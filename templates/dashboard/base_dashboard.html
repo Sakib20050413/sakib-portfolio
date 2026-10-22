@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Control Panel | {{ profile.full_name }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex flex-col md:flex-row bg-[#060813]">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-64 bg-slate-950 border-r border-slate-800 p-6 flex flex-col justify-between shrink-0">
+        <div class="space-y-6">
+            <!-- Brand -->
+            <div class="border-b border-slate-800/80 pb-4">
+                <div class="flex items-center gap-2 font-mono font-bold text-sm text-purple-400">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    <span>SAKIB_ADMIN_CMS</span>
+                </div>
+                <div class="text-[11px] text-slate-500 font-mono mt-1">
+                    Student ID: {{ profile.student_id }} • BAIUST
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1.5 text-xs font-mono">
+                <a href="{% url 'dashboard:overview' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'overview' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
+                    <span>📊</span>
+                    <span>Overview Telemetry</span>
+                </a>
+                <a href="{% url 'dashboard:profile_manager' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'profile' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
+                    <span>👤</span>
+                    <span>Profile & Social Links</span>
+                </a>
+                <a href="{% url 'dashboard:projects_manager' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'projects' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
+                    <span>📁</span>
+                    <span>Projects CRUD [8]</span>
+                </a>
+                <a href="{% url 'dashboard:skills_manager' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'skills' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
+                    <span>⚡</span>
+                    <span>Skills & Physics Pit</span>
+                </a>
+                <a href="{% url 'dashboard:timeline_manager' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'timeline' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
+                    <span>🕒</span>
+                    <span>Timeline & Experience</span>
+                </a>
+                <a href="{% url 'dashboard:messages_inbox' %}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'messages' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
+                    <div class="flex items-center gap-2.5">
+                        <span>💬</span>
+                        <span>Inquiries Inbox</span>
+                    </div>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="pt-6 border-t border-slate-800 space-y-2 text-xs font-mono">
+            <a href="{% url 'core:index' %}" target="_blank" class="flex items-center justify-between px-3 py-2 rounded-lg bg-slate-900 text-slate-300 hover:text-white transition border border-slate-800">
+                <span>⚡ Live Site</span>
+                <span>&rarr;</span>
+            </a>
+            <a href="/php_crud_module/index.php" target="_blank" class="flex items-center justify-between px-3 py-2 rounded-lg bg-indigo-950/40 text-indigo-300 hover:text-indigo-100 transition border border-indigo-500/20">
+                <span>🐘 PHP CRUD</span>
+                <span>&rarr;</span>
+            </a>
+            <a href="{% url 'dashboard:logout' %}" class="flex items-center justify-between px-3 py-2 rounded-lg text-rose-400 hover:bg-rose-500/10 transition">
+                <span>Term. Session</span>
+                <span>⏏</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+        <!-- Top Flash Alerts -->
+        {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                <div class="p-4 rounded-xl text-xs font-mono flex items-center justify-between {% if message.tags == 'error' %}bg-rose-500/10 border border-rose-500/30 text-rose-300{% else %}bg-emerald-500/10 border border-emerald-500/30 text-emerald-300{% endif %}">
+                    <span>✓ {{ message }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block dashboard_content %}
+        {% endblock %}
+    </main>
+
+</div>
+{% endblock %}

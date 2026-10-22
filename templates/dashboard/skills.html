@@ -1,0 +1,124 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="space-y-8">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+            <div class="text-xs font-mono text-purple-400">SKILLS & PHYSICS CANVAS ENGINE</div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Manage Skills & Ball Pit Spheres</h1>
+            <p class="text-xs text-slate-400 mt-1">Add new technologies, set proficiency, and choose sphere colors for the physics pit.</p>
+        </div>
+    </div>
+
+    <!-- Create or Edit Form -->
+    <div class="glass-card p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-4">
+        <h2 class="text-sm font-bold font-mono text-purple-400 uppercase">
+            {% if editing %}Editing Skill: {{ skill.name }}{% else %}Add New Skill Ball{% endif %}
+        </h2>
+
+        <form method="POST" action="{% if editing %}{% url 'dashboard:skill_edit' skill.id %}{% else %}{% url 'dashboard:skills_manager' %}{% endif %}" class="space-y-4">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">SKILL / TECH NAME *</label>
+                    <input type="text" name="name" value="{{ skill.name|default:'' }}" required placeholder="e.g. Docker" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">CATEGORY *</label>
+                    <select name="category" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500">
+                        <option value="Web & Backend" {% if skill.category == 'Web & Backend' %}selected{% endif %}>Web & Backend</option>
+                        <option value="Embedded AI & IoT" {% if skill.category == 'Embedded AI & IoT' %}selected{% endif %}>Embedded AI & IoT</option>
+                        <option value="Languages & Core CS" {% if skill.category == 'Languages & Core CS' %}selected{% endif %}>Languages & Core CS</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">PROFICIENCY (0-100%)</label>
+                    <input type="number" name="proficiency" value="{{ skill.proficiency|default:85 }}" min="10" max="100" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">BALL HEX COLOR (PHYSICS PIT)</label>
+                    <div class="flex items-center gap-2">
+                        <input type="color" name="badge_color" value="{{ skill.badge_color|default:'#8B5CF6' }}" class="h-10 w-16 bg-slate-950 border border-slate-800 rounded-lg cursor-pointer">
+                        <span class="text-xs font-mono text-slate-400">Sphere Glow</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">BALL RADIUS (PIXELS)</label>
+                    <input type="number" name="radius" value="{{ skill.radius|default:28 }}" min="20" max="45" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">SORT ORDER</label>
+                    <input type="number" name="order" value="{{ skill.order|default:0 }}" min="0" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                {% if editing %}
+                <a href="{% url 'dashboard:skills_manager' %}" class="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 text-xs font-mono hover:bg-slate-800 transition">Cancel</a>
+                {% endif %}
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs font-mono transition shadow-lg shadow-purple-600/30">
+                    {% if editing %}Update Skill{% else %}Add to Physics Pit{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Skills List Table -->
+    <div class="space-y-4">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>⚡</span>
+            <span>Registered Skills [{{ skills.count }}]</span>
+        </h2>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/40">
+            <table class="w-full text-left text-xs font-mono text-slate-300">
+                <thead class="bg-slate-900/80 uppercase text-slate-400 border-b border-slate-800">
+                    <tr>
+                        <th class="px-4 py-3">Color</th>
+                        <th class="px-4 py-3">Name</th>
+                        <th class="px-4 py-3">Category</th>
+                        <th class="px-4 py-3">Proficiency</th>
+                        <th class="px-4 py-3">Radius</th>
+                        <th class="px-4 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 font-sans">
+                    {% for s in skills %}
+                    <tr class="hover:bg-slate-800/30 transition">
+                        <td class="px-4 py-3.5">
+                            <span class="inline-block w-4 h-4 rounded-full border border-white/20" style="background-color: {{ s.badge_color }};"></span>
+                        </td>
+                        <td class="px-4 py-3.5 font-bold text-white">{{ s.name }}</td>
+                        <td class="px-4 py-3.5 font-mono text-xs text-slate-400">{{ s.category }}</td>
+                        <td class="px-4 py-3.5 font-mono text-purple-300 font-semibold">{{ s.proficiency }}%</td>
+                        <td class="px-4 py-3.5 font-mono text-slate-400">{{ s.radius }}px</td>
+                        <td class="px-4 py-3.5 text-right space-x-2">
+                            <a href="{% url 'dashboard:skill_edit' s.id %}" class="px-3 py-1 bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 border border-blue-500/30 rounded-lg text-xs font-mono transition inline-block">
+                                Edit
+                            </a>
+                            <form action="{% url 'dashboard:skill_delete' s.id %}" method="POST" class="inline" onsubmit="return confirm('Delete skill {{ s.name }}?');">
+                                {% csrf_token %}
+                                <button type="submit" class="px-3 py-1 bg-rose-600/20 hover:bg-rose-600/40 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-mono transition">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-4 py-8 text-center text-slate-500 font-mono">No skills defined.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

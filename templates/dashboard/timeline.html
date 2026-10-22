@@ -1,0 +1,124 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="space-y-8">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+            <div class="text-xs font-mono text-purple-400">TIMELINE & MILESTONES CRUD</div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Experience, Leadership & Education</h1>
+            <p class="text-xs text-slate-400 mt-1">Add or edit career milestones, research groups, internships, and university degrees.</p>
+        </div>
+    </div>
+
+    <!-- Create or Edit Form -->
+    <div class="glass-card p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-4">
+        <h2 class="text-sm font-bold font-mono text-purple-400 uppercase">
+            {% if editing %}Editing Milestone: {{ entry.title }}{% else %}Add New Career Milestone{% endif %}
+        </h2>
+
+        <form method="POST" action="{% if editing %}{% url 'dashboard:timeline_edit' entry.id %}{% else %}{% url 'dashboard:timeline_manager' %}{% endif %}" class="space-y-4">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">ROLE / TITLE *</label>
+                    <input type="text" name="title" value="{{ entry.title|default:'' }}" required placeholder="e.g. Team Leader (Team 03) — Django Internship" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">ORGANIZATION / INSTITUTION *</label>
+                    <input type="text" name="organization" value="{{ entry.organization|default:'' }}" required placeholder="e.g. BAIUST Computer Club" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">CATEGORY *</label>
+                    <select name="category" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500">
+                        <option value="Leadership" {% if entry.category == 'Leadership' %}selected{% endif %}>Leadership</option>
+                        <option value="Experience" {% if entry.category == 'Experience' %}selected{% endif %}>Experience</option>
+                        <option value="Education" {% if entry.category == 'Education' %}selected{% endif %}>Education</option>
+                        <option value="Award" {% if entry.category == 'Award' %}selected{% endif %}>Award</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">TIME PERIOD *</label>
+                    <input type="text" name="period" value="{{ entry.period|default:'' }}" required placeholder="e.g. May 2026 – Present" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">ORDER (SORT)</label>
+                    <input type="number" name="order" value="{{ entry.order|default:0 }}" min="0" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">DESCRIPTION & ACHIEVEMENTS *</label>
+                <textarea name="description" rows="3" required placeholder="Specific engineering responsibilities, deliverables, and team leadership..." class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500 leading-relaxed">{{ entry.description|default:'' }}</textarea>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+                {% if editing %}
+                <a href="{% url 'dashboard:timeline_manager' %}" class="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 text-xs font-mono hover:bg-slate-800 transition">Cancel</a>
+                {% endif %}
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs font-mono transition shadow-lg shadow-purple-600/30">
+                    {% if editing %}Update Milestone{% else %}Save Milestone{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Timeline List Table -->
+    <div class="space-y-4">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>🕒</span>
+            <span>Recorded Milestones [{{ timeline.count }}]</span>
+        </h2>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/40">
+            <table class="w-full text-left text-xs font-mono text-slate-300">
+                <thead class="bg-slate-900/80 uppercase text-slate-400 border-b border-slate-800">
+                    <tr>
+                        <th class="px-4 py-3">Category</th>
+                        <th class="px-4 py-3">Title & Organization</th>
+                        <th class="px-4 py-3">Period</th>
+                        <th class="px-4 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 font-sans">
+                    {% for item in timeline %}
+                    <tr class="hover:bg-slate-800/30 transition">
+                        <td class="px-4 py-3.5">
+                            <span class="px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-300 font-mono text-[11px]">
+                                {{ item.category }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3.5">
+                            <div class="font-bold text-white text-sm">{{ item.title }}</div>
+                            <div class="text-xs text-slate-400 font-mono">{{ item.organization }}</div>
+                        </td>
+                        <td class="px-4 py-3.5 font-mono text-xs text-slate-300">{{ item.period }}</td>
+                        <td class="px-4 py-3.5 text-right space-x-2">
+                            <a href="{% url 'dashboard:timeline_edit' item.id %}" class="px-3 py-1 bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 border border-blue-500/30 rounded-lg text-xs font-mono transition inline-block">
+                                Edit
+                            </a>
+                            <form action="{% url 'dashboard:timeline_delete' item.id %}" method="POST" class="inline" onsubmit="return confirm('Delete milestone {{ item.title }}?');">
+                                {% csrf_token %}
+                                <button type="submit" class="px-3 py-1 bg-rose-600/20 hover:bg-rose-600/40 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-mono transition">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="px-4 py-8 text-center text-slate-500 font-mono">No timeline milestones added.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

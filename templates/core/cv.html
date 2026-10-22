@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Curriculum Vitae — {{ profile.full_name }} (BAIUST ID: {{ profile.student_id }}){% endblock %}
+
+{% block extra_head %}
+<style>
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+    }
+    .no-print {
+        display: none !important;
+    }
+    .print-sheet {
+        border: none !important;
+        box-shadow: none !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto w-full px-4 py-8">
+
+    <!-- Action Bar (Hidden in Print) -->
+    <div class="no-print mb-8 p-4 rounded-2xl glass-card flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-800">
+        <div class="flex items-center gap-3">
+            <a href="{% url 'core:index' %}" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 hover:text-white text-xs font-mono transition">
+                &larr; Return to Portfolio
+            </a>
+            <span class="text-xs text-slate-400 font-mono">Academic & Industry Standard Format</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs font-mono transition shadow-lg shadow-purple-600/30 flex items-center gap-1.5">
+                <span>🖨️ Print / Save as PDF</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Resume Document Sheet -->
+    <div class="print-sheet bg-slate-900/90 text-slate-100 p-8 sm:p-12 rounded-3xl border border-slate-800 shadow-2xl space-y-8">
+        
+        <!-- Header -->
+        <header class="border-b border-slate-800 pb-6">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl font-extrabold tracking-tight text-white">{{ profile.full_name }}</h1>
+                    <div class="text-purple-400 text-sm font-mono mt-1 font-semibold">
+                        Full-Stack Software Engineer • Embedded AI & TinyML Researcher
+                    </div>
+                    <div class="text-slate-400 text-xs font-mono mt-1">
+                        BAIUST Student ID: <strong class="text-slate-200">{{ profile.student_id }}</strong> • {{ profile.department_batch }}
+                    </div>
+                </div>
+                <div class="text-xs font-mono text-slate-300 sm:text-right space-y-1">
+                    <div>{{ profile.location }}</div>
+                    <div>Email: <a href="mailto:{{ profile.primary_email }}" class="text-cyan-400 hover:underline">{{ profile.primary_email }}</a></div>
+                    <div>GitHub: <a href="{{ profile.github_url }}" target="_blank" class="text-purple-400 hover:underline">github.com/Sakib20050413</a></div>
+                    <div>LinkedIn: <a href="{{ profile.linkedin_url }}" target="_blank" class="text-purple-400 hover:underline">in/md-najmus-sakib-rahatul</a></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="space-y-2">
+            <h2 class="text-xs font-bold font-mono tracking-wider text-purple-400 uppercase">Executive Summary</h2>
+            <p class="text-slate-300 text-sm leading-relaxed">
+                {{ profile.bio }}
+            </p>
+        </section>
+
+        <!-- Technical Skills -->
+        <section class="space-y-3">
+            <h2 class="text-xs font-bold font-mono tracking-wider text-purple-400 uppercase">Core Technical Skills</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono">
+                <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                    <span class="text-slate-400 block mb-1">WEB & BACKEND:</span>
+                    <span class="text-slate-200">Python, Django 5, Next.js, TypeScript, JavaScript (ES6+), PHP, PostgreSQL, MySQL, SQLite, Tailwind CSS, WhiteNoise, Gunicorn</span>
+                </div>
+                <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                    <span class="text-slate-400 block mb-1">EMBEDDED AI & IOT:</span>
+                    <span class="text-slate-200">ESP32-S3 (Xtensa Dual-Core), C++, TinyML Decision Trees, 512-pt Radix-2 FFT DSP, I2S DMA Audio, I2C/UART/SPI Buses, FreeRTOS</span>
+                </div>
+                <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                    <span class="text-slate-400 block mb-1">SYSTEMS & TOOLS:</span>
+                    <span class="text-slate-200">Git / GitHub, Linux (Bash/Zsh), Java (OOP, Swing), MATLAB Signal Processing, REST APIs, Docker Basics, CI/CD</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Leadership -->
+        <section class="space-y-4">
+            <h2 class="text-xs font-bold font-mono tracking-wider text-purple-400 uppercase">Leadership & Research Experience</h2>
+            <div class="space-y-4">
+                {% for item in timeline %}
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs font-mono">
+                        <span class="font-bold text-white text-sm">{{ item.title }}</span>
+                        <span class="text-purple-400">{{ item.period }}</span>
+                    </div>
+                    <div class="text-xs text-cyan-400 font-mono mt-0.5">{{ item.organization }}</div>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1 leading-relaxed">
+                        {{ item.description }}
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Selected Real Projects -->
+        <section class="space-y-4">
+            <h2 class="text-xs font-bold font-mono tracking-wider text-purple-400 uppercase">Key Engineering Projects</h2>
+            <div class="space-y-4">
+                {% for p in projects|slice:":5" %}
+                <div class="border-b border-slate-800/80 pb-4 last:border-b-0">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs font-mono">
+                        <span class="font-bold text-white text-sm">
+                            [{{ p.code }}] {{ p.title }}
+                        </span>
+                        <span class="text-slate-400">{{ p.category }}</span>
+                    </div>
+                    <div class="text-xs text-purple-300 font-mono mt-1">Tech: {{ p.tech_stack }}</div>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1 leading-relaxed">
+                        {{ p.summary }}
+                    </p>
+                    {% if p.github_url %}
+                    <a href="{{ p.github_url }}" target="_blank" class="text-xs text-indigo-400 hover:underline font-mono inline-block mt-1">
+                        &rarr; {{ p.github_url }}
+                    </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="space-y-2 border-t border-slate-800 pt-6">
+            <h2 class="text-xs font-bold font-mono tracking-wider text-purple-400 uppercase">Education</h2>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs font-mono">
+                <div>
+                    <div class="font-bold text-white text-sm">Bachelor of Science in Computer Science & Engineering (B.Sc. CSE)</div>
+                    <div class="text-slate-300">Bangladesh Army International University of Science and Technology (BAIUST), Cumilla</div>
+                </div>
+                <div class="text-slate-400 sm:text-right mt-1 sm:mt-0">
+                    Level 3, Term 2 (Enrolled)<br>
+                    Student ID: <strong class="text-purple-400">1119003</strong>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+{% endblock %}

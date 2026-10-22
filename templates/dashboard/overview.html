@@ -1,0 +1,133 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="space-y-8">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-6">
+        <div>
+            <div class="text-xs font-mono text-purple-400">TELEMETRY // SYSTEM STATUS: OPTIMAL</div>
+            <h1 class="text-3xl font-extrabold text-white mt-1">Portfolio CMS Control Panel</h1>
+            <p class="text-xs text-slate-400 mt-1">
+                Full CRUD control over all portfolio layers without modifying source code.
+            </p>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
+                ● Database: SQLite Local (Postgres Ready)
+            </span>
+        </div>
+    </div>
+
+    <!-- 4 Overview Analytics Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Total Projects -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+                <span>PROJECTS</span>
+                <span class="text-purple-400">CRUD ACTIVE</span>
+            </div>
+            <div class="text-3xl font-extrabold text-white font-mono">{{ total_projects }}</div>
+            <div class="text-xs text-slate-500 mt-1">8 verified real systems</div>
+        </div>
+
+        <!-- Total Skills -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+                <span>PHYSICS SKILLS</span>
+                <span class="text-cyan-400">BALL PIT</span>
+            </div>
+            <div class="text-3xl font-extrabold text-white font-mono">{{ total_skills }}</div>
+            <div class="text-xs text-slate-500 mt-1">Simulated on 2D Canvas</div>
+        </div>
+
+        <!-- Upvotes / Stars -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+                <span>TOTAL UPVOTES</span>
+                <span class="text-amber-400">AJAX STARS</span>
+            </div>
+            <div class="text-3xl font-extrabold text-amber-400 font-mono">{{ total_stars }}</div>
+            <div class="text-xs text-slate-500 mt-1">Audience engagement</div>
+        </div>
+
+        <!-- Unread Messages -->
+        <div class="glass-card p-6 rounded-2xl border border-slate-800">
+            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+                <span>INBOX UNREAD</span>
+                <span class="text-rose-400">CONTACT</span>
+            </div>
+            <div class="text-3xl font-extrabold text-white font-mono">{{ unread_messages }}</div>
+            <div class="text-xs text-slate-500 mt-1">Incoming recruiters / researchers</div>
+        </div>
+    </div>
+
+    <!-- Recent Projects & Recent Inquiries -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left: Quick Projects List (7 Cols) -->
+        <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <span>📁</span>
+                    <span>Recent Projects in Database</span>
+                </h2>
+                <a href="{% url 'dashboard:projects_manager' %}" class="text-xs text-purple-400 hover:text-purple-300 font-mono">
+                    Manage All &rarr;
+                </a>
+            </div>
+
+            <div class="space-y-3">
+                {% for p in recent_projects %}
+                <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-mono text-xs font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">
+                                {{ p.code }}
+                            </span>
+                            <span class="text-sm font-bold text-slate-100">{{ p.title }}</span>
+                        </div>
+                        <div class="text-xs text-slate-400 mt-1 font-mono">Category: {{ p.category }} • ★ {{ p.stars_count }}</div>
+                    </div>
+                    <a href="{% url 'dashboard:project_edit' p.id %}" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-xs font-mono border border-slate-700">
+                        Edit
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Right: Recent Messages (5 Cols) -->
+        <div class="lg:col-span-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <span>💬</span>
+                    <span>Recent Inquiries</span>
+                </h2>
+                <a href="{% url 'dashboard:messages_inbox' %}" class="text-xs text-purple-400 hover:text-purple-300 font-mono">
+                    View Inbox &rarr;
+                </a>
+            </div>
+
+            <div class="space-y-3">
+                {% for m in recent_messages %}
+                <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+                    <div class="flex items-center justify-between text-xs font-mono">
+                        <span class="font-bold text-white">{{ m.sender_name }}</span>
+                        <span class="text-slate-500">{{ m.created_at|date:"M d" }}</span>
+                    </div>
+                    <div class="text-xs text-purple-300 truncate">{{ m.subject }}</div>
+                    <div class="text-[11px] text-slate-400 line-clamp-1">{{ m.message }}</div>
+                </div>
+                {% empty %}
+                <div class="p-6 text-center text-xs text-slate-500 font-mono bg-slate-900/40 rounded-xl border border-slate-800">
+                    No recent inquiries.
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

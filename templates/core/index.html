@@ -1,0 +1,726 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ================================================================= -->
+<!-- 1. TERMINAL BOOT PRELOADER (0% -> 100%)                          -->
+<!-- ================================================================= -->
+<div id="boot-preloader" class="fixed inset-0 z-50 bg-[#060813] flex flex-col items-center justify-center p-6 text-slate-200">
+    <div class="max-w-md w-full glass-panel p-6 rounded-2xl border border-purple-500/30 shadow-2xl relative scanline">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-xs font-mono text-purple-400">
+            <span>[ SAKIB_PORTFOLIO_OS v3.2 ]</span>
+            <span class="text-emerald-400 font-bold">ONLINE</span>
+        </div>
+        <div class="py-4 font-mono text-xs text-slate-300 space-y-1">
+            <p class="text-sky-400">$ init --user "{{ profile.display_handle }}" --id {{ profile.student_id }}</p>
+            <p class="text-slate-400">&gt; Location: {{ profile.location }}</p>
+            <p class="text-slate-400">&gt; Kernel: Django 5.x + Vanilla JS DOM + Web Audio API</p>
+            <p class="text-slate-400">&gt; Initializing 2D Physics Engine & Hardware Telemetry...</p>
+        </div>
+        <div class="mt-4">
+            <div class="flex justify-between text-xs font-mono mb-1.5">
+                <span class="text-slate-400">Boot Progress</span>
+                <span id="preloader-percent" class="text-purple-400 font-bold">0%</span>
+            </div>
+            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                <div id="preloader-progress-bar" class="h-full bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400 w-0 transition-all duration-75"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================= -->
+<!-- 2. STICKY GLASSMORPHIC HEADER & TELEMETRY NAV                     -->
+<!-- ================================================================= -->
+<header class="sticky top-0 z-40 w-full glass-panel border-b border-slate-800/80 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo / Identity -->
+        <a href="#hero" class="flex items-center gap-2 group">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="font-mono font-bold text-sm tracking-wider text-slate-100 group-hover:text-purple-400 transition">
+                [ SAKIB // <span class="text-purple-400">{{ profile.student_id }}</span> ]
+            </span>
+        </a>
+
+        <!-- Center Telemetry Badges (Desktop) -->
+        <div class="hidden lg:flex items-center gap-3 text-xs font-mono text-slate-400">
+            <div class="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                <span id="live-clock">DAC (UTC+6) • Loading...</span>
+            </div>
+            <div class="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                <span id="fps-badge">60 FPS</span>
+            </div>
+        </div>
+
+        <!-- Controls: Sound, Mode, Theme, Dashboard Link -->
+        <div class="flex items-center gap-2 sm:gap-3 text-xs font-mono">
+            <button id="btn-sound-toggle" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 text-purple-400 hover:border-purple-500/40 transition">
+                🔊 SOUND: ON
+            </button>
+            <button id="mode-toggle" type="button" class="hidden sm:inline-flex px-3 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 text-slate-300 hover:border-slate-700 transition">
+                💻 TERMINAL MODE
+            </button>
+            <button id="theme-toggle" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-900/70 border border-slate-800 text-slate-300 hover:border-slate-700 transition">
+                🌙 CYBER
+            </button>
+            <a href="{% url 'dashboard:overview' %}" class="px-3.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold shadow-md shadow-purple-600/30 transition flex items-center gap-1">
+                <span>CMS</span>
+                <span class="hidden sm:inline">Admin</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- ================================================================= -->
+<!-- MAIN PAGE CONTENT                                                -->
+<!-- ================================================================= -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-24">
+
+    <!-- ============================================================= -->
+    <!-- 3. HERO SECTION WITH KINETIC TEXT & CURSOR-TRACKING AVATAR   -->
+    <!-- ============================================================= -->
+    <section id="hero" class="relative pt-6 sm:pt-12 pb-8 overflow-hidden">
+        <!-- Huge Kinetic Background Text -->
+        <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-full select-none pointer-events-none opacity-[0.035] text-center font-extrabold tracking-tighter text-7xl sm:text-9xl whitespace-nowrap">
+            NAJMUS SAKIB RAHATUL
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <!-- Left Bio & CTAs (7 Cols) -->
+            <div class="lg:col-span-7 space-y-6">
+                <!-- Academic Batch Badge -->
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>BAIUST CSE • Level 3, Term 2 (ID: {{ profile.student_id }})</span>
+                </div>
+
+                <!-- Headline -->
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15]">
+                    Hi, I'm <span class="gradient-text">{{ profile.full_name }}</span>
+                </h1>
+
+                <!-- Typewriter Role Badge -->
+                <div class="h-8 flex items-center text-lg sm:text-xl font-medium text-slate-300 font-mono">
+                    <span class="text-purple-400 mr-2">&gt;</span>
+                    <span id="typewriter-text" class="text-sky-300">Full-Stack Web Developer (Django • Next.js)</span>
+                    <span class="inline-block w-2.5 h-5 bg-purple-400 ml-1 cursor-blink"></span>
+                </div>
+
+                <!-- Paragraph Bio -->
+                <p class="text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+                    {{ profile.bio }}
+                </p>
+
+                <!-- Actions: Explore Projects, CV Modal, PHP Lab Bridge -->
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                    <a href="#projects-section" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm shadow-xl shadow-purple-600/30 transition flex items-center gap-2">
+                        <span>🚀 Explore Projects [{{ total_projects }}]</span>
+                    </a>
+                    <a href="{% url 'core:cv' %}" class="px-5 py-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 text-sm font-medium transition flex items-center gap-2">
+                        <span>📄 View Printable CV</span>
+                    </a>
+                    <a href="/php_crud_module/index.php" target="_blank" class="px-4 py-3 rounded-xl bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-300 border border-indigo-500/30 text-sm font-mono transition">
+                        <span>⚡ PHP CRUD Module</span>
+                    </a>
+                </div>
+
+                <!-- Floating Social Dock -->
+                <div class="pt-4 flex items-center gap-3">
+                    <span class="text-xs text-slate-500 font-mono">PROFILES:</span>
+                    <a href="{{ profile.github_url }}" target="_blank" class="p-2.5 rounded-lg bg-slate-900/70 border border-slate-800 text-slate-300 hover:text-white hover:border-purple-500/40 transition" title="GitHub">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                    <a href="{{ profile.linkedin_url }}" target="_blank" class="p-2.5 rounded-lg bg-slate-900/70 border border-slate-800 text-slate-300 hover:text-white hover:border-purple-500/40 transition" title="LinkedIn">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="{{ profile.x_twitter_url }}" target="_blank" class="p-2.5 rounded-lg bg-slate-900/70 border border-slate-800 text-slate-300 hover:text-white hover:border-purple-500/40 transition" title="X (Twitter)">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="{{ profile.leetcode_url }}" target="_blank" class="p-2.5 rounded-lg bg-slate-900/70 border border-slate-800 text-amber-400 hover:border-amber-500/40 transition font-mono text-xs font-bold" title="LeetCode">
+                        LC
+                    </a>
+                    <a href="{{ profile.kaggle_url }}" target="_blank" class="p-2.5 rounded-lg bg-slate-900/70 border border-slate-800 text-sky-400 hover:border-sky-500/40 transition font-mono text-xs font-bold" title="Kaggle">
+                        KG
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Vector Avatar Canvas (5 Cols) -->
+            <div class="lg:col-span-5 flex flex-col items-center justify-center relative">
+                <div class="relative w-full max-w-sm rounded-3xl p-4 glass-card border border-purple-500/20 text-center">
+                    <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2 px-2">
+                        <span class="text-purple-400">VECTOR_AVATAR // 60FPS</span>
+                        <span class="text-emerald-400">● LIVE TRACKING</span>
+                    </div>
+                    <canvas id="avatar-canvas" class="w-full h-80 rounded-2xl bg-slate-950/80 cursor-crosshair"></canvas>
+                    <div class="mt-3 text-xs text-slate-400 font-mono">
+                        Hover cursor to tilt vector avatar eyes & head in 3D
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 4. INTERACTIVE MACOS TERMINAL EMULATOR                       -->
+    <!-- ============================================================= -->
+    <section id="terminal-section" class="scroll-mt-24">
+        <div class="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-purple-500/20 text-purple-300 font-mono font-semibold border border-purple-500/30">
+                    INTERACTIVE CLI // ES6 DOM
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">macOS Terminal Emulator</h2>
+            </div>
+            <div class="text-xs text-slate-400 font-mono">
+                Type <code class="text-purple-300 bg-slate-900 px-1.5 py-0.5 rounded">help</code> or <code class="text-amber-300 bg-slate-900 px-1.5 py-0.5 rounded">open A001</code>
+            </div>
+        </div>
+
+        <div id="terminal-window" class="terminal-window">
+            <!-- Terminal Header -->
+            <div class="terminal-header">
+                <div class="terminal-traffic-lights">
+                    <span id="traffic-red" class="traffic-light red" title="Clear History"></span>
+                    <span id="traffic-yellow" class="traffic-light yellow" title="Collapse"></span>
+                    <span id="traffic-green" class="traffic-light green" title="Fullscreen"></span>
+                </div>
+                <div class="text-xs font-mono text-slate-400">sakib@baiust: ~ (zsh)</div>
+                <div class="text-xs font-mono text-slate-500">UTF-8</div>
+            </div>
+
+            <!-- Terminal Body & History -->
+            <div id="terminal-body" class="terminal-body">
+                <div class="text-slate-400 font-mono text-xs">
+                    Last login: {% now "D M d H:i:s" %} on ttys001<br>
+                    Welcome to <span class="text-purple-400 font-bold">Md Najmus Sakib Rahatul's</span> Interactive Portfolio OS.<br>
+                    Type <code class="text-sky-300">help</code> to list available commands, or <code class="text-amber-300">projects</code> to view indexed projects.
+                </div>
+            </div>
+
+            <!-- Terminal Prompt Input Line -->
+            <div class="px-4 py-3 bg-slate-950/90 border-t border-slate-800 flex items-center gap-2">
+                <span class="terminal-prompt-user">sakib@baiust</span>
+                <span class="terminal-prompt-at">:</span>
+                <span class="terminal-prompt-path">~</span>
+                <span class="text-slate-400 font-mono font-bold">$</span>
+                <input id="terminal-input" type="text" class="terminal-input" placeholder="type a command (e.g. 'help', 'projects', 'open A001')..." autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 5. 2D PHYSICS TECH-STACK BALL PIT CANVAS                     -->
+    <!-- ============================================================= -->
+    <section id="skills-section" class="scroll-mt-24 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-cyan-500/20 text-cyan-300 font-mono font-semibold border border-cyan-500/30">
+                    HTML5 CANVAS PHYSICS ENGINE
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Tech-Stack Ball Pit & Skills</h2>
+                <p class="text-slate-400 text-sm mt-1">
+                    18 interactive skills with elastic bounce, gravity simulation, and cursor repulsion force.
+                </p>
+            </div>
+            <button id="btn-shake-gravity" type="button" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-purple-500/50 text-purple-300 text-xs font-mono font-semibold transition flex items-center gap-2 self-start sm:self-auto">
+                <span>⚡ Shake Gravity</span>
+            </button>
+        </div>
+
+        <!-- Canvas Container -->
+        <div class="glass-card rounded-2xl p-4 overflow-hidden border border-slate-800">
+            <canvas id="physics-canvas" class="w-full h-96 rounded-xl bg-slate-950/70 cursor-grab active:cursor-grabbing"></canvas>
+            <div class="mt-3 flex items-center justify-between text-xs text-slate-400 font-mono px-2">
+                <span>INTERACTION: Hover or fling through spheres with cursor</span>
+                <span class="text-purple-400">RESTITUTION: 0.72 • GRAVITY: 0.24</span>
+            </div>
+        </div>
+
+        <!-- Categorized Proficiency Progress Bars -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <!-- Web & Backend -->
+            <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span>Web & Backend</span>
+                    </h3>
+                    <span class="text-xs text-slate-400 mono">Django / Next.js</span>
+                </div>
+                <div class="space-y-2.5 pt-1">
+                    {% for s in skills_web %}
+                    <div>
+                        <div class="flex justify-between text-xs font-mono mb-1">
+                            <span class="text-slate-300">{{ s.name }}</span>
+                            <span class="text-purple-300 font-bold">{{ s.proficiency }}%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                            <div class="h-full rounded-full" style="width: {{ s.proficiency }}%; background-color: {{ s.badge_color }};"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Embedded AI & IoT -->
+            <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                        <span>Embedded AI & IoT</span>
+                    </h3>
+                    <span class="text-xs text-slate-400 mono">ESP32-S3 / DSP</span>
+                </div>
+                <div class="space-y-2.5 pt-1">
+                    {% for s in skills_iot %}
+                    <div>
+                        <div class="flex justify-between text-xs font-mono mb-1">
+                            <span class="text-slate-300">{{ s.name }}</span>
+                            <span class="text-cyan-300 font-bold">{{ s.proficiency }}%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                            <div class="h-full rounded-full" style="width: {{ s.proficiency }}%; background-color: {{ s.badge_color }};"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Languages & Core CS -->
+            <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span>Languages & Core CS</span>
+                    </h3>
+                    <span class="text-xs text-slate-400 mono">C/C++ / Java</span>
+                </div>
+                <div class="space-y-2.5 pt-1">
+                    {% for s in skills_cs %}
+                    <div>
+                        <div class="flex justify-between text-xs font-mono mb-1">
+                            <span class="text-slate-300">{{ s.name }}</span>
+                            <span class="text-amber-300 font-bold">{{ s.proficiency }}%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                            <div class="h-full rounded-full" style="width: {{ s.proficiency }}%; background-color: {{ s.badge_color }};"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 6. BENTO GRID PROJECTS SHOWCASE & LIVE FILTER                -->
+    <!-- ============================================================= -->
+    <section id="projects-section" class="scroll-mt-24 space-y-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-purple-500/20 text-purple-300 font-mono font-semibold border border-purple-500/30">
+                    BENTO GRID ARCHITECTURE
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Engineering Projects Portfolio</h2>
+                <p class="text-slate-400 text-sm mt-1">
+                    8 real-world systems spanning full-stack web platforms, embedded DSP traps, and IoT nowcasting nodes.
+                </p>
+            </div>
+
+            <!-- Live Keyword Search Input -->
+            <div class="w-full md:w-72">
+                <input id="project-search-input" type="text" placeholder="Live search by keyword or tag..." class="w-full px-4 py-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-purple-500 font-mono">
+            </div>
+        </div>
+
+        <!-- Category Filter Buttons -->
+        <div class="flex flex-wrap gap-2 pt-1">
+            {% for cat in categories %}
+            <button type="button" class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono font-semibold transition {% if forloop.first %}bg-purple-600 text-white{% else %}bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800{% endif %}" data-category="{{ cat }}">
+                {{ cat }}
+            </button>
+            {% endfor %}
+        </div>
+
+        <!-- Bento Grid Cards Container -->
+        <div id="projects-bento-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for p in projects %}
+            <article class="project-card glass-card p-6 rounded-2xl border border-slate-800 flex flex-col justify-between transition-all duration-300"
+                     data-category="{{ p.category }}"
+                     data-title="{{ p.title }}"
+                     data-stack="{{ p.tech_stack }}"
+                     data-project-code="{{ p.code }}">
+                
+                <div>
+                    <!-- Top Index & Star Button -->
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800/80">
+                        <span class="font-mono text-xs font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-md border border-purple-500/20">
+                            {{ p.code }}
+                        </span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800/80 text-slate-300">
+                                {{ p.category }}
+                            </span>
+                            <button type="button" class="btn-project-star text-xs font-mono text-slate-400 hover:text-amber-400 transition flex items-center gap-1" data-project-id="{{ p.id }}" title="Star project">
+                                <span>★</span>
+                                <span class="star-count">{{ p.stars_count }}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Title & Summary -->
+                    <h3 class="text-lg font-bold text-white mt-4 line-clamp-1 hover:text-purple-300 transition">
+                        {{ p.title }}
+                    </h3>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-2 line-clamp-3 leading-relaxed">
+                        {{ p.summary }}
+                    </p>
+
+                    <!-- Tech Stack Badges -->
+                    <div class="flex flex-wrap gap-1.5 mt-4">
+                        {% for tech in p.tech_list|slice:":4" %}
+                        <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-300">
+                            {{ tech }}
+                        </span>
+                        {% endfor %}
+                        {% if p.tech_list|length > 4 %}
+                        <span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono text-purple-400">
+                            +{{ p.tech_list|length|add:"-4" }}
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Footer Buttons: View Case Study Modal & GitHub -->
+                <div class="pt-5 mt-5 border-t border-slate-800/80 flex items-center justify-between">
+                    <button type="button" class="btn-view-casestudy text-xs font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                        <span>View Architecture</span>
+                        <span>&rarr;</span>
+                    </button>
+                    {% if p.github_url %}
+                    <a href="{{ p.github_url }}" target="_blank" class="text-xs font-mono text-slate-400 hover:text-slate-200" title="GitHub Repo">
+                        [Repo]
+                    </a>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        <!-- Empty state if search returns nothing -->
+        <div id="projects-empty-state" class="hidden text-center py-12 glass-card rounded-2xl border border-slate-800">
+            <p class="text-slate-400 text-sm font-mono">No matching projects found for this filter criteria.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 7. INTERACTIVE HARDWARE & TINYML SCROLLYTELLING STRIP        -->
+    <!-- ============================================================= -->
+    <section id="hardware-section" class="scroll-mt-24 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-amber-500/20 text-amber-300 font-mono font-semibold border border-amber-500/30">
+                    EMBEDDED HARDWARE LAB
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">ESP32-S3 Hardware Pinout Visualizer</h2>
+                <p id="hw-subtitle" class="text-slate-400 text-sm mt-1">
+                    3-Stream AI/ML Cross-Verified Distance Estimation & Bangla Voice Siren
+                </p>
+            </div>
+
+            <!-- Switcher Buttons -->
+            <div class="flex items-center gap-2">
+                <button id="btn-hw-lightning" type="button" class="px-3.5 py-2 rounded-xl bg-purple-600 text-white text-xs font-mono font-semibold transition">
+                    Storm Box (CSE 301)
+                </button>
+                <button id="btn-hw-mosquito" type="button" class="px-3.5 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-mono font-semibold transition">
+                    Mosquito Trap (CSE 326)
+                </button>
+            </div>
+        </div>
+
+        <!-- Interactive Blueprint Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <!-- Left: Pin List (5 cols) -->
+            <div class="lg:col-span-5 space-y-3">
+                <div class="text-xs font-mono text-slate-400 mb-1 flex items-center justify-between">
+                    <span>CLICK PINS TO INSPECT SIGNAL FLOW:</span>
+                    <span id="hw-mcu" class="text-cyan-400 font-bold">ESP32-S3</span>
+                </div>
+                <div id="hw-pin-list" class="space-y-2.5">
+                    <!-- Populated dynamically via hardware_scrolly.js -->
+                </div>
+            </div>
+
+            <!-- Right: Interactive Pin Detail & Firmware Box (7 cols) -->
+            <div class="lg:col-span-7 glass-card p-6 rounded-2xl border border-slate-800">
+                <div id="hw-detail-box">
+                    <!-- Populated dynamically via hardware_scrolly.js -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 8. TIMELINE & LEADERSHIP MILESTONES                          -->
+    <!-- ============================================================= -->
+    <section id="timeline-section" class="scroll-mt-24 space-y-6">
+        <div>
+            <span class="px-2.5 py-1 text-xs rounded-md bg-emerald-500/20 text-emerald-300 font-mono font-semibold border border-emerald-500/30">
+                CAREER & ACADEMIC TRAJECTORY
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Leadership, Research & Education</h2>
+        </div>
+
+        <div class="relative pl-6 sm:pl-8 border-l border-slate-800 space-y-8">
+            {% for item in timeline %}
+            <div class="relative group">
+                <!-- Milestone Dot -->
+                <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-purple-500 group-hover:scale-125 transition"></div>
+
+                <div class="glass-card p-5 sm:p-6 rounded-2xl border border-slate-800/80">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2">
+                        <span class="px-2.5 py-0.5 rounded bg-purple-500/10 text-purple-300 font-mono text-xs self-start">
+                            {{ item.category }}
+                        </span>
+                        <span class="text-xs font-mono text-slate-400">{{ item.period }}</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">{{ item.title }}</h3>
+                    <div class="text-xs font-mono text-cyan-400 mt-0.5">{{ item.organization }}</div>
+                    <p class="text-slate-300 text-sm mt-3 leading-relaxed">
+                        {{ item.description }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 9. IMESSAGE CHAT-BUBBLE INTERACTIVE FAQ                      -->
+    <!-- ============================================================= -->
+    <section id="faq-section" class="scroll-mt-24 space-y-6">
+        <div>
+            <span class="px-2.5 py-1 text-xs rounded-md bg-indigo-500/20 text-indigo-300 font-mono font-semibold border border-indigo-500/30">
+                SIMULATED CONVERSATION ENGINE
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Interactive iMessage FAQ</h2>
+            <p class="text-slate-400 text-sm mt-1">Click a question pill below to simulate a live chat response with typing indicators.</p>
+        </div>
+
+        <!-- Preset Question Pills -->
+        <div class="flex flex-wrap gap-2.5">
+            <button type="button" class="faq-pill px-4 py-2 rounded-xl bg-slate-900/80 hover:bg-purple-900/30 text-purple-300 text-xs font-semibold border border-purple-500/30 transition shadow-sm" data-faq-key="stack">
+                💬 What is your strongest tech stack?
+            </button>
+            <button type="button" class="faq-pill px-4 py-2 rounded-xl bg-slate-900/80 hover:bg-purple-900/30 text-purple-300 text-xs font-semibold border border-purple-500/30 transition shadow-sm" data-faq-key="deploy">
+                🚀 Can you build & deploy full-stack apps?
+            </button>
+            <button type="button" class="faq-pill px-4 py-2 rounded-xl bg-slate-900/80 hover:bg-purple-900/30 text-purple-300 text-xs font-semibold border border-purple-500/30 transition shadow-sm" data-faq-key="research">
+                🔬 Tell me about your BAIUST research
+            </button>
+            <button type="button" class="faq-pill px-4 py-2 rounded-xl bg-slate-900/80 hover:bg-purple-900/30 text-purple-300 text-xs font-semibold border border-purple-500/30 transition shadow-sm" data-faq-key="internships">
+                💼 Are you open to internships / remote work?
+            </button>
+        </div>
+
+        <!-- Chat Bubble Viewport -->
+        <div class="glass-card rounded-2xl p-5 border border-slate-800">
+            <div id="faq-chat-container" class="h-80 overflow-y-auto pr-2 space-y-3">
+                <!-- Initial Welcome Bubble -->
+                <div class="flex gap-2.5 max-w-sm sm:max-w-lg">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-cyan-500 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                        NS
+                    </div>
+                    <div>
+                        <div class="text-[11px] text-slate-400 mb-1 mono">Sakib • Level 3 Term 2, BAIUST</div>
+                        <div class="bg-slate-900 border border-slate-800 text-slate-200 px-4 py-3 rounded-2xl rounded-tl-sm text-sm leading-relaxed shadow-lg">
+                            Hello! Click any prompt pill above to ask me about my engineering stack, embedded AI research, or internship availability.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- 10. AJAX CONTACT & HIRE ME SECTION (CRUD CREATE)              -->
+    <!-- ============================================================= -->
+    <section id="contact-section" class="scroll-mt-24 space-y-6">
+        <div class="max-w-2xl mx-auto text-center space-y-2">
+            <span class="px-2.5 py-1 text-xs rounded-md bg-emerald-500/20 text-emerald-300 font-mono font-semibold border border-emerald-500/30">
+                GET IN TOUCH
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Let's Build Something Resilient</h2>
+            <p class="text-slate-400 text-sm">
+                Available for Software Engineering Internships, Remote Full-Stack AI Roles, and TinyML Research Collaborations.
+            </p>
+        </div>
+
+        <div class="max-w-2xl mx-auto glass-card p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-2xl relative">
+            <!-- Toast Feedback Notification -->
+            <div id="contact-feedback" class="hidden mb-6"></div>
+
+            <form id="contact-form" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="sender_name" class="block text-xs font-mono text-slate-300 mb-1">YOUR NAME *</label>
+                        <input type="text" id="sender_name" required placeholder="e.g. Arifur Rahaman" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    </div>
+                    <div>
+                        <label for="sender_email" class="block text-xs font-mono text-slate-300 mb-1">YOUR EMAIL *</label>
+                        <input type="email" id="sender_email" required placeholder="e.g. recruiter@ai-labs.com" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="subject" class="block text-xs font-mono text-slate-300 mb-1">SUBJECT</label>
+                        <input type="text" id="subject" placeholder="e.g. Software Engineering Interview" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                    </div>
+                    <div>
+                        <label for="project_type" class="block text-xs font-mono text-slate-300 mb-1">INQUIRY TYPE</label>
+                        <select id="project_type" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500 transition">
+                            <option value="Internship / Full-Time">Internship / Full-Time Role</option>
+                            <option value="Research Collaboration">Research Collaboration (IEEE)</option>
+                            <option value="Full-Stack Web Project">Full-Stack Web Project</option>
+                            <option value="Embedded Systems / TinyML">Embedded Systems / TinyML</option>
+                            <option value="Other">Other Inquiry</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="message" class="block text-xs font-mono text-slate-300 mb-1">MESSAGE *</label>
+                    <textarea id="message" rows="4" required placeholder="Type your message, project scope, or interview schedule details..." class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500 transition"></textarea>
+                </div>
+
+                <div class="pt-2">
+                    <button id="contact-submit-btn" type="submit" class="w-full py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm shadow-xl shadow-purple-600/30 transition flex items-center justify-center gap-2">
+                        <span>Send Encrypted Message</span>
+                        <span>&rarr;</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</main>
+
+<!-- ================================================================= -->
+<!-- 11. MACOS CASE-STUDY MODAL DIALOG (README.MD VIEWER)             -->
+<!-- ================================================================= -->
+<dialog id="casestudy-modal" class="rounded-2xl p-0 bg-slate-950 border border-slate-800 text-slate-100 max-w-3xl w-full shadow-2xl backdrop:bg-slate-950/80 backdrop:backdrop-blur-md">
+    <div class="flex flex-col max-h-[85vh]">
+        <!-- Modal Top Bar (macOS Window Chrome) -->
+        <div class="px-5 py-3.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span id="modal-close-btn" class="traffic-light red" title="Close"></span>
+                <span class="traffic-light yellow" title="Minimize"></span>
+                <span class="traffic-light green" title="Expand"></span>
+                <span id="modal-project-code" class="ml-2 font-mono text-xs font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">
+                    A001
+                </span>
+            </div>
+            <span id="modal-project-title" class="text-sm font-bold text-white truncate max-w-sm">Project Title</span>
+            <span id="modal-project-category" class="text-xs font-mono text-slate-400">Full-Stack Web</span>
+        </div>
+
+        <!-- Modal Tabs -->
+        <div class="px-5 py-2.5 bg-slate-900/60 border-b border-slate-800/80 flex items-center gap-2 overflow-x-auto text-xs font-mono">
+            <button type="button" class="modal-tab-btn active px-3 py-1.5 rounded-lg bg-purple-600 text-white transition" data-target-panel="panel-why">
+                Why I Built It
+            </button>
+            <button type="button" class="modal-tab-btn px-3 py-1.5 rounded-lg bg-slate-900/60 text-slate-400 hover:text-white transition" data-target-panel="panel-arch">
+                Architecture & Logic
+            </button>
+            <button type="button" class="modal-tab-btn px-3 py-1.5 rounded-lg bg-slate-900/60 text-slate-400 hover:text-white transition" data-target-panel="panel-highlights">
+                Code & Hardware
+            </button>
+        </div>
+
+        <!-- Modal Content Body -->
+        <div class="p-6 overflow-y-auto space-y-4 text-sm leading-relaxed text-slate-300">
+            <!-- Summary Callout -->
+            <div class="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-200 text-xs sm:text-sm">
+                <span class="font-bold text-purple-300">EXECUTIVE SUMMARY:</span>
+                <span id="modal-project-summary">...</span>
+            </div>
+
+            <!-- Tab Panels -->
+            <div id="panel-why" class="modal-tab-panel space-y-2">
+                <h4 class="text-sm font-bold text-white font-mono uppercase tracking-wider text-purple-400">Problem & Motivation</h4>
+                <p id="modal-project-why" class="text-slate-300 text-sm whitespace-pre-line">...</p>
+            </div>
+
+            <div id="panel-arch" class="modal-tab-panel hidden space-y-2">
+                <h4 class="text-sm font-bold text-white font-mono uppercase tracking-wider text-purple-400">System Architecture & Engineering Decisions</h4>
+                <p id="modal-project-arch" class="text-slate-300 text-sm whitespace-pre-line font-mono bg-slate-900/70 p-4 rounded-xl border border-slate-800 text-xs">...</p>
+            </div>
+
+            <div id="panel-highlights" class="modal-tab-panel hidden space-y-2">
+                <h4 class="text-sm font-bold text-white font-mono uppercase tracking-wider text-purple-400">Key Engineering & Firmware Highlights</h4>
+                <p id="modal-project-highlights" class="text-slate-300 text-sm whitespace-pre-line font-mono bg-slate-900/70 p-4 rounded-xl border border-slate-800 text-xs">...</p>
+            </div>
+
+            <!-- Tech Pills Inside Modal -->
+            <div class="pt-2">
+                <div class="text-xs font-mono text-slate-400 mb-2">VERIFIED TECH STACK:</div>
+                <div id="modal-project-tech" class="flex flex-wrap gap-1.5"></div>
+            </div>
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="px-6 py-4 bg-slate-900 border-t border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a id="modal-github-link" href="#" target="_blank" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition inline-flex items-center gap-1.5">
+                    <span>GitHub Repository &rarr;</span>
+                </a>
+                <a id="modal-live-link" href="#" target="_blank" class="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-mono transition inline-flex items-center gap-1.5">
+                    <span>Live Demo &rarr;</span>
+                </a>
+            </div>
+            <button onclick="document.getElementById('casestudy-modal').close()" class="text-xs text-slate-400 hover:text-white font-mono">
+                Press ESC to close
+            </button>
+        </div>
+    </div>
+</dialog>
+
+<!-- ================================================================= -->
+<!-- 12. ACADEMIC RUBRIC & SEMANTIC FOOTER                            -->
+<!-- ================================================================= -->
+<footer class="w-full border-t border-slate-800/80 bg-[#060813] py-10 text-xs text-slate-400 font-mono">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+            <div class="text-slate-200 font-bold text-sm">
+                Md Najmus Sakib Rahatul (Student ID: {{ profile.student_id }})
+            </div>
+            <div class="text-slate-500 mt-0.5">
+                Dept. of CSE, BAIUST, Cumilla • Web Technology Theory Course Project
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="{% url 'core:cv' %}" class="hover:text-purple-400 transition">Printable CV</a>
+            <span>•</span>
+            <a href="/php_crud_module/index.php" target="_blank" class="hover:text-purple-400 transition">PHP CRUD Bridge</a>
+            <span>•</span>
+            <a href="{% url 'dashboard:overview' %}" class="hover:text-purple-400 transition">Custom Admin CMS</a>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/avatar_tracker.js' %}"></script>
+<script src="{% static 'js/physics_ballpit.js' %}"></script>
+<script src="{% static 'js/terminal.js' %}"></script>
+<script src="{% static 'js/hardware_scrolly.js' %}"></script>
+<script src="{% static 'js/imessage_faq.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

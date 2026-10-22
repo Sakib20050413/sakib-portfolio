@@ -1,0 +1,170 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="space-y-8">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+            <div class="text-xs font-mono text-purple-400">PROJECTS CRUD MANAGER</div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Manage Portfolio Projects</h1>
+            <p class="text-xs text-slate-400 mt-1">Create, update, or remove projects and configure modal architectural tabs.</p>
+        </div>
+        <a href="#project-form-section" class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs font-mono transition shadow-md shadow-purple-600/30 self-start sm:self-auto">
+            + New Project Record
+        </a>
+    </div>
+
+    <!-- Create or Edit Form -->
+    <div id="project-form-section" class="glass-card p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-4">
+        <h2 class="text-sm font-bold font-mono text-purple-400 uppercase">
+            {% if editing %}Editing Project [{{ project.code }}]{% else %}Add New Project{% endif %}
+        </h2>
+
+        <form method="POST" action="{% if editing %}{% url 'dashboard:project_edit' project.id %}{% else %}{% url 'dashboard:projects_manager' %}{% endif %}" class="space-y-4">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">PROJECT CODE *</label>
+                    <input type="text" name="code" value="{{ project.code|default:'' }}" required placeholder="e.g. A009" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-mono text-slate-300 mb-1">PROJECT TITLE *</label>
+                    <input type="text" name="title" value="{{ project.title|default:'' }}" required placeholder="e.g. Distributed Task Queue Engine" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">CATEGORY *</label>
+                    <select name="category" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500">
+                        <option value="Full-Stack Web" {% if project.category == 'Full-Stack Web' %}selected{% endif %}>Full-Stack Web</option>
+                        <option value="IoT & TinyML" {% if project.category == 'IoT & TinyML' %}selected{% endif %}>IoT & TinyML</option>
+                        <option value="Desktop & Systems" {% if project.category == 'Desktop & Systems' %}selected{% endif %}>Desktop & Systems</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">TECH STACK (COMMA-SEPARATED)</label>
+                    <input type="text" name="tech_stack" value="{{ project.tech_stack|default:'' }}" placeholder="e.g. Django 5, Celery, Redis, Docker, Tailwind" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">EXECUTIVE SUMMARY / CARD DESCRIPTION *</label>
+                <textarea name="summary" rows="2" required placeholder="Short summary appearing on the bento grid card..." class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-purple-500">{{ project.summary|default:'' }}</textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">WHY I BUILT IT (PROBLEM STATEMENT)</label>
+                    <textarea name="why_built" rows="3" placeholder="Context & real-world necessity..." class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-purple-500">{{ project.why_built|default:'' }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">SYSTEM ARCHITECTURE (DECISIONS)</label>
+                    <textarea name="architecture" rows="3" placeholder="App modules, algorithms, data flow..." class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500">{{ project.architecture|default:'' }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">HARDWARE / CODE HIGHLIGHTS</label>
+                    <textarea name="hardware_code_highlights" rows="3" placeholder="Firmware, pins, test coverage..." class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500">{{ project.hardware_code_highlights|default:'' }}</textarea>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">GITHUB URL</label>
+                    <input type="url" name="github_url" value="{{ project.github_url|default:'' }}" placeholder="https://github.com/..." class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">LIVE URL</label>
+                    <input type="url" name="live_url" value="{{ project.live_url|default:'' }}" placeholder="https://..." class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">STARS COUNT</label>
+                    <input type="number" name="stars_count" value="{{ project.stars_count|default:0 }}" min="0" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-1">ORDER (DISPLAY SORT)</label>
+                    <input type="number" name="order" value="{{ project.order|default:0 }}" min="0" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500">
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-2">
+                <input type="checkbox" id="is_featured" name="is_featured" {% if project.is_featured or not editing %}checked{% endif %} class="w-4 h-4 rounded bg-slate-950 border-slate-800 text-purple-600 focus:ring-0">
+                <label for="is_featured" class="text-xs font-mono text-slate-300">Feature on Homepage Bento Grid</label>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+                {% if editing %}
+                <a href="{% url 'dashboard:projects_manager' %}" class="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 text-xs font-mono hover:bg-slate-800 transition">Cancel</a>
+                {% endif %}
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs font-mono transition shadow-lg shadow-purple-600/30">
+                    {% if editing %}Save Changes{% else %}Create Project{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Projects List Table -->
+    <div class="space-y-4">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>📋</span>
+            <span>All Projects in Database [{{ projects.count }}]</span>
+        </h2>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/40">
+            <table class="w-full text-left text-xs font-mono text-slate-300">
+                <thead class="bg-slate-900/80 uppercase text-slate-400 border-b border-slate-800">
+                    <tr>
+                        <th class="px-4 py-3">Code</th>
+                        <th class="px-4 py-3">Title</th>
+                        <th class="px-4 py-3">Category</th>
+                        <th class="px-4 py-3">Tech Stack</th>
+                        <th class="px-4 py-3 text-center">Stars</th>
+                        <th class="px-4 py-3 text-center">Featured</th>
+                        <th class="px-4 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 font-sans">
+                    {% for p in projects %}
+                    <tr class="hover:bg-slate-800/30 transition">
+                        <td class="px-4 py-3.5 font-mono font-bold text-purple-400">{{ p.code }}</td>
+                        <td class="px-4 py-3.5 font-semibold text-white max-w-xs truncate">{{ p.title }}</td>
+                        <td class="px-4 py-3.5">
+                            <span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[11px] font-mono">
+                                {{ p.category }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3.5 font-mono text-[11px] text-slate-400 max-w-xs truncate">{{ p.tech_stack }}</td>
+                        <td class="px-4 py-3.5 text-center font-mono text-amber-400">★ {{ p.stars_count }}</td>
+                        <td class="px-4 py-3.5 text-center">
+                            {% if p.is_featured %}
+                            <span class="text-emerald-400 font-mono text-xs">YES</span>
+                            {% else %}
+                            <span class="text-slate-600 font-mono text-xs">NO</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-3.5 text-right space-x-2">
+                            <a href="{% url 'dashboard:project_edit' p.id %}" class="px-3 py-1 bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 border border-blue-500/30 rounded-lg text-xs font-mono transition inline-block">
+                                Edit
+                            </a>
+                            <form action="{% url 'dashboard:project_delete' p.id %}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete [{{ p.code }}]?');">
+                                {% csrf_token %}
+                                <button type="submit" class="px-3 py-1 bg-rose-600/20 hover:bg-rose-600/40 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-mono transition">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="px-4 py-8 text-center text-slate-500 font-mono">No projects in database.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
