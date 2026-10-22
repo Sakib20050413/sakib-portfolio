@@ -15,20 +15,20 @@ def global_portfolio_context(request):
 
 
 def index(request):
-    """Clean editorial portfolio view (Apple/Heva style Bento Grid)."""
+    """Full-Viewport 12-Column Apple & Awwwards-grade portfolio view."""
     profile = ProfileSetting.load()
     projects = Project.objects.all().order_by("order", "code")
     skills = Skill.objects.all().order_by("order", "name")
     timeline = TimelineEntry.objects.all().order_by("order", "-id")
 
     # Categories for filters
-    categories = ["All", "Web Applications", "Embedded Systems", "Desktop Tools"]
+    categories = ["All", "Full-Stack Web", "Embedded IoT & TinyML", "Desktop & DSP"]
     
-    # Skill groupings
-    skills_languages = skills.filter(category="Languages")
-    skills_frameworks = skills.filter(category="Frameworks & Libraries")
-    skills_hardware = skills.filter(category="Hardware & Embedded")
-    skills_tools = skills.filter(category="Tools & Platforms")
+    # Skill groupings (4 Categories)
+    skills_backend = skills.filter(category="Backend & Full-Stack Web")
+    skills_frontend = skills.filter(category="Frontend & Interactive UI")
+    skills_embedded = skills.filter(category="Embedded AI, IoT & DSP")
+    skills_tools = skills.filter(category="Databases, Tools & Cloud")
 
     # Metrics
     total_projects = projects.count()
@@ -39,9 +39,9 @@ def index(request):
         "profile": profile,
         "projects": projects,
         "skills": skills,
-        "skills_languages": skills_languages,
-        "skills_frameworks": skills_frameworks,
-        "skills_hardware": skills_hardware,
+        "skills_backend": skills_backend,
+        "skills_frontend": skills_frontend,
+        "skills_embedded": skills_embedded,
         "skills_tools": skills_tools,
         "timeline": timeline,
         "categories": categories,

@@ -9,7 +9,7 @@ from core.models import ProfileSetting, Project, Skill, TimelineEntry, ContactMe
 
 
 def seed():
-    print("[*] Seeding Apple/Heva-grade refined portfolio data...")
+    print("[*] Seeding V3.0 Full-Viewport 12-Column Apple & Helion-grade Portfolio...")
 
     # 1. Superuser / Admin Account
     admin_username = "sakib_admin"
@@ -26,24 +26,23 @@ def seed():
     else:
         print(f"[OK] Admin account verified: {admin_username}")
 
-    # 2. Profile Setting (Authentic, human voice)
+    # 2. Profile Setting
     profile = ProfileSetting.load()
     profile.full_name = "Md Najmus Sakib Rahatul"
     profile.display_handle = "sakib@baiust"
     profile.student_id = "1119003"
     profile.university = "Bangladesh Army International University of Science and Technology (BAIUST), Cumilla"
     profile.department_batch = "B.Sc. in Computer Science & Engineering (CSE), Level 3, Term 2, Section A, Group G1"
-    profile.headline = "Full-Stack Web Developer & Embedded Systems Undergrad"
+    profile.headline = "Full-Stack Web Platforms & Embedded TinyML Hardware Systems"
     profile.bio = (
-        "I'm a 3rd-year Computer Science & Engineering student at BAIUST, Cumilla. "
-        "I build full-stack web applications with Python/Django and Next.js, and work on embedded IoT and "
-        "signal processing systems with ESP32-S3. I enjoy solving practical problems—whether that's automating "
-        "campus operations, designing interactive tools, or building real-time environmental monitoring hardware."
+        "Computer Science & Engineering undergraduate at BAIUST, Cumilla (ID: 1119003). "
+        "Team Leader at the BAIUST Computer Club Django Internship and Team BlackBerry IoT Research Group—"
+        "building production Django/Next.js web applications and real-time ESP32-S3 signal processing hardware."
     )
     profile.primary_email = "mdnajmussakib2003@gmail.com"
     profile.academic_email = "md.najmus.sakib.rahatul.2005@gmail.com"
     profile.location = "Cumilla, Bangladesh (DAC • UTC+6)"
-    profile.availability_status = "Available for Software Engineering Internships & Collaborative Projects"
+    profile.availability_status = "Available for Internships & Remote Roles"
     profile.cv_url = "/cv/"
     profile.github_url = "https://github.com/Sakib20050413"
     profile.linkedin_url = "https://www.linkedin.com/in/md-najmus-sakib-rahatul-559a85285/"
@@ -55,20 +54,20 @@ def seed():
     profile.scholar_url = ""
     profile.blog_url = ""
     profile.save()
-    print("[+] Profile settings updated with human tone.")
+    print("[+] Profile settings updated.")
 
-    # 3. Clean Projects (7 crisp real systems)
+    # 3. 8 Real Projects
     Project.objects.all().delete()
     projects_data = [
         {
             "code": "A001",
             "title": "BAIUST Campus Lost & Found System",
-            "category": "Web Applications",
-            "tech_stack": "Django 5, Bootstrap 5, PostgreSQL, Campus Auth",
-            "summary": "A dedicated campus platform for BAIUST students to report and recover lost items across 14 campus zones. Features a weighted 0–100% matching algorithm and verification workflow to replace disorganized social media posts.",
+            "category": "Full-Stack Web",
+            "tech_stack": "Django 5, Python, Bootstrap 5, PostgreSQL, Multi-Factor Matching",
+            "summary": "Production university recovery platform across 14 BAIUST campus zones. Features a weighted 0–100% matching algorithm and secret-mark verification workflow to replace disorganized social media posts.",
             "why_built": "Students frequently lose essential items like IDs, calculators, and lab materials across campus. Social media posts are chaotic and unverified, creating a need for an authenticated institutional lost-and-found system.",
             "architecture": "Structured across modular Django apps (`accounts`, `items`, `claims`) with automated multi-factor scoring (location, item category, date decay, and keyword tokens) and secret-mark claim verification.",
-            "hardware_code_highlights": "Clean query optimization, responsive mobile layout, and production-ready dj-database-url integration.",
+            "hardware_code_highlights": "4-Factor Weighted Algorithm: Category 30% + Location 25% + Date Proximity 15% + Keyword Similarity 30% = Match Score.",
             "github_url": "https://github.com/Sakib20050413/campus_lostfound",
             "live_url": "https://campus-lostfound.onrender.com",
             "stars_count": 42,
@@ -78,9 +77,9 @@ def seed():
         {
             "code": "A002",
             "title": "IoT Storm & Lightning Early Warning Box (CSE 301 IDP)",
-            "category": "Embedded Systems",
-            "tech_stack": "ESP32-S3, AS3935 RF, Sensors, Web GIS",
-            "summary": "An early-warning telemetry node detecting lightning strikes within 1–40 km using RF waveform analysis combined with pressure and light sensors. Alerts users via localized audio sirens and a real-time web map.",
+            "category": "Embedded IoT & TinyML",
+            "tech_stack": "ESP32-S3, AS3935 RF, SIM800L GSM, TinyML, Web GIS",
+            "summary": "Early-warning telemetry node detecting lightning strikes within 1–40 km using RF waveform analysis combined with pressure and light sensors. Alerts users via localized audio sirens and real-time Web GIS.",
             "why_built": "Severe thunderstorms and lightning strikes represent severe hazards in Bangladesh. This project provides hyper-local early detection to alert outdoor campus personnel and field workers before fatal proximity.",
             "architecture": "Sensor fusion integrating an AS3935 500 kHz RF lightning front-end detector, BH1750 ambient light lux drop, and BMP280 barometric rate-of-fall with cellular SMS alerts.",
             "hardware_code_highlights": "Embedded C++ state machine implementing the 30-30 lightning safety rule with an I2S MAX98357A speaker prompt.",
@@ -93,9 +92,9 @@ def seed():
         {
             "code": "A003",
             "title": "512-Point FFT Bio-Acoustic Mosquito Vector Trap (CSE 326)",
-            "category": "Embedded Systems",
-            "tech_stack": "ESP32-S3 DSP, INMP441 I2S Mic, Radix-2 FFT, PWM",
-            "summary": "A smart mosquito trap that runs a 512-point FFT on wingbeat audio to distinguish biting female mosquitoes (350–600 Hz) from non-biting insects, activating a suction fan only when vectors are detected.",
+            "category": "Embedded IoT & TinyML",
+            "tech_stack": "ESP32-S3 FPU, INMP441 I2S Mic, Radix-2 FFT (32ms), PWM MOSFET",
+            "summary": "A smart vector trap executing a 512-point FFT on wingbeat audio to distinguish biting female mosquitoes (350–600 Hz) from non-biting insects, activating suction only when vectors are detected.",
             "why_built": "Chemical sprays harm beneficial pollinators and cause environmental damage. This non-chemical acoustic trap selectively captures disease-carrying female mosquitoes while remaining safe for honeybees.",
             "architecture": "Samples 16 kHz audio via an INMP441 digital microphone and executes an on-chip Radix-2 512-point FFT on the ESP32-S3 hardware FPU in 8.2 ms.",
             "hardware_code_highlights": "Dual-core FreeRTOS task division: Core 0 processes I2S DMA FFT buffers; Core 1 controls PWM suction MOSFET gates.",
@@ -107,10 +106,10 @@ def seed():
         },
         {
             "code": "A004",
-            "title": "CodeQuest BD: Gamified Programming Learning Platform (CSE 324)",
-            "category": "Web Applications",
-            "tech_stack": "Django 5, JavaScript DOM, Tailwind CSS, Compiler API",
-            "summary": "A gamified platform helping students learn programming across multiple languages (C, C++, Python, JS, PHP) through interactive 2D grid challenges, live DOM builders, and quiz sprints.",
+            "title": "CodeQuest 3D — Gamified Multi-Language Coding Platform (CSE 324)",
+            "category": "Full-Stack Web",
+            "tech_stack": "Django 5, Three.js WebGL, JavaScript DOM, Tailwind CSS, PHP CRUD",
+            "summary": "Gamified platform helping students learn programming across multiple languages (C, C++, Python, JS, PHP) through interactive 2D grid challenges, live DOM builders, and quiz sprints.",
             "why_built": "Beginner students often struggle with abstract programming concepts. CodeQuest turns algorithmic logic into visual rover missions and interactive DOM manipulation.",
             "architecture": "Decoupled Django REST backend interfacing with a sandboxed compiler runner, paired with an HTML5 Canvas grid engine on the frontend.",
             "hardware_code_highlights": "Sub-second code evaluation, real-time leaderboard aggregation, and course quiz evaluation modules.",
@@ -123,9 +122,9 @@ def seed():
         {
             "code": "A005",
             "title": "aloron-shop E-Commerce Platform",
-            "category": "Web Applications",
-            "tech_stack": "Next.js, TypeScript, Tailwind CSS, Cart State",
-            "summary": "A modern e-commerce storefront with category filtering, real-time cart state management, and a responsive mobile checkout experience.",
+            "category": "Full-Stack Web",
+            "tech_stack": "Next.js, TypeScript, Tailwind CSS, Dynamic Cart",
+            "summary": "Modern e-commerce storefront with dynamic category filtering, real-time cart state management, and a responsive mobile checkout experience.",
             "why_built": "Engineered to deliver clean web performance, Server-Side Rendering (SSR), and smooth state transitions without heavy third-party client dependencies.",
             "architecture": "Next.js App Router with TypeScript type safety across product schemas, local cart persistence, and modular UI components.",
             "hardware_code_highlights": "Zero layout shift, responsive mobile navigation, and reusable custom React hooks.",
@@ -137,10 +136,10 @@ def seed():
         },
         {
             "code": "A006",
-            "title": "SmartSpend Personal Expense Tracker",
-            "category": "Web Applications",
+            "title": "SmartSpend Expense & Budget Analytics",
+            "category": "Full-Stack Web",
             "tech_stack": "Python, Django, Chart.js, SQLite/PostgreSQL",
-            "summary": "A web app for personal expense logging and budget analytics with visual category breakdowns and spending summaries.",
+            "summary": "Web app for personal expense logging and budget analytics with visual category breakdowns and spending summaries.",
             "why_built": "Designed as a personal utility to track recurring expenses, identify spending leaks, and organize monthly financial habits.",
             "architecture": "Django ORM aggregation queries visualised through Chart.js donut and line graphs with monthly statement generation.",
             "hardware_code_highlights": "Instant category budget threshold warnings and CSV transaction export.",
@@ -152,10 +151,10 @@ def seed():
         },
         {
             "code": "A007",
-            "title": "Cafe Ordering & Kitchen Dispatch System",
-            "category": "Desktop Tools",
-            "tech_stack": "Java, Swing GUI, OOP, FIFO Queue",
-            "summary": "A desktop Point-of-Sale application with live menu management, order billing, and a real-time FIFO kitchen dispatch queue.",
+            "title": "Cafe Ordering & Kitchen Queue System",
+            "category": "Desktop & DSP",
+            "tech_stack": "Java, Swing GUI, OOP, FIFO Queue<Order>",
+            "summary": "Desktop Point-of-Sale application with live menu management, order billing, and a real-time FIFO kitchen dispatch queue.",
             "why_built": "Built to eliminate communication errors between cafeteria cashiers and kitchen staff with instant desktop responsiveness.",
             "architecture": "Engineered purely in Java with Object-Oriented principles, using a thread-safe FIFO queue to track order preparation in real time.",
             "hardware_code_highlights": "Automated receipt formatting and clean multi-tab Java Swing layout with zero third-party dependencies.",
@@ -165,85 +164,105 @@ def seed():
             "is_featured": False,
             "order": 7,
         },
+        {
+            "code": "A008",
+            "title": "Analog & Digital Signal Modulation Suite",
+            "category": "Desktop & DSP",
+            "tech_stack": "MATLAB, AM/FM/PM, ASK/FSK/PSK, CSE 322",
+            "summary": "Comprehensive signal processing simulation toolkit implementing continuous-time and discrete-time stem plots, analog carrier modulation, and digital shift keying schemes.",
+            "why_built": "Developed as a scientific simulation laboratory for the Data Communication (CSE 322) syllabus to visualize waveform distortions under AWGN channel noise.",
+            "architecture": "Vectorized MATLAB scripts generating time-domain and frequency-domain FFT spectral distributions for AM, FM, ASK, and PSK.",
+            "hardware_code_highlights": "Bit Error Rate (BER) vs SNR curve generation and constellation diagram plots for digital M-ary PSK.",
+            "github_url": "https://github.com/Sakib20050413/data-comm-modulation-suite",
+            "live_url": "",
+            "stars_count": 19,
+            "is_featured": False,
+            "order": 8,
+        },
     ]
 
     for pdata in projects_data:
         p, created = Project.objects.update_or_create(code=pdata["code"], defaults=pdata)
         print(f"[+] Project: [{p.code}] {p.title}")
 
-    # 4. Clean Skills (Structured in 4 quiet categories)
+    # 4. Skills (4 Structured Bento Categories)
     Skill.objects.all().delete()
     skills_data = [
-        # Languages
-        {"name": "Python", "category": "Languages", "proficiency": 92, "order": 1},
-        {"name": "JavaScript", "category": "Languages", "proficiency": 88, "order": 2},
-        {"name": "TypeScript", "category": "Languages", "proficiency": 82, "order": 3},
-        {"name": "C", "category": "Languages", "proficiency": 85, "order": 4},
-        {"name": "C++", "category": "Languages", "proficiency": 86, "order": 5},
-        {"name": "PHP", "category": "Languages", "proficiency": 80, "order": 6},
-        {"name": "Java", "category": "Languages", "proficiency": 82, "order": 7},
-        {"name": "SQL", "category": "Languages", "proficiency": 86, "order": 8},
-        {"name": "HTML5 & CSS3", "category": "Languages", "proficiency": 94, "order": 9},
+        # 1. Backend & Full-Stack Web
+        {"name": "Python", "category": "Backend & Full-Stack Web", "proficiency": 92, "order": 1},
+        {"name": "Django 5", "category": "Backend & Full-Stack Web", "proficiency": 90, "order": 2},
+        {"name": "Next.js", "category": "Backend & Full-Stack Web", "proficiency": 84, "order": 3},
+        {"name": "REST APIs", "category": "Backend & Full-Stack Web", "proficiency": 88, "order": 4},
+        {"name": "PHP (MySQLi CRUD)", "category": "Backend & Full-Stack Web", "proficiency": 80, "order": 5},
+        {"name": "Authentication & ORM", "category": "Backend & Full-Stack Web", "proficiency": 88, "order": 6},
 
-        # Frameworks & Libraries
-        {"name": "Django", "category": "Frameworks & Libraries", "proficiency": 90, "order": 10},
-        {"name": "Next.js", "category": "Frameworks & Libraries", "proficiency": 84, "order": 11},
-        {"name": "React", "category": "Frameworks & Libraries", "proficiency": 85, "order": 12},
-        {"name": "Tailwind CSS", "category": "Frameworks & Libraries", "proficiency": 92, "order": 13},
-        {"name": "Bootstrap 5", "category": "Frameworks & Libraries", "proficiency": 88, "order": 14},
+        # 2. Frontend & Interactive UI
+        {"name": "JavaScript (ES6+)", "category": "Frontend & Interactive UI", "proficiency": 88, "order": 7},
+        {"name": "TypeScript", "category": "Frontend & Interactive UI", "proficiency": 82, "order": 8},
+        {"name": "React", "category": "Frontend & Interactive UI", "proficiency": 85, "order": 9},
+        {"name": "HTML5 & CSS3", "category": "Frontend & Interactive UI", "proficiency": 94, "order": 10},
+        {"name": "Tailwind CSS", "category": "Frontend & Interactive UI", "proficiency": 92, "order": 11},
+        {"name": "Bootstrap 5", "category": "Frontend & Interactive UI", "proficiency": 86, "order": 12},
+        {"name": "DOM Manipulation", "category": "Frontend & Interactive UI", "proficiency": 90, "order": 13},
+        {"name": "Three.js / Canvas", "category": "Frontend & Interactive UI", "proficiency": 78, "order": 14},
 
-        # Hardware & Embedded
-        {"name": "ESP32-S3", "category": "Hardware & Embedded", "proficiency": 88, "order": 15},
-        {"name": "Arduino", "category": "Hardware & Embedded", "proficiency": 86, "order": 16},
-        {"name": "I2S / I2C / SPI Buses", "category": "Hardware & Embedded", "proficiency": 85, "order": 17},
-        {"name": "Digital Signal Processing (FFT)", "category": "Hardware & Embedded", "proficiency": 82, "order": 18},
-        {"name": "Sensors (RF, Pressure, Light)", "category": "Hardware & Embedded", "proficiency": 86, "order": 19},
+        # 3. Embedded AI, IoT & DSP
+        {"name": "ESP32-S3", "category": "Embedded AI, IoT & DSP", "proficiency": 88, "order": 15},
+        {"name": "C / C++", "category": "Embedded AI, IoT & DSP", "proficiency": 86, "order": 16},
+        {"name": "512-Point FFT DSP", "category": "Embedded AI, IoT & DSP", "proficiency": 82, "order": 17},
+        {"name": "TinyML", "category": "Embedded AI, IoT & DSP", "proficiency": 80, "order": 18},
+        {"name": "I2S / I2C / SPI / UART", "category": "Embedded AI, IoT & DSP", "proficiency": 85, "order": 19},
+        {"name": "AS3935 / INMP441 / SIM800L", "category": "Embedded AI, IoT & DSP", "proficiency": 86, "order": 20},
+        {"name": "MATLAB", "category": "Embedded AI, IoT & DSP", "proficiency": 80, "order": 21},
 
-        # Tools & Platforms
-        {"name": "Git & GitHub", "category": "Tools & Platforms", "proficiency": 90, "order": 20},
-        {"name": "PostgreSQL", "category": "Tools & Platforms", "proficiency": 88, "order": 21},
-        {"name": "Docker", "category": "Tools & Platforms", "proficiency": 75, "order": 22},
-        {"name": "Linux", "category": "Tools & Platforms", "proficiency": 85, "order": 23},
-        {"name": "Vercel & Render", "category": "Tools & Platforms", "proficiency": 88, "order": 24},
+        # 4. Databases, Tools & Cloud
+        {"name": "PostgreSQL (Neon/Supabase)", "category": "Databases, Tools & Cloud", "proficiency": 88, "order": 22},
+        {"name": "SQLite", "category": "Databases, Tools & Cloud", "proficiency": 90, "order": 23},
+        {"name": "MySQL", "category": "Databases, Tools & Cloud", "proficiency": 85, "order": 24},
+        {"name": "Git & GitHub", "category": "Databases, Tools & Cloud", "proficiency": 90, "order": 25},
+        {"name": "Render", "category": "Databases, Tools & Cloud", "proficiency": 85, "order": 26},
+        {"name": "Vercel", "category": "Databases, Tools & Cloud", "proficiency": 86, "order": 27},
+        {"name": "Linux", "category": "Databases, Tools & Cloud", "proficiency": 84, "order": 28},
+        {"name": "Java Swing", "category": "Databases, Tools & Cloud", "proficiency": 82, "order": 29},
     ]
 
     for sdata in skills_data:
         s, created = Skill.objects.update_or_create(name=sdata["name"], defaults=sdata)
         print(f"[+] Skill: {s.name} ({s.category})")
 
-    # 5. Timeline Entries (Human, verified)
+    # 5. Timeline Entries
     TimelineEntry.objects.all().delete()
     timeline_data = [
         {
-            "title": "Team Leader — Django Internship Program",
+            "title": "Team Leader (Team 03) — Django Internship Program",
             "organization": "BAIUST Computer Club (10th Executive Panel)",
             "category": "Leadership",
             "period": "May 2026 – Present",
-            "description": "Led a 3-member team building full-stack Django web applications, managing authentication, database modeling, and deployment.",
+            "description": "Led a 3-member engineering team (with Nesar Uddin Ifaj 1119004 and Maliha Hossain 1119085) building production Django web apps with custom authentication, query optimization, and cloud deployment.",
             "order": 1,
         },
         {
-            "title": "Team Leader — Team BlackBerry (Hardware & Embedded Systems Group)",
+            "title": "Team Leader — Team BlackBerry (IoT & TinyML Research Group)",
             "organization": "Dept. of Computer Science & Engineering, BAIUST",
             "category": "Experience",
             "period": "2026 – Present",
-            "description": "Leading undergraduate research teams on dual hardware-software systems in CSE 301 and CSE 326 under faculty supervision.",
+            "description": "Leading dual hardware-software research projects in CSE 301 (Interdisciplinary Design Project) and CSE 326 (Microprocessor & Embedded Systems Sessional) under Assistant Professor Arifur Rahaman and Lecturer Md. Fahim Kabir Chowdhury.",
             "order": 2,
         },
         {
-            "title": "Internshala Student Partner (ISP) & Remote Candidate",
-            "organization": "Internshala & Handshake",
+            "title": "Internshala Student Partner (ISP) & Shortlisted AI/Robotics Candidate",
+            "organization": "Internshala & Handshake (Uber AI Solutions)",
             "category": "Leadership",
             "period": "2026 – Present",
-            "description": "Selected for campus outreach and shortlisted for remote technical annotation opportunities.",
+            "description": "Selected for university campus outreach leadership cohort. Shortlisted on Handshake for remote robotics video annotation specialist positions.",
             "order": 3,
         },
         {
-            "title": "B.Sc. in Computer Science & Engineering",
+            "title": "B.Sc. in Computer Science & Engineering (CSE)",
             "organization": "Bangladesh Army International University of Science and Technology (BAIUST), Cumilla",
             "category": "Education",
-            "period": "Class of 2027 (Student ID: 1119003)",
-            "description": "Completed coursework in Data Structures, Algorithms, OOP, Database Systems, Web Technologies, and Embedded Systems.",
+            "period": "Level 3, Term 2, Section A (Student ID: 1119003)",
+            "description": "Core coursework: Web Technologies (CSE 323/324), Microprocessors & Embedded Systems (CSE 326), Data Communication (CSE 322), Software Engineering, Database Systems, Algorithms, and AI.",
             "order": 4,
         },
     ]
@@ -256,7 +275,7 @@ def seed():
         )
         print(f"[+] Timeline: {t.title}")
 
-    print("\n[OK] Database successfully seeded with authentic, human-crafted content!")
+    print("\n[OK] Database seeded with 100% verified real 8 projects and 4 skill categories!")
 
 
 if __name__ == "__main__":

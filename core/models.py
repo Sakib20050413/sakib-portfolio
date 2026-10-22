@@ -15,17 +15,17 @@ class ProfileSetting(models.Model):
     )
     headline = models.CharField(
         max_length=300,
-        default="Full-Stack Web Developer & Embedded Systems Undergrad"
+        default="Full-Stack Web Platforms & Embedded TinyML Hardware Systems"
     )
     bio = models.TextField(
-        default="I'm a 3rd-year Computer Science & Engineering student at BAIUST, Cumilla. I build full-stack web applications with Python/Django and Next.js, and work on embedded IoT and signal processing systems with ESP32-S3. I enjoy solving practical problems—whether that's automating campus operations, designing interactive tools, or building real-time environmental monitoring hardware."
+        default="Computer Science & Engineering undergraduate at BAIUST, Cumilla (ID: 1119003). Team Leader at the BAIUST Computer Club Django Internship and Team BlackBerry IoT Research Group—building production Django/Next.js web applications and real-time ESP32-S3 signal processing hardware."
     )
     primary_email = models.EmailField(default="mdnajmussakib2003@gmail.com")
     academic_email = models.EmailField(default="md.najmus.sakib.rahatul.2005@gmail.com")
     location = models.CharField(max_length=120, default="Cumilla, Bangladesh (DAC • UTC+6)")
     availability_status = models.CharField(
         max_length=255,
-        default="Available for Software Engineering Internships & Collaborative Projects"
+        default="Available for Internships & Remote Roles"
     )
     cv_url = models.CharField(max_length=255, blank=True, default="/cv/")
     
@@ -57,14 +57,14 @@ class ProfileSetting(models.Model):
 
 class Project(models.Model):
     CATEGORY_CHOICES = [
-        ("Web Applications", "Web Applications"),
-        ("Embedded Systems", "Embedded Systems"),
-        ("Desktop Tools", "Desktop Tools"),
+        ("Full-Stack Web", "Full-Stack Web"),
+        ("Embedded IoT & TinyML", "Embedded IoT & TinyML"),
+        ("Desktop & DSP", "Desktop & DSP"),
     ]
 
     code = models.CharField(max_length=15, unique=True, help_text="e.g. A001")
     title = models.CharField(max_length=220)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="Web Applications")
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="Full-Stack Web")
     tech_stack = models.CharField(max_length=350, help_text="Comma-separated tech badges")
     summary = models.TextField()
     why_built = models.TextField(blank=True)
@@ -91,16 +91,16 @@ class Project(models.Model):
 
 class Skill(models.Model):
     CATEGORY_CHOICES = [
-        ("Languages", "Languages"),
-        ("Frameworks & Libraries", "Frameworks & Libraries"),
-        ("Hardware & Embedded", "Hardware & Embedded"),
-        ("Tools & Platforms", "Tools & Platforms"),
+        ("Backend & Full-Stack Web", "Backend & Full-Stack Web"),
+        ("Frontend & Interactive UI", "Frontend & Interactive UI"),
+        ("Embedded AI, IoT & DSP", "Embedded AI, IoT & DSP"),
+        ("Databases, Tools & Cloud", "Databases, Tools & Cloud"),
     ]
 
     name = models.CharField(max_length=80)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="Languages")
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="Backend & Full-Stack Web")
     proficiency = models.PositiveIntegerField(default=85, help_text="Percentage 0-100")
-    badge_color = models.CharField(max_length=30, default="#3b82f6", blank=True)
+    badge_color = models.CharField(max_length=30, default="#4f46e5", blank=True)
     icon_svg = models.TextField(blank=True, help_text="Optional inline SVG path or icon name")
     order = models.PositiveIntegerField(default=0)
 
@@ -113,8 +113,8 @@ class Skill(models.Model):
 
 class TimelineEntry(models.Model):
     CATEGORY_CHOICES = [
-        ("Experience", "Experience"),
         ("Leadership", "Leadership"),
+        ("Experience", "Experience"),
         ("Education", "Education"),
         ("Award", "Award"),
     ]
