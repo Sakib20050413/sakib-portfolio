@@ -124,7 +124,7 @@ class DashboardCRUDTests(TestCase):
         self.assertTrue(login_res)
         response = self.client.get(reverse("dashboard:overview"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Portfolio CMS Control Panel")
+        self.assertContains(response, "Portfolio CMS Overview")
 
     def test_project_create_crud(self):
         self.client.login(username="sakib_admin", password="baiust1119003")

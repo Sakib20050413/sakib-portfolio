@@ -15,17 +15,17 @@ class ProfileSetting(models.Model):
     )
     headline = models.CharField(
         max_length=300,
-        default="Full-Stack Web Developer (Django • Next.js) | Embedded AI & TinyML Researcher | Team Lead @ BAIUST Computer Club Django Internship"
+        default="Full-Stack Web Developer & Embedded Systems Undergrad"
     )
     bio = models.TextField(
-        default="Passionate Computer Science & Engineering student at BAIUST specializing in high-performance Full-Stack Web architectures (Django/Next.js) and Edge AI / TinyML DSP systems. Leading university research teams targeting IEEE-grade IoT hardware and resilient software systems."
+        default="I'm a 3rd-year Computer Science & Engineering student at BAIUST, Cumilla. I build full-stack web applications with Python/Django and Next.js, and work on embedded IoT and signal processing systems with ESP32-S3. I enjoy solving practical problems—whether that's automating campus operations, designing interactive tools, or building real-time environmental monitoring hardware."
     )
     primary_email = models.EmailField(default="mdnajmussakib2003@gmail.com")
     academic_email = models.EmailField(default="md.najmus.sakib.rahatul.2005@gmail.com")
-    location = models.CharField(max_length=120, default="Cumilla, Chittagong Division, Bangladesh (DAC • UTC+6)")
+    location = models.CharField(max_length=120, default="Cumilla, Bangladesh (DAC • UTC+6)")
     availability_status = models.CharField(
         max_length=255,
-        default="Open to Software Engineering Internships, Remote AI Roles & Research Collaborations"
+        default="Available for Software Engineering Internships & Collaborative Projects"
     )
     cv_url = models.CharField(max_length=255, blank=True, default="/cv/")
     
@@ -57,14 +57,14 @@ class ProfileSetting(models.Model):
 
 class Project(models.Model):
     CATEGORY_CHOICES = [
-        ("Full-Stack Web", "Full-Stack Web"),
-        ("IoT & TinyML", "IoT & TinyML"),
-        ("Desktop & Systems", "Desktop & Systems"),
+        ("Web Applications", "Web Applications"),
+        ("Embedded Systems", "Embedded Systems"),
+        ("Desktop Tools", "Desktop Tools"),
     ]
 
     code = models.CharField(max_length=15, unique=True, help_text="e.g. A001")
     title = models.CharField(max_length=220)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="Full-Stack Web")
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="Web Applications")
     tech_stack = models.CharField(max_length=350, help_text="Comma-separated tech badges")
     summary = models.TextField()
     why_built = models.TextField(blank=True)
@@ -91,23 +91,24 @@ class Project(models.Model):
 
 class Skill(models.Model):
     CATEGORY_CHOICES = [
-        ("Web & Backend", "Web & Backend"),
-        ("Embedded AI & IoT", "Embedded AI & IoT"),
-        ("Languages & Core CS", "Languages & Core CS"),
+        ("Languages", "Languages"),
+        ("Frameworks & Libraries", "Frameworks & Libraries"),
+        ("Hardware & Embedded", "Hardware & Embedded"),
+        ("Tools & Platforms", "Tools & Platforms"),
     ]
 
     name = models.CharField(max_length=80)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="Web & Backend")
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="Languages")
     proficiency = models.PositiveIntegerField(default=85, help_text="Percentage 0-100")
-    badge_color = models.CharField(max_length=30, default="#8B5CF6", help_text="Hex code for physics ball")
-    radius = models.PositiveIntegerField(default=28)
+    badge_color = models.CharField(max_length=30, default="#3b82f6", blank=True)
+    icon_svg = models.TextField(blank=True, help_text="Optional inline SVG path or icon name")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ["order", "name"]
 
     def __str__(self):
-        return f"{self.name} ({self.proficiency}%)"
+        return f"{self.name} ({self.category})"
 
 
 class TimelineEntry(models.Model):

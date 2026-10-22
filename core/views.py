@@ -1,7 +1,6 @@
 import json
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_GET
 from .models import ProfileSetting, Project, Skill, TimelineEntry, ContactMessage
 
@@ -16,19 +15,20 @@ def global_portfolio_context(request):
 
 
 def index(request):
-    """Main portfolio view with 3D/Bento mode, Terminal, Physics Ball Pit, and case studies."""
+    """Clean editorial portfolio view (Apple/Heva style Bento Grid)."""
     profile = ProfileSetting.load()
     projects = Project.objects.all().order_by("order", "code")
     skills = Skill.objects.all().order_by("order", "name")
     timeline = TimelineEntry.objects.all().order_by("order", "-id")
 
     # Categories for filters
-    categories = ["All", "Full-Stack Web", "IoT & TinyML", "Desktop & Systems"]
+    categories = ["All", "Web Applications", "Embedded Systems", "Desktop Tools"]
     
     # Skill groupings
-    skills_web = skills.filter(category="Web & Backend")
-    skills_iot = skills.filter(category="Embedded AI & IoT")
-    skills_cs = skills.filter(category="Languages & Core CS")
+    skills_languages = skills.filter(category="Languages")
+    skills_frameworks = skills.filter(category="Frameworks & Libraries")
+    skills_hardware = skills.filter(category="Hardware & Embedded")
+    skills_tools = skills.filter(category="Tools & Platforms")
 
     # Metrics
     total_projects = projects.count()
@@ -39,9 +39,10 @@ def index(request):
         "profile": profile,
         "projects": projects,
         "skills": skills,
-        "skills_web": skills_web,
-        "skills_iot": skills_iot,
-        "skills_cs": skills_cs,
+        "skills_languages": skills_languages,
+        "skills_frameworks": skills_frameworks,
+        "skills_hardware": skills_hardware,
+        "skills_tools": skills_tools,
         "timeline": timeline,
         "categories": categories,
         "total_projects": total_projects,
@@ -52,7 +53,7 @@ def index(request):
 
 
 def cv_view(request):
-    """Printable and downloadable CV view for Md Najmus Sakib Rahatul."""
+    """Clean, printable, and downloadable CV view for Md Najmus Sakib Rahatul."""
     profile = ProfileSetting.load()
     projects = Project.objects.all().order_by("order", "code")
     skills = Skill.objects.all().order_by("order", "name")
@@ -73,7 +74,7 @@ def cv_view(request):
 
 @require_GET
 def api_projects_list(request):
-    """Returns JSON list of all projects for terminal queries and dynamic UI filters."""
+    """Returns JSON list of all projects for dynamic UI filters."""
     category = request.GET.get("category")
     projects_qs = Project.objects.all().order_by("order", "code")
     if category and category != "All":
@@ -155,7 +156,7 @@ def api_contact_submit(request):
         if not name or not email or not message:
             return JsonResponse({
                 "status": "error",
-                "message": "Name, email, and message are strictly required."
+                "message": "Name, email, and message are required."
             }, status=400)
 
         contact = ContactMessage.objects.create(
@@ -168,7 +169,7 @@ def api_contact_submit(request):
 
         return JsonResponse({
             "status": "success",
-            "message": f"Thank you {name}! Your message has been encrypted and delivered to Sakib's inbox.",
+            "message": f"Thank you, {name}. Your message has been received.",
             "contact_id": contact.id,
         })
     except Exception as exc:
@@ -180,7 +181,7 @@ def api_contact_submit(request):
 
 @require_GET
 def api_skills_list(request):
-    """Returns JSON payload of skills for the 2D physics canvas ball pit."""
+    """Returns JSON payload of skills."""
     skills_qs = Skill.objects.all().order_by("order", "name")
     data = []
     for s in skills_qs:
@@ -189,7 +190,5 @@ def api_skills_list(request):
             "name": s.name,
             "category": s.category,
             "proficiency": s.proficiency,
-            "badge_color": s.badge_color,
-            "radius": s.radius,
         })
     return JsonResponse({"status": "success", "skills": data})

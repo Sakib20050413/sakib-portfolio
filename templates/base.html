@@ -4,17 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ profile.full_name }} | Full-Stack Web & Embedded AI Portfolio{% endblock %}</title>
+    <title>{% block title %}{{ profile.full_name }} — Portfolio{% endblock %}</title>
     
-    <!-- Meta SEO & Academic Attribution -->
-    <meta name="description" content="{{ profile.headline }} — Student ID: {{ profile.student_id }}, BAIUST, Cumilla">
+    <meta name="description" content="{{ profile.headline }} — {{ profile.university }}">
     <meta name="author" content="{{ profile.full_name }}">
-    <meta name="theme-color" content="#060813">
+    <meta name="theme-color" content="#0c0d12">
 
     <!-- Fonts: Plus Jakarta Sans & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,16 +23,20 @@
         theme: {
           extend: {
             colors: {
-              cyber: {
-                dark: '#060813',
-                surface: '#0c1024',
-                purple: '#a855f7',
-                cyan: '#06b6d4',
+              obsidian: {
+                950: '#0c0d12',
+                900: '#13151c',
+                850: '#181b24',
+                800: '#202430',
+              },
+              accent: {
+                indigo: '#4f46e5',
+                blue: '#3b82f6',
                 emerald: '#10b981',
               }
             },
             fontFamily: {
-              sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+              sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
               mono: ['JetBrains Mono', 'monospace'],
             }
           }
@@ -41,13 +44,12 @@
       }
     </script>
 
-    <!-- Custom Next-Gen Stylesheet & Terminal Stylesheet -->
+    <!-- Refined Editorial Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/terminal.css' %}">
 
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-[#060813] text-slate-100 antialiased selection:bg-purple-500 selection:text-white min-h-screen flex flex-col spotlight-wrapper">
+<body class="bg-[#0c0d12] text-[#f4f4f6] antialiased selection:bg-indigo-600 selection:text-white min-h-screen flex flex-col">
 
     {% csrf_token %}
 

@@ -1,10 +1,8 @@
 /**
- * main.js
- * Primary Frontend Controller & DOM Orchestrator
- * Md Najmus Sakib Rahatul (ID: 1119003) - BAIUST
+ * Apple & Heva-Grade Human Portfolio Controller
+ * Md Najmus Sakib Rahatul (Student ID: 1119003) — BAIUST
  */
 
-// CSRF Token Helper
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -20,215 +18,61 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// Web Audio API Synthesizer Sound FX
-let audioCtx = null;
-let soundEnabled = true;
-
-function initAudio() {
-  if (!audioCtx) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (AudioContext) audioCtx = new AudioContext();
-  }
-}
-
-window.playSynthClick = function (freq = 440, duration = 0.04) {
-  if (!soundEnabled) return;
-  try {
-    initAudio();
-    if (!audioCtx) return;
-    if (audioCtx.state === "suspended") audioCtx.resume();
-
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
-  } catch (e) {
-    // Audio context may be restricted before user gesture
-  }
-};
-
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Terminal Boot Preloader (0% -> 100%)
-  const preloader = document.getElementById("boot-preloader");
-  const preloaderBar = document.getElementById("preloader-progress-bar");
-  const preloaderPercent = document.getElementById("preloader-percent");
-
-  if (preloader) {
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += Math.floor(Math.random() * 15) + 8;
-      if (progress > 100) progress = 100;
-
-      if (preloaderBar) preloaderBar.style.width = `${progress}%`;
-      if (preloaderPercent) preloaderPercent.textContent = `${progress}%`;
-
-      if (progress >= 100) {
-        clearInterval(interval);
-        setTimeout(() => {
-          preloader.classList.add("fade-out");
-          setTimeout(() => preloader.remove(), 600);
-        }, 300);
-      }
-    }, 45);
-  }
-
-  // 2. Sound Toggle Button
-  const soundToggleBtn = document.getElementById("btn-sound-toggle");
-  if (soundToggleBtn) {
-    soundToggleBtn.addEventListener("click", () => {
-      soundEnabled = !soundEnabled;
-      soundToggleBtn.textContent = soundEnabled ? "🔊 SOUND: ON" : "🔇 SOUND: OFF";
-      soundToggleBtn.classList.toggle("text-purple-400", soundEnabled);
-      soundToggleBtn.classList.toggle("text-slate-500", !soundEnabled);
-      if (soundEnabled) window.playSynthClick(520);
-    });
-  }
-
-  // 3. Live Cumilla / Dhaka (DAC • UTC+6) Clock
-  const clockEl = document.getElementById("live-clock");
+  // 1. Live Cumilla Time (DAC • UTC+6)
+  const clockEl = document.getElementById("dac-clock");
   if (clockEl) {
     function updateClock() {
       const now = new Date();
-      // Format as 12-hour with seconds
       const options = {
         timeZone: "Asia/Dhaka",
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit",
         hour12: true,
       };
-      clockEl.textContent = `DAC (UTC+6) • ${now.toLocaleTimeString("en-US", options)}`;
+      clockEl.textContent = `DAC ${now.toLocaleTimeString("en-US", options)}`;
     }
     updateClock();
     setInterval(updateClock, 1000);
   }
 
-  // 4. Live FPS Telemetry Badge
-  const fpsBadge = document.getElementById("fps-badge");
-  if (fpsBadge) {
-    let lastTime = performance.now();
-    let frameCount = 0;
-    function calcFps(now) {
-      frameCount++;
-      if (now - lastTime >= 1000) {
-        const fps = Math.round((frameCount * 1000) / (now - lastTime));
-        fpsBadge.textContent = `${fps} FPS`;
-        frameCount = 0;
-        lastTime = now;
-      }
-      requestAnimationFrame(calcFps);
-    }
-    requestAnimationFrame(calcFps);
-  }
-
-  // 5. Theme Switcher (Dark Cyber vs Editorial Light)
+  // 2. Minimalist Theme Switcher (Obsidian Dark vs Studio Light)
   const themeToggle = document.getElementById("theme-toggle");
-  const savedTheme = localStorage.getItem("sakib_theme");
+  const savedTheme = localStorage.getItem("sakib_theme_clean");
   if (savedTheme === "light") {
     document.body.classList.add("light-mode");
-    if (themeToggle) themeToggle.textContent = "☀️ LIGHT";
+    if (themeToggle) themeToggle.textContent = "Light";
   }
 
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
       document.body.classList.toggle("light-mode");
       const isLight = document.body.classList.contains("light-mode");
-      themeToggle.textContent = isLight ? "☀️ LIGHT" : "🌙 CYBER";
-      localStorage.setItem("sakib_theme", isLight ? "light" : "dark");
-      window.playSynthClick(440);
+      themeToggle.textContent = isLight ? "Light" : "Dark";
+      localStorage.setItem("sakib_theme_clean", isLight ? "light" : "dark");
     });
   }
 
-  // 6. Mode Switcher (Bento UI vs Full Terminal View)
-  const modeToggle = document.getElementById("mode-toggle");
-  const terminalWindow = document.getElementById("terminal-window");
-  if (modeToggle && terminalWindow) {
-    modeToggle.addEventListener("click", () => {
-      terminalWindow.classList.toggle("fullscreen-mode");
-      const isFull = terminalWindow.classList.contains("fullscreen-mode");
-      modeToggle.textContent = isFull ? "🪟 BENTO MODE" : "💻 TERMINAL MODE";
-      modeToggle.classList.toggle("bg-purple-600", isFull);
-      window.playSynthClick(580);
-    });
-  }
-
-  // 7. Mouse Cursor Spotlight Effect
-  document.addEventListener("mousemove", (e) => {
-    document.documentElement.style.setProperty("--mouse-x", `${e.clientX}px`);
-    document.documentElement.style.setProperty("--mouse-y", `${e.clientY}px`);
-  });
-
-  // 8. Typewriter Effect for Hero Badge
-  const typewriterEl = document.getElementById("typewriter-text");
-  if (typewriterEl) {
-    const roles = [
-      "Full-Stack Web Developer (Django • Next.js)",
-      "Embedded AI & TinyML Researcher (ESP32-S3)",
-      "512-Point Radix-2 FFT DSP Engineer",
-      "Lead @ BAIUST Computer Club Django Internship",
-    ];
-    let roleIdx = 0;
-    let charIdx = 0;
-    let isDeleting = false;
-
-    function typeLoop() {
-      const currentRole = roles[roleIdx];
-      if (isDeleting) {
-        charIdx--;
-        typewriterEl.textContent = currentRole.substring(0, charIdx);
-      } else {
-        charIdx++;
-        typewriterEl.textContent = currentRole.substring(0, charIdx);
-      }
-
-      let speed = isDeleting ? 30 : 60;
-
-      if (!isDeleting && charIdx === currentRole.length) {
-        speed = 1800; // pause at end
-        isDeleting = true;
-      } else if (isDeleting && charIdx === 0) {
-        isDeleting = false;
-        roleIdx = (roleIdx + 1) % roles.length;
-        speed = 400;
-      }
-
-      setTimeout(typeLoop, speed);
-    }
-    typeLoop();
-  }
-
-  // 9. Bento Grid Projects Filtering & Search
+  // 3. Category Filter Tabs for Works
   const filterBtns = document.querySelectorAll(".project-filter-btn");
-  const projectSearchInput = document.getElementById("project-search-input");
   const projectCards = document.querySelectorAll(".project-card");
+  const searchInput = document.getElementById("project-search-input");
 
   let currentCategory = "All";
   let currentSearch = "";
 
-  function applyProjectFilters() {
+  function filterProjects() {
     let visibleCount = 0;
     projectCards.forEach((card) => {
       const cardCategory = card.getAttribute("data-category");
       const cardTitle = (card.getAttribute("data-title") || "").toLowerCase();
       const cardStack = (card.getAttribute("data-stack") || "").toLowerCase();
-      const cardCode = (card.getAttribute("data-project-code") || "").toLowerCase();
 
       const matchesCat = currentCategory === "All" || cardCategory === currentCategory;
       const matchesSearch =
         !currentSearch ||
         cardTitle.includes(currentSearch) ||
-        cardStack.includes(currentSearch) ||
-        cardCode.includes(currentSearch);
+        cardStack.includes(currentSearch);
 
       if (matchesCat && matchesSearch) {
         card.style.display = "flex";
@@ -238,94 +82,59 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    const noResults = document.getElementById("projects-empty-state");
-    if (noResults) {
-      noResults.style.display = visibleCount === 0 ? "block" : "none";
+    const emptyState = document.getElementById("projects-empty-state");
+    if (emptyState) {
+      emptyState.style.display = visibleCount === 0 ? "block" : "none";
     }
   }
 
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       filterBtns.forEach((b) => {
-        b.classList.remove("bg-purple-600", "text-white");
-        b.classList.add("bg-slate-900/60", "text-slate-400");
+        b.classList.remove("bg-white", "text-black", "dark:bg-white", "dark:text-black", "border-transparent", "shadow-sm");
+        b.classList.add("text-neutral-400", "hover:text-neutral-200");
       });
-      btn.classList.add("bg-purple-600", "text-white");
-      btn.classList.remove("bg-slate-900/60", "text-slate-400");
+      btn.classList.add("bg-white", "text-black", "dark:bg-white", "dark:text-black", "border-transparent", "shadow-sm");
+      btn.classList.remove("text-neutral-400", "hover:text-neutral-200");
 
       currentCategory = btn.getAttribute("data-category");
-      applyProjectFilters();
-      window.playSynthClick(360);
+      filterProjects();
     });
   });
 
-  if (projectSearchInput) {
-    projectSearchInput.addEventListener("input", (e) => {
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
       currentSearch = e.target.value.trim().toLowerCase();
-      applyProjectFilters();
+      filterProjects();
     });
   }
 
-  // 10. AJAX Project Upvote / Star Counter
-  document.querySelectorAll(".btn-project-star").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const projectId = btn.getAttribute("data-project-id");
-      const starCountSpan = btn.querySelector(".star-count");
-
-      btn.classList.add("scale-125");
-      setTimeout(() => btn.classList.remove("scale-125"), 200);
-
-      fetch(`/api/projects/${projectId}/like/`, {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.status === "success" && starCountSpan) {
-            starCountSpan.textContent = data.stars_count;
-            btn.classList.add("text-amber-400");
-            window.playSynthClick(640);
-          }
-        })
-        .catch(() => {});
-    });
-  });
-
-  // 11. macOS Case-Study Modal Dialog Handler
-  const modal = document.getElementById("casestudy-modal");
+  // 4. Case-Study Modal Trigger
+  const modal = document.getElementById("project-detail-modal");
   const modalCloseBtn = document.getElementById("modal-close-btn");
-  const modalTabs = document.querySelectorAll(".modal-tab-btn");
-  const modalPanels = document.querySelectorAll(".modal-tab-panel");
 
   window.openProjectModal = function (p) {
     if (!modal) return;
 
-    document.getElementById("modal-project-code").textContent = p.code;
-    document.getElementById("modal-project-title").textContent = p.title;
-    document.getElementById("modal-project-category").textContent = p.category;
-    document.getElementById("modal-project-summary").textContent = p.summary;
-    document.getElementById("modal-project-why").textContent = p.why_built || "Documented during engineering sprint.";
-    document.getElementById("modal-project-arch").textContent = p.architecture || "Modular layered architecture.";
-    document.getElementById("modal-project-highlights").textContent = p.hardware_code_highlights || "Full stack verification passed.";
+    document.getElementById("modal-title").textContent = p.title;
+    document.getElementById("modal-category").textContent = p.category;
+    document.getElementById("modal-summary").textContent = p.summary;
+    document.getElementById("modal-why").textContent = p.why_built || "Built to address core engineering constraints.";
+    document.getElementById("modal-arch").textContent = p.architecture || "Modular layered design.";
+    document.getElementById("modal-highlights").textContent = p.hardware_code_highlights || "Standard test verification passed.";
 
-    // Tech stack badges
-    const techBox = document.getElementById("modal-project-tech");
+    const techBox = document.getElementById("modal-tech-list");
     if (techBox) {
       techBox.innerHTML = "";
       (p.tech_list || p.tech_stack.split(",")).forEach((tech) => {
         const span = document.createElement("span");
-        span.className = "px-2.5 py-1 text-xs rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30 mono";
+        span.className = "px-2.5 py-1 rounded-md text-xs font-mono bg-neutral-800 text-neutral-300 border border-neutral-700/60";
         span.textContent = tech.trim();
         techBox.appendChild(span);
       });
     }
 
-    // Links
-    const githubLink = document.getElementById("modal-github-link");
+    const githubLink = document.getElementById("modal-github");
     if (githubLink) {
       if (p.github_url) {
         githubLink.href = p.github_url;
@@ -335,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    const liveLink = document.getElementById("modal-live-link");
+    const liveLink = document.getElementById("modal-live");
     if (liveLink) {
       if (p.live_url) {
         liveLink.href = p.live_url;
@@ -345,22 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Reset to Tab 1
-    modalTabs.forEach((t) => t.classList.remove("active", "bg-purple-600", "text-white"));
-    modalPanels.forEach((pan) => pan.classList.add("hidden"));
-    if (modalTabs[0]) {
-      modalTabs[0].classList.add("active", "bg-purple-600", "text-white");
-    }
-    if (modalPanels[0]) {
-      modalPanels[0].classList.remove("hidden");
-    }
-
     modal.showModal();
-    window.playSynthClick(500);
   };
 
-  // Attach click listener on each card's "View Case Study" button
-  document.querySelectorAll(".btn-view-casestudy").forEach((btn) => {
+  document.querySelectorAll(".btn-view-details").forEach((btn) => {
     btn.addEventListener("click", () => {
       const card = btn.closest(".project-card");
       const code = card.getAttribute("data-project-code");
@@ -376,44 +173,47 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   if (modalCloseBtn && modal) {
-    modalCloseBtn.addEventListener("click", () => {
-      modal.close();
-      window.playSynthClick(320);
-    });
+    modalCloseBtn.addEventListener("click", () => modal.close());
   }
 
-  // Close modal when clicking on the backdrop
   if (modal) {
     modal.addEventListener("click", (e) => {
       const rect = modal.getBoundingClientRect();
-      const isInDialog =
+      const inDialog =
         rect.top <= e.clientY &&
         e.clientY <= rect.top + rect.height &&
         rect.left <= e.clientX &&
         e.clientX <= rect.left + rect.width;
-      if (!isInDialog) modal.close();
+      if (!inDialog) modal.close();
     });
   }
 
-  // Modal Tab Switching
-  modalTabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const targetPanelId = tab.getAttribute("data-target-panel");
-      modalTabs.forEach((t) => {
-        t.classList.remove("bg-purple-600", "text-white");
-        t.classList.add("bg-slate-900/60", "text-slate-400");
-      });
-      tab.classList.add("bg-purple-600", "text-white");
-      tab.classList.remove("bg-slate-900/60", "text-slate-400");
+  // 5. Project Star Upvote Counter
+  document.querySelectorAll(".btn-project-star").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const projectId = btn.getAttribute("data-project-id");
+      const starSpan = btn.querySelector(".star-count");
 
-      modalPanels.forEach((pan) => {
-        pan.classList.toggle("hidden", pan.id !== targetPanelId);
-      });
-      window.playSynthClick(460);
+      fetch(`/api/projects/${projectId}/like/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success" && starSpan) {
+            starSpan.textContent = data.stars_count;
+            btn.classList.add("text-indigo-400");
+          }
+        })
+        .catch(() => {});
     });
   });
 
-  // 12. AJAX Contact Form Submission
+  // 6. Clean AJAX Contact Form Submission
   const contactForm = document.getElementById("contact-form");
   const contactFeedback = document.getElementById("contact-feedback");
   const contactSubmitBtn = document.getElementById("contact-submit-btn");
@@ -422,27 +222,25 @@ document.addEventListener("DOMContentLoaded", () => {
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const senderName = document.getElementById("sender_name").value.trim();
-      const senderEmail = document.getElementById("sender_email").value.trim();
+      const name = document.getElementById("sender_name").value.trim();
+      const email = document.getElementById("sender_email").value.trim();
       const subject = document.getElementById("subject").value.trim();
-      const projectType = document.getElementById("project_type").value;
       const message = document.getElementById("message").value.trim();
 
-      if (!senderName || !senderEmail || !message) {
+      if (!name || !email || !message) {
         showToast("Please fill in Name, Email, and Message.", "error");
         return;
       }
 
       if (contactSubmitBtn) {
         contactSubmitBtn.disabled = true;
-        contactSubmitBtn.textContent = "Transmitting to Inbox...";
+        contactSubmitBtn.textContent = "Sending...";
       }
 
       const payload = {
-        sender_name: senderName,
-        sender_email: senderEmail,
+        sender_name: name,
+        sender_email: email,
         subject: subject,
-        project_type: projectType,
         message: message,
       };
 
@@ -459,18 +257,17 @@ document.addEventListener("DOMContentLoaded", () => {
           if (data.status === "success") {
             showToast(data.message, "success");
             contactForm.reset();
-            window.playSynthClick(720);
           } else {
-            showToast(data.message || "Failed to send message.", "error");
+            showToast(data.message || "Unable to send message.", "error");
           }
         })
         .catch(() => {
-          showToast("Network error occurred while transmitting message.", "error");
+          showToast("Network error. Please try again or reach out via email.", "error");
         })
         .finally(() => {
           if (contactSubmitBtn) {
             contactSubmitBtn.disabled = false;
-            contactSubmitBtn.textContent = "Send Encrypted Message";
+            contactSubmitBtn.textContent = "Send Message";
           }
         });
     });
@@ -478,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showToast(msg, type = "success") {
     if (!contactFeedback) return;
-    contactFeedback.className = `p-4 rounded-xl text-sm font-medium transition ${
+    contactFeedback.className = `p-4 rounded-xl text-xs font-medium transition ${
       type === "success"
         ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-300"
         : "bg-rose-500/10 border border-rose-500/30 text-rose-300"
@@ -487,6 +284,6 @@ document.addEventListener("DOMContentLoaded", () => {
     contactFeedback.classList.remove("hidden");
     setTimeout(() => {
       contactFeedback.classList.add("hidden");
-    }, 6000);
+    }, 5000);
   }
 });

@@ -1,68 +1,60 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Admin Control Panel | {{ profile.full_name }}{% endblock %}
+{% block title %}Dashboard — {{ profile.full_name }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex flex-col md:flex-row bg-[#060813]">
+<div class="min-h-screen flex flex-col md:flex-row bg-[#0c0d12]">
 
     <!-- Sidebar Navigation -->
-    <aside class="w-full md:w-64 bg-slate-950 border-r border-slate-800 p-6 flex flex-col justify-between shrink-0">
+    <aside class="w-full md:w-64 bg-[#13151c] border-r border-neutral-800 p-6 flex flex-col justify-between shrink-0">
         <div class="space-y-6">
             <!-- Brand -->
-            <div class="border-b border-slate-800/80 pb-4">
-                <div class="flex items-center gap-2 font-mono font-bold text-sm text-purple-400">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                    <span>SAKIB_ADMIN_CMS</span>
+            <div class="border-b border-neutral-800 pb-4">
+                <div class="font-bold text-sm text-white flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>Admin CMS</span>
                 </div>
-                <div class="text-[11px] text-slate-500 font-mono mt-1">
-                    Student ID: {{ profile.student_id }} • BAIUST
+                <div class="text-[11px] text-neutral-500 font-mono mt-0.5">
+                    {{ profile.student_id }} • BAIUST
                 </div>
             </div>
 
             <!-- Navigation Links -->
-            <nav class="space-y-1.5 text-xs font-mono">
-                <a href="{% url 'dashboard:overview' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'overview' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
-                    <span>📊</span>
-                    <span>Overview Telemetry</span>
+            <nav class="space-y-1 text-xs font-mono">
+                <a href="{% url 'dashboard:overview' %}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg transition {% if active_tab == 'overview' %}bg-white text-black font-semibold shadow-sm{% else %}text-neutral-400 hover:text-white hover:bg-neutral-800/60{% endif %}">
+                    <span>Overview</span>
                 </a>
-                <a href="{% url 'dashboard:profile_manager' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'profile' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
-                    <span>👤</span>
-                    <span>Profile & Social Links</span>
+                <a href="{% url 'dashboard:profile_manager' %}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg transition {% if active_tab == 'profile' %}bg-white text-black font-semibold shadow-sm{% else %}text-neutral-400 hover:text-white hover:bg-neutral-800/60{% endif %}">
+                    <span>Profile & Social</span>
                 </a>
-                <a href="{% url 'dashboard:projects_manager' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'projects' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
-                    <span>📁</span>
-                    <span>Projects CRUD [8]</span>
+                <a href="{% url 'dashboard:projects_manager' %}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg transition {% if active_tab == 'projects' %}bg-white text-black font-semibold shadow-sm{% else %}text-neutral-400 hover:text-white hover:bg-neutral-800/60{% endif %}">
+                    <span>Projects CRUD</span>
                 </a>
-                <a href="{% url 'dashboard:skills_manager' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'skills' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
-                    <span>⚡</span>
-                    <span>Skills & Physics Pit</span>
+                <a href="{% url 'dashboard:skills_manager' %}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg transition {% if active_tab == 'skills' %}bg-white text-black font-semibold shadow-sm{% else %}text-neutral-400 hover:text-white hover:bg-neutral-800/60{% endif %}">
+                    <span>Skills CRUD</span>
                 </a>
-                <a href="{% url 'dashboard:timeline_manager' %}" class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'timeline' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
-                    <span>🕒</span>
-                    <span>Timeline & Experience</span>
+                <a href="{% url 'dashboard:timeline_manager' %}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg transition {% if active_tab == 'timeline' %}bg-white text-black font-semibold shadow-sm{% else %}text-neutral-400 hover:text-white hover:bg-neutral-800/60{% endif %}">
+                    <span>Timeline CRUD</span>
                 </a>
-                <a href="{% url 'dashboard:messages_inbox' %}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition {% if active_tab == 'messages' %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}text-slate-400 hover:text-slate-200 hover:bg-slate-900{% endif %}">
-                    <div class="flex items-center gap-2.5">
-                        <span>💬</span>
-                        <span>Inquiries Inbox</span>
-                    </div>
+                <a href="{% url 'dashboard:messages_inbox' %}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg transition {% if active_tab == 'messages' %}bg-white text-black font-semibold shadow-sm{% else %}text-neutral-400 hover:text-white hover:bg-neutral-800/60{% endif %}">
+                    <span>Inquiries Inbox</span>
                 </a>
             </nav>
         </div>
 
         <!-- Bottom Controls -->
-        <div class="pt-6 border-t border-slate-800 space-y-2 text-xs font-mono">
-            <a href="{% url 'core:index' %}" target="_blank" class="flex items-center justify-between px-3 py-2 rounded-lg bg-slate-900 text-slate-300 hover:text-white transition border border-slate-800">
-                <span>⚡ Live Site</span>
+        <div class="pt-6 border-t border-neutral-800 space-y-2 text-xs font-mono">
+            <a href="{% url 'core:index' %}" target="_blank" class="flex items-center justify-between px-3 py-2 rounded-lg bg-neutral-900 text-neutral-300 hover:text-white transition border border-neutral-800">
+                <span>View Portfolio</span>
                 <span>&rarr;</span>
             </a>
-            <a href="/php_crud_module/index.php" target="_blank" class="flex items-center justify-between px-3 py-2 rounded-lg bg-indigo-950/40 text-indigo-300 hover:text-indigo-100 transition border border-indigo-500/20">
-                <span>🐘 PHP CRUD</span>
+            <a href="/php_crud_module/index.php" target="_blank" class="flex items-center justify-between px-3 py-2 rounded-lg bg-neutral-900 text-neutral-400 hover:text-white transition border border-neutral-800">
+                <span>PHP Module</span>
                 <span>&rarr;</span>
             </a>
             <a href="{% url 'dashboard:logout' %}" class="flex items-center justify-between px-3 py-2 rounded-lg text-rose-400 hover:bg-rose-500/10 transition">
-                <span>Term. Session</span>
+                <span>Log Out</span>
                 <span>⏏</span>
             </a>
         </div>
@@ -70,12 +62,11 @@
 
     <!-- Main Content Area -->
     <main class="flex-1 p-6 md:p-10 overflow-y-auto">
-        <!-- Top Flash Alerts -->
         {% if messages %}
             <div class="mb-6 space-y-2">
                 {% for message in messages %}
-                <div class="p-4 rounded-xl text-xs font-mono flex items-center justify-between {% if message.tags == 'error' %}bg-rose-500/10 border border-rose-500/30 text-rose-300{% else %}bg-emerald-500/10 border border-emerald-500/30 text-emerald-300{% endif %}">
-                    <span>✓ {{ message }}</span>
+                <div class="p-3.5 rounded-xl text-xs font-mono flex items-center justify-between {% if message.tags == 'error' %}bg-rose-500/10 border border-rose-500/30 text-rose-300{% else %}bg-emerald-500/10 border border-emerald-500/30 text-emerald-300{% endif %}">
+                    <span>{{ message }}</span>
                 </div>
                 {% endfor %}
             </div>
