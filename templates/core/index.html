@@ -1,582 +1,402 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" data-theme="{{ profile.default_theme|default:'dark' }}">
+<html lang="en" data-grade="aurora">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ profile.full_name }} — {{ profile.role_title }}</title>
+  <title>{{ profile.full_name }} — AI/ML Systems, Edge TinyML &amp; Full-Stack Architect</title>
   <meta name="description" content="{{ profile.bio_summary }}" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23141413'/><text x='50' y='66' font-family='monospace' font-size='44' font-weight='bold' fill='%23f59e0b' text-anchor='middle'>SR</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2304060c'/><text x='50' y='66' font-family='monospace' font-size='44' font-weight='bold' fill='%2300f5d4' text-anchor='middle'>SR</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ==========================================================================
-       100% BESPOKE HAND-CRAFTED CSS ARCHITECTURE (ZERO GENERIC TAILWIND SLOP)
-       Aesthetic: Warm Titanium & Carbon Monolith / Alabaster Editorial Paper
+       V9.0 TRUE 100VW FULL-BLEED SPATIAL PORTFOLIO + 3 STUDIO COLOR GRADES
+       Zero 2-3 Inch Side Margins • Motion Graphics • Physics Skill Arena
        ========================================================================== */
-    :root, [data-theme="dark"] {
-      --bg-base: #060608;
-      --bg-elevated: #0d0e12;
-      --bg-panel: #12141a;
-      --bg-glass: rgba(10, 11, 15, 0.88);
-      --bg-input: #0a0b0e;
-      --ink-1: #f5f3ef;
-      --ink-2: #b8b5ad;
-      --ink-3: #78756f;
-      --line: rgba(245, 243, 239, 0.09);
-      --line-strong: rgba(245, 158, 11, 0.45);
-      --accent: #f59e0b;
-      --accent-2: #ff6b35;
-      --signal: #10b981;
-      --dot-grid: rgba(255, 255, 255, 0.045);
-      --shadow-elev: 0 24px 60px -15px rgba(0, 0, 0, 0.7);
-      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    :root, [data-grade="aurora"] {
+      --bg-0: #04060c;
+      --bg-1: #090d18;
+      --bg-2: #101728;
+      --bg-glass: rgba(7, 10, 19, 0.86);
+      --bg-input: #070b14;
+      --ink-1: #f4f7fb;
+      --ink-2: #a8b3cf;
+      --ink-3: #6c7a9c;
+      --border: rgba(0, 245, 212, 0.14);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --accent-1: #00f5d4;
+      --accent-2: #6366f1;
+      --accent-3: #f59e0b;
+      --btn-fg: #04060c;
+      --aurora-1: radial-gradient(circle at 15% 15%, rgba(0, 245, 212, 0.13), transparent 42%);
+      --aurora-2: radial-gradient(circle at 85% 22%, rgba(99, 102, 241, 0.16), transparent 46%);
     }
 
-    [data-theme="light"] {
-      --bg-base: #f3f0e8;
-      --bg-elevated: #faf8f3;
-      --bg-panel: #ffffff;
-      --bg-glass: rgba(243, 240, 232, 0.92);
-      --bg-input: #f5f2eb;
-      --ink-1: #141413;
-      --ink-2: #3d3c38;
-      --ink-3: #6e6c66;
-      --line: rgba(20, 20, 19, 0.11);
-      --line-strong: rgba(200, 75, 49, 0.45);
-      --accent: #d97706;
-      --accent-2: #c84b31;
-      --signal: #059669;
-      --dot-grid: rgba(20, 20, 19, 0.055);
-      --shadow-elev: 0 20px 50px -15px rgba(20, 20, 19, 0.08);
+    [data-grade="titanium"] {
+      --bg-0: #070606;
+      --bg-1: #111010;
+      --bg-2: #191716;
+      --bg-glass: rgba(14, 13, 12, 0.88);
+      --bg-input: #0b0a09;
+      --ink-1: #f7f4ef;
+      --ink-2: #c2bcb2;
+      --ink-3: #857e74;
+      --border: rgba(245, 158, 11, 0.24);
+      --border-subtle: rgba(255, 248, 235, 0.09);
+      --accent-1: #f59e0b;
+      --accent-2: #ff5722;
+      --accent-3: #10b981;
+      --btn-fg: #070606;
+      --aurora-1: radial-gradient(circle at 18% 15%, rgba(245, 158, 11, 0.14), transparent 42%);
+      --aurora-2: radial-gradient(circle at 82% 25%, rgba(255, 87, 34, 0.12), transparent 45%);
+    }
+
+    [data-grade="daylight"] {
+      --bg-0: #f3f1ea;
+      --bg-1: #ffffff;
+      --bg-2: #eae6dc;
+      --bg-glass: rgba(243, 241, 234, 0.92);
+      --bg-input: #f8f6f0;
+      --ink-1: #0f172a;
+      --ink-2: #334155;
+      --ink-3: #64748b;
+      --border: rgba(37, 99, 235, 0.28);
+      --border-subtle: rgba(15, 23, 42, 0.12);
+      --accent-1: #2563eb;
+      --accent-2: #059669;
+      --accent-3: #d97706;
+      --btn-fg: #ffffff;
+      --aurora-1: radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.09), transparent 42%);
+      --aurora-2: radial-gradient(circle at 85% 22%, rgba(5, 150, 105, 0.09), transparent 45%);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; width: 100%; }
     body {
-      background-color: var(--bg-base);
-      background-image: radial-gradient(var(--dot-grid) 1px, transparent 1px);
-      background-size: 24px 24px;
+      width: 100%;
+      min-height: 100vh;
+      background-color: var(--bg-0);
+      background-image: var(--aurora-1), var(--aurora-2);
+      background-attachment: fixed;
       color: var(--ink-1);
       font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
-      transition: background-color 240ms var(--ease-out), color 240ms var(--ease-out);
+      transition: background-color 260ms ease, color 260ms ease;
     }
 
-    .font-display { font-family: 'Syne', 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.035em; }
+    .font-syne { font-family: 'Syne', sans-serif; letter-spacing: -0.03em; }
     .font-serif-it { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
-
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 
-    /* Layout Shell */
-    .shell {
+    /* TRUE 100% FULL-SCREEN EDGE-TO-EDGE WRAPPER (ZERO 2-3 INCH SIDE MARGIN GAPS!) */
+    .full-screen-bleed {
       width: 100%;
-      max-width: 1540px;
-      margin: 0 auto;
-      padding: 0 clamp(1.25rem, 4vw, 4rem);
+      max-width: 100%;
+      padding-left: clamp(16px, 2.2vw, 38px);
+      padding-right: clamp(16px, 2.2vw, 38px);
     }
 
-    /* Floating Glass Command Dock (Top Header) */
-    .top-dock-wrap {
+    /* Full-Width Sticky Edge-to-Edge Studio Top Bar */
+    .studio-topbar {
       position: sticky;
-      top: 14px;
+      top: 0;
       z-index: 9999;
-      padding: 0 clamp(1rem, 3vw, 3rem);
-      pointer-events: none;
-    }
-    .top-dock {
-      pointer-events: auto;
-      max-width: 1460px;
-      margin: 0 auto;
-      height: 62px;
+      width: 100%;
+      height: 66px;
       background: var(--bg-glass);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 1.25rem;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      box-shadow: var(--shadow-elev);
     }
 
-    .brand-cluster {
+    .nav-cluster {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.35rem;
     }
-    .brand-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1.5px solid var(--accent);
-    }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--signal);
-      box-shadow: 0 0 10px var(--signal);
-      display: inline-block;
-    }
+    @media (max-width: 1080px) { .nav-cluster { display: none; } }
 
-    .dock-links {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    @media (max-width: 1024px) {
-      .dock-links { display: none; }
-    }
-    .dock-link {
+    .nav-item {
       padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
+      border-radius: 10px;
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--ink-2);
-      transition: all 160ms var(--ease-out);
+      transition: all 150ms ease;
     }
-    .dock-link:hover {
+    .nav-item:hover {
       color: var(--ink-1);
-      background: var(--line);
+      background: var(--bg-2);
     }
 
-    .dock-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .pill-btn {
-      padding: 0.45rem 0.95rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--bg-elevated);
-      font-size: 0.75rem;
-      font-weight: 600;
+    .grade-btn {
+      padding: 0.4rem 0.8rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-1);
+      font-size: 0.72rem;
+      font-weight: 700;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      transition: transform 150ms var(--ease-out), border-color 150ms var(--ease-out);
+      transition: all 160ms ease;
     }
-    .pill-btn:hover { border-color: var(--accent); }
-    .pill-btn:active { transform: scale(0.96); }
-    .pill-btn-primary {
-      background: var(--ink-1);
-      color: var(--bg-base);
-      border-color: var(--ink-1);
-      font-weight: 700;
-    }
-    .pill-btn-amber {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #09090b;
-      border: none;
+    .grade-btn:hover { border-color: var(--accent-1); }
+    .grade-btn-cta {
+      background: var(--accent-1);
+      color: var(--btn-fg);
+      border-color: var(--accent-1);
       font-weight: 800;
     }
 
-    /* Editorial Section Dividers */
-    .monolith-section {
-      padding: clamp(4rem, 7vw, 6.5rem) 0;
-      border-bottom: 1px solid var(--line);
-      position: relative;
-    }
-
-    .sec-index-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--line);
-    }
-    .sec-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-    .sec-title {
-      font-size: clamp(2rem, 3.8vw, 3.25rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-    }
-
-    /* HERO MONOLITH */
-    .hero-grid {
+    /* Full-Bleed 12-Column Architectural Grid */
+    .grid-12 {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 2rem;
-      align-items: stretch;
-      padding-top: 2rem;
-    }
-    .hero-left {
-      grid-column: span 7;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-    .hero-right {
-      grid-column: span 5;
-      display: flex;
-      flex-direction: column;
       gap: 1.25rem;
-    }
-    @media (max-width: 1080px) {
-      .hero-left, .hero-right { grid-column: span 12; }
-    }
-
-    .hero-title {
-      font-size: clamp(2.5rem, 5.2vw, 4.65rem);
-      font-weight: 800;
-      line-height: 1.04;
-      letter-spacing: -0.035em;
-      text-wrap: balance;
-    }
-
-    .hero-bio {
-      font-size: clamp(0.98rem, 1.2vw, 1.12rem);
-      color: var(--ink-2);
-      max-width: 68ch;
-      line-height: 1.7;
-    }
-
-    .social-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    /* Interactive Sovereign Hardware Memory Allocator Workbench */
-    .workbench-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 1.5rem;
-      box-shadow: var(--shadow-elev);
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-    }
-
-    .ram-bar-outer {
       width: 100%;
-      height: 28px;
-      background: var(--bg-input);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      overflow: hidden;
-      display: flex;
-    }
-    .ram-seg {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #050506;
-      transition: width 360ms var(--ease-out);
-      overflow: hidden;
-      white-space: nowrap;
     }
 
-    /* Interactive Split-Screen Project Explorer (AVEA / Zajno Style) */
-    .explorer-grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 2rem;
-      align-items: start;
-    }
-    .explorer-list {
-      grid-column: span 6;
-      display: flex;
-      flex-direction: column;
-      border-top: 1px solid var(--line);
-    }
-    .explorer-stage {
-      grid-column: span 6;
-      position: sticky;
-      top: 96px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 2rem;
-      box-shadow: var(--shadow-elev);
-    }
-    @media (max-width: 1024px) {
-      .explorer-list, .explorer-stage { grid-column: span 12; position: static; }
-    }
-
-    .work-row {
-      padding: 1.35rem 1rem;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      cursor: pointer;
-      transition: background-color 180ms var(--ease-out), padding-left 180ms var(--ease-out);
-    }
-    .work-row:hover, .work-row.active {
-      background-color: var(--bg-elevated);
-      padding-left: 1.5rem;
-      border-left: 3px solid var(--accent);
-    }
-
-    /* Domain Constellation Matrix (Replaces Fake % Progress Bars) */
-    .matrix-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.25rem;
-    }
-    .matrix-cell {
-      background: var(--bg-elevated);
-      border: 1px solid var(--line);
+    .card-spatial {
+      background: var(--bg-1);
+      border: 1px solid var(--border-subtle);
       border-radius: 20px;
-      padding: 1.6rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 1.25rem;
-      transition: border-color 180ms var(--ease-out), transform 180ms var(--ease-out);
+      padding: clamp(1.25rem, 2.2vw, 2.25rem);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 200ms ease, transform 200ms ease;
     }
-    .matrix-cell:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-    .skill-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.35rem 0.75rem;
-      border-radius: 8px;
-      background: var(--bg-panel);
-      border: 1px solid var(--line);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.74rem;
-      color: var(--ink-1);
+    .card-spatial:hover {
+      border-color: var(--border);
     }
 
-    /* Form Inputs */
-    .field-input {
+    /* Infinite Kinetic Motion Marquee */
+    @keyframes marqueeSlide {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeSlide 32s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    /* Floating Motion Graphics Badge */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+    .float-badge { animation: floatSlow 4.2s ease-in-out infinite; }
+
+    .input-box {
       width: 100%;
       background: var(--bg-input);
-      border: 1px solid var(--line);
+      border: 1px solid var(--border-subtle);
       color: var(--ink-1);
       border-radius: 12px;
       padding: 0.8rem 1rem;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       outline: none;
-      transition: border-color 160ms var(--ease-out);
     }
-    .field-input:focus { border-color: var(--accent); }
+    .input-box:focus { border-color: var(--accent-1); }
   </style>
 </head>
 <body>
 
-  <!-- FLOATING PILL COMMAND DOCK (Z-INDEX 9999 • NO OVERLAP • NO ADMIN BUTTON) -->
-  <div class="top-dock-wrap">
-    <header class="top-dock">
-      <a href="#top" class="brand-cluster">
-        <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" class="brand-avatar" />
-        <div>
-          <div style="display:flex; align-items:center; gap:0.5rem;">
-            <span style="font-weight:800; font-size:0.92rem;">{{ profile.full_name }}</span>
-            <span class="status-dot" title="Available for AI/ML Engineering & Research"></span>
-          </div>
-          <div class="font-mono" style="font-size:0.68rem; color:var(--ink-3);">AI/ML ARCHITECT • LOCAL NEURAL RUNTIMES</div>
+  <!-- EDGE-TO-EDGE FULL-WIDTH STICKY TOP COMMAND BAR -->
+  <header class="studio-topbar full-screen-bleed">
+    <a href="#hero" style="display:flex; align-items:center; gap:0.8rem;">
+      <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" style="width:40px; height:40px; border-radius:12px; object-fit:cover; border:2px solid var(--accent-1);" />
+      <div>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span style="font-weight:800; font-size:0.95rem;">{{ profile.full_name }}</span>
+          <span class="font-mono" style="font-size:0.65rem; padding:0.15rem 0.55rem; border-radius:6px; background:rgba(0,245,212,0.12); color:var(--accent-1); font-weight:700;">AI/ML &amp; TINYML</span>
         </div>
-      </a>
-
-      <nav class="dock-links font-mono">
-        <a href="#top" class="dock-link">01. Identity</a>
-        <a href="#nexus-architecture" class="dock-link">02. Local Master AI</a>
-        <a href="#selected-works" class="dock-link">03. Works ({{ projects|length }})</a>
-        <a href="#competency-matrix" class="dock-link">04. Neural Stack</a>
-        <a href="#credentials" class="dock-link">05. Credentials</a>
-        <a href="#collaborate" class="dock-link">06. Collaborate</a>
-      </nav>
-
-      <div class="dock-actions font-mono">
-        <span id="dhakaClock" class="pill-btn" style="color:var(--ink-3);">DAC • UTC+6</span>
-        <button type="button" id="openShellBtn" class="pill-btn" title="Open Sakib-OS Interactive Shell">&gt;_ Shell</button>
-        <button type="button" id="themeSwitchBtn" class="pill-btn" title="Switch Carbon / Alabaster Theme">◐ Theme</button>
-        <a href="{% url 'printable_cv' %}" class="pill-btn pill-btn-amber">CV / Resume ↗</a>
+        <div class="font-mono" style="font-size:0.68rem; color:var(--ink-3);">LLMs • 512-Pt FFT Edge DSP • Full-Stack Web</div>
       </div>
-    </header>
+    </a>
+
+    <nav class="nav-cluster font-mono">
+      <a href="#hero" class="nav-item">01 // Identity</a>
+      <a href="#local-ai" class="nav-item">02 // Sovereign AI Runtime</a>
+      <a href="#physics-skills" class="nav-item">03 // 2D Physics Arsenal</a>
+      <a href="#works-showcase" class="nav-item">04 // Production Works ({{ projects|length }})</a>
+      <a href="#credentials" class="nav-item">05 // Credentials</a>
+      <a href="#contact" class="nav-item">06 // Collaborate</a>
+    </nav>
+
+    <!-- Live Color Grading Switcher + CV Link -->
+    <div style="display:flex; align-items:center; gap:0.45rem;" class="font-mono">
+      <button type="button" onclick="setGrade('aurora')" class="grade-btn" title="Cyber-Aurora Dark Grade">🌌 Aurora</button>
+      <button type="button" onclick="setGrade('titanium')" class="grade-btn" title="Solar-Titanium Dark Grade">🔥 Titanium</button>
+      <button type="button" onclick="setGrade('daylight')" class="grade-btn" title="Swiss Daylight Editorial Grade">☀️ Daylight</button>
+      <a href="{% url 'printable_cv' %}" class="grade-btn grade-btn-cta">Resume PDF ↗</a>
+    </div>
+  </header>
+
+  <!-- FULL-BLEED KINETIC MOTION GRAPHICS TICKER -->
+  <div style="width:100%; border-bottom:1px solid var(--border-subtle); background:var(--bg-1); padding:0.55rem 0; overflow:hidden;">
+    <div class="marquee-track font-mono" style="font-size:0.72rem; color:var(--ink-2); gap:2.5rem; align-items:center;">
+      <span>⚡ SOVEREIGN LOCAL MASTER AI ROUTER (~420 MB RAM)</span>
+      <span style="color:var(--accent-1);">✦</span>
+      <span>🦟 512-POINT RADIX-2 FFT BIO-ACOUSTIC MOSQUITO AI TRAP (32 MS LATENCY)</span>
+      <span style="color:var(--accent-1);">✦</span>
+      <span>🌩️ 3-STREAM TINYML RURAL LIGHTNING EARLY WARNING SYSTEM (AS3935 RF + SIM800L)</span>
+      <span style="color:var(--accent-1);">✦</span>
+      <span>🛒 ALORON SHOP FULL-STACK NEXT.JS + TYPESCRIPT + PRISMA (LIVE ON VERCEL)</span>
+      <span style="color:var(--accent-1);">✦</span>
+      <span>🔍 CAMPUS LOST &amp; FOUND MULTI-FACTOR MATCHING ENGINE (LIVE ON VERCEL)</span>
+      <span style="color:var(--accent-1);">✦</span>
+      <span>⚡ SOVEREIGN LOCAL MASTER AI ROUTER (~420 MB RAM)</span>
+      <span style="color:var(--accent-1);">✦</span>
+      <span>🦟 512-POINT RADIX-2 FFT BIO-ACOUSTIC MOSQUITO AI TRAP (32 MS LATENCY)</span>
+    </div>
   </div>
 
-  <main class="shell">
+  <main class="full-screen-bleed" style="padding-top:1.75rem; padding-bottom:4rem; display:flex; flex-direction:column; gap:3.5rem;">
+
     <!-- =================================================================== -->
-    <!-- 01. SPATIAL EDITORIAL HERO + LIVE LOCAL AI MEMORY ALLOCATOR         -->
+    <!-- 01. FULL-BLEED SPATIAL HERO + 3D GEODESIC AI & 512-PT FFT GLOBE     -->
     <!-- =================================================================== -->
-    <section id="top" class="monolith-section">
-      <div class="hero-grid">
-        <!-- Left 7 Cols: Editorial Monolith Typography -->
-        <div class="hero-left">
-          <div style="display:flex; flex-direction:column; gap:1.5rem;">
-            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.6rem;" class="font-mono">
-              <span style="padding:0.3rem 0.8rem; border-radius:999px; background:rgba(245,158,11,0.14); color:var(--accent); border:1px solid var(--line-strong); font-size:0.74rem; font-weight:700;">
-                {{ profile.role_title }}
-              </span>
-              <span style="padding:0.3rem 0.8rem; border-radius:999px; border:1px solid var(--line); color:var(--ink-2); font-size:0.74rem;">
-                {{ profile.location }}
-              </span>
-            </div>
-
-            <h1 class="hero-title">
-              Orchestrating <span class="font-serif-it" style="color:var(--accent); font-weight:400;">sovereign local AI</span> across unified memory &amp; building high-scale web systems.
-            </h1>
-
-            <p class="hero-bio">
-              {{ profile.bio_summary }}
-            </p>
-
-            <div style="display:flex; flex-wrap:wrap; gap:0.75rem; padding-top:0.5rem;">
-              <a href="#selected-works" class="pill-btn pill-btn-amber" style="padding:0.85rem 1.6rem; font-size:0.86rem;">
-                Explore Selected Works ({{ projects|length }}) →
-              </a>
-              <a href="#nexus-architecture" class="pill-btn" style="padding:0.85rem 1.4rem; font-size:0.86rem;">
-                Test Local Master AI Simulator
-              </a>
-              <a href="#collaborate" class="pill-btn" style="padding:0.85rem 1.4rem; font-size:0.86rem;">
-                Initiate Collaboration
-              </a>
-            </div>
-
-            <div class="social-strip font-mono" style="padding-top:0.5rem;">
-              <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="pill-btn">GitHub ↗</a>
-              <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="pill-btn">LinkedIn ↗</a>
-              <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="pill-btn">Kaggle ↗</a>
-              <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener" class="pill-btn">X / Twitter ↗</a>
-              <a href="{{ profile.facebook_url }}" target="_blank" rel="noopener" class="pill-btn">Facebook ↗</a>
-              <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener" class="pill-btn">Instagram ↗</a>
-            </div>
+    <section id="hero" class="grid-12" style="align-items:stretch;">
+      <!-- Left 7 Columns -->
+      <div class="card-spatial" style="grid-column: span 7; display:flex; flex-direction:column; justify-content:space-between; gap:2rem;">
+        <div style="display:flex; flex-direction:column; gap:1.35rem;">
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.6rem;" class="font-mono">
+            <span class="float-badge" style="padding:0.35rem 0.85rem; border-radius:999px; background:rgba(0,245,212,0.12); color:var(--accent-1); border:1px solid var(--border); font-size:0.74rem; font-weight:700;">
+              ● {{ profile.role_title }}
+            </span>
+            <span style="padding:0.35rem 0.85rem; border-radius:999px; border:1px solid var(--border-subtle); color:var(--ink-2); font-size:0.74rem;">
+              {{ profile.location }}
+            </span>
           </div>
 
-          <!-- Architectural Telemetry Ledger -->
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:1.25rem; padding-top:2rem; border-top:1px solid var(--line);">
-            <div>
-              <div class="font-mono" style="font-size:1.75rem; font-weight:800; color:var(--accent);">~1.0 GB</div>
-              <div style="font-size:0.78rem; color:var(--ink-3);">Quantized Expert Footprint</div>
-            </div>
-            <div>
-              <div class="font-mono" style="font-size:1.75rem; font-weight:800;">CPU+GPU+NPU</div>
-              <div style="font-size:0.78rem; color:var(--ink-3);">Unified Local Memory Bus</div>
-            </div>
-            <div>
-              <div class="font-mono" style="font-size:1.75rem; font-weight:800; color:var(--signal);">In-Place</div>
-              <div style="font-size:0.78rem; color:var(--ink-3);">Single-Node Self-Training</div>
-            </div>
-            <div>
-              <div class="font-mono" style="font-size:1.75rem; font-weight:800;">{{ projects|length }} Systems</div>
-              <div style="font-size:0.78rem; color:var(--ink-3);">Live Production &amp; Edge AI</div>
-            </div>
+          <h1 class="font-syne" style="font-size:clamp(2.2rem, 4.2vw, 4.1rem); font-weight:800; line-height:1.06; text-wrap:balance;">
+            Architecting <span class="font-serif-it" style="color:var(--accent-1); font-weight:400;">sovereign local AI runtimes</span>, 32ms Edge TinyML DSP &amp; full-stack cloud systems.
+          </h1>
+
+          <p style="font-size:1rem; color:var(--ink-2); max-width:74ch; line-height:1.7;">
+            {{ profile.bio_summary }}
+          </p>
+
+          <div style="display:flex; flex-wrap:wrap; gap:0.75rem; padding-top:0.25rem;" class="font-mono">
+            <a href="#works-showcase" class="grade-btn grade-btn-cta" style="padding:0.85rem 1.5rem; font-size:0.82rem;">
+              Explore {{ projects|length }} Production Systems →
+            </a>
+            <a href="#physics-skills" class="grade-btn" style="padding:0.85rem 1.35rem; font-size:0.82rem;">
+              Play 2D Physics Skill Arena
+            </a>
+            <a href="#contact" class="grade-btn" style="padding:0.85rem 1.35rem; font-size:0.82rem;">
+              Collaborate / Hire
+            </a>
+          </div>
+
+          <!-- Verified Profiles -->
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem; padding-top:0.4rem;" class="font-mono">
+            <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="grade-btn">GitHub ↗</a>
+            <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="grade-btn">LinkedIn ↗</a>
+            <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="grade-btn">Kaggle ↗</a>
+            <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener" class="grade-btn">X / Twitter ↗</a>
+            <a href="{{ profile.facebook_url }}" target="_blank" rel="noopener" class="grade-btn">Facebook ↗</a>
+            <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener" class="grade-btn">Instagram ↗</a>
           </div>
         </div>
 
-        <!-- Right 5 Cols: Interactive Sovereign Local AI Hardware & Memory Workbench -->
-        <div class="hero-right">
-          <div class="workbench-card">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-bottom:0.9rem; border-bottom:1px solid var(--line);">
-              <div style="display:flex; align-items:center; gap:0.85rem;">
-                <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" style="width:54px; height:54px; border-radius:16px; object-fit:cover; border:1.5px solid var(--accent);" />
-                <div>
-                  <div class="font-mono" style="font-size:0.7rem; color:var(--accent); font-weight:700;">NEXUSLOCAL // HARDWARE TELEMETRY</div>
-                  <div style="font-weight:800; font-size:1.05rem;">Sovereign Master AI Simulator</div>
-                  <div style="font-size:0.76rem; color:var(--ink-3);">Interactive Local RAM / VRAM / NPU Pager</div>
-                </div>
-              </div>
-              <span class="font-mono" id="simSpeedBadge" style="padding:0.25rem 0.65rem; border-radius:8px; background:rgba(16,185,129,0.15); color:var(--signal); font-size:0.72rem; font-weight:700;">
-                68.4 tok/s
-              </span>
-            </div>
+        <!-- Bottom 4-Metric Bar -->
+        <div style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:1rem; padding-top:1.5rem; border-top:1px solid var(--border-subtle);" class="font-mono">
+          <div>
+            <div style="font-size:1.65rem; font-weight:800; color:var(--accent-1);">~1.0 GB</div>
+            <div style="font-size:0.72rem; color:var(--ink-3);">4-Bit NF4 Sub-Models</div>
+          </div>
+          <div>
+            <div style="font-size:1.65rem; font-weight:800;">32 ms</div>
+            <div style="font-size:0.72rem; color:var(--ink-3);">512-Pt Edge FFT DSP</div>
+          </div>
+          <div>
+            <div style="font-size:1.65rem; font-weight:800; color:var(--accent-3);">CPU+GPU+NPU</div>
+            <div style="font-size:0.72rem; color:var(--ink-3);">Unified Memory Pager</div>
+          </div>
+          <div>
+            <div style="font-size:1.65rem; font-weight:800;">{{ projects|length }} Live</div>
+            <div style="font-size:0.72rem; color:var(--ink-3);">AI, TinyML &amp; Web Repos</div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Live 3D Tensor & Neural Node Viewport -->
-            <div style="position:relative; width:100%; height:225px; border-radius:16px; overflow:hidden; background:#050609; border:1px solid var(--line);">
-              <canvas id="sovereignNeuralCanvas" style="width:100%; height:100%; display:block; cursor:grab;"></canvas>
-              <div class="font-mono" style="position:absolute; top:10px; left:12px; right:12px; display:flex; justify-content:space-between; pointer-events:none; font-size:0.68rem; color:#cbd5e1;">
-                <span id="simActiveNodeLabel" style="background:rgba(0,0,0,0.75); padding:3px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.12);">
-                  ACTIVE: MASTER ROUTER (420 MB) + CODE-1G (0.95 GB NF4)
-                </span>
-                <span style="background:rgba(245,158,11,0.2); color:#fbbf24; padding:3px 8px; border-radius:6px;">DRAG 3D</span>
-              </div>
-            </div>
-
-            <!-- Live Unified Memory Allocation Bar -->
-            <div style="display:flex; flex-direction:column; gap:0.45rem;">
-              <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--ink-2);">
-                <span>UNIFIED HARDWARE MEMORY BUS (CPU RAM + GPU VRAM + NPU)</span>
-                <span id="simRamTotalText" style="color:var(--accent); font-weight:700;">1.37 GB / 8.00 GB USED</span>
-              </div>
-              <div class="ram-bar-outer">
-                <div id="segMaster" class="ram-seg" style="width:18%; background:#f59e0b;">MASTER 420M</div>
-                <div id="segExpert" class="ram-seg" style="width:32%; background:#38bdf8;">CODE-1G (0.95G)</div>
-                <div id="segDelta" class="ram-seg" style="width:8%; background:#10b981;">ΔW</div>
-              </div>
-            </div>
-
-            <!-- Interactive Prompt Dispatcher Buttons -->
-            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.5rem;" class="font-mono">
-              <button type="button" onclick="dispatchLocalAI(0)" class="pill-btn" style="justify-content:center; padding:0.6rem;">
-                ⚡ Load Code-1G (0.95 GB)
-              </button>
-              <button type="button" onclick="dispatchLocalAI(1)" class="pill-btn" style="justify-content:center; padding:0.6rem;">
-                🎨 Load Vision-1G (1.05 GB)
-              </button>
-              <button type="button" onclick="dispatchLocalAI(2)" class="pill-btn" style="justify-content:center; padding:0.6rem;">
-                🎬 Load Video-1G (1.15 GB)
-              </button>
-              <button type="button" onclick="dispatchLocalAI(3)" class="pill-btn pill-btn-amber" style="justify-content:center; padding:0.6rem;">
-                🧠 In-Place Self-Train (ΔW)
-              </button>
+      <!-- Right 5 Columns: Live 3D Geodesic AI Telemetry Sphere + 512-Pt FFT Spectrum -->
+      <div class="card-spatial" style="grid-column: span 5; display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem;">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" style="width:48px; height:48px; border-radius:14px; object-fit:cover; border:1.5px solid var(--accent-1);" />
+            <div>
+              <div class="font-mono" style="font-size:0.68rem; color:var(--accent-1); font-weight:700;">LIVE TELEMETRY // DRAG 3D SPHERE</div>
+              <div style="font-weight:800; font-size:1rem;">Sovereign AI &amp; 512-Pt FFT Core</div>
             </div>
           </div>
+          <span id="globeModeLabel" class="font-mono" style="font-size:0.7rem; padding:0.25rem 0.65rem; border-radius:8px; background:rgba(0,245,212,0.12); color:var(--accent-1); font-weight:700;">
+            CODE-AST-1G
+          </span>
+        </div>
+
+        <div style="position:relative; width:100%; height:290px; border-radius:16px; overflow:hidden; background:#040710; border:1px solid var(--border-subtle);">
+          <canvas id="hero3dGlobeCanvas" style="width:100%; height:100%; display:block; cursor:grab;"></canvas>
+          <div class="font-mono" style="position:absolute; bottom:8px; left:12px; right:12px; display:flex; justify-content:space-between; pointer-events:none; font-size:0.66rem; color:#94a3b8;">
+            <span>BOTTOM SPECTRUM: 512-PT RADIX-2 FFT (350–600 HZ VECTOR BAND)</span>
+            <span style="color:#00f5d4;">60 FPS</span>
+          </div>
+        </div>
+
+        <!-- 4 Authentic AI/ML & Hardware Mode Buttons (Zero Videography!) -->
+        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.5rem;" class="font-mono">
+          <button type="button" onclick="switchGlobeMode(0, 'CODE-AST-1G (0.95 GB NF4)')" class="grade-btn" style="justify-content:center; padding:0.6rem;">
+            ⚡ Route Code-AST-1G
+          </button>
+          <button type="button" onclick="switchGlobeMode(1, 'HYBRID-RAG-1G (BM25 + VECTOR)')" class="grade-btn" style="justify-content:center; padding:0.6rem;">
+            🔍 Route Hybrid-RAG-1G
+          </button>
+          <button type="button" onclick="switchGlobeMode(2, 'ESP32-S3 512-PT FFT DSP')" class="grade-btn" style="justify-content:center; padding:0.6rem;">
+            🦟 512-Pt FFT Edge DSP
+          </button>
+          <button type="button" onclick="switchGlobeMode(3, 'IN-PLACE CONTINUAL LoRA ΔW')" class="grade-btn grade-btn-cta" style="justify-content:center; padding:0.6rem;">
+            🧠 In-Place LoRA ΔW
+          </button>
         </div>
       </div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- 02. SOVEREIGN LOCAL MASTER AI & IN-PLACE CONTINUAL LEARNING THESIS  -->
+    <!-- 02. SOVEREIGN LOCAL MASTER AI & EDGE TINYML ARCHITECTURE            -->
     <!-- =================================================================== -->
-    <section id="nexus-architecture" class="monolith-section">
-      <div class="sec-index-row">
+    <section id="local-ai" style="display:flex; flex-direction:column; gap:1.5rem;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:1rem;">
         <div>
-          <div class="sec-num">02 // CORE AI/ML ARCHITECTURAL THESIS</div>
-          <h2 class="sec-title">Sovereign Local Multi-Model Orchestration &amp; In-Place Evolution</h2>
-        </div>
-        <div class="font-mono" style="font-size:0.78rem; color:var(--ink-3); max-width:44ch;">
-          Replacing monolithic cloud API lock-in with a persistent ~420 MB Master Router and hot-swappable ~1 GB quantized specialist experts.
+          <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">02 // CORE AI/ML &amp; HARDWARE ARCHITECTURE</div>
+          <h2 class="font-syne" style="font-size:clamp(1.75rem, 3vw, 2.6rem); font-weight:800;">Sovereign Local Multi-Model Runtime &amp; Edge DSP Nodes</h2>
         </div>
       </div>
 
-      <!-- 5 Architecture Nodes in an Editorial Horizontal Ledger -->
-      <div class="matrix-grid">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1.1rem;">
         {% for node in ai_nodes %}
-        <div class="matrix-cell">
-          <div style="display:flex; flex-direction:column; gap:0.75rem;">
-            <div class="font-mono" style="display:flex; justify-content:space-between; align-items:center; font-size:0.74rem;">
-              <span style="color:var(--accent); font-weight:700;">[ {{ node.node_id }} ]</span>
-              <span style="padding:0.2rem 0.6rem; border-radius:6px; background:var(--bg-panel); border:1px solid var(--line); color:var(--signal);">{{ node.memory_budget }}</span>
+        <div class="card-spatial" style="display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
+          <div>
+            <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.72rem; margin-bottom:0.6rem;">
+              <span style="color:var(--accent-1); font-weight:700;">[ {{ node.node_id }} ]</span>
+              <span style="color:var(--accent-3); font-weight:700;">{{ node.memory_budget }}</span>
             </div>
-            <h3 style="font-size:1.18rem; font-weight:800;">{{ node.title }}</h3>
-            <p style="font-size:0.86rem; color:var(--ink-2);">{{ node.summary }}</p>
+            <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:0.45rem;">{{ node.title }}</h3>
+            <p style="font-size:0.84rem; color:var(--ink-2);">{{ node.summary }}</p>
           </div>
-          <div style="padding-top:0.9rem; border-top:1px solid var(--line); font-size:0.78rem; color:var(--ink-3);">
-            <div class="font-mono" style="color:var(--ink-1); font-weight:600; margin-bottom:0.25rem;">Target: {{ node.hardware_pool }}</div>
+          <div style="padding-top:0.85rem; border-top:1px solid var(--border-subtle); font-size:0.76rem; color:var(--ink-3);">
+            <div class="font-mono" style="color:var(--ink-1); font-weight:700; margin-bottom:0.2rem;">{{ node.hardware_pool }}</div>
             {{ node.mechanism_detail }}
           </div>
         </div>
@@ -585,297 +405,222 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- 03. INTERACTIVE SPLIT-SCREEN SELECTED WORKS SHOWCASE (AVEA STYLE)   -->
+    <!-- 03. INTERACTIVE 2D PHYSICS SKILL BALL PIT + 6-DOMAIN MATRIX         -->
     <!-- =================================================================== -->
-    <section id="selected-works" class="monolith-section">
-      <div class="sec-index-row">
+    <section id="physics-skills" style="display:flex; flex-direction:column; gap:1.5rem;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:1rem;">
         <div>
-          <div class="sec-num">03 // PRODUCTION SYSTEMS &amp; LIVE DEPLOYMENTS</div>
-          <h2 class="sec-title">Selected Engineering Works ({{ projects|length }})</h2>
+          <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">03 // INTERACTIVE MOTION GRAPHICS &amp; TECHNICAL ARSENAL</div>
+          <h2 class="font-syne" style="font-size:clamp(1.75rem, 3vw, 2.6rem); font-weight:800;">Interactive 2D Physics Skill Arena &amp; Domain Matrix</h2>
         </div>
-        <div style="display:flex; flex-wrap:wrap; gap:0.5rem;" class="font-mono">
-          <button type="button" data-wf="ALL" class="wf-btn pill-btn pill-btn-amber">All ({{ projects|length }})</button>
-          <button type="button" data-wf="AI/ML & LLM Systems" class="wf-btn pill-btn">AI &amp; LLMs</button>
-          <button type="button" data-wf="Full-Stack Web Platforms" class="wf-btn pill-btn">Full-Stack Web</button>
-          <button type="button" data-wf="Edge AI & TinyML Hardware" class="wf-btn pill-btn">Edge TinyML</button>
-          <button type="button" data-wf="FastAPI & Core Systems" class="wf-btn pill-btn">FastAPI &amp; Docker</button>
-        </div>
+        <button type="button" id="impulseBallsBtn" class="grade-btn grade-btn-cta font-mono" style="padding:0.65rem 1.25rem;">
+          💥 Launch Zero-Gravity Impulse
+        </button>
       </div>
 
-      <div class="explorer-grid">
-        <!-- Left 6 Cols: Interactive Numbered Accordion Index -->
-        <div class="explorer-list" id="workIndexList">
-          {% for proj in projects %}
-          <div class="work-row {% if forloop.first %}active{% endif %}" data-proj-id="{{ proj.id }}" data-proj-cat="{{ proj.get_category_display }}" onclick="selectWorkItem({{ proj.id }}, this)">
-            <div style="display:flex; align-items:baseline; gap:1rem;">
-              <span class="font-mono" style="font-size:0.82rem; color:var(--accent); font-weight:700;">{{ proj.code }}</span>
-              <div>
-                <h3 style="font-size:1.12rem; font-weight:800;">{{ proj.title }}</h3>
-                <p style="font-size:0.8rem; color:var(--ink-3); margin-top:0.2rem;">{{ proj.tech_stack_csv }}</p>
-              </div>
-            </div>
-            <div style="display:flex; align-items:center; gap:0.6rem; shrink:0;" class="font-mono">
-              {% if proj.live_server_url %}
-              <span style="padding:0.2rem 0.6rem; border-radius:999px; background:rgba(16,185,129,0.15); color:var(--signal); font-size:0.68rem; font-weight:700;">LIVE ↗</span>
-              {% endif %}
-              <span style="font-size:0.9rem; color:var(--ink-3);">→</span>
-            </div>
+      <div class="grid-12" style="align-items:stretch;">
+        <!-- Left 5 Cols: Live 2D Gravity & Mouse-Repulsion Skill Ball Pit -->
+        <div class="card-spatial" style="grid-column: span 5; display:flex; flex-direction:column; justify-content:space-between; gap:0.85rem; padding:1.25rem;">
+          <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--ink-2);">
+            <span>MOVE CURSOR TO PUSH &amp; SCATTER SKILL SPHERES</span>
+            <span style="color:var(--accent-1);">2D PHYSICS ENGINE</span>
           </div>
-          {% endfor %}
-        </div>
-
-        <!-- Right 6 Cols: Sticky Live Case-Study Inspector Stage -->
-        <div class="explorer-stage" id="workInspectorStage">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;" class="font-mono">
-            <span id="stageWorkCode" style="color:var(--accent); font-size:0.78rem; font-weight:700;">[ SYSTEM // 01 ]</span>
-            <span id="stageWorkStatus" style="padding:0.25rem 0.75rem; border-radius:999px; border:1px solid var(--line); font-size:0.72rem; color:var(--signal);">Live Production</span>
-          </div>
-
-          <h3 id="stageWorkTitle" style="font-size:1.65rem; font-weight:800; line-height:1.2; margin-bottom:0.75rem;"></h3>
-          <p id="stageWorkTagline" style="font-size:0.95rem; color:var(--ink-1); font-weight:600; margin-bottom:0.75rem;"></p>
-          <p id="stageWorkDesc" style="font-size:0.86rem; color:var(--ink-2); margin-bottom:1.25rem;"></p>
-
-          <div style="margin-bottom:1.25rem;">
-            <div class="font-mono" style="font-size:0.7rem; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem; font-weight:700;">System Architecture &amp; Engineering Decisions</div>
-            <pre id="stageWorkArch" class="font-mono" style="background:var(--bg-input); border:1px solid var(--line); border-radius:14px; padding:1rem; font-size:0.76rem; color:var(--ink-2); white-space:pre-wrap; line-height:1.6;"></pre>
-          </div>
-
-          <div id="stageWorkTags" style="display:flex; flex-wrap:wrap; gap:0.45rem; margin-bottom:1.5rem;"></div>
-
-          <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.75rem; padding-top:1rem; border-top:1px solid var(--line);">
-            <div id="stageWorkLinks" style="display:flex; flex-wrap:wrap; gap:0.6rem;"></div>
-            <button type="button" id="stageUpvoteBtn" class="pill-btn font-mono">
-              ▲ Endorse (<span id="stageUpvoteCount">0</span>)
-            </button>
+          <div style="width:100%; height:380px; border-radius:14px; overflow:hidden; background:#050811; border:1px solid var(--border-subtle);">
+            <canvas id="skillPhysicsCanvas" style="width:100%; height:100%; display:block; cursor:crosshair;"></canvas>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- =================================================================== -->
-    <!-- 04. AI/ML & FULL-STACK COMPETENCY CONSTELLATION (NO FAKE % BARS)    -->
-    <!-- =================================================================== -->
-    <section id="competency-matrix" class="monolith-section">
-      <div class="sec-index-row">
-        <div>
-          <div class="sec-num">04 // TECHNICAL ARSENAL &amp; CORE COMPETENCIES</div>
-          <h2 class="sec-title">AI/ML &amp; Full-Stack Engineering Matrix</h2>
-        </div>
-        <div class="font-mono" style="font-size:0.78rem; color:var(--ink-3);">
-          Active production capabilities across LLMs, Local Quantization, Edge TinyML, and Full-Stack Web.
-        </div>
-      </div>
-
-      <div class="matrix-grid">
-        {% for dom in skill_domains %}
-        <div class="matrix-cell">
-          <div>
-            <div class="font-mono" style="font-size:0.76rem; color:var(--accent); font-weight:700; margin-bottom:1rem; padding-bottom:0.65rem; border-bottom:1px solid var(--line);">
+        <!-- Right 7 Cols: 6-Domain Structured Matrix -->
+        <div style="grid-column: span 7; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+          {% for dom in skill_domains %}
+          <div class="card-spatial" style="padding:1.25rem;">
+            <div class="font-mono" style="font-size:0.72rem; color:var(--accent-1); font-weight:700; margin-bottom:0.75rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border-subtle);">
               {{ dom.label }}
             </div>
-            <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <div style="display:flex; flex-wrap:wrap; gap:0.4rem;">
               {% for sk in dom.skills %}
-              <span class="skill-chip">
-                <span style="width:6px; height:6px; border-radius:50%; background:var(--accent);"></span>
+              <span class="font-mono" style="padding:0.28rem 0.6rem; border-radius:7px; background:var(--bg-2); border:1px solid var(--border-subtle); font-size:0.71rem;">
                 {{ sk.name }}
               </span>
               {% endfor %}
             </div>
           </div>
-          <div class="font-mono" style="font-size:0.7rem; color:var(--ink-3); display:flex; justify-content:space-between;">
-            <span>DOMAIN VERIFIED</span>
-            <span style="color:var(--signal);">PRODUCTION ACTIVE</span>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 04. FULL-BLEED PRODUCTION WORKS & LIVE SERVER SHOWCASE              -->
+    <!-- =================================================================== -->
+    <section id="works-showcase" style="display:flex; flex-direction:column; gap:1.5rem;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:1rem;">
+        <div>
+          <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">04 // VERIFIED PRODUCTION SYSTEMS &amp; LIVE DEPLOYMENTS</div>
+          <h2 class="font-syne" style="font-size:clamp(1.75rem, 3vw, 2.6rem); font-weight:800;">Selected AI, TinyML Hardware &amp; Full-Stack Works ({{ projects|length }})</h2>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem;" class="font-mono">
+          <button type="button" data-pf="ALL" class="pf-btn grade-btn grade-btn-cta">All ({{ projects|length }})</button>
+          <button type="button" data-pf="AI_LLM" class="pf-btn grade-btn">AI &amp; LLMs</button>
+          <button type="button" data-pf="FULLSTACK" class="pf-btn grade-btn">Full-Stack Web</button>
+          <button type="button" data-pf="EDGE_TINYML" class="pf-btn grade-btn">Edge TinyML</button>
+          <button type="button" data-pf="API_SYSTEMS" class="pf-btn grade-btn">FastAPI &amp; Docker</button>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(420px, 1fr)); gap:1.25rem;">
+        {% for proj in projects %}
+        <article class="card-spatial proj-card-item" data-cat="{{ proj.category }}" style="display:flex; flex-direction:column; justify-content:space-between; gap:1.25rem;">
+          <div style="display:flex; flex-direction:column; gap:0.75rem;">
+            <div class="font-mono" style="display:flex; justify-content:space-between; align-items:center; font-size:0.74rem;">
+              <span style="color:var(--accent-1); font-weight:800;">[ SYSTEM // {{ proj.code }} ]</span>
+              <span style="padding:0.2rem 0.65rem; border-radius:999px; border:1px solid var(--border); font-size:0.68rem; font-weight:700; color:var(--accent-1);">
+                {{ proj.status_label }}
+              </span>
+            </div>
+
+            <h3 style="font-size:1.3rem; font-weight:800; line-height:1.25;">{{ proj.title }}</h3>
+            <p style="font-size:0.88rem; color:var(--ink-1); font-weight:600;">{{ proj.tagline }}</p>
+            <p style="font-size:0.82rem; color:var(--ink-2);">{{ proj.description }}</p>
+
+            <pre class="font-mono" style="background:var(--bg-input); border:1px solid var(--border-subtle); border-radius:12px; padding:0.85rem; font-size:0.72rem; color:var(--ink-2); white-space:pre-wrap;">{{ proj.architecture_breakdown }}</pre>
+
+            <div style="display:flex; flex-wrap:wrap; gap:0.4rem;">
+              {% for tag in proj.tech_tags %}
+              <span class="font-mono" style="padding:0.22rem 0.55rem; border-radius:6px; background:var(--bg-2); font-size:0.7rem;">{{ tag }}</span>
+              {% endfor %}
+            </div>
           </div>
+
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.75rem; padding-top:1rem; border-top:1px solid var(--border-subtle);" class="font-mono">
+            <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+              {% if proj.live_server_url %}
+              <a href="{{ proj.live_server_url }}" target="_blank" rel="noopener" class="grade-btn grade-btn-cta" style="padding:0.55rem 1rem;">
+                🟢 Launch Live Website ↗
+              </a>
+              {% endif %}
+              {% if proj.github_repo_url %}
+              <a href="{{ proj.github_repo_url }}" target="_blank" rel="noopener" class="grade-btn" style="padding:0.55rem 1rem;">
+                GitHub Code ↗
+              </a>
+              {% endif %}
+            </div>
+            <button type="button" onclick="upvoteWork({{ proj.id }}, this)" class="grade-btn">
+              ▲ <span class="upv-num">{{ proj.upvotes }}</span>
+            </button>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 05. CREDENTIALS & LEADERSHIP TIMELINE                               -->
+    <!-- =================================================================== -->
+    <section id="credentials" class="grid-12">
+      <div style="grid-column: span 6; display:flex; flex-direction:column; gap:1rem;">
+        <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">05A // VERIFIED CERTIFICATIONS &amp; HACKATHONS</div>
+        {% for c in courses %}
+        <div class="card-spatial" style="padding:1.35rem;">
+          <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--accent-1); font-weight:700;">
+            <span>{{ c.issuer }}</span>
+            <span style="color:var(--ink-3);">{{ c.completion_date }}</span>
+          </div>
+          <h3 style="font-size:1.05rem; font-weight:800; margin:0.3rem 0;">{{ c.title }}</h3>
+          <p style="font-size:0.82rem; color:var(--ink-2);">{{ c.key_takeaways }}</p>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div style="grid-column: span 6; display:flex; flex-direction:column; gap:1rem;">
+        <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">05B // LEADERSHIP &amp; ACADEMIC TRAJECTORY</div>
+        {% for item in timeline %}
+        <div class="card-spatial" style="padding:1.35rem;">
+          <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--accent-3); font-weight:700;">
+            <span>{{ item.period }}</span>
+            <span>{{ item.badge_metric }}</span>
+          </div>
+          <h3 style="font-size:1.05rem; font-weight:800; margin:0.3rem 0;">{{ item.role }}</h3>
+          <div class="font-mono" style="font-size:0.74rem; color:var(--ink-3); margin-bottom:0.3rem;">{{ item.organization }}</div>
+          <p style="font-size:0.82rem; color:var(--ink-2);">{{ item.impact_summary }}</p>
         </div>
         {% endfor %}
       </div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- 05. VERIFIED CREDENTIALS, COURSES & LEADERSHIP TIMELINE             -->
+    <!-- 06. DIRECT COLLABORATION & CONTACT                                  -->
     <!-- =================================================================== -->
-    <section id="credentials" class="monolith-section">
-      <div class="sec-index-row">
-        <div>
-          <div class="sec-num">05 // VERIFIED CREDENTIALS &amp; TRAJECTORY</div>
-          <h2 class="sec-title">Courses, Hackathons &amp; Leadership</h2>
+    <section id="contact" class="grid-12">
+      <div class="card-spatial" style="grid-column: span 5; display:flex; flex-direction:column; justify-content:space-between;">
+        <div style="display:flex; flex-direction:column; gap:0.85rem;">
+          <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">06 // DIRECT COLLABORATION</div>
+          <h2 class="font-syne" style="font-size:1.85rem; font-weight:800;">Initiate an Engineering or Research Dialogue</h2>
+          <p style="font-size:0.88rem; color:var(--ink-2);">
+            Open to AI/ML engineering roles, Edge TinyML research collaborations, and full-stack web architecture.
+          </p>
+          <div class="font-mono" style="font-size:0.78rem; display:flex; flex-direction:column; gap:0.5rem; padding-top:0.5rem;">
+            <div>Primary: <a href="mailto:{{ profile.primary_email }}" style="color:var(--accent-1); font-weight:700;">{{ profile.primary_email }}</a></div>
+            <div>Secondary: <a href="mailto:{{ profile.secondary_email }}" style="color:var(--accent-1);">{{ profile.secondary_email }}</a></div>
+            <div>Location: {{ profile.location }}</div>
+          </div>
         </div>
+        <div class="font-mono" style="font-size:0.72rem; color:var(--accent-1);">● REAL-TIME DATABASE INBOX ACTIVE</div>
       </div>
 
-      <div style="display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); gap:2rem;">
-        <div style="grid-column: span 6; display:flex; flex-direction:column; gap:1rem;">
-          <div class="font-mono" style="font-size:0.78rem; color:var(--accent); font-weight:700;">VERIFIED CERTIFICATIONS &amp; COURSES</div>
-          {% for c in courses %}
-          <div class="matrix-cell" style="padding:1.35rem;">
-            <div style="display:flex; justify-content:space-between; font-size:0.74rem;" class="font-mono">
-              <span style="color:var(--signal); font-weight:700;">{{ c.issuer }}</span>
-              <span style="color:var(--ink-3);">{{ c.completion_date }}</span>
-            </div>
-            <h3 style="font-size:1.05rem; font-weight:800; margin:0.35rem 0;">{{ c.title }}</h3>
-            <p style="font-size:0.82rem; color:var(--ink-2);">{{ c.key_takeaways }}</p>
-            {% if c.credential_url %}
-            <a href="{{ c.credential_url }}" target="_blank" rel="noopener" class="font-mono" style="font-size:0.74rem; color:var(--accent); font-weight:700; margin-top:0.4rem;">
-              Inspect Verification / Repository ↗
-            </a>
-            {% endif %}
+      <div class="card-spatial" style="grid-column: span 7;">
+        <form id="ajaxContactForm" style="display:flex; flex-direction:column; gap:0.9rem;">
+          {% csrf_token %}
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.9rem;">
+            <input type="text" name="sender_name" required placeholder="Your Name *" class="input-box" />
+            <input type="email" name="sender_email" required placeholder="Your Email *" class="input-box" />
           </div>
-          {% endfor %}
-        </div>
-
-        <div style="grid-column: span 6; display:flex; flex-direction:column; gap:1rem;">
-          <div class="font-mono" style="font-size:0.78rem; color:var(--accent); font-weight:700;">LEADERSHIP &amp; ACADEMIC TIMELINE</div>
-          {% for item in timeline %}
-          <div class="matrix-cell" style="padding:1.35rem;">
-            <div style="display:flex; justify-content:space-between; font-size:0.74rem;" class="font-mono">
-              <span style="color:var(--accent); font-weight:700;">{{ item.period }}</span>
-              {% if item.badge_metric %}
-              <span style="padding:0.15rem 0.55rem; border-radius:6px; border:1px solid var(--line); color:var(--ink-2);">{{ item.badge_metric }}</span>
-              {% endif %}
-            </div>
-            <h3 style="font-size:1.05rem; font-weight:800; margin:0.35rem 0;">{{ item.role }}</h3>
-            <div class="font-mono" style="font-size:0.75rem; color:var(--ink-3); margin-bottom:0.35rem;">{{ item.organization }}</div>
-            <p style="font-size:0.82rem; color:var(--ink-2);">{{ item.impact_summary }}</p>
+          <input type="text" name="subject" required placeholder="Subject / Role / Project Scope *" class="input-box" />
+          <textarea name="message" rows="4" required placeholder="Your Message *" class="input-box"></textarea>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span id="contactFormStatus" class="font-mono" style="font-size:0.76rem; color:var(--accent-1); font-weight:700;"></span>
+            <button type="submit" class="grade-btn grade-btn-cta font-mono" style="padding:0.85rem 1.75rem; font-size:0.8rem;">
+              Transmit Message →
+            </button>
           </div>
-          {% endfor %}
-        </div>
+        </form>
       </div>
     </section>
 
-    <!-- =================================================================== -->
-    <!-- 06. DIRECT COLLABORATION & HIRE DISPATCH                            -->
-    <!-- =================================================================== -->
-    <section id="collaborate" class="monolith-section" style="border-bottom:none;">
-      <div class="sec-index-row">
-        <div>
-          <div class="sec-num">06 // DIRECT TRANSMISSION</div>
-          <h2 class="sec-title">Initiate an AI/ML or Full-Stack Collaboration</h2>
-        </div>
-      </div>
-
-      <div style="display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); gap:2rem;">
-        <div style="grid-column: span 5;" class="matrix-cell">
-          <div style="display:flex; flex-direction:column; gap:1rem;">
-            <h3 style="font-size:1.35rem; font-weight:800;">Direct Engineering Channels</h3>
-            <p style="font-size:0.88rem; color:var(--ink-2);">
-              Available for AI/ML engineering roles, local LLM/multimodal research, and full-stack web architecture.
-            </p>
-            <div class="font-mono" style="font-size:0.8rem; display:flex; flex-direction:column; gap:0.6rem; padding-top:0.5rem;">
-              <div>Primary: <a href="mailto:{{ profile.primary_email }}" style="color:var(--accent); font-weight:700;">{{ profile.primary_email }}</a></div>
-              <div>Secondary: <a href="mailto:{{ profile.secondary_email }}" style="color:var(--accent);">{{ profile.secondary_email }}</a></div>
-              <div>Location: {{ profile.location }}</div>
-            </div>
-          </div>
-          <div class="font-mono" style="font-size:0.72rem; color:var(--signal);">● DIRECT DATABASE DISPATCH ACTIVE</div>
-        </div>
-
-        <div style="grid-column: span 7;" class="matrix-cell">
-          <form id="ajaxContactForm" style="display:flex; flex-direction:column; gap:1rem;">
-            {% csrf_token %}
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
-              <div>
-                <label class="font-mono" style="font-size:0.72rem; color:var(--ink-3); display:block; margin-bottom:0.35rem;">YOUR NAME *</label>
-                <input type="text" name="sender_name" required placeholder="Recruiter / Collaborator Name" class="field-input" />
-              </div>
-              <div>
-                <label class="font-mono" style="font-size:0.72rem; color:var(--ink-3); display:block; margin-bottom:0.35rem;">YOUR EMAIL *</label>
-                <input type="email" name="sender_email" required placeholder="name@organization.com" class="field-input" />
-              </div>
-            </div>
-            <div>
-              <label class="font-mono" style="font-size:0.72rem; color:var(--ink-3); display:block; margin-bottom:0.35rem;">SUBJECT / ROLE *</label>
-              <input type="text" name="subject" required placeholder="AI/ML Engineer Role / Research / Full-Stack Contract" class="field-input" />
-            </div>
-            <div>
-              <label class="font-mono" style="font-size:0.72rem; color:var(--ink-3); display:block; margin-bottom:0.35rem;">MESSAGE *</label>
-              <textarea name="message" rows="4" required placeholder="Share project scope, role details, or timeline..." class="field-input"></textarea>
-            </div>
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
-              <span id="contactFormStatus" class="font-mono" style="font-size:0.78rem; color:var(--signal); font-weight:700;"></span>
-              <button type="submit" class="pill-btn pill-btn-amber" style="padding:0.85rem 1.75rem; font-size:0.82rem;">
-                Transmit Message →
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <!-- SAKIB-OS INTERACTIVE COMMAND SHELL MODAL -->
-  <div id="shellModal" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.82); backdrop-filter:blur(12px); align-items:center; justify-content:center; padding:1rem;">
-    <div style="max-width:680px; width:100%; background:#0a0b0f; border:1px solid var(--line-strong); border-radius:20px; overflow:hidden; box-shadow:var(--shadow-elev); color:#f5f3ef;" class="font-mono">
-      <div style="padding:0.85rem 1.25rem; background:#12141c; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center; font-size:0.75rem;">
-        <span style="color:var(--accent); font-weight:700;">sakib@nexuslocal-os:~ (Interactive Engineering Shell)</span>
-        <button type="button" onclick="document.getElementById('shellModal').style.display='none'" style="color:#94a3b8;">✕ ESC</button>
-      </div>
-      <div id="shellOutput" style="padding:1.25rem; height:260px; overflow-y:auto; font-size:0.76rem; display:flex; flex-direction:column; gap:0.5rem;">
-        <div style="color:var(--signal);">Sakib-OS v8.0 Initialized. Type <code>help</code>, <code>whoami</code>, <code>nexuslocal</code>, <code>works</code>, <code>stack</code>, or <code>clear</code>.</div>
-      </div>
-      <form id="shellForm" style="padding:0.85rem 1.25rem; border-top:1px solid rgba(255,255,255,0.08); display:flex; gap:0.6rem; background:#06070a; font-size:0.78rem;">
-        <span style="color:var(--accent); font-weight:700;">sakib@os:~$</span>
-        <input id="shellInput" type="text" placeholder="Enter command..." style="flex:1; background:transparent; border:none; color:#fff; outline:none; font-family:inherit;" />
-      </form>
-    </div>
-  </div>
-
-  <footer style="border-top:1px solid var(--line); padding:2.5rem 0; font-size:0.78rem; color:var(--ink-3);" class="font-mono">
-    <div class="shell" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem;">
-      <div>© 2026 {{ profile.full_name }} — {{ profile.role_title }}</div>
-      <div style="display:flex; gap:1.25rem;">
-        <a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>
-        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener">Kaggle</a>
-      </div>
+  <footer class="full-screen-bleed font-mono" style="border-top:1px solid var(--border-subtle); padding-top:2rem; padding-bottom:2rem; font-size:0.75rem; color:var(--ink-3); display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem;">
+    <div>© 2026 {{ profile.full_name }} • AI/ML, Edge TinyML &amp; Full-Stack Systems</div>
+    <div style="display:flex; gap:1.25rem;">
+      <a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>
+      <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener">Kaggle</a>
     </div>
   </footer>
 
   <script>
-    const WORKS_DB = {{ projects_json|safe }};
-    let activeWorkId = WORKS_DB.length > 0 ? WORKS_DB[0].id : 0;
-
-    // 1. Live Dhaka Clock & Theme Switcher
-    setInterval(function () {
-      const el = document.getElementById("dhakaClock");
-      if (el) el.textContent = "DAC • " + new Date().toLocaleTimeString("en-US", { hour12: false }) + " UTC+6";
-    }, 1000);
-
-    document.getElementById("themeSwitchBtn").onclick = function () {
-      const root = document.documentElement;
-      root.setAttribute("data-theme", root.getAttribute("data-theme") === "light" ? "dark" : "light");
+    // 1. Studio Color-Grade Switcher
+    window.setGrade = function (grade) {
+      document.documentElement.setAttribute("data-grade", grade);
     };
 
-    // 2. Interactive Sovereign Local AI Hardware Simulator & 60FPS 3D Tensor Field
-    const AI_MODES = [
-      { label: "ACTIVE: MASTER ROUTER (420 MB) + CODE-1G (0.95 GB NF4)", ramText: "1.37 GB / 8.00 GB USED", speed: "68.4 tok/s", segW: "32%", segName: "CODE-1G (0.95G)", segCol: "#38bdf8", deltaW: "8%" },
-      { label: "ACTIVE: MASTER ROUTER (420 MB) + VISION-1G (1.05 GB FLOW)", ramText: "1.47 GB / 8.00 GB USED", speed: "42.0 step/s", segW: "36%", segName: "VISION-1G (1.05G)", segCol: "#10b981", deltaW: "8%" },
-      { label: "ACTIVE: MASTER ROUTER (420 MB) + VIDEO-1G (1.15 GB VAE)", ramText: "1.57 GB / 8.00 GB USED", speed: "24.0 fps", segW: "40%", segName: "VIDEO-1G (1.15G)", segCol: "#a855f7", deltaW: "10%" },
-      { label: "IN-PLACE SINGLE-NODE CONTINUAL SELF-TRAINING (LoRA ΔW MERGE)", ramText: "1.42 GB / 8.00 GB (ZERO EXTRA NODE BLOAT)", speed: "ΔW MERGING", segW: "28%", segName: "ACTIVE NODE", segCol: "#f59e0b", deltaW: "24%" }
-    ];
-    let currentAiMode = 0;
-
-    window.dispatchLocalAI = function (modeIdx) {
-      currentAiMode = modeIdx;
-      const m = AI_MODES[modeIdx] || AI_MODES[0];
-      document.getElementById("simActiveNodeLabel").textContent = m.label;
-      document.getElementById("simRamTotalText").textContent = m.ramText;
-      document.getElementById("simSpeedBadge").textContent = m.speed;
-      const segE = document.getElementById("segExpert");
-      segE.style.width = m.segW;
-      segE.style.background = m.segCol;
-      segE.textContent = m.segName;
-      document.getElementById("segDelta").style.width = m.deltaW;
+    // 2. Engine 1: 3D Geodesic AI Sphere + Live 512-Point FFT Bio-Acoustic Spectrum Analyzer
+    let activeGlobeMode = 0;
+    window.switchGlobeMode = function (idx, label) {
+      activeGlobeMode = idx;
+      document.getElementById("globeModeLabel").textContent = label;
     };
 
-    (function initSovereignCanvas() {
-      const canvas = document.getElementById("sovereignNeuralCanvas");
+    (function initHeroGlobeAndFFT() {
+      const canvas = document.getElementById("hero3dGlobeCanvas");
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
-      let w = 480, h = 225, yaw = 0.5, pitch = 0.35, dragging = false, lx = 0, ly = 0;
+      let w = 480, h = 290, yaw = 0.3, pitch = 0.25, dragging = false, lx = 0, ly = 0;
 
       function resize() {
         const r = canvas.parentElement.getBoundingClientRect();
         w = Math.max(280, r.width || 460);
-        h = Math.max(200, r.height || 225);
+        h = Math.max(240, r.height || 290);
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
         canvas.width = w * dpr;
         canvas.height = h * dpr;
@@ -889,165 +634,236 @@
       window.addEventListener("pointermove", function (e) {
         if (!dragging) return;
         yaw += (e.clientX - lx) * 0.01;
-        pitch = Math.max(0.1, Math.min(1.1, pitch + (e.clientY - ly) * 0.008));
+        pitch = Math.max(-0.6, Math.min(0.8, pitch + (e.clientY - ly) * 0.008));
         lx = e.clientX; ly = e.clientY;
       });
+
+      // Generate 3D Geodesic Sphere Points
+      const spherePts = [];
+      for (let lat = -60; lat <= 60; lat += 30) {
+        for (let lon = 0; lon < 360; lon += 30) {
+          const rLat = (lat * Math.PI) / 180, rLon = (lon * Math.PI) / 180;
+          spherePts.push([
+            Math.cos(rLat) * Math.cos(rLon) * 86,
+            Math.sin(rLat) * 86,
+            Math.cos(rLat) * Math.sin(rLon) * 86
+          ]);
+        }
+      }
+
+      const nodes = [
+        { name: "CODE-AST-1G", col: "#00f5d4", ang: 0 },
+        { name: "HYBRID-RAG-1G", col: "#818cf8", ang: 1.57 },
+        { name: "512-PT-FFT-DSP", col: "#f59e0b", ang: 3.14 },
+        { name: "CONTINUAL-LoRA", col: "#10b981", ang: 4.71 }
+      ];
 
       function proj(x, y, z) {
         const cy = Math.cos(yaw), sy = Math.sin(yaw);
         const x1 = x * cy - z * sy, z1 = z * cy + x * sy;
         const cp = Math.cos(pitch), sp = Math.sin(pitch);
         const y2 = y * cp - z1 * sp, z2 = z1 * cp + y * sp;
-        const f = 320 / (320 + z2 + 110);
-        return { x: w / 2 + x1 * f, y: h / 2 + y2 * f + 6, s: f };
+        const f = 340 / (340 + z2 + 120);
+        return { x: w / 2 + x1 * f, y: h / 2 - 18 + y2 * f, s: f, z: z2 };
       }
 
-      const satellites = [
-        { name: "CODE-1G", col: "#38bdf8" },
-        { name: "VISION-1G", col: "#10b981" },
-        { name: "VIDEO-1G", col: "#a855f7" },
-        { name: "REASON-1G", col: "#f59e0b" }
-      ];
+      function render() {
+        requestAnimationFrame(render);
+        const t = Date.now() * 0.002;
+        if (!dragging) yaw += 0.007;
 
-      function loop() {
-        requestAnimationFrame(loop);
-        const t = Date.now() * 0.0018;
-        if (!dragging) yaw += (currentAiMode === 3 ? 0.018 : 0.006);
-
-        ctx.fillStyle = "#050609";
+        ctx.fillStyle = "#040710";
         ctx.fillRect(0, 0, w, h);
 
-        // Draw 3D Memory Bus Rings
-        [68, 112].forEach(function (rad, idx) {
+        // Draw Geodesic Neural Sphere
+        const projected = spherePts.map(function (p) { return proj(p[0], p[1], p[2]); });
+        ctx.fillStyle = "rgba(0, 245, 212, 0.45)";
+        projected.forEach(function (p) {
           ctx.beginPath();
-          for (let i = 0; i <= 60; i++) {
-            const a = (i / 60) * Math.PI * 2;
-            const p = proj(Math.cos(a) * rad, 0, Math.sin(a) * rad);
-            if (i === 0) ctx.moveTo(p.x, p.y);
-            else ctx.lineTo(p.x, p.y);
-          }
-          ctx.strokeStyle = idx === 0 ? "rgba(245, 158, 11, 0.28)" : "rgba(255, 255, 255, 0.08)";
-          ctx.lineWidth = 1.2;
-          ctx.stroke();
+          ctx.arc(p.x, p.y, 1.8 * p.s, 0, Math.PI * 2);
+          ctx.fill();
         });
 
         const c0 = proj(0, 0, 0);
-
-        satellites.forEach(function (sat, i) {
-          const a = (i * Math.PI) / 2 + t * 0.65;
-          const dist = currentAiMode === i ? 82 : 112;
-          const sx = Math.cos(a) * dist, sy = Math.sin(t * 2 + i) * 12, sz = Math.sin(a) * dist;
-          const sp = proj(sx, sy, sz);
-          const active = (currentAiMode === i || currentAiMode === 3);
+        nodes.forEach(function (n, i) {
+          const a = n.ang + t * 0.7;
+          const nx = Math.cos(a) * 122, ny = Math.sin(t * 2 + i) * 14, nz = Math.sin(a) * 122;
+          const np = proj(nx, ny, nz);
+          const isSel = (activeGlobeMode === i);
 
           ctx.beginPath();
           ctx.moveTo(c0.x, c0.y);
-          ctx.lineTo(sp.x, sp.y);
-          ctx.strokeStyle = active ? sat.col : "rgba(148, 163, 184, 0.2)";
-          ctx.lineWidth = active ? 2.2 : 1;
+          ctx.lineTo(np.x, np.y);
+          ctx.strokeStyle = isSel ? n.col : "rgba(148, 163, 184, 0.22)";
+          ctx.lineWidth = isSel ? 2.2 : 1;
           ctx.stroke();
 
-          if (active) {
-            const prog = (Date.now() * 0.0028) % 1;
-            const dProg = currentAiMode === 3 ? (1 - prog) : prog;
-            const px = c0.x + (sp.x - c0.x) * dProg;
-            const py = c0.y + (sp.y - c0.y) * dProg;
-            ctx.fillStyle = "#ffffff";
-            ctx.beginPath();
-            ctx.arc(px, py, 3.2, 0, Math.PI * 2);
-            ctx.fill();
-          }
-
-          ctx.fillStyle = active ? sat.col : "#1e293b";
+          ctx.fillStyle = n.col;
           ctx.beginPath();
-          ctx.arc(sp.x, sp.y, (active ? 10 : 7) * sp.s, 0, Math.PI * 2);
+          ctx.arc(np.x, np.y, (isSel ? 9 : 6) * np.s, 0, Math.PI * 2);
           ctx.fill();
 
-          ctx.fillStyle = active ? "#ffffff" : "#94a3b8";
+          ctx.fillStyle = isSel ? "#ffffff" : "#94a3b8";
           ctx.font = "700 10px 'JetBrains Mono', monospace";
-          ctx.fillText(sat.name, sp.x - 22, sp.y - 12);
+          ctx.fillText(n.name, np.x - 34, np.y - 12);
         });
 
-        // Central Master AI Core
-        const coreR = (currentAiMode === 3 ? 22 + Math.sin(t * 5) * 4 : 19) * c0.s;
-        ctx.fillStyle = "rgba(245, 158, 11, 0.22)";
-        ctx.strokeStyle = "#f59e0b";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(c0.x, c0.y, coreR, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = "#fde68a";
-        ctx.font = "700 10px 'JetBrains Mono', monospace";
-        ctx.fillText("MASTER ROUTER", c0.x - 42, c0.y + coreR + 14);
+        // Bottom 512-Point Radix-2 FFT Bio-Acoustic Spectrum Analyzer Bars
+        const barCount = 36;
+        const barW = (w - 24) / barCount;
+        for (let b = 0; b < barCount; b++) {
+          const wave = Math.abs(Math.sin(t * 3 + b * 0.35) * Math.cos(t * 1.4 - b * 0.2));
+          const bh = 8 + wave * (activeGlobeMode === 2 ? 46 : 26);
+          ctx.fillStyle = (b >= 12 && b <= 22) ? "#00f5d4" : "rgba(99, 102, 241, 0.55)";
+          ctx.fillRect(12 + b * barW, h - 24 - bh, barW - 2, bh);
+        }
       }
-      loop();
+      render();
     })();
 
-    // 3. Interactive Split-Screen Work Showcase Controller
-    window.selectWorkItem = function (projId, rowEl) {
-      const p = WORKS_DB.find(function (x) { return x.id === projId; }) || WORKS_DB[0];
-      if (!p) return;
-      activeWorkId = p.id;
-      document.querySelectorAll(".work-row").forEach(function (r) { r.classList.remove("active"); });
-      if (rowEl) rowEl.classList.add("active");
+    // 3. Engine 3: Interactive 2D Gravity & Mouse-Repulsion Physics Skill Ball Pit
+    (function initSkillPhysicsArena() {
+      const canvas = document.getElementById("skillPhysicsCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      let cw = 480, ch = 380;
+      const labels = [
+        "PyTorch", "Django 5", "FastAPI", "Next.js 15", "TypeScript",
+        "QLoRA NF4", "llama.cpp", "ESP32-S3", "512-Pt FFT", "TinyML",
+        "PostgreSQL", "Docker", "Prisma", "LangGraph", "Hybrid RAG",
+        "Python 3.12", "C++20", "ONNX", "Three.js", "Tailwind"
+      ];
+      const colors = ["#00f5d4", "#6366f1", "#f59e0b", "#10b981", "#38bdf8", "#a855f7"];
+      const balls = [];
+      let mx = -999, my = -999;
 
-      document.getElementById("stageWorkCode").textContent = "[ SYSTEM // " + p.code + " • " + p.category.toUpperCase() + " ]";
-      document.getElementById("stageWorkStatus").textContent = p.status;
-      document.getElementById("stageWorkTitle").textContent = p.title;
-      document.getElementById("stageWorkTagline").textContent = p.tagline;
-      document.getElementById("stageWorkDesc").textContent = p.description;
-      document.getElementById("stageWorkArch").textContent = p.architecture;
-      document.getElementById("stageUpvoteCount").textContent = p.upvotes;
+      function resize() {
+        const r = canvas.parentElement.getBoundingClientRect();
+        cw = Math.max(280, r.width || 460);
+        ch = Math.max(320, r.height || 380);
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = cw * dpr;
+        canvas.height = ch * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener("resize", resize);
 
-      const tagsBox = document.getElementById("stageWorkTags");
-      tagsBox.innerHTML = "";
-      (p.tags || []).forEach(function (t) {
-        tagsBox.innerHTML += '<span class="skill-chip">' + t + '</span>';
+      labels.forEach(function (lbl, i) {
+        balls.push({
+          label: lbl,
+          r: 26 + (lbl.length > 9 ? 5 : 0),
+          x: 45 + (i % 5) * 82,
+          y: 40 + Math.floor(i / 5) * 65,
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 2,
+          color: colors[i % colors.length]
+        });
       });
 
-      const linksBox = document.getElementById("stageWorkLinks");
-      linksBox.innerHTML = "";
-      if (p.liveUrl) {
-        linksBox.innerHTML += '<a href="' + p.liveUrl + '" target="_blank" rel="noopener" class="pill-btn pill-btn-amber" style="padding:0.65rem 1.2rem;">🟢 Launch Live Server ↗</a>';
-      }
-      if (p.githubUrl) {
-        linksBox.innerHTML += '<a href="' + p.githubUrl + '" target="_blank" rel="noopener" class="pill-btn" style="padding:0.65rem 1.2rem;">GitHub Repository ↗</a>';
-      }
-    };
+      canvas.addEventListener("pointermove", function (e) {
+        const rect = canvas.getBoundingClientRect();
+        mx = e.clientX - rect.left;
+        my = e.clientY - rect.top;
+      });
+      canvas.addEventListener("pointerleave", function () { mx = -999; my = -999; });
 
-    document.getElementById("stageUpvoteBtn").onclick = function () {
-      if (!activeWorkId) return;
-      fetch("/api/projects/" + activeWorkId + "/upvote/", {
+      document.getElementById("impulseBallsBtn").onclick = function () {
+        balls.forEach(function (b) {
+          b.vy = -8 - Math.random() * 6;
+          b.vx = (Math.random() - 0.5) * 10;
+        });
+      };
+
+      function stepPhysics() {
+        requestAnimationFrame(stepPhysics);
+        ctx.fillStyle = "#050811";
+        ctx.fillRect(0, 0, cw, ch);
+
+        for (let i = 0; i < balls.length; i++) {
+          const b = balls[i];
+          b.vy += 0.18; // Gravity
+          // Mouse repulsion
+          const dxM = b.x - mx, dyM = b.y - my;
+          const distM = Math.sqrt(dxM * dxM + dyM * dyM);
+          if (distM < b.r + 48 && distM > 1) {
+            const force = (b.r + 48 - distM) * 0.18;
+            b.vx += (dxM / distM) * force;
+            b.vy += (dyM / distM) * force;
+          }
+
+          b.x += b.vx;
+          b.y += b.vy;
+          b.vx *= 0.985;
+          b.vy *= 0.985;
+
+          // Wall bounce
+          if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx) * 0.8; }
+          if (b.x + b.r > cw) { b.x = cw - b.r; b.vx = -Math.abs(b.vx) * 0.8; }
+          if (b.y - b.r < 0) { b.y = b.r; b.vy = Math.abs(b.vy) * 0.8; }
+          if (b.y + b.r > ch) { b.y = ch - b.r; b.vy = -Math.abs(b.vy) * 0.72; }
+
+          // Ball-to-ball collision
+          for (let j = i + 1; j < balls.length; j++) {
+            const b2 = balls[j];
+            const dx = b2.x - b.x, dy = b2.y - b.y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            const minD = b.r + b2.r;
+            if (d < minD && d > 0.1) {
+              const overlap = (minD - d) * 0.5;
+              const nx = dx / d, ny = dy / d;
+              b.x -= nx * overlap; b.y -= ny * overlap;
+              b2.x += nx * overlap; b2.y += ny * overlap;
+              const kx = (b.vx - b2.vx), ky = (b.vy - b2.vy);
+              const p = 2 * (nx * kx + ny * ky) / 2;
+              b.vx -= p * nx * 0.8; b.vy -= p * ny * 0.8;
+              b2.vx += p * nx * 0.8; b2.vy += p * ny * 0.8;
+            }
+          }
+
+          // Render Sphere
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
+          ctx.fill();
+          ctx.lineWidth = 1.8;
+          ctx.strokeStyle = b.color;
+          ctx.stroke();
+
+          ctx.fillStyle = "#f8fafc";
+          ctx.font = "700 10px 'JetBrains Mono', monospace";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(b.label, b.x, b.y);
+        }
+      }
+      stepPhysics();
+    })();
+
+    // 4. Project Filter & Upvote
+    document.querySelectorAll(".pf-btn").forEach(function (btn) {
+      btn.onclick = function () {
+        const cat = btn.getAttribute("data-pf");
+        document.querySelectorAll(".pf-btn").forEach(function (b) { b.className = "pf-btn grade-btn"; });
+        btn.className = "pf-btn grade-btn grade-btn-cta";
+        document.querySelectorAll(".proj-card-item").forEach(function (c) {
+          c.style.display = (cat === "ALL" || c.getAttribute("data-cat") === cat) ? "" : "none";
+        });
+      };
+    });
+
+    window.upvoteWork = function (pk, btn) {
+      fetch("/api/projects/" + pk + "/upvote/", {
         method: "POST",
         headers: { "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value }
       })
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        if (d.ok) {
-          document.getElementById("stageUpvoteCount").textContent = d.upvotes;
-          const item = WORKS_DB.find(function (x) { return x.id === activeWorkId; });
-          if (item) item.upvotes = d.upvotes;
-        }
+        if (d.ok) btn.querySelector(".upv-num").textContent = d.upvotes;
       });
     };
 
-    document.querySelectorAll(".wf-btn").forEach(function (btn) {
-      btn.onclick = function () {
-        const cat = btn.getAttribute("data-wf");
-        document.querySelectorAll(".wf-btn").forEach(function (b) { b.className = "wf-btn pill-btn"; });
-        btn.className = "wf-btn pill-btn pill-btn-amber";
-        document.querySelectorAll(".work-row").forEach(function (r) {
-          r.style.display = (cat === "ALL" || r.getAttribute("data-proj-cat") === cat) ? "" : "none";
-        });
-      };
-    });
-
-    if (WORKS_DB.length > 0) {
-      selectWorkItem(WORKS_DB[0].id, document.querySelector(".work-row"));
-    }
-
-    // 4. AJAX Contact Form
+    // 5. AJAX Contact Form
     document.getElementById("ajaxContactForm").addEventListener("submit", function (e) {
       e.preventDefault();
       const form = e.target;
@@ -1063,32 +879,6 @@
         if (d.ok) form.reset();
       });
     });
-
-    // 5. Sakib-OS Interactive Shell Modal
-    document.getElementById("openShellBtn").onclick = function () {
-      document.getElementById("shellModal").style.display = "flex";
-      document.getElementById("shellInput").focus();
-    };
-    document.getElementById("shellForm").onsubmit = function (e) {
-      e.preventDefault();
-      const inp = document.getElementById("shellInput");
-      const out = document.getElementById("shellOutput");
-      const cmd = inp.value.trim().toLowerCase();
-      inp.value = "";
-      if (!cmd) return;
-      out.innerHTML += '<div style="color:var(--accent);">sakib@os:~$ ' + cmd + '</div>';
-      if (cmd === "clear") { out.innerHTML = ""; return; }
-      const map = {
-        "help": "Commands: whoami, nexuslocal, works, stack, contact, clear",
-        "whoami": "Md Najmus Sakib Rahatul — AI/ML Systems Engineer & Full-Stack Architect.",
-        "nexuslocal": "Resident Master AI Router (420 MB RAM) + ~1 GB 4-bit NF4 quantized specialist models (Code, Vision, Video, Reason) + In-Place Single-Node Continual Learning.",
-        "works": "01 NexusLocal | 02 Aloron Shop (aloron-shop.vercel.app) | 03 Campus Lost & Found (baiust-campus-lost-and-found.vercel.app) | 04 Polyglot/NexusCode 3D (codequest-bd.vercel.app)",
-        "stack": "PyTorch, Transformers, QLoRA/NF4, llama.cpp, vLLM, ONNX, ExecuTorch, LangGraph, Django 5, FastAPI, Next.js, ESP32-S3 TinyML, PostgreSQL.",
-        "contact": "Email: mdnajmussakib2003@gmail.com | GitHub: github.com/Sakib20050413"
-      };
-      out.innerHTML += '<div style="color:#e2e8f0;">' + (map[cmd] || "Unknown command. Type 'help'.") + '</div>';
-      out.scrollTop = out.scrollHeight;
-    };
   </script>
 </body>
 </html>

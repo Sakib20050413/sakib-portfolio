@@ -20,7 +20,7 @@ from .models import (
 def ensure_db_ready_and_seeded():
     """Auto-heals and seeds the database on Vercel cold start if tables or rows are missing."""
     try:
-        if ProfileConfig.objects.count() == 0 or Project.objects.count() == 0:
+        if ProfileConfig.objects.count() == 0 or Project.objects.count() == 0 or AIArchitectureNode.objects.filter(node_id__icontains="PHOTO").exists():
             from seed_portfolio import run_seed
             run_seed()
     except (OperationalError, ProgrammingError):
