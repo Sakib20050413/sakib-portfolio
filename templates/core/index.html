@@ -60,24 +60,86 @@
       --text-faint: #64748b;
       --accent: #4f46e5;
       --accent-hover: #4338ca;
+      --accent-text: #a5b4fc;
+      --section-heading: #818cf8;
       --signal: #10b981;
       --card-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.6);
+
+      --badge-ai-bg: rgba(147, 51, 234, 0.18);
+      --badge-ai-text: #d8b4fe;
+      --badge-ai-border: rgba(147, 51, 234, 0.35);
+
+      --badge-embedded-bg: rgba(245, 158, 11, 0.18);
+      --badge-embedded-text: #fcd34d;
+      --badge-embedded-border: rgba(245, 158, 11, 0.35);
+
+      --badge-web-bg: rgba(16, 185, 129, 0.18);
+      --badge-web-text: #6ee7b7;
+      --badge-web-border: rgba(16, 185, 129, 0.35);
+
+      --tag-proficient-bg: rgba(79, 70, 229, 0.22);
+      --tag-proficient-text: #c7d2fe;
+      --tag-proficient-border: rgba(99, 102, 241, 0.45);
+
+      --tag-project-bg: rgba(51, 65, 85, 0.6);
+      --tag-project-text: #e2e8f0;
+      --tag-project-border: rgba(100, 116, 139, 0.45);
+
+      --tag-learning-bg: rgba(217, 119, 6, 0.22);
+      --tag-learning-text: #fde68a;
+      --tag-learning-border: rgba(245, 158, 11, 0.45);
+
+      --input-bg: #0c0e15;
+      --input-text: #f8fafc;
+      --input-border: rgba(255, 255, 255, 0.14);
+      --modal-overlay: rgba(4, 6, 10, 0.85);
     }
 
     [data-theme="light"] {
-      --bg-base: #f8f9fa;
+      --bg-base: #f8fafc;
       --bg-surface: #ffffff;
       --bg-surface-elevated: #f1f5f9;
-      --bg-nav: rgba(248, 249, 250, 0.92);
-      --border-subtle: rgba(15, 23, 42, 0.09);
-      --border-strong: rgba(15, 23, 42, 0.18);
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --text-faint: #94a3b8;
-      --accent: #4338ca;
+      --bg-nav: rgba(248, 250, 252, 0.94);
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;           /* Deep ink, ultra readable, 16:1 contrast */
+      --text-muted: #334155;          /* Slate 700, 8.5:1 contrast */
+      --text-faint: #64748b;          /* Slate 500, 4.6:1 contrast (WCAG AA pass) */
+      --accent: #4338ca;              /* Indigo 700 */
       --accent-hover: #3730a3;
-      --signal: #059669;
-      --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+      --accent-text: #4338ca;         /* Deep readable indigo for light mode */
+      --section-heading: #4338ca;     /* Clear readable indigo for section labels */
+      --signal: #059669;              /* Deep emerald */
+      --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+
+      --badge-ai-bg: #f3e8ff;
+      --badge-ai-text: #6b21a8;        /* Purple 800, high contrast */
+      --badge-ai-border: #d8b4fe;
+
+      --badge-embedded-bg: #fef3c7;
+      --badge-embedded-text: #92400e;  /* Amber 800, high contrast */
+      --badge-embedded-border: #fde68a;
+
+      --badge-web-bg: #ecfdf5;
+      --badge-web-text: #065f46;       /* Emerald 800, high contrast */
+      --badge-web-border: #a7f3d0;
+
+      --tag-proficient-bg: #e0e7ff;
+      --tag-proficient-text: #3730a3;
+      --tag-proficient-border: #c7d2fe;
+
+      --tag-project-bg: #f1f5f9;
+      --tag-project-text: #1e293b;
+      --tag-project-border: #cbd5e1;
+
+      --tag-learning-bg: #fef3c7;
+      --tag-learning-text: #92400e;
+      --tag-learning-border: #fde68a;
+
+      --input-bg: #ffffff;
+      --input-text: #0f172a;
+      --input-border: #cbd5e1;
+      --modal-overlay: rgba(15, 23, 42, 0.55);
     }
 
     * { box-sizing: border-box; }
@@ -132,8 +194,60 @@
     }
 
     .modal-backdrop {
-      background-color: rgba(4, 6, 10, 0.82);
+      background-color: var(--modal-overlay);
       backdrop-filter: blur(8px);
+    }
+
+    /* Theme helper classes */
+    .badge-ai {
+      background-color: var(--badge-ai-bg);
+      color: var(--badge-ai-text);
+      border-color: var(--badge-ai-border);
+    }
+    .badge-embedded {
+      background-color: var(--badge-embedded-bg);
+      color: var(--badge-embedded-text);
+      border-color: var(--badge-embedded-border);
+    }
+    .badge-web {
+      background-color: var(--badge-web-bg);
+      color: var(--badge-web-text);
+      border-color: var(--badge-web-border);
+    }
+    .tag-proficient {
+      background-color: var(--tag-proficient-bg);
+      color: var(--tag-proficient-text);
+      border-color: var(--tag-proficient-border);
+    }
+    .tag-project {
+      background-color: var(--tag-project-bg);
+      color: var(--tag-project-text);
+      border-color: var(--tag-project-border);
+    }
+    .tag-learning {
+      background-color: var(--tag-learning-bg);
+      color: var(--tag-learning-text);
+      border-color: var(--tag-learning-border);
+    }
+    .themed-input {
+      background-color: var(--input-bg) !important;
+      color: var(--input-text) !important;
+      border-color: var(--input-border) !important;
+    }
+    .themed-input::placeholder {
+      color: var(--text-faint) !important;
+    }
+    .filter-btn-active {
+      background-color: var(--accent) !important;
+      color: #ffffff !important;
+    }
+    .filter-btn-inactive {
+      background-color: transparent !important;
+      color: var(--text-muted) !important;
+    }
+    .filter-btn-inactive:hover {
+      color: var(--text-main) !important;
+      background-color: var(--bg-surface-elevated) !important;
     }
   </style>
 
@@ -166,18 +280,18 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <a href="#hero" class="flex items-center gap-2.5 group">
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20"></span>
-        <span class="font-bold tracking-tight text-sm sm:text-base group-hover:text-indigo-400 transition-colors">
+        <span class="font-bold tracking-tight text-sm sm:text-base group-hover:text-indigo-400 transition-colors" style="color: var(--text-main);">
           {{ settings.full_name }}
         </span>
       </a>
 
       <!-- Desktop Navigation Links -->
-      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);" aria-label="Main Navigation">
-        <a href="#about" class="hover:text-white transition-colors">About</a>
-        <a href="#projects" class="hover:text-white transition-colors">Projects</a>
-        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
-        <a href="#experience" class="hover:text-white transition-colors">Experience</a>
-        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider" aria-label="Main Navigation">
+        <a href="#about" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">About</a>
+        <a href="#projects" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Projects</a>
+        <a href="#skills" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Skills</a>
+        <a href="#experience" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Experience</a>
+        <a href="#contact" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Contact</a>
       </nav>
 
       <!-- Right Controls: Resume & Theme Switcher -->
@@ -187,13 +301,13 @@
         </a>
 
         {% if settings.theme_toggle_enabled %}
-        <button id="themeToggleBtn" type="button" aria-label="Toggle Light and Dark Mode" class="tap-target p-2 rounded-lg border text-sm transition-colors hover:border-slate-500" style="border-color: var(--border-subtle); color: var(--text-muted);">
+        <button id="themeToggleBtn" type="button" aria-label="Toggle Light and Dark Mode" class="tap-target p-2 rounded-lg border text-sm transition-colors hover:border-slate-500" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface-elevated);">
           <svg id="moonIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
           <svg id="sunIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
         </button>
         {% endif %}
 
-        <button id="mobileMenuBtn" type="button" aria-label="Open Navigation Menu" class="md:hidden tap-target p-2 rounded-lg border text-sm" style="border-color: var(--border-subtle); color: var(--text-muted);">
+        <button id="mobileMenuBtn" type="button" aria-label="Open Navigation Menu" class="md:hidden tap-target p-2 rounded-lg border text-sm" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface-elevated);">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
@@ -201,11 +315,11 @@
 
     <!-- Mobile Navigation Drawer -->
     <div id="mobileMenu" class="hidden md:hidden border-b px-4 py-4 space-y-3" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-      <a href="#about" class="block text-sm font-medium py-1.5 text-slate-300 hover:text-white">About</a>
-      <a href="#projects" class="block text-sm font-medium py-1.5 text-slate-300 hover:text-white">Projects</a>
-      <a href="#skills" class="block text-sm font-medium py-1.5 text-slate-300 hover:text-white">Skills</a>
-      <a href="#experience" class="block text-sm font-medium py-1.5 text-slate-300 hover:text-white">Experience</a>
-      <a href="#contact" class="block text-sm font-medium py-1.5 text-slate-300 hover:text-white">Contact</a>
+      <a href="#about" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">About</a>
+      <a href="#projects" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Projects</a>
+      <a href="#skills" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Skills</a>
+      <a href="#experience" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Experience</a>
+      <a href="#contact" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Contact</a>
     </div>
   </header>
 
@@ -224,10 +338,10 @@
         </div>
 
         <div class="space-y-2">
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15]">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15]" style="color: var(--text-main);">
             {{ settings.full_name }}
           </h1>
-          <p class="text-base sm:text-lg font-mono font-medium text-indigo-400">
+          <p class="text-base sm:text-lg font-mono font-semibold" style="color: var(--accent-text);">
             {{ settings.role_title }}
           </p>
         </div>
@@ -235,13 +349,13 @@
         <!-- 3-Sentence Professional Answers (Who, What, Why) -->
         <div class="space-y-3 text-sm sm:text-base leading-relaxed max-w-2xl" style="color: var(--text-muted);">
           <p>
-            <strong class="text-white font-medium">Who I am:</strong> A 3rd-year Computer Science &amp; Engineering student at BAIUST, Cumilla, driven by practical engineering over hype.
+            <strong class="font-semibold" style="color: var(--text-main);">Who I am:</strong> A 3rd-year Computer Science &amp; Engineering student at BAIUST, Cumilla, driven by practical engineering over hype.
           </p>
           <p>
-            <strong class="text-white font-medium">What I build:</strong> Resilient full-stack web platforms with Python/Django &amp; Next.js, and real-time edge telemetry &amp; digital signal processing hardware on ESP32-S3.
+            <strong class="font-semibold" style="color: var(--text-main);">What I build:</strong> Resilient full-stack web platforms with Python/Django &amp; Next.js, and real-time edge telemetry &amp; digital signal processing hardware on ESP32-S3.
           </p>
           <p>
-            <strong class="text-white font-medium">Why explore:</strong> Every project featured here is backed by real implementation, working code on GitHub, and verifiable outcomes.
+            <strong class="font-semibold" style="color: var(--text-main);">Why explore:</strong> Every project featured here is backed by real implementation, working code on GitHub, and verifiable outcomes.
           </p>
         </div>
 
@@ -250,7 +364,7 @@
           <a href="#projects" class="tap-target px-6 text-sm font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
             View Projects
           </a>
-          <a href="#contact" class="tap-target px-6 text-sm font-semibold rounded-lg border transition-colors hover:bg-white/5" style="border-color: var(--border-subtle); color: var(--text-main);">
+          <a href="#contact" class="tap-target px-6 text-sm font-semibold rounded-lg border transition-colors hover:border-indigo-500" style="border-color: var(--border-strong); color: var(--text-main); background-color: var(--bg-surface-elevated);">
             Contact Me
           </a>
         </div>
@@ -258,25 +372,25 @@
         <!-- Social Channels -->
         <div class="flex items-center justify-center lg:justify-start gap-5 pt-2" style="color: var(--text-muted);">
           {% if settings.github_url %}
-          <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="hover:text-white transition-colors" title="GitHub">
+          <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="GitHub">
             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           </a>
           {% endif %}
 
           {% if settings.linkedin_url %}
-          <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="hover:text-white transition-colors" title="LinkedIn">
+          <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="LinkedIn">
             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
           </a>
           {% endif %}
 
           {% if settings.kaggle_url %}
-          <a href="{{ settings.kaggle_url }}" target="_blank" rel="noopener" class="hover:text-white transition-colors text-xs font-mono font-bold" title="Kaggle">
+          <a href="{{ settings.kaggle_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500 text-xs font-mono font-bold" style="color: var(--text-muted);" title="Kaggle">
             Kaggle
           </a>
           {% endif %}
 
           {% if settings.twitter_url %}
-          <a href="{{ settings.twitter_url }}" target="_blank" rel="noopener" class="hover:text-white transition-colors" title="X (Twitter)">
+          <a href="{{ settings.twitter_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="X (Twitter)">
             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
           {% endif %}
@@ -289,13 +403,13 @@
           <img src="{{ settings.photo_display_url }}" alt="{{ settings.full_name }}" class="w-full h-full object-cover rounded-xl" loading="eager" />
         </div>
         <div class="w-full mt-3 p-3 rounded-xl border text-xs font-mono space-y-1" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-          <div class="flex justify-between text-slate-400">
+          <div class="flex justify-between" style="color: var(--text-faint);">
             <span>Location:</span>
-            <span class="text-white">{{ about.location }}</span>
+            <span class="font-medium" style="color: var(--text-main);">{{ about.location }}</span>
           </div>
-          <div class="flex justify-between text-slate-400">
+          <div class="flex justify-between" style="color: var(--text-faint);">
             <span>Affiliation:</span>
-            <span class="text-white">BAIUST CSE (L3T2)</span>
+            <span class="font-medium" style="color: var(--text-main);">BAIUST CSE (L3T2)</span>
           </div>
         </div>
       </div>
@@ -308,8 +422,8 @@
     <section id="about" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
       <div class="space-y-6 max-w-3xl">
         <div class="space-y-1">
-          <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">About Me</h2>
-          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">{{ about.headline }}</h3>
+          <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">About Me</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">{{ about.headline }}</h3>
         </div>
 
         <div class="space-y-4 text-base leading-relaxed" style="color: var(--text-muted);">
@@ -325,12 +439,12 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
           <div class="p-4 rounded-xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-            <div class="text-xs font-mono text-slate-400 uppercase tracking-wider">Formal Education</div>
-            <div class="text-sm font-semibold mt-1 text-white">{{ about.education }}</div>
+            <div class="text-xs font-mono uppercase tracking-wider" style="color: var(--text-faint);">Formal Education</div>
+            <div class="text-sm font-semibold mt-1" style="color: var(--text-main);">{{ about.education }}</div>
           </div>
           <div class="p-4 rounded-xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-            <div class="text-xs font-mono text-slate-400 uppercase tracking-wider">Primary Location</div>
-            <div class="text-sm font-semibold mt-1 text-white">{{ about.location }}</div>
+            <div class="text-xs font-mono uppercase tracking-wider" style="color: var(--text-faint);">Primary Location</div>
+            <div class="text-sm font-semibold mt-1" style="color: var(--text-main);">{{ about.location }}</div>
           </div>
         </div>
       </div>
@@ -344,44 +458,44 @@
       <div class="space-y-10">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div class="space-y-1">
-            <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Engineering Portfolio</h2>
-            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">Featured Projects &amp; Case Studies</h3>
+            <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Engineering Portfolio</h2>
+            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">Featured Projects &amp; Case Studies</h3>
             <p class="text-xs sm:text-sm pt-0.5" style="color: var(--text-muted);">
-              Curated selection of verified software systems and embedded prototypes. Click "Case Study" for complete engineering details.
+              Curated selection of verified software systems and embedded prototypes. Click "Inspect Case Study" for complete engineering details.
             </p>
           </div>
 
           <!-- Functional Category Filter Controls -->
           <div class="inline-flex p-1 rounded-xl border self-start sm:self-auto flex-shrink-0" style="background-color: var(--bg-surface); border-color: var(--border-subtle);" role="tablist">
-            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors bg-indigo-600 text-white" data-filter="ALL">All ({{ projects|length }})</button>
-            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors text-slate-400 hover:text-white" data-filter="AI_ML">AI-ML</button>
-            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors text-slate-400 hover:text-white" data-filter="WEB">Web</button>
-            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors text-slate-400 hover:text-white" data-filter="EMBEDDED">Embedded</button>
+            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-active" data-filter="ALL">All ({{ projects|length }})</button>
+            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="AI_ML">AI-ML</button>
+            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="WEB">Web</button>
+            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="EMBEDDED">Embedded</button>
           </div>
         </div>
 
         <!-- Featured Project Spotlight (Asymmetric Visual Hierarchy) -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {% for p in projects %}
-          <article class="project-card group p-6 sm:p-7 rounded-2xl border flex flex-col justify-between transition-all hover:border-slate-500" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);" data-category="{{ p.category }}" data-project-id="{{ p.id }}">
+          <article class="project-card group p-6 sm:p-7 rounded-2xl border flex flex-col justify-between transition-all hover:border-indigo-500" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);" data-category="{{ p.category }}" data-project-id="{{ p.id }}">
             <div class="space-y-4">
               <!-- Top Category & Status Header -->
               <div class="flex items-center justify-between">
-                <span class="text-xs font-mono font-medium px-2.5 py-0.5 rounded border {% if p.category == 'AI_ML' %}border-purple-500/30 text-purple-300 bg-purple-950/40{% elif p.category == 'EMBEDDED' %}border-amber-500/30 text-amber-300 bg-amber-950/40{% else %}border-emerald-500/30 text-emerald-300 bg-emerald-950/40{% endif %}">
+                <span class="text-xs font-mono font-medium px-2.5 py-0.5 rounded border {% if p.category == 'AI_ML' %}badge-ai{% elif p.category == 'EMBEDDED' %}badge-embedded{% else %}badge-web{% endif %}">
                   {{ p.get_category_display }}
                 </span>
-                <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full {% if p.status == 'Completed' %}bg-emerald-400{% else %}bg-amber-400{% endif %}"></span>
+                <span class="text-xs font-mono flex items-center gap-1.5" style="color: var(--text-faint);">
+                  <span class="w-1.5 h-1.5 rounded-full {% if p.status == 'Completed' %}bg-emerald-500{% else %}bg-amber-500{% endif %}"></span>
                   {{ p.status }}
                 </span>
               </div>
 
               <!-- Title & Summary -->
               <div>
-                <h4 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">
+                <h4 class="text-xl font-bold transition-colors group-hover:text-indigo-500" style="color: var(--text-main);">
                   {{ p.title }}
                 </h4>
-                <p class="text-sm font-mono mt-1 text-indigo-300/90">
+                <p class="text-sm font-mono mt-1 font-medium" style="color: var(--accent-text);">
                   {{ p.summary }}
                 </p>
               </div>
@@ -389,7 +503,7 @@
               <!-- Stack Tags -->
               <div class="flex flex-wrap gap-1.5 pt-1">
                 {% for tag in p.tech_tags %}
-                <span class="px-2 py-0.5 rounded text-[11px] font-mono border" style="background-color: var(--bg-base); border-color: var(--border-subtle); color: var(--text-muted);">
+                <span class="px-2 py-0.5 rounded text-[11px] font-mono border" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle); color: var(--text-muted);">
                   {{ tag }}
                 </span>
                 {% endfor %}
@@ -398,19 +512,19 @@
 
             <!-- Card Bottom Action Bar -->
             <div class="flex items-center justify-between border-t pt-4 mt-6" style="border-color: var(--border-subtle);">
-              <button type="button" class="open-case-study-btn text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition-colors" data-project-index="{{ forloop.counter0 }}">
+              <button type="button" class="open-case-study-btn text-xs font-semibold flex items-center gap-1 transition-colors hover:underline" style="color: var(--accent);" data-project-index="{{ forloop.counter0 }}">
                 <span>Inspect Case Study</span>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
               </button>
 
               <div class="flex items-center gap-3">
                 {% if p.repo_url %}
-                <a href="{{ p.repo_url }}" target="_blank" rel="noopener" class="text-xs font-mono text-slate-300 hover:text-white transition-colors" title="GitHub Repository">
+                <a href="{{ p.repo_url }}" target="_blank" rel="noopener" class="text-xs font-mono transition-colors hover:text-indigo-500 font-medium" style="color: var(--text-muted);" title="GitHub Repository">
                   Source Code ↗
                 </a>
                 {% endif %}
                 {% if p.live_url %}
-                <a href="{{ p.live_url }}" target="_blank" rel="noopener" class="text-xs font-mono font-medium text-emerald-400 hover:text-emerald-300 transition-colors" title="Live Deployment">
+                <a href="{{ p.live_url }}" target="_blank" rel="noopener" class="text-xs font-mono font-semibold transition-colors hover:underline" style="color: var(--signal);" title="Live Deployment">
                   Live Demo ↗
                 </a>
                 {% endif %}
@@ -429,25 +543,25 @@
     <section id="skills" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
       <div class="space-y-8">
         <div class="space-y-1">
-          <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Technical Arsenal</h2>
-          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">Verified Skills &amp; Runtimes</h3>
+          <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Technical Arsenal</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">Verified Skills &amp; Runtimes</h3>
           <p class="text-xs sm:text-sm" style="color: var(--text-muted);">
-            Grouped by domain and labeled with authentic proficiency levels: <span class="text-indigo-300 font-mono">Proficient</span> (daily engineering), <span class="text-slate-300 font-mono">Used in projects</span>, and <span class="text-amber-300 font-mono">Learning</span>.
+            Grouped by domain and labeled with authentic proficiency levels: <span class="font-mono font-medium" style="color: var(--accent-text);">Proficient</span> (daily engineering), <span class="font-mono font-medium" style="color: var(--text-muted);">Used in projects</span>, and <span class="font-mono font-medium" style="color: var(--badge-embedded-text);">Learning</span>.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {% for group in skill_groups %}
           <div class="p-6 rounded-2xl border space-y-4" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
-            <h4 class="text-sm font-bold font-mono text-white border-b pb-2 flex items-center justify-between" style="border-color: var(--border-subtle);">
+            <h4 class="text-sm font-bold font-mono border-b pb-2 flex items-center justify-between" style="border-color: var(--border-subtle); color: var(--text-main);">
               <span>{{ group.name }}</span>
-              <span class="text-[10px] text-slate-400 font-normal">({{ group.skills.count }} tools)</span>
+              <span class="text-[10px] font-normal" style="color: var(--text-faint);">({{ group.skills.count }} tools)</span>
             </h4>
             <div class="flex flex-wrap gap-2">
               {% for s in group.skills.all %}
-              <div class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium" style="background-color: var(--bg-base); border-color: var(--border-subtle);">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle); color: var(--text-main);">
                 <span>{{ s.name }}</span>
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded {% if s.level_label == 'Proficient' %}bg-indigo-950 text-indigo-300 border border-indigo-800/80{% elif s.level_label == 'Used in projects' %}bg-slate-800 text-slate-300 border border-slate-700{% else %}bg-amber-950 text-amber-300 border border-amber-800/80{% endif %}">
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border {% if s.level_label == 'Proficient' %}tag-proficient{% elif s.level_label == 'Used in projects' %}tag-project{% else %}tag-learning{% endif %}">
                   {{ s.level_label }}
                 </span>
               </div>
@@ -468,17 +582,17 @@
         <!-- Experience & Leadership Timeline -->
         <div class="space-y-6">
           <div>
-            <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Career Milestones</h2>
-            <h3 class="text-2xl font-bold tracking-tight mt-1">Experience &amp; Leadership</h3>
+            <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Career Milestones</h2>
+            <h3 class="text-2xl font-bold tracking-tight mt-1" style="color: var(--text-main);">Experience &amp; Leadership</h3>
           </div>
 
           <div class="space-y-8 relative border-l pl-6" style="border-color: var(--border-subtle);">
             {% for exp in experiences %}
             <div class="relative space-y-1.5">
               <span class="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full bg-indigo-500 ring-4" style="--tw-ring-color: var(--bg-base);"></span>
-              <div class="text-xs font-mono text-indigo-400">{{ exp.period }}</div>
-              <h4 class="text-base font-bold text-white">{{ exp.role_title }}</h4>
-              <div class="text-xs font-medium text-slate-300">{{ exp.organization }}</div>
+              <div class="text-xs font-mono font-medium" style="color: var(--accent-text);">{{ exp.period }}</div>
+              <h4 class="text-base font-bold" style="color: var(--text-main);">{{ exp.role_title }}</h4>
+              <div class="text-xs font-medium" style="color: var(--text-muted);">{{ exp.organization }}</div>
               <p class="text-sm pt-1 leading-relaxed" style="color: var(--text-muted);">
                 {{ exp.description }}
               </p>
@@ -490,19 +604,19 @@
         <!-- Verified Certifications -->
         <div class="space-y-6">
           <div>
-            <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Verified Credentials</h2>
-            <h3 class="text-2xl font-bold tracking-tight mt-1">Certifications &amp; Courses</h3>
+            <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Verified Credentials</h2>
+            <h3 class="text-2xl font-bold tracking-tight mt-1" style="color: var(--text-main);">Certifications &amp; Courses</h3>
           </div>
 
           <div class="space-y-4">
             {% for cert in certificates %}
-            <div class="p-4 rounded-xl border flex items-center justify-between transition-colors hover:border-slate-500" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <div class="p-4 rounded-xl border flex items-center justify-between transition-colors hover:border-indigo-500" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
               <div class="space-y-0.5">
-                <h4 class="text-sm font-semibold text-white">{{ cert.title }}</h4>
-                <div class="text-xs text-slate-400">{{ cert.issuer }} • {{ cert.issue_date }}</div>
+                <h4 class="text-sm font-semibold" style="color: var(--text-main);">{{ cert.title }}</h4>
+                <div class="text-xs" style="color: var(--text-faint);">{{ cert.issuer }} • {{ cert.issue_date }}</div>
               </div>
               {% if cert.credential_url %}
-              <a href="{{ cert.credential_url }}" target="_blank" rel="noopener" class="text-xs font-mono text-indigo-400 hover:text-indigo-300 transition-colors">
+              <a href="{{ cert.credential_url }}" target="_blank" rel="noopener" class="text-xs font-mono font-medium transition-colors hover:underline" style="color: var(--accent-text);">
                 Verify ↗
               </a>
               {% endif %}
@@ -521,9 +635,9 @@
     <section id="exploring" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
       <div class="p-6 sm:p-8 rounded-2xl border space-y-3" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
         <div class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-          <span class="text-xs font-mono uppercase tracking-wider text-amber-300 font-semibold">{{ settings.exploring_title }}</span>
-          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950/60 text-amber-300 border border-amber-800/50">Active Research</span>
+          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+          <span class="text-xs font-mono uppercase tracking-wider font-semibold" style="color: var(--badge-embedded-text);">{{ settings.exploring_title }}</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded border badge-embedded">Active Research</span>
         </div>
         <p class="text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);">
           {{ settings.exploring_text }}
@@ -539,12 +653,12 @@
     <section id="contact" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
       <div class="max-w-xl mx-auto space-y-8 text-center">
         <div class="space-y-2">
-          <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Initiate Collaboration</h2>
-          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">Let's Connect</h3>
+          <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Initiate Collaboration</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">Let's Connect</h3>
           <p class="text-sm leading-relaxed" style="color: var(--text-muted);">
             Whether you have an AI/ML internship opportunity, full-stack project, or research partnership, reach out below or email directly at:
             <br />
-            <a href="mailto:{{ settings.primary_email }}" class="text-indigo-400 font-mono font-semibold hover:underline">{{ settings.primary_email }}</a>
+            <a href="mailto:{{ settings.primary_email }}" class="font-mono font-semibold hover:underline" style="color: var(--accent);">{{ settings.primary_email }}</a>
           </p>
         </div>
 
@@ -558,18 +672,18 @@
           </div>
 
           <div>
-            <label for="nameInput" class="block text-xs font-medium text-slate-300 mb-1">Your Full Name <span class="text-rose-400">*</span></label>
-            <input type="text" id="nameInput" name="name" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors" style="background-color: var(--bg-base); border-color: var(--border-subtle);" placeholder="Alex Smith" />
+            <label for="nameInput" class="block text-xs font-semibold mb-1" style="color: var(--text-main);">Your Full Name <span class="text-rose-500">*</span></label>
+            <input type="text" id="nameInput" name="name" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm themed-input focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors" placeholder="Alex Smith" />
           </div>
 
           <div>
-            <label for="emailInput" class="block text-xs font-medium text-slate-300 mb-1">Your Work Email <span class="text-rose-400">*</span></label>
-            <input type="email" id="emailInput" name="email" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors" style="background-color: var(--bg-base); border-color: var(--border-subtle);" placeholder="alex@company.com" />
+            <label for="emailInput" class="block text-xs font-semibold mb-1" style="color: var(--text-main);">Your Work Email <span class="text-rose-500">*</span></label>
+            <input type="email" id="emailInput" name="email" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm themed-input focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors" placeholder="alex@company.com" />
           </div>
 
           <div>
-            <label for="messageInput" class="block text-xs font-medium text-slate-300 mb-1">Project Details or Inquiry <span class="text-rose-400">*</span></label>
-            <textarea id="messageInput" name="message" rows="4" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors" style="background-color: var(--bg-base); border-color: var(--border-subtle);" placeholder="Outline the technical role, stack, or collaboration you'd like to discuss..."></textarea>
+            <label for="messageInput" class="block text-xs font-semibold mb-1" style="color: var(--text-main);">Project Details or Inquiry <span class="text-rose-500">*</span></label>
+            <textarea id="messageInput" name="message" rows="4" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm themed-input focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors" placeholder="Outline the technical role, stack, or collaboration you'd like to discuss..."></textarea>
           </div>
 
           <!-- Dynamic Status Notice Container -->
@@ -594,8 +708,8 @@
         © 2026 {{ settings.full_name }}. Built with Django 5 &amp; Vanilla JS.
       </div>
       <div class="flex items-center gap-6">
-        <a href="{% url 'printable_cv' %}" class="hover:text-white transition-colors">CV</a>
-        <a href="#hero" class="hover:text-white transition-colors">Back to Top ↑</a>
+        <a href="{% url 'printable_cv' %}" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">CV</a>
+        <a href="#hero" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Back to Top ↑</a>
       </div>
     </div>
   </footer>
@@ -605,45 +719,45 @@
        DEEP CASE STUDY MODAL (STRUCTURED ENGINEERING DEEP-DIVE)
        ========================================================================= -->
   <div id="projectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="relative w-full max-w-2xl rounded-2xl border p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[90vh]" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);">
-      <button id="closeModalBtn" type="button" aria-label="Close modal" class="absolute top-5 right-5 tap-target p-2 rounded-lg text-slate-400 hover:text-white focus:outline-none">
+    <div class="relative w-full max-w-2xl rounded-2xl border p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[90vh]" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);">
+      <button id="closeModalBtn" type="button" aria-label="Close modal" class="absolute top-5 right-5 tap-target p-2 rounded-lg text-sm font-mono font-bold transition-colors hover:opacity-75 focus:outline-none" style="color: var(--text-faint);">
         ✕
       </button>
 
       <!-- Modal Header -->
       <div class="space-y-1.5 pr-8">
         <div class="flex items-center gap-2">
-          <span id="modalCategory" class="text-xs font-mono font-medium px-2 py-0.5 rounded border border-indigo-500/30 text-indigo-300 bg-indigo-950/40">Category</span>
-          <span id="modalStatus" class="text-xs font-mono text-slate-400">Status</span>
+          <span id="modalCategory" class="text-xs font-mono font-medium px-2 py-0.5 rounded border badge-web">Category</span>
+          <span id="modalStatus" class="text-xs font-mono" style="color: var(--text-faint);">Status</span>
         </div>
-        <h3 id="modalTitle" class="text-2xl font-bold text-white mt-1">Project Title</h3>
-        <p id="modalSummary" class="text-sm font-mono text-indigo-300"></p>
+        <h3 id="modalTitle" class="text-2xl font-bold mt-1" style="color: var(--text-main);">Project Title</h3>
+        <p id="modalSummary" class="text-sm font-mono font-medium" style="color: var(--accent-text);"></p>
       </div>
 
       <!-- Narrative & Architecture -->
       <div class="space-y-3 border-t pt-4" style="border-color: var(--border-subtle);">
-        <h4 class="text-xs font-mono uppercase tracking-wider text-slate-400">Technical Deep Dive &amp; Engineering Decisions</h4>
+        <h4 class="text-xs font-mono uppercase tracking-wider font-semibold" style="color: var(--text-faint);">Technical Deep Dive &amp; Engineering Decisions</h4>
         <div id="modalDescription" class="text-sm leading-relaxed space-y-3 whitespace-pre-line" style="color: var(--text-muted);"></div>
       </div>
 
       <!-- Technology Chips -->
       <div class="space-y-2 border-t pt-4" style="border-color: var(--border-subtle);">
-        <h4 class="text-xs font-mono uppercase tracking-wider text-slate-400">Verified Technology Stack</h4>
+        <h4 class="text-xs font-mono uppercase tracking-wider font-semibold" style="color: var(--text-faint);">Verified Technology Stack</h4>
         <div id="modalTechStack" class="flex flex-wrap gap-1.5"></div>
       </div>
 
       <!-- Action Footer -->
       <div class="flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
-        <button id="modalUpvoteBtn" type="button" class="tap-target px-3.5 py-1.5 rounded-lg border text-xs font-mono text-slate-300 hover:text-white flex items-center gap-2 transition-colors" style="border-color: var(--border-subtle);">
+        <button id="modalUpvoteBtn" type="button" class="tap-target px-3.5 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-2 transition-colors hover:border-indigo-500" style="border-color: var(--border-subtle); color: var(--text-main); background-color: var(--bg-surface-elevated);">
           <span>▲ Upvote</span>
-          <span id="modalUpvoteCount" class="font-bold text-indigo-400">0</span>
+          <span id="modalUpvoteCount" class="font-bold" style="color: var(--accent-text);">0</span>
         </button>
 
         <div class="flex items-center gap-3">
-          <a id="modalRepoLink" href="#" target="_blank" rel="noopener" class="tap-target px-4 py-1.5 text-xs font-mono font-medium rounded-lg border text-slate-200 hover:bg-white/5 transition-colors" style="border-color: var(--border-subtle);">
+          <a id="modalRepoLink" href="#" target="_blank" rel="noopener" class="tap-target px-4 py-1.5 text-xs font-mono font-medium rounded-lg border transition-colors hover:border-indigo-500" style="border-color: var(--border-subtle); color: var(--text-main); background-color: var(--bg-surface-elevated);">
             Source Code ↗
           </a>
-          <a id="modalLiveLink" href="#" target="_blank" rel="noopener" class="tap-target px-4 py-1.5 text-xs font-mono font-medium rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-colors">
+          <a id="modalLiveLink" href="#" target="_blank" rel="noopener" class="tap-target px-4 py-1.5 text-xs font-mono font-medium rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shadow-sm">
             Live Demo ↗
           </a>
         </div>
@@ -663,6 +777,7 @@
         id: {{ p.id }},
         title: "{{ p.title|escapejs }}",
         category: "{{ p.get_category_display|escapejs }}",
+        categoryRaw: "{{ p.category|escapejs }}",
         status: "{{ p.status|escapejs }}",
         summary: "{{ p.summary|escapejs }}",
         description: "{{ p.description|escapejs }}",
@@ -697,9 +812,11 @@
       btn.addEventListener('click', () => {
         const filter = btn.getAttribute('data-filter');
         document.querySelectorAll('.project-filter-btn').forEach(b => {
-          b.className = 'project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors text-slate-400 hover:text-white';
+          b.classList.remove('filter-btn-active');
+          b.classList.add('filter-btn-inactive');
         });
-        btn.className = 'project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors bg-indigo-600 text-white';
+        btn.classList.add('filter-btn-active');
+        btn.classList.remove('filter-btn-inactive');
 
         document.querySelectorAll('.project-card').forEach(card => {
           if (filter === 'ALL' || card.getAttribute('data-category') === filter) {
@@ -721,7 +838,11 @@
       currentActiveProject = p;
 
       document.getElementById('modalTitle').textContent = p.title;
-      document.getElementById('modalCategory').textContent = p.category;
+      const catBadge = document.getElementById('modalCategory');
+      catBadge.textContent = p.category;
+      catBadge.className = 'text-xs font-mono font-medium px-2 py-0.5 rounded border ' +
+        (p.categoryRaw === 'AI_ML' ? 'badge-ai' : (p.categoryRaw === 'EMBEDDED' ? 'badge-embedded' : 'badge-web'));
+
       document.getElementById('modalStatus').textContent = p.status;
       document.getElementById('modalSummary').textContent = p.summary;
       document.getElementById('modalDescription').textContent = p.description;
@@ -731,7 +852,10 @@
       techContainer.innerHTML = '';
       p.techStack.forEach(tag => {
         const chip = document.createElement('span');
-        chip.className = 'px-2 py-0.5 rounded text-[11px] font-mono border text-slate-300 bg-slate-900 border-white/10';
+        chip.className = 'px-2 py-0.5 rounded text-[11px] font-mono border';
+        chip.style.backgroundColor = 'var(--bg-surface-elevated)';
+        chip.style.borderColor = 'var(--border-subtle)';
+        chip.style.color = 'var(--text-muted)';
         chip.textContent = tag;
         techContainer.appendChild(chip);
       });
@@ -815,11 +939,11 @@
         formStatus.classList.remove('hidden');
 
         if (res.ok && data.ok) {
-          formStatus.className = 'text-xs font-mono p-3 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800';
+          formStatus.className = 'text-xs font-mono p-3 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800';
           formStatus.textContent = data.message || 'Thank you! Your message has been received.';
           contactForm.reset();
         } else {
-          formStatus.className = 'text-xs font-mono p-3 rounded bg-rose-950/80 text-rose-300 border border-rose-800';
+          formStatus.className = 'text-xs font-mono p-3 rounded bg-rose-50 text-rose-800 border border-rose-300 dark:bg-rose-950/80 dark:text-rose-300 dark:border-rose-800';
           formStatus.textContent = data.error || 'Failed to send message. Please verify fields and try again.';
         }
       })
@@ -827,7 +951,7 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Message';
         formStatus.classList.remove('hidden');
-        formStatus.className = 'text-xs font-mono p-3 rounded bg-rose-950/80 text-rose-300 border border-rose-800';
+        formStatus.className = 'text-xs font-mono p-3 rounded bg-rose-50 text-rose-800 border border-rose-300 dark:bg-rose-950/80 dark:text-rose-300 dark:border-rose-800';
         formStatus.textContent = 'Network error encountered. Please try again.';
       });
     });
