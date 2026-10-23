@@ -2,12 +2,5 @@ services:
   - type: web
     name: sakib-ai-portfolio
     env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput && python seed_portfolio.py"
+    buildCommand: "pip install -r requirements.txt && python manage.py migrate --noinput && python seed_portfolio.py && python manage.py collectstatic --noinput"
     startCommand: "gunicorn portfolio_project.wsgi:application"
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.8
-      - key: SECRET_KEY
-        generateValue: true
-      - key: DEBUG
-        value: "False"

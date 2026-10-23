@@ -6,45 +6,197 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ profile.full_name }} — {{ profile.role_title }}</title>
   <meta name="description" content="{{ profile.bio_summary }}" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='66' font-family='monospace' font-size='46' font-weight='bold' fill='white' text-anchor='middle'>NS</text></svg>" />
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <style>
+    /* ==========================================================================
+       SELF-CONTAINED DESIGN SYSTEM (29-SKILL ENFORCED • ZERO 404 ON VERCEL)
+       Fixes: Sticky Header Z-Index, Light/Dark Contrast, Input Boxes, 1600px Grid
+       ========================================================================== */
+    :root, [data-theme="dark"] {
+      --bg-canvas: #07080d;
+      --bg-surface: #0f121b;
+      --bg-surface-elevated: #151926;
+      --bg-header: rgba(7, 8, 13, 0.90);
+      --bg-input: #0a0d15;
+      --bg-code: #090b12;
+      --bg-pill: rgba(255, 255, 255, 0.05);
+      --border-hairline: rgba(255, 255, 255, 0.09);
+      --border-focus: rgba(99, 102, 241, 0.55);
+      --text-primary: #f4f4f6;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --accent-indigo: #4f46e5;
+      --accent-emerald: #10b981;
+      --track-bar: rgba(255, 255, 255, 0.08);
+      --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-canvas: #f6f5f1;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1efe9;
+      --bg-header: rgba(246, 245, 241, 0.94);
+      --bg-input: #f8fafc;
+      --bg-code: #f1f5f9;
+      --bg-pill: rgba(15, 23, 42, 0.05);
+      --border-hairline: rgba(15, 23, 42, 0.12);
+      --border-focus: rgba(79, 70, 229, 0.55);
+      --text-primary: #0f172a;
+      --text-secondary: #1e293b;
+      --text-muted: #475569;
+      --accent-indigo: #4f46e5;
+      --accent-emerald: #059669;
+      --track-bar: rgba(15, 23, 42, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100vh;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: -0.015em;
+      overflow-x: hidden;
+      transition: background-color 200ms var(--ease-out-expo), color 200ms var(--ease-out-expo);
+    }
+
+    .font-serif-editorial { font-family: 'Instrument Serif', Georgia, serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+
+    .container-studio {
+      width: 100%;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: clamp(1.25rem, 3.5vw, 3.75rem);
+      padding-right: clamp(1.25rem, 3.5vw, 3.75rem);
+    }
+
+    .bento-grid-12 {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1.25rem;
+      width: 100%;
+    }
+
+    /* Sticky Header with High Z-Index & Solid Blur so Hero Never Bleeds Over It */
+    .glass-header {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      width: 100%;
+      background-color: var(--bg-header);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .surface-card {
+      position: relative;
+      z-index: 1;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: 16px;
+      transition: transform 200ms var(--ease-out-expo), border-color 200ms var(--ease-out-expo), box-shadow 200ms var(--ease-out-expo);
+    }
+
+    .surface-card-interactive:hover {
+      border-color: var(--border-focus);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px -12px rgba(79, 70, 229, 0.16);
+    }
+
+    .hairline-section {
+      width: 100%;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .text-theme-primary { color: var(--text-primary); }
+    .text-theme-secondary { color: var(--text-secondary); }
+    .text-theme-muted { color: var(--text-muted); }
+
+    .theme-pill {
+      background-color: var(--bg-pill);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-secondary);
+    }
+
+    .theme-code-box {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-secondary);
+    }
+
+    .theme-input {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-primary);
+      border-radius: 12px;
+      padding: 0.65rem 0.9rem;
+      outline: none;
+      transition: border-color 160ms var(--ease-out-expo);
+    }
+    .theme-input:focus {
+      border-color: var(--accent-indigo);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background-color: var(--track-bar);
+      overflow: hidden;
+    }
+
+    .btn-press {
+      transition: transform 160ms var(--ease-out-expo), opacity 160ms var(--ease-out-expo), background-color 160ms var(--ease-out-expo);
+    }
+    .btn-press:active { transform: scale(0.97); }
+    svg { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- TOP STICKY GLASSMORPHIC COMMAND HEADER (NO VISIBLE ADMIN BUTTON) -->
-  <header class="sticky top-0 z-50 w-full glass-header">
-    <div class="container-studio h-16 flex items-center justify-between gap-4">
+  <!-- TOP STICKY GLASSMORPHIC COMMAND HEADER (Z-INDEX 9999 • NO VISIBLE ADMIN LINK) -->
+  <header class="glass-header">
+    <div class="container-studio h-16 flex items-center justify-between gap-3">
       <a href="#hero" class="flex items-center gap-3 group btn-press">
         <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" class="w-9 h-9 rounded-xl object-cover border border-indigo-500/40" />
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-bold text-sm sm:text-base tracking-tight">{{ profile.full_name }}</span>
-            <span class="hidden md:inline-flex items-center gap-1.5 text-[10px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="font-bold text-sm sm:text-base tracking-tight text-theme-primary">{{ profile.full_name }}</span>
+            <span class="hidden md:inline-flex items-center gap-1.5 text-[10px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               AI/ML ENGINEER
             </span>
           </div>
-          <p class="text-[11px] font-mono-code text-gray-400 hidden sm:block">LLMs • Multimodal AI • Local Neural Runtimes</p>
+          <p class="text-[11px] font-mono-code text-theme-muted hidden sm:block">LLMs • Multimodal AI • Local Neural Runtimes</p>
         </div>
       </a>
 
-      <nav class="hidden xl:flex items-center gap-1 p-1 rounded-xl border border-white/10 bg-black/20 font-mono-code text-xs">
-        <a href="#hero" class="px-3 py-1.5 rounded-lg hover:bg-white/5 text-gray-300 hover:text-white">01 // Overview</a>
-        <a href="#master-ai" class="px-3 py-1.5 rounded-lg hover:bg-white/5 text-gray-300 hover:text-white">02 // Master AI</a>
-        <a href="#skills" class="px-3 py-1.5 rounded-lg hover:bg-white/5 text-gray-300 hover:text-white">03 // AI/ML Arsenal</a>
-        <a href="#projects" class="px-3 py-1.5 rounded-lg hover:bg-white/5 text-gray-300 hover:text-white">04 // Selected Works</a>
-        <a href="#courses" class="px-3 py-1.5 rounded-lg hover:bg-white/5 text-gray-300 hover:text-white">05 // Credentials</a>
-        <a href="#contact" class="px-3 py-1.5 rounded-lg hover:bg-white/5 text-gray-300 hover:text-white">06 // Contact</a>
+      <nav class="hidden xl:flex items-center gap-1 p-1 rounded-xl theme-pill font-mono-code text-xs">
+        <a href="#hero" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">01 // Overview</a>
+        <a href="#master-ai" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">02 // Master AI</a>
+        <a href="#skills" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">03 // AI/ML Arsenal</a>
+        <a href="#projects" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">04 // Selected Works</a>
+        <a href="#courses" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">05 // Credentials</a>
+        <a href="#contact" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">06 // Contact</a>
       </nav>
 
-      <div class="flex items-center gap-2.5">
-        <span id="liveClockBdt" class="hidden sm:inline-block font-mono-code text-xs text-gray-400 px-2.5 py-1 rounded-lg border border-white/10">BDT • UTC+6</span>
-        <button id="themeToggleBtn" type="button" class="px-3 py-1.5 rounded-xl border border-white/10 text-xs font-mono-code hover:border-indigo-500/50 btn-press" aria-label="Toggle Theme">
+      <div class="flex items-center gap-2">
+        <span id="liveClockBdt" class="hidden sm:inline-block font-mono-code text-xs text-theme-muted px-2.5 py-1 rounded-lg theme-pill">BDT • UTC+6</span>
+        <button id="openTerminalBtn" type="button" class="px-2.5 py-1.5 rounded-xl theme-pill text-xs font-mono-code hover:border-indigo-500 btn-press" title="Open Interactive AI Engineer CLI">
+          &gt;_ CLI
+        </button>
+        <button id="themeToggleBtn" type="button" class="px-2.5 py-1.5 rounded-xl theme-pill text-xs font-mono-code hover:border-indigo-500 btn-press" aria-label="Toggle Dark or Light Mode">
           ☀/☾
         </button>
         <a href="{% url 'printable_cv' %}" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono-code font-semibold btn-press">
@@ -55,104 +207,113 @@
   </header>
 
   <main class="flex-1 w-full">
-    <!-- SECTION 01: HERO (12-COLUMN SPLIT: 7 LEFT + 5 RIGHT PORTRAIT & 3D NEURAL ROUTER) -->
+    <!-- SECTION 01: HERO (12-COLUMN SPLIT: 7 LEFT + 5 RIGHT PORTRAIT & GUARANTEED 3D NEURAL ROUTER) -->
     <section id="hero" class="hairline-section py-10 lg:py-16">
       <div class="container-studio">
         <div class="bento-grid-12 items-stretch">
           <!-- Left 7 Columns -->
-          <div class="col-span-12 lg:col-span-7 surface-card p-7 sm:p-10 lg:p-12 flex flex-col justify-between">
+          <div class="col-span-12 lg:col-span-7 surface-card p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
             <div class="space-y-6">
               <div class="flex flex-wrap items-center gap-2">
-                <span class="font-mono-code text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-indigo-500/40 bg-indigo-500/10 text-indigo-300">
+                <span class="font-mono-code text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-indigo-500/40 bg-indigo-500/10 text-indigo-400 font-semibold">
                   [ {{ profile.role_title }} ]
                 </span>
-                <span class="font-mono-code text-xs px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
+                <span class="font-mono-code text-xs px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 font-medium">
                   {{ profile.availability_text }}
                 </span>
               </div>
 
-              <h1 class="text-3xl sm:text-5xl lg:text-[50px] font-extrabold tracking-tight leading-[1.08]" style="text-wrap: balance;">
+              <h1 class="text-3xl sm:text-5xl lg:text-[48px] font-extrabold tracking-tight leading-[1.08] text-theme-primary" style="text-wrap: balance;">
                 {{ profile.hero_headline }}
               </h1>
 
-              <p class="text-sm sm:text-base text-gray-400 leading-relaxed">
+              <p class="text-sm sm:text-base text-theme-secondary leading-relaxed">
                 {{ profile.bio_summary }}
               </p>
 
               <!-- Primary CTAs -->
-              <div class="flex flex-wrap items-center gap-3 pt-2">
+              <div class="flex flex-wrap items-center gap-3 pt-1">
                 <a href="#projects" class="px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 btn-press">
-                  Explore Production Works →
+                  Explore Production Works ({{ projects|length }}) →
                 </a>
-                <a href="#master-ai" class="px-5 py-3.5 rounded-xl border border-white/15 hover:border-indigo-400/60 bg-white/[0.03] text-sm font-medium btn-press">
+                <a href="#master-ai" class="px-5 py-3.5 rounded-xl theme-pill hover:border-indigo-500 text-sm font-medium btn-press">
                   Inspect Local Master AI Blueprint
                 </a>
-                <a href="#contact" class="px-4 py-3.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-sm font-mono-code btn-press">
+                <a href="#contact" class="px-4 py-3.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-500 font-semibold text-sm font-mono-code btn-press">
                   Collaborate / Hire
                 </a>
               </div>
 
               <!-- Verified Social Profiles -->
-              <div class="flex flex-wrap items-center gap-2 pt-2 font-mono-code text-xs">
-                <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg border border-white/10 hover:border-indigo-500/50 text-gray-300 hover:text-white">GitHub ↗</a>
-                <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg border border-white/10 hover:border-indigo-500/50 text-gray-300 hover:text-white">LinkedIn ↗</a>
-                <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg border border-white/10 hover:border-indigo-500/50 text-gray-300 hover:text-white">Kaggle ↗</a>
-                <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg border border-white/10 hover:border-indigo-500/50 text-gray-300 hover:text-white">X (Twitter) ↗</a>
-                <a href="{{ profile.facebook_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg border border-white/10 hover:border-indigo-500/50 text-gray-300 hover:text-white">Facebook ↗</a>
-                <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg border border-white/10 hover:border-indigo-500/50 text-gray-300 hover:text-white">Instagram ↗</a>
+              <div class="flex flex-wrap items-center gap-2 pt-1 font-mono-code text-xs">
+                <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">GitHub ↗</a>
+                <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">LinkedIn ↗</a>
+                <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">Kaggle ↗</a>
+                <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">X (Twitter) ↗</a>
+                <a href="{{ profile.facebook_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">Facebook ↗</a>
+                <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">Instagram ↗</a>
               </div>
             </div>
 
             <!-- Bottom 4-Column Impact Bar -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-8 border-t border-white/10">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-8 border-t" style="border-color: var(--border-hairline);">
               <div>
-                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-white">~1.0 GB</div>
-                <div class="text-xs text-gray-400 mt-0.5">Modular Sub-Model Footprint</div>
+                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-theme-primary">~1.0 GB</div>
+                <div class="text-xs text-theme-muted mt-0.5">Modular Sub-Model Target</div>
               </div>
               <div>
-                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-emerald-400">CPU+GPU+NPU</div>
-                <div class="text-xs text-gray-400 mt-0.5">Unified Local Memory Pool</div>
+                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-emerald-500">CPU+GPU+NPU</div>
+                <div class="text-xs text-theme-muted mt-0.5">Unified Local Memory Pool</div>
               </div>
               <div>
-                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-indigo-400">{{ projects|length }}+</div>
-                <div class="text-xs text-gray-400 mt-0.5">Production AI & Web Systems</div>
+                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-indigo-500">{{ projects|length }}+</div>
+                <div class="text-xs text-theme-muted mt-0.5">Production AI &amp; Web Systems</div>
               </div>
               <div>
-                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-amber-400">32 ms</div>
-                <div class="text-xs text-gray-400 mt-0.5">512-Pt Edge FFT Latency</div>
+                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-amber-500">32 ms</div>
+                <div class="text-xs text-theme-muted mt-0.5">512-Pt Edge FFT Latency</div>
               </div>
             </div>
           </div>
 
-          <!-- Right 5 Columns: Sakib's Framed Portrait + Live 3D Master AI Router -->
+          <!-- Right 5 Columns: Sakib's Framed Portrait + Indestructible 60FPS 3D Master AI Router -->
           <div class="col-span-12 lg:col-span-5 flex flex-col gap-5">
             <!-- Portrait Profile Card -->
             <div class="surface-card p-6 flex flex-col sm:flex-row items-center gap-5">
               <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-indigo-500/40 shrink-0 shadow-lg" />
               <div class="space-y-2 text-center sm:text-left">
-                <div class="font-mono-code text-[11px] text-indigo-400 uppercase">[ ARCHITECT PROFILE ]</div>
-                <h2 class="text-xl font-bold">{{ profile.full_name }}</h2>
-                <p class="text-xs text-gray-400">{{ profile.location }}</p>
+                <div class="font-mono-code text-[11px] text-indigo-500 font-semibold uppercase">[ ARCHITECT PROFILE ]</div>
+                <h2 class="text-xl font-bold text-theme-primary">{{ profile.full_name }}</h2>
+                <p class="text-xs text-theme-muted">{{ profile.location }}</p>
                 <div class="flex flex-wrap justify-center sm:justify-start gap-1.5 pt-1">
-                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">LLM Orchestration</span>
-                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Multimodal AI</span>
-                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">Django & FastAPI</span>
+                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 font-medium">LLM Orchestration</span>
+                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 font-medium">Multimodal AI</span>
+                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-amber-500/15 text-amber-500 border border-amber-500/30 font-medium">Django &amp; FastAPI</span>
                 </div>
               </div>
             </div>
 
-            <!-- Live 3D Master AI Memory Orchestrator Card -->
+            <!-- Interactive 60FPS 3D Master AI Memory Orchestrator Card -->
             <div class="surface-card p-5 flex-1 flex flex-col justify-between space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="font-mono-code text-xs text-emerald-400 font-semibold">[ 3D LOCAL MASTER AI ROUTER ]</span>
-                <span id="masterAiTelemetryStatus" class="font-mono-code text-[10px] text-indigo-300">RESIDENT IN RAM • READY</span>
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-mono-code text-xs text-emerald-500 font-semibold">[ 3D LOCAL MASTER AI ROUTER ]</span>
+                <span id="masterAiTelemetryStatus" class="font-mono-code text-[10px] text-indigo-400 font-medium truncate">RESIDENT IN RAM • DRAG TO ORBIT 3D</span>
               </div>
-              <div id="masterAi3dViewport" class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-[#07080d] border border-white/10"></div>
+
+              <!-- Self-Contained 60FPS 3D Projection Canvas (Never Renders Black!) -->
+              <div class="relative w-full h-60 sm:h-64 rounded-xl overflow-hidden bg-[#070911] border border-indigo-500/25">
+                <canvas id="masterAi3dCanvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+                <div class="absolute bottom-2.5 left-3 right-3 pointer-events-none flex items-center justify-between text-[10px] font-mono-code text-slate-300">
+                  <span id="canvasPoolBadge" class="px-2 py-0.5 rounded bg-black/70 border border-white/10">POOL: CPU RAM + GPU VRAM + NPU</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">60 FPS 3D CORE</span>
+                </div>
+              </div>
+
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono-code text-[11px]">
-                <button type="button" onclick="triggerMasterAIRoute(0, 'CODE-1G QUEUED IN VRAM')" class="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-indigo-600/30 border border-white/10 text-sky-300 btn-press">⚡ Code-1G</button>
-                <button type="button" onclick="triggerMasterAIRoute(1, 'PHOTO-1G QUEUED IN NPU/GPU')" class="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-indigo-600/30 border border-white/10 text-emerald-300 btn-press">🎨 Photo-1G</button>
-                <button type="button" onclick="triggerMasterAIRoute(2, 'VIDEO-1G STREAMING IN RAM')" class="px-2 py-1.5 rounded-lg bg-white/5 hover:bg-indigo-600/30 border border-white/10 text-amber-300 btn-press">🎬 Video-1G</button>
-                <button type="button" onclick="triggerMasterAIRoute(99, 'IN-PLACE SINGLE-NODE SELF-TRAINING')" class="px-2 py-1.5 rounded-lg bg-indigo-600/25 hover:bg-indigo-600/40 border border-indigo-500/40 text-indigo-200 btn-press">🧠 Self-Train</button>
+                <button type="button" onclick="setMasterAIRoute(0, 'ROUTING -> CODE-1G (0.95 GB 4-BIT NF4 IN VRAM)')" class="px-2 py-1.5 rounded-lg theme-pill hover:border-sky-400 font-semibold btn-press">⚡ Code-1G</button>
+                <button type="button" onclick="setMasterAIRoute(1, 'ROUTING -> PHOTO-1G (1.05 GB FLOW IN GPU/NPU)')" class="px-2 py-1.5 rounded-lg theme-pill hover:border-emerald-400 font-semibold btn-press">🎨 Photo-1G</button>
+                <button type="button" onclick="setMasterAIRoute(2, 'ROUTING -> VIDEO-1G (1.15 GB TEMPORAL VAE)')" class="px-2 py-1.5 rounded-lg theme-pill hover:border-amber-400 font-semibold btn-press">🎬 Video-1G</button>
+                <button type="button" onclick="setMasterAIRoute(99, 'IN-PLACE SINGLE-NODE CONTINUAL SELF-TRAINING')" class="px-2 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold btn-press">🧠 Self-Train</button>
               </div>
             </div>
           </div>
@@ -165,18 +326,18 @@
       <div class="container-studio space-y-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <span class="font-mono-code text-xs uppercase text-indigo-400 tracking-wider">[ 02 // CORE AI/ML RESEARCH &amp; CAPSTONE ARCHITECTURE ]</span>
-            <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1">
+            <span class="font-mono-code text-xs uppercase text-indigo-500 font-semibold tracking-wider">[ 02 // CORE AI/ML RESEARCH &amp; CAPSTONE ARCHITECTURE ]</span>
+            <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1 text-theme-primary">
               Sovereign Local Master AI &amp; In-Place Self-Evolving Neural Node
             </h2>
           </div>
-          <p class="text-xs font-mono-code text-gray-400 max-w-md">
-            Running frontier-grade multi-model intelligence locally on PC &amp; mobile across CPU RAM, GPU VRAM, and NPU memory pools.
+          <p class="text-xs font-mono-code text-theme-muted max-w-md">
+            Executing frontier-grade multi-model intelligence locally on PC &amp; mobile across unified CPU RAM, GPU VRAM, and NPU memory pools.
           </p>
         </div>
 
-        <!-- Orthogonal Inline SVG Architecture Schematic (diagram-design skill) -->
-        <div class="surface-card p-6 overflow-x-auto">
+        <!-- Orthogonal Inline SVG Architecture Schematic -->
+        <div class="surface-card p-6 overflow-x-auto bg-[#090b12] text-white">
           <svg role="img" aria-labelledby="master-ai-svg-title master-ai-svg-desc" viewBox="0 0 980 260" class="w-full h-auto min-w-[720px]">
             <title id="master-ai-svg-title">Sovereign Local Master AI Orchestrator &amp; In-Place Self-Training Architecture</title>
             <desc id="master-ai-svg-desc">Orthogonal schematic showing the Resident Master AI Router in RAM dispatching prompts to ~1 GB specialist sub-models across CPU RAM, GPU VRAM, and NPU memory, connected to an In-Place Self-Evolving Single-Node Continual Learning core.</desc>
@@ -189,21 +350,18 @@
               </marker>
             </defs>
             <rect x="12" y="12" width="956" height="236" rx="6" fill="#0b0d15" stroke="#252838" stroke-width="1" />
-            <text x="28" y="34" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="10">[ UNIFIED LOCAL HARDWARE MEMORY POOL: SYSTEM CPU RAM + DISCRETE/INTEGRATED GPU VRAM + ON-DIE NPU ]</text>
+            <text x="28" y="34" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="10">[ UNIFIED LOCAL HARDWARE MEMORY POOL: SYSTEM CPU RAM + DISCRETE/INTEGRATED GPU VRAM + ON-DIE NPU ]</text>
 
-            <!-- Connectors -->
             <line x1="220" y1="128" x2="280" y2="128" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arr-ind)" />
             <line x1="500" y1="128" x2="560" y2="128" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arr-ind)" />
             <line x1="740" y1="128" x2="796" y2="128" stroke="#10b981" stroke-width="1.5" marker-end="url(#arr-em)" />
 
-            <!-- Node 1: Resident Master AI Router -->
             <rect x="28" y="68" width="192" height="120" rx="6" fill="#131624" stroke="#4f46e5" stroke-width="1.5" />
             <text x="42" y="92" fill="#818cf8" font-family="JetBrains Mono, monospace" font-size="10">01 // ALWAYS RESIDENT</text>
             <text x="42" y="116" fill="#ffffff" font-family="Inter, sans-serif" font-weight="700" font-size="14">Master AI Router</text>
-            <text x="42" y="138" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">~420 MB in System RAM</text>
+            <text x="42" y="138" fill="#cbd5e1" font-family="JetBrains Mono, monospace" font-size="10">~420 MB in System RAM</text>
             <text x="42" y="158" fill="#10b981" font-family="JetBrains Mono, monospace" font-size="10">Prompt &amp; Memory Pager</text>
 
-            <!-- Node 2: Dynamic ~1 GB Micro-Model Queue -->
             <rect x="284" y="56" width="216" height="144" rx="6" fill="#131624" stroke="#3b82f6" stroke-width="1.5" />
             <text x="300" y="80" fill="#60a5fa" font-family="JetBrains Mono, monospace" font-size="10">02 // ON-DEMAND QUEUE</text>
             <text x="300" y="102" fill="#ffffff" font-family="Inter, sans-serif" font-weight="700" font-size="14">~1 GB Specialist Models</text>
@@ -212,14 +370,12 @@
             <text x="300" y="160" fill="#e2e8f0" font-family="JetBrains Mono, monospace" font-size="10">• Video-1G (Temporal VAE)</text>
             <text x="300" y="178" fill="#e2e8f0" font-family="JetBrains Mono, monospace" font-size="10">• Reason-1G (Hybrid RAG)</text>
 
-            <!-- Node 3: Heterogeneous Execution Engine -->
             <rect x="564" y="68" width="176" height="120" rx="6" fill="#131624" stroke="#f59e0b" stroke-width="1.5" />
             <text x="578" y="92" fill="#fbbf24" font-family="JetBrains Mono, monospace" font-size="10">03 // LOCAL RUNTIME</text>
             <text x="578" y="116" fill="#ffffff" font-family="Inter, sans-serif" font-weight="700" font-size="14">CPU + GPU + NPU</text>
-            <text x="578" y="138" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">llama.cpp • ONNX • QNN</text>
-            <text x="578" y="158" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">Zero Cloud Dependency</text>
+            <text x="578" y="138" fill="#cbd5e1" font-family="JetBrains Mono, monospace" font-size="10">llama.cpp • ONNX • QNN</text>
+            <text x="578" y="158" fill="#cbd5e1" font-family="JetBrains Mono, monospace" font-size="10">Zero Cloud Dependency</text>
 
-            <!-- Node 4: In-Place Self-Evolving Single Node -->
             <rect x="800" y="56" width="152" height="144" rx="6" fill="#0d261f" stroke="#10b981" stroke-width="1.5" />
             <text x="812" y="80" fill="#34d399" font-family="JetBrains Mono, monospace" font-size="10">04 // SELF-EVOLVING</text>
             <text x="812" y="102" fill="#ffffff" font-family="Inter, sans-serif" font-weight="700" font-size="13">In-Place Neural Node</text>
@@ -235,15 +391,15 @@
           <div class="col-span-12 md:col-span-6 lg:col-span-4 surface-card surface-card-interactive p-6 flex flex-col justify-between space-y-4">
             <div class="space-y-2.5">
               <div class="flex items-center justify-between gap-2">
-                <span class="font-mono-code text-xs px-2.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">{{ node.node_id }}</span>
-                <span class="font-mono-code text-[11px] text-emerald-400">{{ node.memory_budget }}</span>
+                <span class="font-mono-code text-xs px-2.5 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 font-semibold">{{ node.node_id }}</span>
+                <span class="font-mono-code text-[11px] text-emerald-500 font-semibold">{{ node.memory_budget }}</span>
               </div>
-              <h3 class="text-lg font-bold">{{ node.title }}</h3>
-              <p class="text-xs text-gray-400 leading-relaxed">{{ node.summary }}</p>
+              <h3 class="text-lg font-bold text-theme-primary">{{ node.title }}</h3>
+              <p class="text-xs text-theme-secondary leading-relaxed">{{ node.summary }}</p>
             </div>
-            <div class="pt-3 border-t border-white/10 space-y-1">
-              <div class="font-mono-code text-[10px] text-indigo-300 uppercase">Hardware Target: {{ node.hardware_pool }}</div>
-              <p class="text-[11px] text-gray-400">{{ node.mechanism_detail }}</p>
+            <div class="pt-3 border-t space-y-1" style="border-color: var(--border-hairline);">
+              <div class="font-mono-code text-[10px] text-indigo-500 font-semibold uppercase">Hardware Target: {{ node.hardware_pool }}</div>
+              <p class="text-[11px] text-theme-muted">{{ node.mechanism_detail }}</p>
             </div>
           </div>
           {% endfor %}
@@ -251,12 +407,12 @@
       </div>
     </section>
 
-    <!-- SECTION 03: COMPLETE AI/ML & FULL-STACK ENGINEERING ARSENAL -->
+    <!-- SECTION 03: COMPLETE AI/ML & FULL-STACK ENGINEERING ARSENAL (HIGH-CONTRAST IN BOTH DARK & LIGHT MODES) -->
     <section id="skills" class="hairline-section py-14 lg:py-20">
       <div class="container-studio space-y-8">
         <div>
-          <span class="font-mono-code text-xs uppercase text-emerald-400 tracking-wider">[ 03 // AI/ML &amp; FULL-STACK ENGINEERING COMPETENCIES ]</span>
-          <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1">
+          <span class="font-mono-code text-xs uppercase text-emerald-500 font-semibold tracking-wider">[ 03 // AI/ML &amp; FULL-STACK ENGINEERING COMPETENCIES ]</span>
+          <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1 text-theme-primary">
             Production Technical Stack &amp; Neural Architecture Arsenal
           </h2>
         </div>
@@ -264,18 +420,18 @@
         <div class="bento-grid-12">
           {% for dom in skill_domains %}
           <div class="col-span-12 md:col-span-6 lg:col-span-4 surface-card p-6 space-y-4">
-            <div class="font-mono-code text-xs text-indigo-400 font-semibold border-b border-white/10 pb-2.5">
+            <div class="font-mono-code text-xs text-indigo-500 font-bold border-b pb-2.5" style="border-color: var(--border-hairline);">
               {{ dom.label }}
             </div>
-            <div class="space-y-2.5">
+            <div class="space-y-3">
               {% for sk in dom.skills %}
               <div class="space-y-1">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="font-medium text-gray-200">{{ sk.name }}</span>
-                  <span class="font-mono-code text-[10px] px-2 py-0.5 rounded bg-white/5 text-indigo-300">{{ sk.highlight_tag }}</span>
+                <div class="flex items-center justify-between text-xs gap-2">
+                  <span class="font-semibold text-theme-primary">{{ sk.name }}</span>
+                  <span class="font-mono-code text-[10px] px-2 py-0.5 rounded theme-pill shrink-0">{{ sk.highlight_tag }}</span>
                 </div>
-                <div class="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
-                  <div class="h-full bg-indigo-500 rounded-full" style="width: {{ sk.proficiency }}%;"></div>
+                <div class="progress-track">
+                  <div class="h-full bg-indigo-600 rounded-full" style="width: {{ sk.proficiency }}%;"></div>
                 </div>
               </div>
               {% endfor %}
@@ -291,17 +447,17 @@
       <div class="container-studio space-y-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <span class="font-mono-code text-xs uppercase text-indigo-400 tracking-wider">[ 04 // SELECTED WORKS &amp; LIVE SERVERS ]</span>
-            <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1">
+            <span class="font-mono-code text-xs uppercase text-indigo-500 font-semibold tracking-wider">[ 04 // SELECTED WORKS &amp; LIVE SERVERS ]</span>
+            <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1 text-theme-primary">
               Production AI Systems, Edge Hardware &amp; Live Web Platforms
             </h2>
           </div>
           <div class="flex flex-wrap gap-2 font-mono-code text-xs">
-            <button type="button" data-filter="ALL" class="proj-filter-btn px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white">All Works ({{ projects|length }})</button>
-            <button type="button" data-filter="AI_LLM" class="proj-filter-btn px-3.5 py-1.5 rounded-xl border border-white/10 text-gray-300">AI &amp; LLMs</button>
-            <button type="button" data-filter="EDGE_TINYML" class="proj-filter-btn px-3.5 py-1.5 rounded-xl border border-white/10 text-gray-300">Edge TinyML</button>
-            <button type="button" data-filter="FULLSTACK" class="proj-filter-btn px-3.5 py-1.5 rounded-xl border border-white/10 text-gray-300">Full-Stack Web</button>
-            <button type="button" data-filter="API_SYSTEMS" class="proj-filter-btn px-3.5 py-1.5 rounded-xl border border-white/10 text-gray-300">FastAPI &amp; Docker</button>
+            <button type="button" data-filter="ALL" class="proj-filter-btn px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold">All Works ({{ projects|length }})</button>
+            <button type="button" data-filter="AI_LLM" class="proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill">AI &amp; LLMs</button>
+            <button type="button" data-filter="EDGE_TINYML" class="proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill">Edge TinyML</button>
+            <button type="button" data-filter="FULLSTACK" class="proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill">Full-Stack Web</button>
+            <button type="button" data-filter="API_SYSTEMS" class="proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill">FastAPI &amp; Docker</button>
           </div>
         </div>
 
@@ -310,42 +466,42 @@
           <article data-category="{{ proj.category }}" class="project-bento-card col-span-12 lg:col-span-6 surface-card surface-card-interactive p-6 sm:p-8 flex flex-col justify-between space-y-5">
             <div class="space-y-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <span class="font-mono-code text-xs text-indigo-400">[ WORK // {{ proj.code }} ]</span>
-                <span class="font-mono-code text-[11px] px-2.5 py-0.5 rounded-full {% if proj.live_server_url %}bg-emerald-500/15 text-emerald-400 border border-emerald-500/30{% else %}bg-indigo-500/15 text-indigo-300 border border-indigo-500/30{% endif %}">
+                <span class="font-mono-code text-xs text-indigo-500 font-bold">[ WORK // {{ proj.code }} ]</span>
+                <span class="font-mono-code text-[11px] px-2.5 py-0.5 rounded-full font-semibold {% if proj.live_server_url %}bg-emerald-500/15 text-emerald-500 border border-emerald-500/30{% else %}bg-indigo-500/15 text-indigo-400 border border-indigo-500/30{% endif %}">
                   {{ proj.status_label }}
                 </span>
               </div>
 
-              <h3 class="text-xl sm:text-2xl font-bold tracking-tight">{{ proj.title }}</h3>
-              <p class="text-xs sm:text-sm text-gray-300 font-medium">{{ proj.tagline }}</p>
-              <p class="text-xs text-gray-400 leading-relaxed">{{ proj.description }}</p>
+              <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-theme-primary">{{ proj.title }}</h3>
+              <p class="text-xs sm:text-sm text-theme-secondary font-medium">{{ proj.tagline }}</p>
+              <p class="text-xs text-theme-muted leading-relaxed">{{ proj.description }}</p>
 
-              <div class="p-3.5 rounded-xl bg-black/30 border border-white/5 font-mono-code text-[11px] text-gray-300 whitespace-pre-line">{{ proj.architecture_breakdown }}</div>
+              <div class="p-3.5 rounded-xl theme-code-box font-mono-code text-[11px] whitespace-pre-line">{{ proj.architecture_breakdown }}</div>
 
               <div class="flex flex-wrap gap-1.5 pt-1">
                 {% for tag in proj.tech_tags %}
-                <span class="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 font-mono-code text-[11px] text-gray-300">{{ tag }}</span>
+                <span class="px-2.5 py-0.5 rounded-md theme-pill font-mono-code text-[11px]">{{ tag }}</span>
                 {% endfor %}
               </div>
             </div>
 
-            <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+            <div class="pt-4 border-t flex flex-wrap items-center justify-between gap-3" style="border-color: var(--border-hairline);">
               <div class="flex flex-wrap items-center gap-2">
                 {% if proj.live_server_url %}
                 <a href="{{ proj.live_server_url }}" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono-code text-xs font-semibold btn-press">
                   🟢 Launch Live Server ↗
                 </a>
                 {% endif %}
-                <button type="button" onclick="openArchModal('{{ proj.code }}', '{{ proj.title|escapejs }}', '{{ proj.category }}', '{{ proj.tagline|escapejs }}', '{{ proj.description|escapejs }}', '{{ proj.architecture_breakdown|escapejs }}', '{{ proj.tech_stack_csv|escapejs }}', '{{ proj.live_server_url|escapejs }}', '{{ proj.github_repo_url|escapejs }}')" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono-code text-indigo-300 btn-press">
-                  Inspect Architecture ↗
-                </button>
                 {% if proj.github_repo_url %}
-                <a href="{{ proj.github_repo_url }}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl border border-white/15 hover:border-white/40 text-xs font-mono-code text-gray-200 btn-press">
+                <a href="{{ proj.github_repo_url }}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl theme-pill hover:border-indigo-500 text-xs font-mono-code font-medium btn-press">
                   GitHub Repo ↗
                 </a>
                 {% endif %}
+                <button type="button" onclick="openProjectModal({{ proj.id }})" class="px-3 py-2 rounded-xl theme-pill hover:border-indigo-500 text-xs font-mono-code btn-press">
+                  README / Specs
+                </button>
               </div>
-              <button type="button" onclick="upvoteProject({{ proj.id }}, this)" class="px-3 py-1.5 rounded-xl border border-white/10 hover:border-indigo-500/50 font-mono-code text-xs text-indigo-300 btn-press">
+              <button type="button" onclick="upvoteProject({{ proj.id }}, this)" class="px-3 py-1.5 rounded-xl theme-pill hover:border-indigo-500 font-mono-code text-xs text-indigo-500 font-semibold btn-press">
                 ▲ <span class="upvote-count">{{ proj.upvotes }}</span>
               </button>
             </div>
@@ -359,24 +515,23 @@
     <section id="courses" class="hairline-section py-14 lg:py-20">
       <div class="container-studio">
         <div class="bento-grid-12">
-          <!-- Left 6 Columns: Courses & Verified Credentials -->
           <div class="col-span-12 lg:col-span-6 space-y-6">
             <div>
-              <span class="font-mono-code text-xs uppercase text-indigo-400">[ 05A // COURSES, CERTIFICATIONS &amp; HACKATHONS ]</span>
-              <h2 class="text-2xl sm:text-3xl font-bold mt-1">Verified Technical Credentials</h2>
+              <span class="font-mono-code text-xs uppercase text-indigo-500 font-semibold">[ 05A // COURSES, CERTIFICATIONS &amp; HACKATHONS ]</span>
+              <h2 class="text-2xl sm:text-3xl font-bold mt-1 text-theme-primary">Verified Technical Credentials</h2>
             </div>
             <div class="space-y-4">
               {% for c in courses %}
               <div class="surface-card p-5 space-y-2">
                 <div class="flex items-center justify-between text-xs font-mono-code">
-                  <span class="text-emerald-400">{{ c.issuer }}</span>
-                  <span class="text-gray-400">{{ c.completion_date }}</span>
+                  <span class="text-emerald-500 font-semibold">{{ c.issuer }}</span>
+                  <span class="text-theme-muted">{{ c.completion_date }}</span>
                 </div>
-                <h3 class="text-base font-bold">{{ c.title }}</h3>
-                <p class="text-xs text-gray-400 leading-relaxed">{{ c.key_takeaways }}</p>
+                <h3 class="text-base font-bold text-theme-primary">{{ c.title }}</h3>
+                <p class="text-xs text-theme-secondary leading-relaxed">{{ c.key_takeaways }}</p>
                 {% if c.credential_url %}
                 <div class="pt-1">
-                  <a href="{{ c.credential_url }}" target="_blank" rel="noopener" class="font-mono-code text-xs text-indigo-400 hover:underline">Verify Credential / Repository ↗</a>
+                  <a href="{{ c.credential_url }}" target="_blank" rel="noopener" class="font-mono-code text-xs text-indigo-500 font-semibold hover:underline">Verify Credential / Repository ↗</a>
                 </div>
                 {% endif %}
               </div>
@@ -384,24 +539,23 @@
             </div>
           </div>
 
-          <!-- Right 6 Columns: Experience & Academic Trajectory -->
           <div class="col-span-12 lg:col-span-6 space-y-6">
             <div>
-              <span class="font-mono-code text-xs uppercase text-emerald-400">[ 05B // ENGINEERING LEADERSHIP &amp; TRAJECTORY ]</span>
-              <h2 class="text-2xl sm:text-3xl font-bold mt-1">Experience &amp; Research Timeline</h2>
+              <span class="font-mono-code text-xs uppercase text-emerald-500 font-semibold">[ 05B // ENGINEERING LEADERSHIP &amp; TRAJECTORY ]</span>
+              <h2 class="text-2xl sm:text-3xl font-bold mt-1 text-theme-primary">Experience &amp; Research Timeline</h2>
             </div>
             <div class="space-y-4">
               {% for item in timeline %}
               <div class="surface-card p-5 space-y-2">
                 <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono-code">
-                  <span class="text-indigo-300">{{ item.period }}</span>
+                  <span class="text-indigo-500 font-semibold">{{ item.period }}</span>
                   {% if item.badge_metric %}
-                  <span class="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">{{ item.badge_metric }}</span>
+                  <span class="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 font-semibold">{{ item.badge_metric }}</span>
                   {% endif %}
                 </div>
-                <h3 class="text-base font-bold">{{ item.role }}</h3>
-                <div class="text-xs font-mono-code text-gray-400">{{ item.organization }}</div>
-                <p class="text-xs text-gray-300 leading-relaxed">{{ item.impact_summary }}</p>
+                <h3 class="text-base font-bold text-theme-primary">{{ item.role }}</h3>
+                <div class="text-xs font-mono-code text-theme-muted">{{ item.organization }}</div>
+                <p class="text-xs text-theme-secondary leading-relaxed">{{ item.impact_summary }}</p>
               </div>
               {% endfor %}
             </div>
@@ -410,19 +564,19 @@
       </div>
     </section>
 
-    <!-- SECTION 06: DIRECT CONTACT & COLLABORATION -->
+    <!-- SECTION 06: DIRECT CONTACT & COLLABORATION (THEMED INPUTS IN BOTH DARK & LIGHT MODE) -->
     <section id="contact" class="py-14 lg:py-20">
       <div class="container-studio">
         <div class="bento-grid-12">
           <div class="col-span-12 lg:col-span-5 surface-card p-8 space-y-5">
-            <span class="font-mono-code text-xs uppercase text-indigo-400">[ 06 // DIRECT CHANNEL ]</span>
-            <h2 class="text-2xl sm:text-3xl font-bold">Initiate an AI/ML or Full-Stack Collaboration</h2>
-            <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">
+            <span class="font-mono-code text-xs uppercase text-indigo-500 font-semibold">[ 06 // DIRECT CHANNEL ]</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-theme-primary">Initiate an AI/ML or Full-Stack Collaboration</h2>
+            <p class="text-xs sm:text-sm text-theme-secondary leading-relaxed">
               Available for AI/ML engineering roles, LLM/multimodal systems research, and full-stack web architecture.
             </p>
-            <div class="space-y-2 font-mono-code text-xs">
-              <div>Primary: <a href="mailto:{{ profile.primary_email }}" class="text-indigo-400 hover:underline">{{ profile.primary_email }}</a></div>
-              <div>Secondary: <a href="mailto:{{ profile.secondary_email }}" class="text-indigo-400 hover:underline">{{ profile.secondary_email }}</a></div>
+            <div class="space-y-2.5 font-mono-code text-xs text-theme-secondary">
+              <div>Primary: <a href="mailto:{{ profile.primary_email }}" class="text-indigo-500 font-semibold hover:underline">{{ profile.primary_email }}</a></div>
+              <div>Secondary: <a href="mailto:{{ profile.secondary_email }}" class="text-indigo-500 font-semibold hover:underline">{{ profile.secondary_email }}</a></div>
               <div>Location: {{ profile.location }}</div>
             </div>
           </div>
@@ -432,24 +586,24 @@
               {% csrf_token %}
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block font-mono-code text-xs text-gray-400 mb-1">Your Name *</label>
-                  <input type="text" name="sender_name" required class="w-full bg-[#080a10] border border-white/15 rounded-xl px-3.5 py-2.5 text-white" />
+                  <label class="block font-mono-code text-xs text-theme-muted mb-1.5">Your Name *</label>
+                  <input type="text" name="sender_name" required placeholder="Recruiter / Collaborator Name" class="theme-input" />
                 </div>
                 <div>
-                  <label class="block font-mono-code text-xs text-gray-400 mb-1">Your Email *</label>
-                  <input type="email" name="sender_email" required class="w-full bg-[#080a10] border border-white/15 rounded-xl px-3.5 py-2.5 text-white" />
+                  <label class="block font-mono-code text-xs text-theme-muted mb-1.5">Your Email *</label>
+                  <input type="email" name="sender_email" required placeholder="name@company.com" class="theme-input" />
                 </div>
               </div>
               <div>
-                <label class="block font-mono-code text-xs text-gray-400 mb-1">Subject *</label>
-                <input type="text" name="subject" required placeholder="AI/ML Role / Research / Full-Stack Project" class="w-full bg-[#080a10] border border-white/15 rounded-xl px-3.5 py-2.5 text-white" />
+                <label class="block font-mono-code text-xs text-theme-muted mb-1.5">Subject *</label>
+                <input type="text" name="subject" required placeholder="AI/ML Role / Research / Full-Stack Project" class="theme-input" />
               </div>
               <div>
-                <label class="block font-mono-code text-xs text-gray-400 mb-1">Message *</label>
-                <textarea name="message" rows="4" required class="w-full bg-[#080a10] border border-white/15 rounded-xl p-3.5 text-white"></textarea>
+                <label class="block font-mono-code text-xs text-theme-muted mb-1.5">Message *</label>
+                <textarea name="message" rows="4" required placeholder="Share role details, timeline, or collaboration scope..." class="theme-input"></textarea>
               </div>
               <div class="flex items-center justify-between gap-4">
-                <span id="contactFormStatus" class="font-mono-code text-xs text-emerald-400"></span>
+                <span id="contactFormStatus" class="font-mono-code text-xs text-emerald-500 font-semibold"></span>
                 <button type="submit" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-mono-code text-xs font-bold btn-press">
                   Send Message →
                 </button>
@@ -461,74 +615,55 @@
     </section>
   </main>
 
-  <footer class="w-full border-t border-white/10 py-6 text-xs font-mono-code text-gray-400">
+  <!-- PROJECT ARCHITECTURE & README CASE-STUDY MODAL -->
+  <div id="projectReadmeModal" class="hidden fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="surface-card max-w-2xl w-full p-6 sm:p-8 space-y-4 border border-indigo-500/40">
+      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-hairline);">
+        <span id="modalProjCode" class="font-mono-code text-xs text-indigo-500 font-bold">[ ARCHITECTURE SPECS ]</span>
+        <button type="button" onclick="closeProjectModal()" class="px-2.5 py-1 rounded-lg theme-pill font-mono-code text-xs">✕ ESC</button>
+      </div>
+      <h3 id="modalProjTitle" class="text-xl sm:text-2xl font-bold text-theme-primary"></h3>
+      <p id="modalProjDesc" class="text-xs sm:text-sm text-theme-secondary leading-relaxed"></p>
+      <div id="modalProjArch" class="p-4 rounded-xl theme-code-box font-mono-code text-xs whitespace-pre-line"></div>
+      <div id="modalProjLinks" class="flex flex-wrap gap-3 pt-2"></div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE AI ENGINEER CLI TERMINAL MODAL (Cmd+K / >_ CLI) -->
+  <div id="cliTerminalModal" class="hidden fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full rounded-2xl overflow-hidden bg-[#080a12] border border-indigo-500/40 text-gray-100 shadow-2xl">
+      <div class="px-4 py-2.5 bg-[#101422] border-b border-white/10 flex items-center justify-between font-mono-code text-xs">
+        <span>sakib@nexuslocal-ai:~ (Interactive Engineering Shell)</span>
+        <button type="button" onclick="document.getElementById('cliTerminalModal').classList.add('hidden')" class="text-gray-400 hover:text-white">✕ ESC</button>
+      </div>
+      <div id="cliOutput" class="p-4 h-64 overflow-y-auto font-mono-code text-xs space-y-1.5 text-gray-300">
+        <div class="text-emerald-400">Welcome to Sakib AI Systems Shell v7.0. Type <code class="text-indigo-300">help</code>, <code class="text-indigo-300">whoami</code>, <code class="text-indigo-300">master-ai</code>, <code class="text-indigo-300">projects</code>, or <code class="text-indigo-300">clear</code>.</div>
+      </div>
+      <form id="cliForm" class="border-t border-white/10 px-4 py-2.5 flex items-center gap-2 bg-[#06080e] font-mono-code text-xs">
+        <span class="text-emerald-400">sakib@ai:~$</span>
+        <input id="cliInput" type="text" placeholder="Type command (e.g. master-ai, projects)..." class="flex-1 bg-transparent text-white outline-none" />
+      </form>
+    </div>
+  </div>
+
+  <footer class="w-full border-t py-6 text-xs font-mono-code text-theme-muted" style="border-color: var(--border-hairline);">
     <div class="container-studio flex flex-col sm:flex-row items-center justify-between gap-3">
       <div>© 2026 {{ profile.full_name }} • {{ profile.role_title }}</div>
       <div class="flex items-center gap-4">
-        <button type="button" onclick="document.getElementById('cmdKModal').showModal()" class="hover:text-indigo-400 text-indigo-300">Cmd+K Shell</button>
-        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="hover:text-white">GitHub</a>
-        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="hover:text-white">LinkedIn</a>
-        <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="hover:text-white">Kaggle</a>
+        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="hover:underline">GitHub</a>
+        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="hover:underline">LinkedIn</a>
+        <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="hover:underline">Kaggle</a>
       </div>
     </div>
   </footer>
 
-  <!-- ARCHITECTURE README MODAL -->
-  <dialog id="archModal" class="p-0 rounded-2xl bg-[#0d0f17] text-gray-100 border border-white/15 shadow-2xl w-full max-w-2xl backdrop:bg-black/80 backdrop:backdrop-blur-md">
-    <div class="p-4 bg-[#131624] border-b border-white/10 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
-        <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
-        <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-        <span id="archModalCode" class="text-xs font-mono-code text-gray-400 pl-2">README.md</span>
-      </div>
-      <button type="button" onclick="document.getElementById('archModal').close()" class="text-gray-400 hover:text-white font-mono-code text-sm px-2">✕</button>
-    </div>
-    <div class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-      <div>
-        <span id="archModalCategory" class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">CATEGORY</span>
-        <h3 id="archModalTitle" class="text-2xl font-bold tracking-tight text-white mt-2">Project Title</h3>
-        <p id="archModalTagline" class="text-xs font-mono-code text-indigo-300 mt-1">Tagline</p>
-        <p id="archModalDescription" class="text-xs text-gray-300 mt-2 leading-relaxed">Description</p>
-      </div>
-      <div>
-        <h4 class="text-xs font-mono-code text-indigo-400 font-bold uppercase tracking-wider">System Architecture &amp; Engineering Decisions</h4>
-        <div id="archModalBreakdown" class="text-xs font-mono-code text-gray-200 mt-1.5 p-3.5 rounded-xl bg-black/40 border border-white/5 whitespace-pre-line leading-relaxed">Breakdown</div>
-      </div>
-      <div>
-        <h4 class="text-xs font-mono-code text-gray-400 font-bold uppercase tracking-wider mb-2">Tech Stack</h4>
-        <div id="archModalTech" class="flex flex-wrap gap-1.5"></div>
-      </div>
-      <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-        <a id="archModalRepo" href="#" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono-code text-gray-200">GitHub Repository ↗</a>
-        <a id="archModalLive" href="#" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono-code text-xs font-bold">🟢 Launch Live Server ↗</a>
-      </div>
-    </div>
-  </dialog>
-
-  <!-- CMD+K INTERACTIVE TERMINAL DRAWER -->
-  <dialog id="cmdKModal" class="p-0 rounded-2xl bg-[#0d0f17] text-gray-100 border border-white/15 shadow-2xl w-full max-w-xl backdrop:bg-black/80 backdrop:backdrop-blur-md">
-    <div class="p-3.5 bg-[#131624] border-b border-white/10 flex items-center justify-between text-xs font-mono-code">
-      <div class="flex items-center gap-2 text-indigo-400">
-        <span>⚡ sakib@ai-engine:~$</span>
-      </div>
-      <span class="text-gray-500">ESC to close</span>
-    </div>
-    <div class="p-4 space-y-3 font-mono-code text-xs">
-      <div id="cliOutput" class="space-y-1.5 text-gray-300 max-h-56 overflow-y-auto">
-        <div class="text-emerald-400">Sakib AI Orchestrator CLI [Version 6.0]</div>
-        <div class="text-gray-400">Available commands: <span class="text-indigo-300">projects</span>, <span class="text-indigo-300">skills</span>, <span class="text-indigo-300">masterai</span>, <span class="text-indigo-300">contact</span>, <span class="text-indigo-300">clear</span></div>
-      </div>
-      <div class="flex items-center gap-2 pt-2 border-t border-white/10">
-        <span class="text-indigo-400">&gt;</span>
-        <input id="cliInput" type="text" placeholder="type a command..." autofocus class="w-full bg-transparent text-white focus:outline-none text-xs" />
-      </div>
-    </div>
-  </dialog>
-
-  <script src="{% static 'js/neural_router_3d.js' %}"></script>
+  <!-- ========================================================================
+       INDESTRUCTIBLE 60 FPS 3D NEURAL MEMORY ROUTER ENGINE + INTERACTIVE APP JS
+       ======================================================================== -->
   <script>
-    // Live Clock, Theme Toggle, Project Filter, Upvote & AJAX Contact
+    const PROJECTS_DATA = {{ projects_json|safe }};
+
+    // 1. Live Clock & Theme Switcher
     setInterval(function () {
       const el = document.getElementById("liveClockBdt");
       if (el) el.textContent = "BDT • " + new Date().toLocaleTimeString("en-US", { hour12: false }) + " UTC+6";
@@ -539,18 +674,218 @@
       root.setAttribute("data-theme", root.getAttribute("data-theme") === "light" ? "dark" : "light");
     });
 
+    // 2. Indestructible 60 FPS 3D Perspective & Isometric Neural Memory Orchestrator Canvas
+    (function initMasterAICanvas3D() {
+      const canvas = document.getElementById("masterAi3dCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      let width = 500, height = 250;
+      let rotY = 0.4, rotX = 0.38;
+      let isDragging = false, lastX = 0, lastY = 0;
+      let activeExpert = 0; // 0: Code-1G, 1: Photo-1G, 2: Video-1G, 99: Self-Train
+
+      const experts = [
+        { name: "CODE-1G (0.95 GB NF4)", color: "#38bdf8", pool: "GPU VRAM" },
+        { name: "PHOTO-1G (1.05 GB FLOW)", color: "#10b981", pool: "NPU + GPU" },
+        { name: "VIDEO-1G (1.15 GB VAE)", color: "#f59e0b", pool: "VRAM + RAM" },
+        { name: "REASON-1G (0.90 GB RAG)", color: "#a855f7", pool: "CPU RAM" }
+      ];
+
+      function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        width = Math.max(300, rect.width || 480);
+        height = Math.max(220, rect.height || 240);
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      canvas.addEventListener("pointerdown", function (e) { isDragging = true; lastX = e.clientX; lastY = e.clientY; });
+      window.addEventListener("pointerup", function () { isDragging = false; });
+      window.addEventListener("pointermove", function (e) {
+        if (!isDragging) return;
+        rotY += (e.clientX - lastX) * 0.01;
+        rotX = Math.max(0.15, Math.min(1.1, rotX + (e.clientY - lastY) * 0.008));
+        lastX = e.clientX;
+        lastY = e.clientY;
+      });
+
+      function project3D(x, y, z) {
+        // Rotate Y
+        const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+        const x1 = x * cosY - z * sinY;
+        const z1 = z * cosY + x * sinY;
+        // Rotate X
+        const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+        const y2 = y * cosX - z1 * sinX;
+        const z2 = z1 * cosX + y * sinX;
+        const fov = 340 / (340 + z2 + 120);
+        return {
+          sx: width / 2 + x1 * fov,
+          sy: height / 2 + y2 * fov,
+          scale: fov,
+          z: z2
+        };
+      }
+
+      function draw3DOctahedron(cx, cy, cz, radius, strokeCol, fillCol, spin) {
+        const verts = [
+          [0, -radius, 0], [0, radius, 0],
+          [-radius, 0, 0], [radius, 0, 0],
+          [0, 0, -radius], [0, 0, radius]
+        ].map(function (v) {
+          const c = Math.cos(spin), s = Math.sin(spin);
+          const rx = v[0] * c - v[2] * s;
+          const rz = v[2] * c + v[0] * s;
+          return project3D(cx + rx, cy + v[1], cz + rz);
+        });
+
+        const edges = [
+          [0,2],[0,3],[0,4],[0,5],
+          [1,2],[1,3],[1,4],[1,5],
+          [2,4],[4,3],[3,5],[5,2]
+        ];
+        ctx.fillStyle = fillCol;
+        ctx.beginPath();
+        ctx.arc(verts[0].sx, (verts[0].sy + verts[1].sy) / 2, radius * verts[0].scale * 0.72, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = strokeCol;
+        ctx.lineWidth = 1.4;
+        edges.forEach(function (e) {
+          ctx.beginPath();
+          ctx.moveTo(verts[e[0]].sx, verts[e[0]].sy);
+          ctx.lineTo(verts[e[1]].sx, verts[e[1]].sy);
+          ctx.stroke();
+        });
+      }
+
+      function renderFrame() {
+        requestAnimationFrame(renderFrame);
+        const t = Date.now() * 0.0015;
+        if (!isDragging) rotY += (activeExpert === 99 ? 0.018 : 0.006);
+
+        ctx.fillStyle = "#070911";
+        ctx.fillRect(0, 0, width, height);
+
+        // Subtle 3D Memory Pool Orbit Rings (CPU RAM, GPU VRAM, NPU)
+        [75, 118, 152].forEach(function (r, rIdx) {
+          ctx.beginPath();
+          for (let a = 0; a <= 64; a++) {
+            const ang = (a / 64) * Math.PI * 2;
+            const p = project3D(Math.cos(ang) * r, 0, Math.sin(ang) * r);
+            if (a === 0) ctx.moveTo(p.sx, p.sy);
+            else ctx.lineTo(p.sx, p.sy);
+          }
+          ctx.strokeStyle = rIdx === 1 ? "rgba(99, 102, 241, 0.30)" : "rgba(255, 255, 255, 0.08)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+
+        const centerP = project3D(0, 0, 0);
+
+        // 4 Orbiting ~1.0 GB Sub-Model Nodes + Data Conduits
+        experts.forEach(function (exp, i) {
+          const ang = (i * Math.PI) / 2 + t * 0.7;
+          const dist = activeExpert === i ? 98 : 126;
+          const ex = Math.cos(ang) * dist;
+          const ey = Math.sin(t * 2 + i) * 14;
+          const ez = Math.sin(ang) * dist;
+          const ep = project3D(ex, ey, ez);
+
+          // Conduit Line to Resident Master AI Core
+          ctx.beginPath();
+          ctx.moveTo(centerP.sx, centerP.sy);
+          ctx.lineTo(ep.sx, ep.sy);
+          const isSelected = (activeExpert === i || activeExpert === 99);
+          ctx.strokeStyle = isSelected ? exp.color : "rgba(148, 163, 184, 0.22)";
+          ctx.lineWidth = isSelected ? 2 : 1;
+          ctx.stroke();
+
+          // Flowing Data Packet along Conduit
+          if (isSelected) {
+            const prog = (Date.now() * 0.0025) % 1;
+            const dirProg = activeExpert === 99 ? (1 - prog) : prog;
+            const px = centerP.sx + (ep.sx - centerP.sx) * dirProg;
+            const py = centerP.sy + (ep.sy - centerP.sy) * dirProg;
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(px, py, 3.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          draw3DOctahedron(
+            ex, ey, ez,
+            isSelected ? 20 : 14,
+            exp.color,
+            isSelected ? "rgba(99, 102, 241, 0.28)" : "rgba(15, 23, 42, 0.65)",
+            t * 2 + i
+          );
+
+          ctx.fillStyle = isSelected ? "#ffffff" : "#94a3b8";
+          ctx.font = "600 10px 'JetBrains Mono', monospace";
+          ctx.fillText(exp.name.split(" ")[0], ep.sx - 24, ep.sy - 18);
+        });
+
+        // Central Always-Resident Master AI Router Core
+        const corePulse = activeExpert === 99 ? 30 + Math.sin(t * 6) * 5 : 26;
+        draw3DOctahedron(
+          0, 0, 0,
+          corePulse,
+          activeExpert === 99 ? "#10b981" : "#818cf8",
+          activeExpert === 99 ? "rgba(16, 185, 129, 0.32)" : "rgba(79, 70, 229, 0.35)",
+          -t * 1.5
+        );
+        ctx.fillStyle = "#e0e7ff";
+        ctx.font = "700 10px 'JetBrains Mono', monospace";
+        ctx.fillText("MASTER AI (RAM)", centerP.sx - 44, centerP.sy + 36);
+      }
+      renderFrame();
+
+      window.setMasterAIRoute = function (idx, label) {
+        activeExpert = idx;
+        const tel = document.getElementById("masterAiTelemetryStatus");
+        if (tel) tel.textContent = label;
+      };
+    })();
+
+    // 3. Project Category Filter, Upvote & Modal
     document.querySelectorAll(".proj-filter-btn").forEach(function (btn) {
       btn.addEventListener("click", function () {
         const cat = btn.getAttribute("data-filter");
         document.querySelectorAll(".proj-filter-btn").forEach(function (b) {
-          b.className = "proj-filter-btn px-3.5 py-1.5 rounded-xl border border-white/10 text-gray-300";
+          b.className = "proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill";
         });
-        btn.className = "proj-filter-btn px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white";
+        btn.className = "proj-filter-btn px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold";
         document.querySelectorAll(".project-bento-card").forEach(function (card) {
           card.style.display = (cat === "ALL" || card.getAttribute("data-category") === cat) ? "" : "none";
         });
       });
     });
+
+    function openProjectModal(projId) {
+      const p = PROJECTS_DATA.find(function (x) { return x.id === projId; });
+      if (!p) return;
+      document.getElementById("modalProjCode").textContent = "[ WORK // " + p.code + " • " + p.status + " ]";
+      document.getElementById("modalProjTitle").textContent = p.title;
+      document.getElementById("modalProjDesc").textContent = p.description;
+      document.getElementById("modalProjArch").textContent = p.architecture;
+      const linksBox = document.getElementById("modalProjLinks");
+      linksBox.innerHTML = "";
+      if (p.liveUrl) {
+        linksBox.innerHTML += '<a href="' + p.liveUrl + '" target="_blank" class="px-4 py-2 rounded-xl bg-emerald-600 text-white font-mono-code text-xs font-semibold">🟢 Launch Live Server ↗</a>';
+      }
+      if (p.githubUrl) {
+        linksBox.innerHTML += '<a href="' + p.githubUrl + '" target="_blank" class="px-4 py-2 rounded-xl theme-pill font-mono-code text-xs">GitHub Repository ↗</a>';
+      }
+      document.getElementById("projectReadmeModal").classList.remove("hidden");
+    }
+    function closeProjectModal() {
+      document.getElementById("projectReadmeModal").classList.add("hidden");
+    }
 
     function upvoteProject(pk, btnEl) {
       fetch("/api/projects/" + pk + "/upvote/", {
@@ -563,6 +898,7 @@
       });
     }
 
+    // 4. AJAX Contact Form
     document.getElementById("ajaxContactForm").addEventListener("submit", function (e) {
       e.preventDefault();
       const form = e.target;
@@ -578,90 +914,32 @@
         if (d.ok) form.reset();
       });
     });
-    function openArchModal(code, title, cat, tagline, desc, breakdown, techCsv, liveUrl, repoUrl) {
-      document.getElementById('archModalCode').textContent = code + ' // README.md';
-      document.getElementById('archModalCategory').textContent = cat;
-      document.getElementById('archModalTitle').textContent = title;
-      document.getElementById('archModalTagline').textContent = tagline;
-      document.getElementById('archModalDescription').textContent = desc;
-      document.getElementById('archModalBreakdown').textContent = breakdown;
 
-      const techBox = document.getElementById('archModalTech');
-      techBox.innerHTML = '';
-      techCsv.split(',').forEach(function(t) {
-        if (!t.trim()) return;
-        const s = document.createElement('span');
-        s.className = 'px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 font-mono-code text-[11px] text-gray-300';
-        s.textContent = t.trim();
-        techBox.appendChild(s);
-      });
-
-      const liveBtn = document.getElementById('archModalLive');
-      if (liveUrl) {
-        liveBtn.href = liveUrl;
-        liveBtn.style.display = 'inline-flex';
-      } else {
-        liveBtn.style.display = 'none';
-      }
-
-      const repoBtn = document.getElementById('archModalRepo');
-      if (repoUrl) {
-        repoBtn.href = repoUrl;
-        repoBtn.style.display = 'inline-flex';
-      } else {
-        repoBtn.style.display = 'none';
-      }
-
-      document.getElementById('archModal').showModal();
-    }
-
-    // Cmd+K Key Listener & Terminal CLI
-    window.addEventListener('keydown', function(e) {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        const d = document.getElementById('cmdKModal');
-        if (d.open) d.close(); else d.showModal();
-      }
+    // 5. Interactive CLI Terminal Modal
+    document.getElementById("openTerminalBtn").addEventListener("click", function () {
+      document.getElementById("cliTerminalModal").classList.remove("hidden");
+      document.getElementById("cliInput").focus();
     });
-
-    const cliInput = document.getElementById('cliInput');
-    const cliOutput = document.getElementById('cliOutput');
-    if (cliInput) {
-      cliInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          const val = cliInput.value.trim().toLowerCase();
-          cliInput.value = '';
-          if (!val) return;
-          const userLine = document.createElement('div');
-          userLine.className = 'text-indigo-400 font-bold';
-          userLine.textContent = '$ ' + val;
-          cliOutput.appendChild(userLine);
-
-          let resp = '';
-          if (val === 'help') {
-            resp = 'Commands: projects, skills, masterai, contact, clear';
-          } else if (val === 'projects') {
-            resp = '01: NexusLocal Master AI | 02: Aloron Shop | 03: Campus Lost & Found | 04: Mosquito AI Trap | 05: Rural Lightning Warning | 06: CoWork API | 07: SmartSpend';
-          } else if (val === 'skills') {
-            resp = 'PyTorch, LoRA, 4-Bit NF4, llama.cpp, ONNX, Django 5, FastAPI, Next.js 15, TypeScript, ESP32-S3 TinyML, PostgreSQL, Docker';
-          } else if (val === 'masterai') {
-            resp = 'Master AI Router (~420 MB RAM) dynamically queues ~1 GB sub-models (Code, Photo, Video, Reason) across CPU+GPU+NPU with in-place continual learning.';
-          } else if (val === 'contact') {
-            resp = 'Email: mdnajmussakib2003@gmail.com | Location: Cumilla / Dhaka, Bangladesh (UTC+6)';
-          } else if (val === 'clear') {
-            cliOutput.innerHTML = '';
-            return;
-          } else {
-            resp = 'Command not recognized: ' + val + '. Type "help".';
-          }
-          const respLine = document.createElement('div');
-          respLine.className = 'text-gray-300';
-          respLine.textContent = resp;
-          cliOutput.appendChild(respLine);
-          cliOutput.scrollTop = cliOutput.scrollHeight;
-        }
-      });
-    }
+    document.getElementById("cliForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const inp = document.getElementById("cliInput");
+      const out = document.getElementById("cliOutput");
+      const cmd = inp.value.trim().toLowerCase();
+      inp.value = "";
+      if (!cmd) return;
+      out.innerHTML += '<div class="text-indigo-400">sakib@ai:~$ ' + cmd + '</div>';
+      if (cmd === "clear") { out.innerHTML = ""; return; }
+      const replies = {
+        "help": "Available commands: whoami, master-ai, projects, skills, contact, clear",
+        "whoami": "Md Najmus Sakib Rahatul — AI/ML Engineer & Full-Stack AI Systems Architect (LLMs, Multimodal AI, Local CPU/GPU/NPU Runtimes, Django & FastAPI).",
+        "master-ai": "NexusLocal: Resident Master AI Router (~420 MB RAM) orchestrating ~1.0 GB 4-bit quantized specialist sub-models (Code-1G, Photo-1G, Video-1G, Reason-1G) with In-Place Single-Node Continual Self-Training.",
+        "projects": "01 NexusLocal Master AI | 02 Aloron Shop (aloron-shop.vercel.app) | 03 Campus Lost & Found (baiust-campus-lost-and-found.vercel.app) | 04 NexusCode 3D (codequest-bd.vercel.app) | 05 Bio-Acoustic Mosquito FFT Trap | 06 IoT Storm TinyML | 07 CoWork FastAPI",
+        "skills": "PyTorch, Transformers, QLoRA/4-Bit NF4, llama.cpp, vLLM, ONNX, ExecuTorch, LangGraph, Django 5, FastAPI, Next.js, ESP32-S3 TinyML, PostgreSQL.",
+        "contact": "Primary Email: mdnajmussakib2003@gmail.com | GitHub: github.com/Sakib20050413"
+      };
+      out.innerHTML += '<div class="text-gray-200">' + (replies[cmd] || "Command not recognized. Type 'help' for available commands.") + '</div>';
+      out.scrollTop = out.scrollHeight;
+    });
   </script>
 </body>
 </html>

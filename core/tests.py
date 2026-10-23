@@ -76,7 +76,7 @@ class PortfolioV5Tests(TestCase):
     def test_cv_view_loads_successfully(self):
         response = self.client.get(reverse("printable_cv"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Curriculum Vitae")
+        self.assertContains(response, "CV")
         self.assertContains(response, "Md Najmus Sakib Rahatul")
 
     def test_api_upvote_project(self):

@@ -4,7 +4,7 @@ from pathlib import Path
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-sakib-ai-ml-portfolio-v6-production-key")
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-sakib-ai-portfolio-v7-bulletproof-key")
 DEBUG = os.environ.get("DEBUG", "True").lower() in ("true", "1", "yes")
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
@@ -55,11 +55,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "portfolio_project.wsgi.application"
 
-# Database: Use DATABASE_URL (Neon/Supabase Postgres) if set; on Vercel without DATABASE_URL, copy pre-seeded db.sqlite3 to writable /tmp/db.sqlite3
 if os.environ.get("DATABASE_URL"):
-    DATABASES = {
-        "default": dj_database_url.config(conn_max_age=600)
-    }
+    DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 elif "VERCEL" in os.environ:
     tmp_db = Path("/tmp/db.sqlite3")
     bundled_db = BASE_DIR / "db.sqlite3"

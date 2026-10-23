@@ -10,26 +10,25 @@ class ProfileConfig(models.Model):
     )
     hero_headline = models.CharField(
         max_length=280,
-        default="Architecting Sovereign Local Multi-Model AI Systems, Self-Evolving Neural Nodes & Scalable Web Platforms."
+        default="Architecting Sovereign Local Multi-Model AI Runtimes, Self-Evolving Neural Nodes & Scalable Web Platforms."
     )
     bio_summary = models.TextField(
         default=(
-            "AI/ML Engineer and Full-Stack Developer specializing in Large Language Models, "
-            "Multimodal AI orchestration, Edge TinyML, and high-throughput web architectures. "
-            "My core engineering thesis focuses on building a locally executable Master AI Router "
-            "that coordinates compact ~1 GB specialist sub-models (Code, Image, Video, and Reasoning) "
-            "across unified CPU RAM, GPU VRAM, and NPU memory while performing in-place single-node continual self-training."
+            "AI/ML Engineer and Full-Stack Systems Builder specializing in Large Language Models, "
+            "Multimodal AI orchestration, Edge TinyML, and high-reliability web platforms. "
+            "My core engineering thesis centers on a locally resident Master AI Router across consumer "
+            "CPU RAM, GPU VRAM, and NPU memory that dynamically queues compact ~1 GB specialist sub-models "
+            "(Code, Image, Video, and Reasoning) while performing in-place single-node continual self-training."
         )
     )
     photo_url = models.CharField(
         max_length=500,
-        default="https://avatars.githubusercontent.com/u/166808901?v=4",
-        help_text="Direct URL or uploaded path to Sakib's portrait photo"
+        default="https://avatars.githubusercontent.com/u/166808901?v=4"
     )
     location = models.CharField(max_length=120, default="Cumilla / Dhaka, Bangladesh (UTC+6)")
     availability_text = models.CharField(
         max_length=160,
-        default="Available for AI/ML Engineering Roles, Research & Full-Stack Contracts"
+        default="Open to AI/ML Engineering Roles, Global Remote Contracts & Research"
     )
     primary_email = models.EmailField(default="mdnajmussakib2003@gmail.com")
     secondary_email = models.EmailField(default="md.najmus.sakib.rahatul.2005@gmail.com")
@@ -52,8 +51,8 @@ class AIArchitectureNode(models.Model):
     title = models.CharField(max_length=180)
     memory_budget = models.CharField(max_length=80, default="~1.0 GB Quantized (4-Bit NF4 / GGUF)")
     hardware_pool = models.CharField(max_length=120, default="CPU System RAM + GPU VRAM + NPU")
-    summary = models.TextField(default="")
-    mechanism_detail = models.TextField(default="")
+    summary = models.TextField()
+    mechanism_detail = models.TextField()
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -95,13 +94,13 @@ class Project(models.Model):
     ]
     code = models.CharField(max_length=20, default="01")
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=220, unique=True, default="")
+    slug = models.SlugField(max_length=220, unique=True)
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default="AI_LLM")
     status_label = models.CharField(max_length=80, default="Live Production")
-    tagline = models.CharField(max_length=260, default="")
-    description = models.TextField(default="")
-    architecture_breakdown = models.TextField(default="", blank=True)
-    tech_stack_csv = models.CharField(max_length=400, default="")
+    tagline = models.CharField(max_length=260)
+    description = models.TextField()
+    architecture_breakdown = models.TextField()
+    tech_stack_csv = models.CharField(max_length=400)
     preview_image_url = models.CharField(max_length=500, blank=True, default="")
     live_server_url = models.URLField(blank=True, default="")
     github_repo_url = models.URLField(blank=True, default="")
@@ -126,7 +125,7 @@ class CourseCertification(models.Model):
     completion_date = models.CharField(max_length=60, default="2026")
     credential_url = models.URLField(blank=True, default="")
     screenshot_url = models.CharField(max_length=500, blank=True, default="")
-    key_takeaways = models.TextField(default="")
+    key_takeaways = models.TextField()
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -137,10 +136,10 @@ class CourseCertification(models.Model):
 
 
 class TimelineEntry(models.Model):
-    role = models.CharField(max_length=180, default="")
+    role = models.CharField(max_length=180)
     organization = models.CharField(max_length=180)
     period = models.CharField(max_length=80)
-    impact_summary = models.TextField(default="")
+    impact_summary = models.TextField()
     badge_metric = models.CharField(max_length=100, blank=True, default="")
     order = models.PositiveIntegerField(default=0)
 

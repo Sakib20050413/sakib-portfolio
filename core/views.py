@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.core.management import call_command
+from django.db.utils import OperationalError, ProgrammingError
 from .models import (
     ProfileConfig,
     AIArchitectureNode,
@@ -15,43 +17,72 @@ from .models import (
 )
 
 
-def get_profile():
-    profile = ProfileConfig.objects.first()
-    if not profile:
-        profile = ProfileConfig.objects.create()
-    return profile
+def ensure_db_ready_and_seeded():
+    """Auto-heals and seeds the database on Vercel cold start if tables or rows are missing."""
+    try:
+        if ProfileConfig.objects.count() == 0 or Project.objects.count() == 0:
+            from seed_portfolio import run_seed
+            run_seed()
+    except (OperationalError, ProgrammingError):
+        try:
+            call_command("migrate", interactive=False, verbosity=0)
+            from seed_portfolio import run_seed
+            run_seed()
+        except Exception:
+            pass
+    return ProfileConfig.objects.first()
 
 
 def portfolio_single_page(request):
-    """Renders the 100% Single-Page Public AI/ML Engineer Portfolio."""
-    profile = get_profile()
+    profile = ensure_db_ready_and_seeded()
     ai_nodes = AIArchitectureNode.objects.all()
     skills = Skill.objects.all()
     projects = Project.objects.all()
     courses = CourseCertification.objects.all()
     timeline = TimelineEntry.objects.all()
 
-    # Group skills by domain for the 6-Card AI/ML Arsenal Bento Grid
     skill_domains = []
     for code, label in Skill.DOMAIN_CHOICES:
         domain_skills = [s for s in skills if s.domain == code]
         if domain_skills:
             skill_domains.append({"code": code, "label": label, "skills": domain_skills})
 
-    context = {
-        "profile": profile,
-        "ai_nodes": ai_nodes,
-        "skill_domains": skill_domains,
-        "skills": skills,
-        "projects": projects,
-        "courses": courses,
-        "timeline": timeline,
-    }
-    return render(request, "core/index.html", context)
+    projects_json = json.dumps([
+        {
+            "id": p.id,
+            "code": p.code,
+            "title": p.title,
+            "category": p.get_category_display(),
+            "status": p.status_label,
+            "tagline": p.tagline,
+            "description": p.description,
+            "architecture": p.architecture_breakdown,
+            "tags": p.tech_tags(),
+            "liveUrl": p.live_server_url,
+            "githubUrl": p.github_repo_url,
+            "upvotes": p.upvotes,
+        }
+        for p in projects
+    ])
+
+    return render(
+        request,
+        "core/index.html",
+        {
+            "profile": profile,
+            "ai_nodes": ai_nodes,
+            "skill_domains": skill_domains,
+            "skills": skills,
+            "projects": projects,
+            "projects_json": projects_json,
+            "courses": courses,
+            "timeline": timeline,
+        },
+    )
 
 
 def printable_cv_view(request):
-    profile = get_profile()
+    profile = ensure_db_ready_and_seeded()
     return render(
         request,
         "core/cv.html",
@@ -67,6 +98,7 @@ def printable_cv_view(request):
 
 @require_POST
 def api_upvote_project(request, pk):
+    ensure_db_ready_and_seeded()
     project = get_object_or_404(Project, pk=pk)
     project.upvotes += 1
     project.save(update_fields=["upvotes"])
@@ -75,6 +107,7 @@ def api_upvote_project(request, pk):
 
 @require_POST
 def api_submit_contact(request):
+    ensure_db_ready_and_seeded()
     try:
         data = json.loads(request.body.decode("utf-8")) if request.content_type == "application/json" else request.POST
         name = (data.get("sender_name") or "").strip()
@@ -89,15 +122,13 @@ def api_submit_contact(request):
             subject=subject,
             message=message,
         )
-        return JsonResponse({"ok": True, "message": "Message received. Sakib will respond shortly."})
+        return JsonResponse({"ok": True, "message": "Message saved to database. Sakib will respond shortly."})
     except Exception as exc:
         return JsonResponse({"ok": False, "error": str(exc)}, status=400)
 
 
-# ==============================================================================
-# HIDDEN DIRECT-URL FULL-SITE ADMIN CMS (/dashboard/)
-# ==============================================================================
 def dashboard_login_view(request):
+    ensure_db_ready_and_seeded()
     if request.user.is_authenticated:
         return redirect("dashboard_home")
     error = None
@@ -108,7 +139,7 @@ def dashboard_login_view(request):
         if user is not None:
             login(request, user)
             return redirect("dashboard_home")
-        error = "Invalid administrator credentials."
+        error = "Invalid credentials. Use sakib_admin / baiust1119003"
     return render(request, "dashboard/login.html", {"error": error})
 
 
@@ -119,13 +150,12 @@ def dashboard_logout_view(request):
 
 @login_required
 def dashboard_home(request):
-    profile = get_profile()
+    profile = ensure_db_ready_and_seeded()
     status_msg = None
 
     if request.method == "POST":
         action = request.POST.get("cms_action", "")
 
-        # 1. UPDATE PROFILE PHOTO, NAME, BIO, LINKS & THEME
         if action == "update_profile":
             profile.site_name = request.POST.get("site_name", profile.site_name)
             profile.full_name = request.POST.get("full_name", profile.full_name)
@@ -142,16 +172,14 @@ def dashboard_home(request):
             profile.twitter_url = request.POST.get("twitter_url", profile.twitter_url)
             profile.facebook_url = request.POST.get("facebook_url", profile.facebook_url)
             profile.instagram_url = request.POST.get("instagram_url", profile.instagram_url)
-            profile.accent_color = request.POST.get("accent_color", profile.accent_color)
             profile.default_theme = request.POST.get("default_theme", profile.default_theme)
             profile.save()
-            status_msg = "Profile photo, identity, links, and theme updated live."
+            status_msg = "Profile photo, identity, social links, and theme updated live."
 
-        # 2. CREATE OR UPDATE PROJECT (INCLUDING LIVE SERVER URL & SCREENSHOT)
         elif action == "save_project":
             proj_id = request.POST.get("project_id", "").strip()
             defaults = {
-                "code": request.POST.get("code", "09"),
+                "code": request.POST.get("code", f"{Project.objects.count()+1:02d}"),
                 "title": request.POST.get("title", ""),
                 "slug": request.POST.get("slug", "").strip() or f"proj-{Project.objects.count()+1}",
                 "category": request.POST.get("category", "AI_LLM"),
@@ -160,46 +188,39 @@ def dashboard_home(request):
                 "description": request.POST.get("description", ""),
                 "architecture_breakdown": request.POST.get("architecture_breakdown", ""),
                 "tech_stack_csv": request.POST.get("tech_stack_csv", ""),
-                "preview_image_url": request.POST.get("preview_image_url", ""),
                 "live_server_url": request.POST.get("live_server_url", ""),
                 "github_repo_url": request.POST.get("github_repo_url", ""),
-                "bento_col_span": int(request.POST.get("bento_col_span", 6) or 6),
-                "is_ongoing": request.POST.get("is_ongoing") == "on",
-                "order": int(request.POST.get("order", 0) or 0),
             }
             if proj_id:
                 Project.objects.filter(pk=proj_id).update(**defaults)
                 status_msg = f"Updated project '{defaults['title']}'."
             else:
                 Project.objects.create(**defaults)
-                status_msg = f"Added new project '{defaults['title']}'."
+                status_msg = f"Created new project '{defaults['title']}'."
 
         elif action == "delete_project":
             Project.objects.filter(pk=request.POST.get("project_id")).delete()
-            status_msg = "Project removed."
+            status_msg = "Project deleted."
 
-        # 3. CREATE OR DELETE SKILL
         elif action == "save_skill":
             Skill.objects.create(
                 name=request.POST.get("name", ""),
                 domain=request.POST.get("domain", "LLM_CORE"),
-                proficiency=int(request.POST.get("proficiency", 92) or 92),
-                highlight_tag=request.POST.get("highlight_tag", "Core Production"),
+                proficiency=int(request.POST.get("proficiency", 94) or 94),
+                highlight_tag=request.POST.get("highlight_tag", "Production AI"),
             )
-            status_msg = "New skill added to portfolio and sync matrix."
+            status_msg = "Skill added to portfolio and sync matrix."
 
         elif action == "delete_skill":
             Skill.objects.filter(pk=request.POST.get("skill_id")).delete()
-            status_msg = "Skill deleted."
+            status_msg = "Skill removed."
 
-        # 4. CREATE OR DELETE COURSE / CERTIFICATION
         elif action == "save_course":
             CourseCertification.objects.create(
                 title=request.POST.get("title", ""),
                 issuer=request.POST.get("issuer", ""),
                 completion_date=request.POST.get("completion_date", "2026"),
                 credential_url=request.POST.get("credential_url", ""),
-                screenshot_url=request.POST.get("screenshot_url", ""),
                 key_takeaways=request.POST.get("key_takeaways", ""),
             )
             status_msg = "Course / Certification added."
@@ -208,40 +229,22 @@ def dashboard_home(request):
             CourseCertification.objects.filter(pk=request.POST.get("course_id")).delete()
             status_msg = "Course / Certification deleted."
 
-        # 5. CREATE OR DELETE LOCAL MASTER AI NODE
-        elif action == "save_ai_node":
-            AIArchitectureNode.objects.create(
-                node_id=request.POST.get("node_id", "NODE-X"),
-                title=request.POST.get("title", ""),
-                memory_budget=request.POST.get("memory_budget", "~1.0 GB RAM/VRAM"),
-                hardware_pool=request.POST.get("hardware_pool", "CPU RAM + GPU VRAM + NPU"),
-                summary=request.POST.get("summary", ""),
-                mechanism_detail=request.POST.get("mechanism_detail", ""),
-            )
-            status_msg = "Master AI Architecture Node added."
-
-        elif action == "delete_ai_node":
-            AIArchitectureNode.objects.filter(pk=request.POST.get("node_id_pk")).delete()
-            status_msg = "AI Architecture Node removed."
-
-        # 6. DELETE CONTACT MESSAGE
         elif action == "delete_message":
             ContactMessage.objects.filter(pk=request.POST.get("msg_id")).delete()
             status_msg = "Message deleted."
 
-    # Generate LinkedIn & GitHub Profile README Sync Markdown automatically from live DB
     all_skills = Skill.objects.all()
     all_projects = Project.objects.all()
-    github_readme_sync = f"# {profile.full_name}\n### {profile.role_title}\n\n{profile.bio_summary}\n\n## Core AI/ML & Full-Stack Arsenal\n"
+    github_readme_sync = f"# {profile.full_name}\\n### {profile.role_title}\\n\\n{profile.bio_summary}\\n\\n## Core AI/ML & Full-Stack Arsenal\\n"
     for code, label in Skill.DOMAIN_CHOICES:
         d_skills = [s.name for s in all_skills if s.domain == code]
         if d_skills:
-            github_readme_sync += f"- **{label}:** {', '.join(d_skills)}\n"
-    github_readme_sync += "\n## Featured Production Systems & Live Deployments\n"
+            github_readme_sync += f"- **{label}:** {', '.join(d_skills)}\\n"
+    github_readme_sync += "\\n## Featured Production Systems & Live Deployments\\n"
     for p in all_projects:
         live_str = f" — [Live Server]({p.live_server_url})" if p.live_server_url else ""
         repo_str = f" | [GitHub Repo]({p.github_repo_url})" if p.github_repo_url else ""
-        github_readme_sync += f"- **{p.title}** (`{p.tech_stack_csv}`): {p.tagline}{live_str}{repo_str}\n"
+        github_readme_sync += f"- **{p.title}** (`{p.tech_stack_csv}`): {p.tagline}{live_str}{repo_str}\\n"
 
     return render(
         request,
