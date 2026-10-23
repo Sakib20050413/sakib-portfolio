@@ -6,896 +6,1045 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ profile.full_name }} — {{ profile.role_title }}</title>
   <meta name="description" content="{{ profile.bio_summary }}" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='66' font-family='monospace' font-size='46' font-weight='bold' fill='white' text-anchor='middle'>NS</text></svg>" />
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23141413'/><text x='50' y='66' font-family='monospace' font-size='44' font-weight='bold' fill='%23f59e0b' text-anchor='middle'>SR</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ==========================================================================
-       SELF-CONTAINED DESIGN SYSTEM (29-SKILL ENFORCED • ZERO 404 ON VERCEL)
-       Fixes: Sticky Header Z-Index, Light/Dark Contrast, Input Boxes, 1600px Grid
+       100% BESPOKE HAND-CRAFTED CSS ARCHITECTURE (ZERO GENERIC TAILWIND SLOP)
+       Aesthetic: Warm Titanium & Carbon Monolith / Alabaster Editorial Paper
        ========================================================================== */
     :root, [data-theme="dark"] {
-      --bg-canvas: #07080d;
-      --bg-surface: #0f121b;
-      --bg-surface-elevated: #151926;
-      --bg-header: rgba(7, 8, 13, 0.90);
-      --bg-input: #0a0d15;
-      --bg-code: #090b12;
-      --bg-pill: rgba(255, 255, 255, 0.05);
-      --border-hairline: rgba(255, 255, 255, 0.09);
-      --border-focus: rgba(99, 102, 241, 0.55);
-      --text-primary: #f4f4f6;
-      --text-secondary: #cbd5e1;
-      --text-muted: #94a3b8;
-      --accent-indigo: #4f46e5;
-      --accent-emerald: #10b981;
-      --track-bar: rgba(255, 255, 255, 0.08);
-      --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
+      --bg-base: #060608;
+      --bg-elevated: #0d0e12;
+      --bg-panel: #12141a;
+      --bg-glass: rgba(10, 11, 15, 0.88);
+      --bg-input: #0a0b0e;
+      --ink-1: #f5f3ef;
+      --ink-2: #b8b5ad;
+      --ink-3: #78756f;
+      --line: rgba(245, 243, 239, 0.09);
+      --line-strong: rgba(245, 158, 11, 0.45);
+      --accent: #f59e0b;
+      --accent-2: #ff6b35;
+      --signal: #10b981;
+      --dot-grid: rgba(255, 255, 255, 0.045);
+      --shadow-elev: 0 24px 60px -15px rgba(0, 0, 0, 0.7);
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     [data-theme="light"] {
-      --bg-canvas: #f6f5f1;
-      --bg-surface: #ffffff;
-      --bg-surface-elevated: #f1efe9;
-      --bg-header: rgba(246, 245, 241, 0.94);
-      --bg-input: #f8fafc;
-      --bg-code: #f1f5f9;
-      --bg-pill: rgba(15, 23, 42, 0.05);
-      --border-hairline: rgba(15, 23, 42, 0.12);
-      --border-focus: rgba(79, 70, 229, 0.55);
-      --text-primary: #0f172a;
-      --text-secondary: #1e293b;
-      --text-muted: #475569;
-      --accent-indigo: #4f46e5;
-      --accent-emerald: #059669;
-      --track-bar: rgba(15, 23, 42, 0.10);
+      --bg-base: #f3f0e8;
+      --bg-elevated: #faf8f3;
+      --bg-panel: #ffffff;
+      --bg-glass: rgba(243, 240, 232, 0.92);
+      --bg-input: #f5f2eb;
+      --ink-1: #141413;
+      --ink-2: #3d3c38;
+      --ink-3: #6e6c66;
+      --line: rgba(20, 20, 19, 0.11);
+      --line-strong: rgba(200, 75, 49, 0.45);
+      --accent: #d97706;
+      --accent-2: #c84b31;
+      --signal: #059669;
+      --dot-grid: rgba(20, 20, 19, 0.055);
+      --shadow-elev: 0 20px 50px -15px rgba(20, 20, 19, 0.08);
     }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      width: 100%;
-      min-height: 100vh;
-      background-color: var(--bg-canvas);
-      color: var(--text-primary);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      letter-spacing: -0.015em;
+      background-color: var(--bg-base);
+      background-image: radial-gradient(var(--dot-grid) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--ink-1);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      line-height: 1.6;
       overflow-x: hidden;
-      transition: background-color 200ms var(--ease-out-expo), color 200ms var(--ease-out-expo);
+      transition: background-color 240ms var(--ease-out), color 240ms var(--ease-out);
     }
 
-    .font-serif-editorial { font-family: 'Instrument Serif', Georgia, serif; }
-    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    .font-display { font-family: 'Syne', 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.035em; }
+    .font-serif-it { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-    .container-studio {
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+    /* Layout Shell */
+    .shell {
       width: 100%;
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding-left: clamp(1.25rem, 3.5vw, 3.75rem);
-      padding-right: clamp(1.25rem, 3.5vw, 3.75rem);
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 4vw, 4rem);
     }
 
-    .bento-grid-12 {
+    /* Floating Glass Command Dock (Top Header) */
+    .top-dock-wrap {
+      position: sticky;
+      top: 14px;
+      z-index: 9999;
+      padding: 0 clamp(1rem, 3vw, 3rem);
+      pointer-events: none;
+    }
+    .top-dock {
+      pointer-events: auto;
+      max-width: 1460px;
+      margin: 0 auto;
+      height: 62px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: var(--shadow-elev);
+    }
+
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .brand-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--accent);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 10px var(--signal);
+      display: inline-block;
+    }
+
+    .dock-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    @media (max-width: 1024px) {
+      .dock-links { display: none; }
+    }
+    .dock-link {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink-2);
+      transition: all 160ms var(--ease-out);
+    }
+    .dock-link:hover {
+      color: var(--ink-1);
+      background: var(--line);
+    }
+
+    .dock-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .pill-btn {
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--bg-elevated);
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 150ms var(--ease-out), border-color 150ms var(--ease-out);
+    }
+    .pill-btn:hover { border-color: var(--accent); }
+    .pill-btn:active { transform: scale(0.96); }
+    .pill-btn-primary {
+      background: var(--ink-1);
+      color: var(--bg-base);
+      border-color: var(--ink-1);
+      font-weight: 700;
+    }
+    .pill-btn-amber {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #09090b;
+      border: none;
+      font-weight: 800;
+    }
+
+    /* Editorial Section Dividers */
+    .monolith-section {
+      padding: clamp(4rem, 7vw, 6.5rem) 0;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+
+    .sec-index-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .sec-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .sec-title {
+      font-size: clamp(2rem, 3.8vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    /* HERO MONOLITH */
+    .hero-grid {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 2rem;
+      align-items: stretch;
+      padding-top: 2rem;
+    }
+    .hero-left {
+      grid-column: span 7;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .hero-right {
+      grid-column: span 5;
+      display: flex;
+      flex-direction: column;
       gap: 1.25rem;
+    }
+    @media (max-width: 1080px) {
+      .hero-left, .hero-right { grid-column: span 12; }
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5.2vw, 4.65rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+
+    .hero-bio {
+      font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+      color: var(--ink-2);
+      max-width: 68ch;
+      line-height: 1.7;
+    }
+
+    .social-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* Interactive Sovereign Hardware Memory Allocator Workbench */
+    .workbench-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-elev);
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .ram-bar-outer {
       width: 100%;
-    }
-
-    /* Sticky Header with High Z-Index & Solid Blur so Hero Never Bleeds Over It */
-    .glass-header {
-      position: sticky;
-      top: 0;
-      z-index: 9999;
-      width: 100%;
-      background-color: var(--bg-header);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border-bottom: 1px solid var(--border-hairline);
-    }
-
-    .surface-card {
-      position: relative;
-      z-index: 1;
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-hairline);
-      border-radius: 16px;
-      transition: transform 200ms var(--ease-out-expo), border-color 200ms var(--ease-out-expo), box-shadow 200ms var(--ease-out-expo);
-    }
-
-    .surface-card-interactive:hover {
-      border-color: var(--border-focus);
-      transform: translateY(-2px);
-      box-shadow: 0 14px 34px -12px rgba(79, 70, 229, 0.16);
-    }
-
-    .hairline-section {
-      width: 100%;
-      border-bottom: 1px solid var(--border-hairline);
-    }
-
-    .text-theme-primary { color: var(--text-primary); }
-    .text-theme-secondary { color: var(--text-secondary); }
-    .text-theme-muted { color: var(--text-muted); }
-
-    .theme-pill {
-      background-color: var(--bg-pill);
-      border: 1px solid var(--border-hairline);
-      color: var(--text-secondary);
-    }
-
-    .theme-code-box {
-      background-color: var(--bg-code);
-      border: 1px solid var(--border-hairline);
-      color: var(--text-secondary);
-    }
-
-    .theme-input {
-      width: 100%;
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-hairline);
-      color: var(--text-primary);
-      border-radius: 12px;
-      padding: 0.65rem 0.9rem;
-      outline: none;
-      transition: border-color 160ms var(--ease-out-expo);
-    }
-    .theme-input:focus {
-      border-color: var(--accent-indigo);
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 6px;
-      border-radius: 999px;
-      background-color: var(--track-bar);
+      height: 28px;
+      background: var(--bg-input);
+      border: 1px solid var(--line);
+      border-radius: 10px;
       overflow: hidden;
+      display: flex;
+    }
+    .ram-seg {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #050506;
+      transition: width 360ms var(--ease-out);
+      overflow: hidden;
+      white-space: nowrap;
     }
 
-    .btn-press {
-      transition: transform 160ms var(--ease-out-expo), opacity 160ms var(--ease-out-expo), background-color 160ms var(--ease-out-expo);
+    /* Interactive Split-Screen Project Explorer (AVEA / Zajno Style) */
+    .explorer-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 2rem;
+      align-items: start;
     }
-    .btn-press:active { transform: scale(0.97); }
-    svg { max-width: 100%; height: auto; }
+    .explorer-list {
+      grid-column: span 6;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--line);
+    }
+    .explorer-stage {
+      grid-column: span 6;
+      position: sticky;
+      top: 96px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: var(--shadow-elev);
+    }
+    @media (max-width: 1024px) {
+      .explorer-list, .explorer-stage { grid-column: span 12; position: static; }
+    }
+
+    .work-row {
+      padding: 1.35rem 1rem;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      cursor: pointer;
+      transition: background-color 180ms var(--ease-out), padding-left 180ms var(--ease-out);
+    }
+    .work-row:hover, .work-row.active {
+      background-color: var(--bg-elevated);
+      padding-left: 1.5rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    /* Domain Constellation Matrix (Replaces Fake % Progress Bars) */
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+    .matrix-cell {
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.25rem;
+      transition: border-color 180ms var(--ease-out), transform 180ms var(--ease-out);
+    }
+    .matrix-cell:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    .skill-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      background: var(--bg-panel);
+      border: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--ink-1);
+    }
+
+    /* Form Inputs */
+    .field-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--line);
+      color: var(--ink-1);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 160ms var(--ease-out);
+    }
+    .field-input:focus { border-color: var(--accent); }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-  <!-- TOP STICKY GLASSMORPHIC COMMAND HEADER (Z-INDEX 9999 • NO VISIBLE ADMIN LINK) -->
-  <header class="glass-header">
-    <div class="container-studio h-16 flex items-center justify-between gap-3">
-      <a href="#hero" class="flex items-center gap-3 group btn-press">
-        <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" class="w-9 h-9 rounded-xl object-cover border border-indigo-500/40" />
+  <!-- FLOATING PILL COMMAND DOCK (Z-INDEX 9999 • NO OVERLAP • NO ADMIN BUTTON) -->
+  <div class="top-dock-wrap">
+    <header class="top-dock">
+      <a href="#top" class="brand-cluster">
+        <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" class="brand-avatar" />
         <div>
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-sm sm:text-base tracking-tight text-theme-primary">{{ profile.full_name }}</span>
-            <span class="hidden md:inline-flex items-center gap-1.5 text-[10px] font-mono-code px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 font-semibold">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              AI/ML ENGINEER
-            </span>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span style="font-weight:800; font-size:0.92rem;">{{ profile.full_name }}</span>
+            <span class="status-dot" title="Available for AI/ML Engineering & Research"></span>
           </div>
-          <p class="text-[11px] font-mono-code text-theme-muted hidden sm:block">LLMs • Multimodal AI • Local Neural Runtimes</p>
+          <div class="font-mono" style="font-size:0.68rem; color:var(--ink-3);">AI/ML ARCHITECT • LOCAL NEURAL RUNTIMES</div>
         </div>
       </a>
 
-      <nav class="hidden xl:flex items-center gap-1 p-1 rounded-xl theme-pill font-mono-code text-xs">
-        <a href="#hero" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">01 // Overview</a>
-        <a href="#master-ai" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">02 // Master AI</a>
-        <a href="#skills" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">03 // AI/ML Arsenal</a>
-        <a href="#projects" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">04 // Selected Works</a>
-        <a href="#courses" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">05 // Credentials</a>
-        <a href="#contact" class="px-3 py-1.5 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">06 // Contact</a>
+      <nav class="dock-links font-mono">
+        <a href="#top" class="dock-link">01. Identity</a>
+        <a href="#nexus-architecture" class="dock-link">02. Local Master AI</a>
+        <a href="#selected-works" class="dock-link">03. Works ({{ projects|length }})</a>
+        <a href="#competency-matrix" class="dock-link">04. Neural Stack</a>
+        <a href="#credentials" class="dock-link">05. Credentials</a>
+        <a href="#collaborate" class="dock-link">06. Collaborate</a>
       </nav>
 
-      <div class="flex items-center gap-2">
-        <span id="liveClockBdt" class="hidden sm:inline-block font-mono-code text-xs text-theme-muted px-2.5 py-1 rounded-lg theme-pill">BDT • UTC+6</span>
-        <button id="openTerminalBtn" type="button" class="px-2.5 py-1.5 rounded-xl theme-pill text-xs font-mono-code hover:border-indigo-500 btn-press" title="Open Interactive AI Engineer CLI">
-          &gt;_ CLI
-        </button>
-        <button id="themeToggleBtn" type="button" class="px-2.5 py-1.5 rounded-xl theme-pill text-xs font-mono-code hover:border-indigo-500 btn-press" aria-label="Toggle Dark or Light Mode">
-          ☀/☾
-        </button>
-        <a href="{% url 'printable_cv' %}" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono-code font-semibold btn-press">
-          Resume PDF ↗
-        </a>
+      <div class="dock-actions font-mono">
+        <span id="dhakaClock" class="pill-btn" style="color:var(--ink-3);">DAC • UTC+6</span>
+        <button type="button" id="openShellBtn" class="pill-btn" title="Open Sakib-OS Interactive Shell">&gt;_ Shell</button>
+        <button type="button" id="themeSwitchBtn" class="pill-btn" title="Switch Carbon / Alabaster Theme">◐ Theme</button>
+        <a href="{% url 'printable_cv' %}" class="pill-btn pill-btn-amber">CV / Resume ↗</a>
       </div>
-    </div>
-  </header>
+    </header>
+  </div>
 
-  <main class="flex-1 w-full">
-    <!-- SECTION 01: HERO (12-COLUMN SPLIT: 7 LEFT + 5 RIGHT PORTRAIT & GUARANTEED 3D NEURAL ROUTER) -->
-    <section id="hero" class="hairline-section py-10 lg:py-16">
-      <div class="container-studio">
-        <div class="bento-grid-12 items-stretch">
-          <!-- Left 7 Columns -->
-          <div class="col-span-12 lg:col-span-7 surface-card p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
-            <div class="space-y-6">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="font-mono-code text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-indigo-500/40 bg-indigo-500/10 text-indigo-400 font-semibold">
-                  [ {{ profile.role_title }} ]
+  <main class="shell">
+    <!-- =================================================================== -->
+    <!-- 01. SPATIAL EDITORIAL HERO + LIVE LOCAL AI MEMORY ALLOCATOR         -->
+    <!-- =================================================================== -->
+    <section id="top" class="monolith-section">
+      <div class="hero-grid">
+        <!-- Left 7 Cols: Editorial Monolith Typography -->
+        <div class="hero-left">
+          <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.6rem;" class="font-mono">
+              <span style="padding:0.3rem 0.8rem; border-radius:999px; background:rgba(245,158,11,0.14); color:var(--accent); border:1px solid var(--line-strong); font-size:0.74rem; font-weight:700;">
+                {{ profile.role_title }}
+              </span>
+              <span style="padding:0.3rem 0.8rem; border-radius:999px; border:1px solid var(--line); color:var(--ink-2); font-size:0.74rem;">
+                {{ profile.location }}
+              </span>
+            </div>
+
+            <h1 class="hero-title">
+              Orchestrating <span class="font-serif-it" style="color:var(--accent); font-weight:400;">sovereign local AI</span> across unified memory &amp; building high-scale web systems.
+            </h1>
+
+            <p class="hero-bio">
+              {{ profile.bio_summary }}
+            </p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:0.75rem; padding-top:0.5rem;">
+              <a href="#selected-works" class="pill-btn pill-btn-amber" style="padding:0.85rem 1.6rem; font-size:0.86rem;">
+                Explore Selected Works ({{ projects|length }}) →
+              </a>
+              <a href="#nexus-architecture" class="pill-btn" style="padding:0.85rem 1.4rem; font-size:0.86rem;">
+                Test Local Master AI Simulator
+              </a>
+              <a href="#collaborate" class="pill-btn" style="padding:0.85rem 1.4rem; font-size:0.86rem;">
+                Initiate Collaboration
+              </a>
+            </div>
+
+            <div class="social-strip font-mono" style="padding-top:0.5rem;">
+              <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="pill-btn">GitHub ↗</a>
+              <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="pill-btn">LinkedIn ↗</a>
+              <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="pill-btn">Kaggle ↗</a>
+              <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener" class="pill-btn">X / Twitter ↗</a>
+              <a href="{{ profile.facebook_url }}" target="_blank" rel="noopener" class="pill-btn">Facebook ↗</a>
+              <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener" class="pill-btn">Instagram ↗</a>
+            </div>
+          </div>
+
+          <!-- Architectural Telemetry Ledger -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:1.25rem; padding-top:2rem; border-top:1px solid var(--line);">
+            <div>
+              <div class="font-mono" style="font-size:1.75rem; font-weight:800; color:var(--accent);">~1.0 GB</div>
+              <div style="font-size:0.78rem; color:var(--ink-3);">Quantized Expert Footprint</div>
+            </div>
+            <div>
+              <div class="font-mono" style="font-size:1.75rem; font-weight:800;">CPU+GPU+NPU</div>
+              <div style="font-size:0.78rem; color:var(--ink-3);">Unified Local Memory Bus</div>
+            </div>
+            <div>
+              <div class="font-mono" style="font-size:1.75rem; font-weight:800; color:var(--signal);">In-Place</div>
+              <div style="font-size:0.78rem; color:var(--ink-3);">Single-Node Self-Training</div>
+            </div>
+            <div>
+              <div class="font-mono" style="font-size:1.75rem; font-weight:800;">{{ projects|length }} Systems</div>
+              <div style="font-size:0.78rem; color:var(--ink-3);">Live Production &amp; Edge AI</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: Interactive Sovereign Local AI Hardware & Memory Workbench -->
+        <div class="hero-right">
+          <div class="workbench-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-bottom:0.9rem; border-bottom:1px solid var(--line);">
+              <div style="display:flex; align-items:center; gap:0.85rem;">
+                <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" style="width:54px; height:54px; border-radius:16px; object-fit:cover; border:1.5px solid var(--accent);" />
+                <div>
+                  <div class="font-mono" style="font-size:0.7rem; color:var(--accent); font-weight:700;">NEXUSLOCAL // HARDWARE TELEMETRY</div>
+                  <div style="font-weight:800; font-size:1.05rem;">Sovereign Master AI Simulator</div>
+                  <div style="font-size:0.76rem; color:var(--ink-3);">Interactive Local RAM / VRAM / NPU Pager</div>
+                </div>
+              </div>
+              <span class="font-mono" id="simSpeedBadge" style="padding:0.25rem 0.65rem; border-radius:8px; background:rgba(16,185,129,0.15); color:var(--signal); font-size:0.72rem; font-weight:700;">
+                68.4 tok/s
+              </span>
+            </div>
+
+            <!-- Live 3D Tensor & Neural Node Viewport -->
+            <div style="position:relative; width:100%; height:225px; border-radius:16px; overflow:hidden; background:#050609; border:1px solid var(--line);">
+              <canvas id="sovereignNeuralCanvas" style="width:100%; height:100%; display:block; cursor:grab;"></canvas>
+              <div class="font-mono" style="position:absolute; top:10px; left:12px; right:12px; display:flex; justify-content:space-between; pointer-events:none; font-size:0.68rem; color:#cbd5e1;">
+                <span id="simActiveNodeLabel" style="background:rgba(0,0,0,0.75); padding:3px 8px; border-radius:6px; border:1px solid rgba(255,255,255,0.12);">
+                  ACTIVE: MASTER ROUTER (420 MB) + CODE-1G (0.95 GB NF4)
                 </span>
-                <span class="font-mono-code text-xs px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 font-medium">
-                  {{ profile.availability_text }}
-                </span>
-              </div>
-
-              <h1 class="text-3xl sm:text-5xl lg:text-[48px] font-extrabold tracking-tight leading-[1.08] text-theme-primary" style="text-wrap: balance;">
-                {{ profile.hero_headline }}
-              </h1>
-
-              <p class="text-sm sm:text-base text-theme-secondary leading-relaxed">
-                {{ profile.bio_summary }}
-              </p>
-
-              <!-- Primary CTAs -->
-              <div class="flex flex-wrap items-center gap-3 pt-1">
-                <a href="#projects" class="px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 btn-press">
-                  Explore Production Works ({{ projects|length }}) →
-                </a>
-                <a href="#master-ai" class="px-5 py-3.5 rounded-xl theme-pill hover:border-indigo-500 text-sm font-medium btn-press">
-                  Inspect Local Master AI Blueprint
-                </a>
-                <a href="#contact" class="px-4 py-3.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-500 font-semibold text-sm font-mono-code btn-press">
-                  Collaborate / Hire
-                </a>
-              </div>
-
-              <!-- Verified Social Profiles -->
-              <div class="flex flex-wrap items-center gap-2 pt-1 font-mono-code text-xs">
-                <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">GitHub ↗</a>
-                <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">LinkedIn ↗</a>
-                <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">Kaggle ↗</a>
-                <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">X (Twitter) ↗</a>
-                <a href="{{ profile.facebook_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">Facebook ↗</a>
-                <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg theme-pill hover:border-indigo-500">Instagram ↗</a>
+                <span style="background:rgba(245,158,11,0.2); color:#fbbf24; padding:3px 8px; border-radius:6px;">DRAG 3D</span>
               </div>
             </div>
 
-            <!-- Bottom 4-Column Impact Bar -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-8 border-t" style="border-color: var(--border-hairline);">
-              <div>
-                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-theme-primary">~1.0 GB</div>
-                <div class="text-xs text-theme-muted mt-0.5">Modular Sub-Model Target</div>
+            <!-- Live Unified Memory Allocation Bar -->
+            <div style="display:flex; flex-direction:column; gap:0.45rem;">
+              <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--ink-2);">
+                <span>UNIFIED HARDWARE MEMORY BUS (CPU RAM + GPU VRAM + NPU)</span>
+                <span id="simRamTotalText" style="color:var(--accent); font-weight:700;">1.37 GB / 8.00 GB USED</span>
               </div>
-              <div>
-                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-emerald-500">CPU+GPU+NPU</div>
-                <div class="text-xs text-theme-muted mt-0.5">Unified Local Memory Pool</div>
-              </div>
-              <div>
-                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-indigo-500">{{ projects|length }}+</div>
-                <div class="text-xs text-theme-muted mt-0.5">Production AI &amp; Web Systems</div>
-              </div>
-              <div>
-                <div class="text-2xl sm:text-3xl font-extrabold font-mono-code text-amber-500">32 ms</div>
-                <div class="text-xs text-theme-muted mt-0.5">512-Pt Edge FFT Latency</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right 5 Columns: Sakib's Framed Portrait + Indestructible 60FPS 3D Master AI Router -->
-          <div class="col-span-12 lg:col-span-5 flex flex-col gap-5">
-            <!-- Portrait Profile Card -->
-            <div class="surface-card p-6 flex flex-col sm:flex-row items-center gap-5">
-              <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-indigo-500/40 shrink-0 shadow-lg" />
-              <div class="space-y-2 text-center sm:text-left">
-                <div class="font-mono-code text-[11px] text-indigo-500 font-semibold uppercase">[ ARCHITECT PROFILE ]</div>
-                <h2 class="text-xl font-bold text-theme-primary">{{ profile.full_name }}</h2>
-                <p class="text-xs text-theme-muted">{{ profile.location }}</p>
-                <div class="flex flex-wrap justify-center sm:justify-start gap-1.5 pt-1">
-                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 font-medium">LLM Orchestration</span>
-                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 font-medium">Multimodal AI</span>
-                  <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-amber-500/15 text-amber-500 border border-amber-500/30 font-medium">Django &amp; FastAPI</span>
-                </div>
+              <div class="ram-bar-outer">
+                <div id="segMaster" class="ram-seg" style="width:18%; background:#f59e0b;">MASTER 420M</div>
+                <div id="segExpert" class="ram-seg" style="width:32%; background:#38bdf8;">CODE-1G (0.95G)</div>
+                <div id="segDelta" class="ram-seg" style="width:8%; background:#10b981;">ΔW</div>
               </div>
             </div>
 
-            <!-- Interactive 60FPS 3D Master AI Memory Orchestrator Card -->
-            <div class="surface-card p-5 flex-1 flex flex-col justify-between space-y-3">
-              <div class="flex items-center justify-between gap-2">
-                <span class="font-mono-code text-xs text-emerald-500 font-semibold">[ 3D LOCAL MASTER AI ROUTER ]</span>
-                <span id="masterAiTelemetryStatus" class="font-mono-code text-[10px] text-indigo-400 font-medium truncate">RESIDENT IN RAM • DRAG TO ORBIT 3D</span>
-              </div>
-
-              <!-- Self-Contained 60FPS 3D Projection Canvas (Never Renders Black!) -->
-              <div class="relative w-full h-60 sm:h-64 rounded-xl overflow-hidden bg-[#070911] border border-indigo-500/25">
-                <canvas id="masterAi3dCanvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
-                <div class="absolute bottom-2.5 left-3 right-3 pointer-events-none flex items-center justify-between text-[10px] font-mono-code text-slate-300">
-                  <span id="canvasPoolBadge" class="px-2 py-0.5 rounded bg-black/70 border border-white/10">POOL: CPU RAM + GPU VRAM + NPU</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">60 FPS 3D CORE</span>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono-code text-[11px]">
-                <button type="button" onclick="setMasterAIRoute(0, 'ROUTING -> CODE-1G (0.95 GB 4-BIT NF4 IN VRAM)')" class="px-2 py-1.5 rounded-lg theme-pill hover:border-sky-400 font-semibold btn-press">⚡ Code-1G</button>
-                <button type="button" onclick="setMasterAIRoute(1, 'ROUTING -> PHOTO-1G (1.05 GB FLOW IN GPU/NPU)')" class="px-2 py-1.5 rounded-lg theme-pill hover:border-emerald-400 font-semibold btn-press">🎨 Photo-1G</button>
-                <button type="button" onclick="setMasterAIRoute(2, 'ROUTING -> VIDEO-1G (1.15 GB TEMPORAL VAE)')" class="px-2 py-1.5 rounded-lg theme-pill hover:border-amber-400 font-semibold btn-press">🎬 Video-1G</button>
-                <button type="button" onclick="setMasterAIRoute(99, 'IN-PLACE SINGLE-NODE CONTINUAL SELF-TRAINING')" class="px-2 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold btn-press">🧠 Self-Train</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 02: SOVEREIGN LOCAL MASTER AI ORCHESTRATOR & IN-PLACE SELF-TRAINING BLUEPRINT -->
-    <section id="master-ai" class="hairline-section py-14 lg:py-20">
-      <div class="container-studio space-y-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <span class="font-mono-code text-xs uppercase text-indigo-500 font-semibold tracking-wider">[ 02 // CORE AI/ML RESEARCH &amp; CAPSTONE ARCHITECTURE ]</span>
-            <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1 text-theme-primary">
-              Sovereign Local Master AI &amp; In-Place Self-Evolving Neural Node
-            </h2>
-          </div>
-          <p class="text-xs font-mono-code text-theme-muted max-w-md">
-            Executing frontier-grade multi-model intelligence locally on PC &amp; mobile across unified CPU RAM, GPU VRAM, and NPU memory pools.
-          </p>
-        </div>
-
-        <!-- Orthogonal Inline SVG Architecture Schematic -->
-        <div class="surface-card p-6 overflow-x-auto bg-[#090b12] text-white">
-          <svg role="img" aria-labelledby="master-ai-svg-title master-ai-svg-desc" viewBox="0 0 980 260" class="w-full h-auto min-w-[720px]">
-            <title id="master-ai-svg-title">Sovereign Local Master AI Orchestrator &amp; In-Place Self-Training Architecture</title>
-            <desc id="master-ai-svg-desc">Orthogonal schematic showing the Resident Master AI Router in RAM dispatching prompts to ~1 GB specialist sub-models across CPU RAM, GPU VRAM, and NPU memory, connected to an In-Place Self-Evolving Single-Node Continual Learning core.</desc>
-            <defs>
-              <marker id="arr-ind" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 8 5 L 0 9 z" fill="#6366f1" />
-              </marker>
-              <marker id="arr-em" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 8 5 L 0 9 z" fill="#10b981" />
-              </marker>
-            </defs>
-            <rect x="12" y="12" width="956" height="236" rx="6" fill="#0b0d15" stroke="#252838" stroke-width="1" />
-            <text x="28" y="34" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="10">[ UNIFIED LOCAL HARDWARE MEMORY POOL: SYSTEM CPU RAM + DISCRETE/INTEGRATED GPU VRAM + ON-DIE NPU ]</text>
-
-            <line x1="220" y1="128" x2="280" y2="128" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arr-ind)" />
-            <line x1="500" y1="128" x2="560" y2="128" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arr-ind)" />
-            <line x1="740" y1="128" x2="796" y2="128" stroke="#10b981" stroke-width="1.5" marker-end="url(#arr-em)" />
-
-            <rect x="28" y="68" width="192" height="120" rx="6" fill="#131624" stroke="#4f46e5" stroke-width="1.5" />
-            <text x="42" y="92" fill="#818cf8" font-family="JetBrains Mono, monospace" font-size="10">01 // ALWAYS RESIDENT</text>
-            <text x="42" y="116" fill="#ffffff" font-family="Inter, sans-serif" font-weight="700" font-size="14">Master AI Router</text>
-            <text x="42" y="138" fill="#cbd5e1" font-family="JetBrains Mono, monospace" font-size="10">~420 MB in System RAM</text>
-            <text x="42" y="158" fill="#10b981" font-family="JetBrains Mono, monospace" font-size="10">Prompt &amp; Memory Pager</text>
-
-            <rect x="284" y="56" width="216" height="144" rx="6" fill="#131624" stroke="#3b82f6" stroke-width="1.5" />
-            <text x="300" y="80" fill="#60a5fa" font-family="JetBrains Mono, monospace" font-size="10">02 // ON-DEMAND QUEUE</text>
-            <text x="300" y="102" fill="#ffffff" font-family="Inter, sans-serif" font-weight="700" font-size="14">~1 GB Specialist Models</text>
-            <text x="300" y="124" fill="#e2e8f0" font-family="JetBrains Mono, monospace" font-size="10">• Code-1G (4-Bit NF4)</text>
-            <text x="300" y="142" fill="#e2e8f0" font-family="JetBrains Mono, monospace" font-size="10">• Photo-1G (Latent Flow)</text>
-            <text x="300" y="160" fill="#e2e8f0" font-family="JetBrains Mono, monospace" font-size="10">• Video-1G (Temporal VAE)</text>
-            <text x="300" y="178" fill="#e2e8f0" font-family="JetBrains Mono, monospace" font-size="10">• Reason-1G (Hybrid RAG)</text>
-
-            <rect x="564" y="68" width="176" height="120" rx="6" fill="#131624" stroke="#f59e0b" stroke-width="1.5" />
-            <text x="578" y="92" fill="#fbbf24" font-family="JetBrains Mono, monospace" font-size="10">03 // LOCAL RUNTIME</text>
-            <text x="578" y="116" fill="#ffffff" font-family="Inter, sans-serif" font-weight="700" font-size="14">CPU + GPU + NPU</text>
-            <text x="578" y="138" fill="#cbd5e1" font-family="JetBrains Mono, monospace" font-size="10">llama.cpp • ONNX • QNN</text>
-            <text x="578" y="158" fill="#cbd5e1" font-family="JetBrains Mono, monospace" font-size="10">Zero Cloud Dependency</text>
-
-            <rect x="800" y="56" width="152" height="144" rx="6" fill="#0d261f" stroke="#10b981" stroke-width="1.5" />
-            <text x="812" y="80" fill="#34d399" font-family="JetBrains Mono, monospace" font-size="10">04 // SELF-EVOLVING</text>
-            <text x="812" y="102" fill="#ffffff" font-family="Inter, sans-serif" font-weight="700" font-size="13">In-Place Neural Node</text>
-            <text x="812" y="124" fill="#a7f3d0" font-family="JetBrains Mono, monospace" font-size="10">Continual Self-Train</text>
-            <text x="812" y="144" fill="#a7f3d0" font-family="JetBrains Mono, monospace" font-size="10">LoRA Delta Merge</text>
-            <text x="812" y="164" fill="#a7f3d0" font-family="JetBrains Mono, monospace" font-size="10">Zero Node Bloat</text>
-          </svg>
-        </div>
-
-        <!-- 5 Architecture Nodes Grid -->
-        <div class="bento-grid-12">
-          {% for node in ai_nodes %}
-          <div class="col-span-12 md:col-span-6 lg:col-span-4 surface-card surface-card-interactive p-6 flex flex-col justify-between space-y-4">
-            <div class="space-y-2.5">
-              <div class="flex items-center justify-between gap-2">
-                <span class="font-mono-code text-xs px-2.5 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 font-semibold">{{ node.node_id }}</span>
-                <span class="font-mono-code text-[11px] text-emerald-500 font-semibold">{{ node.memory_budget }}</span>
-              </div>
-              <h3 class="text-lg font-bold text-theme-primary">{{ node.title }}</h3>
-              <p class="text-xs text-theme-secondary leading-relaxed">{{ node.summary }}</p>
-            </div>
-            <div class="pt-3 border-t space-y-1" style="border-color: var(--border-hairline);">
-              <div class="font-mono-code text-[10px] text-indigo-500 font-semibold uppercase">Hardware Target: {{ node.hardware_pool }}</div>
-              <p class="text-[11px] text-theme-muted">{{ node.mechanism_detail }}</p>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 03: COMPLETE AI/ML & FULL-STACK ENGINEERING ARSENAL (HIGH-CONTRAST IN BOTH DARK & LIGHT MODES) -->
-    <section id="skills" class="hairline-section py-14 lg:py-20">
-      <div class="container-studio space-y-8">
-        <div>
-          <span class="font-mono-code text-xs uppercase text-emerald-500 font-semibold tracking-wider">[ 03 // AI/ML &amp; FULL-STACK ENGINEERING COMPETENCIES ]</span>
-          <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1 text-theme-primary">
-            Production Technical Stack &amp; Neural Architecture Arsenal
-          </h2>
-        </div>
-
-        <div class="bento-grid-12">
-          {% for dom in skill_domains %}
-          <div class="col-span-12 md:col-span-6 lg:col-span-4 surface-card p-6 space-y-4">
-            <div class="font-mono-code text-xs text-indigo-500 font-bold border-b pb-2.5" style="border-color: var(--border-hairline);">
-              {{ dom.label }}
-            </div>
-            <div class="space-y-3">
-              {% for sk in dom.skills %}
-              <div class="space-y-1">
-                <div class="flex items-center justify-between text-xs gap-2">
-                  <span class="font-semibold text-theme-primary">{{ sk.name }}</span>
-                  <span class="font-mono-code text-[10px] px-2 py-0.5 rounded theme-pill shrink-0">{{ sk.highlight_tag }}</span>
-                </div>
-                <div class="progress-track">
-                  <div class="h-full bg-indigo-600 rounded-full" style="width: {{ sk.proficiency }}%;"></div>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 04: SELECTED WORKS & LIVE DEPLOYMENTS -->
-    <section id="projects" class="hairline-section py-14 lg:py-20">
-      <div class="container-studio space-y-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <span class="font-mono-code text-xs uppercase text-indigo-500 font-semibold tracking-wider">[ 04 // SELECTED WORKS &amp; LIVE SERVERS ]</span>
-            <h2 class="text-2xl sm:text-4xl font-bold tracking-tight mt-1 text-theme-primary">
-              Production AI Systems, Edge Hardware &amp; Live Web Platforms
-            </h2>
-          </div>
-          <div class="flex flex-wrap gap-2 font-mono-code text-xs">
-            <button type="button" data-filter="ALL" class="proj-filter-btn px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold">All Works ({{ projects|length }})</button>
-            <button type="button" data-filter="AI_LLM" class="proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill">AI &amp; LLMs</button>
-            <button type="button" data-filter="EDGE_TINYML" class="proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill">Edge TinyML</button>
-            <button type="button" data-filter="FULLSTACK" class="proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill">Full-Stack Web</button>
-            <button type="button" data-filter="API_SYSTEMS" class="proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill">FastAPI &amp; Docker</button>
-          </div>
-        </div>
-
-        <div class="bento-grid-12">
-          {% for proj in projects %}
-          <article data-category="{{ proj.category }}" class="project-bento-card col-span-12 lg:col-span-6 surface-card surface-card-interactive p-6 sm:p-8 flex flex-col justify-between space-y-5">
-            <div class="space-y-3">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <span class="font-mono-code text-xs text-indigo-500 font-bold">[ WORK // {{ proj.code }} ]</span>
-                <span class="font-mono-code text-[11px] px-2.5 py-0.5 rounded-full font-semibold {% if proj.live_server_url %}bg-emerald-500/15 text-emerald-500 border border-emerald-500/30{% else %}bg-indigo-500/15 text-indigo-400 border border-indigo-500/30{% endif %}">
-                  {{ proj.status_label }}
-                </span>
-              </div>
-
-              <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-theme-primary">{{ proj.title }}</h3>
-              <p class="text-xs sm:text-sm text-theme-secondary font-medium">{{ proj.tagline }}</p>
-              <p class="text-xs text-theme-muted leading-relaxed">{{ proj.description }}</p>
-
-              <div class="p-3.5 rounded-xl theme-code-box font-mono-code text-[11px] whitespace-pre-line">{{ proj.architecture_breakdown }}</div>
-
-              <div class="flex flex-wrap gap-1.5 pt-1">
-                {% for tag in proj.tech_tags %}
-                <span class="px-2.5 py-0.5 rounded-md theme-pill font-mono-code text-[11px]">{{ tag }}</span>
-                {% endfor %}
-              </div>
-            </div>
-
-            <div class="pt-4 border-t flex flex-wrap items-center justify-between gap-3" style="border-color: var(--border-hairline);">
-              <div class="flex flex-wrap items-center gap-2">
-                {% if proj.live_server_url %}
-                <a href="{{ proj.live_server_url }}" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono-code text-xs font-semibold btn-press">
-                  🟢 Launch Live Server ↗
-                </a>
-                {% endif %}
-                {% if proj.github_repo_url %}
-                <a href="{{ proj.github_repo_url }}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl theme-pill hover:border-indigo-500 text-xs font-mono-code font-medium btn-press">
-                  GitHub Repo ↗
-                </a>
-                {% endif %}
-                <button type="button" onclick="openProjectModal({{ proj.id }})" class="px-3 py-2 rounded-xl theme-pill hover:border-indigo-500 text-xs font-mono-code btn-press">
-                  README / Specs
-                </button>
-              </div>
-              <button type="button" onclick="upvoteProject({{ proj.id }}, this)" class="px-3 py-1.5 rounded-xl theme-pill hover:border-indigo-500 font-mono-code text-xs text-indigo-500 font-semibold btn-press">
-                ▲ <span class="upvote-count">{{ proj.upvotes }}</span>
+            <!-- Interactive Prompt Dispatcher Buttons -->
+            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.5rem;" class="font-mono">
+              <button type="button" onclick="dispatchLocalAI(0)" class="pill-btn" style="justify-content:center; padding:0.6rem;">
+                ⚡ Load Code-1G (0.95 GB)
+              </button>
+              <button type="button" onclick="dispatchLocalAI(1)" class="pill-btn" style="justify-content:center; padding:0.6rem;">
+                🎨 Load Vision-1G (1.05 GB)
+              </button>
+              <button type="button" onclick="dispatchLocalAI(2)" class="pill-btn" style="justify-content:center; padding:0.6rem;">
+                🎬 Load Video-1G (1.15 GB)
+              </button>
+              <button type="button" onclick="dispatchLocalAI(3)" class="pill-btn pill-btn-amber" style="justify-content:center; padding:0.6rem;">
+                🧠 In-Place Self-Train (ΔW)
               </button>
             </div>
-          </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 02. SOVEREIGN LOCAL MASTER AI & IN-PLACE CONTINUAL LEARNING THESIS  -->
+    <!-- =================================================================== -->
+    <section id="nexus-architecture" class="monolith-section">
+      <div class="sec-index-row">
+        <div>
+          <div class="sec-num">02 // CORE AI/ML ARCHITECTURAL THESIS</div>
+          <h2 class="sec-title">Sovereign Local Multi-Model Orchestration &amp; In-Place Evolution</h2>
+        </div>
+        <div class="font-mono" style="font-size:0.78rem; color:var(--ink-3); max-width:44ch;">
+          Replacing monolithic cloud API lock-in with a persistent ~420 MB Master Router and hot-swappable ~1 GB quantized specialist experts.
+        </div>
+      </div>
+
+      <!-- 5 Architecture Nodes in an Editorial Horizontal Ledger -->
+      <div class="matrix-grid">
+        {% for node in ai_nodes %}
+        <div class="matrix-cell">
+          <div style="display:flex; flex-direction:column; gap:0.75rem;">
+            <div class="font-mono" style="display:flex; justify-content:space-between; align-items:center; font-size:0.74rem;">
+              <span style="color:var(--accent); font-weight:700;">[ {{ node.node_id }} ]</span>
+              <span style="padding:0.2rem 0.6rem; border-radius:6px; background:var(--bg-panel); border:1px solid var(--line); color:var(--signal);">{{ node.memory_budget }}</span>
+            </div>
+            <h3 style="font-size:1.18rem; font-weight:800;">{{ node.title }}</h3>
+            <p style="font-size:0.86rem; color:var(--ink-2);">{{ node.summary }}</p>
+          </div>
+          <div style="padding-top:0.9rem; border-top:1px solid var(--line); font-size:0.78rem; color:var(--ink-3);">
+            <div class="font-mono" style="color:var(--ink-1); font-weight:600; margin-bottom:0.25rem;">Target: {{ node.hardware_pool }}</div>
+            {{ node.mechanism_detail }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 03. INTERACTIVE SPLIT-SCREEN SELECTED WORKS SHOWCASE (AVEA STYLE)   -->
+    <!-- =================================================================== -->
+    <section id="selected-works" class="monolith-section">
+      <div class="sec-index-row">
+        <div>
+          <div class="sec-num">03 // PRODUCTION SYSTEMS &amp; LIVE DEPLOYMENTS</div>
+          <h2 class="sec-title">Selected Engineering Works ({{ projects|length }})</h2>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem;" class="font-mono">
+          <button type="button" data-wf="ALL" class="wf-btn pill-btn pill-btn-amber">All ({{ projects|length }})</button>
+          <button type="button" data-wf="AI/ML & LLM Systems" class="wf-btn pill-btn">AI &amp; LLMs</button>
+          <button type="button" data-wf="Full-Stack Web Platforms" class="wf-btn pill-btn">Full-Stack Web</button>
+          <button type="button" data-wf="Edge AI & TinyML Hardware" class="wf-btn pill-btn">Edge TinyML</button>
+          <button type="button" data-wf="FastAPI & Core Systems" class="wf-btn pill-btn">FastAPI &amp; Docker</button>
+        </div>
+      </div>
+
+      <div class="explorer-grid">
+        <!-- Left 6 Cols: Interactive Numbered Accordion Index -->
+        <div class="explorer-list" id="workIndexList">
+          {% for proj in projects %}
+          <div class="work-row {% if forloop.first %}active{% endif %}" data-proj-id="{{ proj.id }}" data-proj-cat="{{ proj.get_category_display }}" onclick="selectWorkItem({{ proj.id }}, this)">
+            <div style="display:flex; align-items:baseline; gap:1rem;">
+              <span class="font-mono" style="font-size:0.82rem; color:var(--accent); font-weight:700;">{{ proj.code }}</span>
+              <div>
+                <h3 style="font-size:1.12rem; font-weight:800;">{{ proj.title }}</h3>
+                <p style="font-size:0.8rem; color:var(--ink-3); margin-top:0.2rem;">{{ proj.tech_stack_csv }}</p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.6rem; shrink:0;" class="font-mono">
+              {% if proj.live_server_url %}
+              <span style="padding:0.2rem 0.6rem; border-radius:999px; background:rgba(16,185,129,0.15); color:var(--signal); font-size:0.68rem; font-weight:700;">LIVE ↗</span>
+              {% endif %}
+              <span style="font-size:0.9rem; color:var(--ink-3);">→</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Right 6 Cols: Sticky Live Case-Study Inspector Stage -->
+        <div class="explorer-stage" id="workInspectorStage">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;" class="font-mono">
+            <span id="stageWorkCode" style="color:var(--accent); font-size:0.78rem; font-weight:700;">[ SYSTEM // 01 ]</span>
+            <span id="stageWorkStatus" style="padding:0.25rem 0.75rem; border-radius:999px; border:1px solid var(--line); font-size:0.72rem; color:var(--signal);">Live Production</span>
+          </div>
+
+          <h3 id="stageWorkTitle" style="font-size:1.65rem; font-weight:800; line-height:1.2; margin-bottom:0.75rem;"></h3>
+          <p id="stageWorkTagline" style="font-size:0.95rem; color:var(--ink-1); font-weight:600; margin-bottom:0.75rem;"></p>
+          <p id="stageWorkDesc" style="font-size:0.86rem; color:var(--ink-2); margin-bottom:1.25rem;"></p>
+
+          <div style="margin-bottom:1.25rem;">
+            <div class="font-mono" style="font-size:0.7rem; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem; font-weight:700;">System Architecture &amp; Engineering Decisions</div>
+            <pre id="stageWorkArch" class="font-mono" style="background:var(--bg-input); border:1px solid var(--line); border-radius:14px; padding:1rem; font-size:0.76rem; color:var(--ink-2); white-space:pre-wrap; line-height:1.6;"></pre>
+          </div>
+
+          <div id="stageWorkTags" style="display:flex; flex-wrap:wrap; gap:0.45rem; margin-bottom:1.5rem;"></div>
+
+          <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.75rem; padding-top:1rem; border-top:1px solid var(--line);">
+            <div id="stageWorkLinks" style="display:flex; flex-wrap:wrap; gap:0.6rem;"></div>
+            <button type="button" id="stageUpvoteBtn" class="pill-btn font-mono">
+              ▲ Endorse (<span id="stageUpvoteCount">0</span>)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 04. AI/ML & FULL-STACK COMPETENCY CONSTELLATION (NO FAKE % BARS)    -->
+    <!-- =================================================================== -->
+    <section id="competency-matrix" class="monolith-section">
+      <div class="sec-index-row">
+        <div>
+          <div class="sec-num">04 // TECHNICAL ARSENAL &amp; CORE COMPETENCIES</div>
+          <h2 class="sec-title">AI/ML &amp; Full-Stack Engineering Matrix</h2>
+        </div>
+        <div class="font-mono" style="font-size:0.78rem; color:var(--ink-3);">
+          Active production capabilities across LLMs, Local Quantization, Edge TinyML, and Full-Stack Web.
+        </div>
+      </div>
+
+      <div class="matrix-grid">
+        {% for dom in skill_domains %}
+        <div class="matrix-cell">
+          <div>
+            <div class="font-mono" style="font-size:0.76rem; color:var(--accent); font-weight:700; margin-bottom:1rem; padding-bottom:0.65rem; border-bottom:1px solid var(--line);">
+              {{ dom.label }}
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+              {% for sk in dom.skills %}
+              <span class="skill-chip">
+                <span style="width:6px; height:6px; border-radius:50%; background:var(--accent);"></span>
+                {{ sk.name }}
+              </span>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="font-mono" style="font-size:0.7rem; color:var(--ink-3); display:flex; justify-content:space-between;">
+            <span>DOMAIN VERIFIED</span>
+            <span style="color:var(--signal);">PRODUCTION ACTIVE</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- 05. VERIFIED CREDENTIALS, COURSES & LEADERSHIP TIMELINE             -->
+    <!-- =================================================================== -->
+    <section id="credentials" class="monolith-section">
+      <div class="sec-index-row">
+        <div>
+          <div class="sec-num">05 // VERIFIED CREDENTIALS &amp; TRAJECTORY</div>
+          <h2 class="sec-title">Courses, Hackathons &amp; Leadership</h2>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); gap:2rem;">
+        <div style="grid-column: span 6; display:flex; flex-direction:column; gap:1rem;">
+          <div class="font-mono" style="font-size:0.78rem; color:var(--accent); font-weight:700;">VERIFIED CERTIFICATIONS &amp; COURSES</div>
+          {% for c in courses %}
+          <div class="matrix-cell" style="padding:1.35rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.74rem;" class="font-mono">
+              <span style="color:var(--signal); font-weight:700;">{{ c.issuer }}</span>
+              <span style="color:var(--ink-3);">{{ c.completion_date }}</span>
+            </div>
+            <h3 style="font-size:1.05rem; font-weight:800; margin:0.35rem 0;">{{ c.title }}</h3>
+            <p style="font-size:0.82rem; color:var(--ink-2);">{{ c.key_takeaways }}</p>
+            {% if c.credential_url %}
+            <a href="{{ c.credential_url }}" target="_blank" rel="noopener" class="font-mono" style="font-size:0.74rem; color:var(--accent); font-weight:700; margin-top:0.4rem;">
+              Inspect Verification / Repository ↗
+            </a>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        <div style="grid-column: span 6; display:flex; flex-direction:column; gap:1rem;">
+          <div class="font-mono" style="font-size:0.78rem; color:var(--accent); font-weight:700;">LEADERSHIP &amp; ACADEMIC TIMELINE</div>
+          {% for item in timeline %}
+          <div class="matrix-cell" style="padding:1.35rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.74rem;" class="font-mono">
+              <span style="color:var(--accent); font-weight:700;">{{ item.period }}</span>
+              {% if item.badge_metric %}
+              <span style="padding:0.15rem 0.55rem; border-radius:6px; border:1px solid var(--line); color:var(--ink-2);">{{ item.badge_metric }}</span>
+              {% endif %}
+            </div>
+            <h3 style="font-size:1.05rem; font-weight:800; margin:0.35rem 0;">{{ item.role }}</h3>
+            <div class="font-mono" style="font-size:0.75rem; color:var(--ink-3); margin-bottom:0.35rem;">{{ item.organization }}</div>
+            <p style="font-size:0.82rem; color:var(--ink-2);">{{ item.impact_summary }}</p>
+          </div>
           {% endfor %}
         </div>
       </div>
     </section>
 
-    <!-- SECTION 05: COURSES, CERTIFICATIONS & LEADERSHIP TIMELINE -->
-    <section id="courses" class="hairline-section py-14 lg:py-20">
-      <div class="container-studio">
-        <div class="bento-grid-12">
-          <div class="col-span-12 lg:col-span-6 space-y-6">
-            <div>
-              <span class="font-mono-code text-xs uppercase text-indigo-500 font-semibold">[ 05A // COURSES, CERTIFICATIONS &amp; HACKATHONS ]</span>
-              <h2 class="text-2xl sm:text-3xl font-bold mt-1 text-theme-primary">Verified Technical Credentials</h2>
-            </div>
-            <div class="space-y-4">
-              {% for c in courses %}
-              <div class="surface-card p-5 space-y-2">
-                <div class="flex items-center justify-between text-xs font-mono-code">
-                  <span class="text-emerald-500 font-semibold">{{ c.issuer }}</span>
-                  <span class="text-theme-muted">{{ c.completion_date }}</span>
-                </div>
-                <h3 class="text-base font-bold text-theme-primary">{{ c.title }}</h3>
-                <p class="text-xs text-theme-secondary leading-relaxed">{{ c.key_takeaways }}</p>
-                {% if c.credential_url %}
-                <div class="pt-1">
-                  <a href="{{ c.credential_url }}" target="_blank" rel="noopener" class="font-mono-code text-xs text-indigo-500 font-semibold hover:underline">Verify Credential / Repository ↗</a>
-                </div>
-                {% endif %}
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-
-          <div class="col-span-12 lg:col-span-6 space-y-6">
-            <div>
-              <span class="font-mono-code text-xs uppercase text-emerald-500 font-semibold">[ 05B // ENGINEERING LEADERSHIP &amp; TRAJECTORY ]</span>
-              <h2 class="text-2xl sm:text-3xl font-bold mt-1 text-theme-primary">Experience &amp; Research Timeline</h2>
-            </div>
-            <div class="space-y-4">
-              {% for item in timeline %}
-              <div class="surface-card p-5 space-y-2">
-                <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono-code">
-                  <span class="text-indigo-500 font-semibold">{{ item.period }}</span>
-                  {% if item.badge_metric %}
-                  <span class="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 font-semibold">{{ item.badge_metric }}</span>
-                  {% endif %}
-                </div>
-                <h3 class="text-base font-bold text-theme-primary">{{ item.role }}</h3>
-                <div class="text-xs font-mono-code text-theme-muted">{{ item.organization }}</div>
-                <p class="text-xs text-theme-secondary leading-relaxed">{{ item.impact_summary }}</p>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
+    <!-- =================================================================== -->
+    <!-- 06. DIRECT COLLABORATION & HIRE DISPATCH                            -->
+    <!-- =================================================================== -->
+    <section id="collaborate" class="monolith-section" style="border-bottom:none;">
+      <div class="sec-index-row">
+        <div>
+          <div class="sec-num">06 // DIRECT TRANSMISSION</div>
+          <h2 class="sec-title">Initiate an AI/ML or Full-Stack Collaboration</h2>
         </div>
       </div>
-    </section>
 
-    <!-- SECTION 06: DIRECT CONTACT & COLLABORATION (THEMED INPUTS IN BOTH DARK & LIGHT MODE) -->
-    <section id="contact" class="py-14 lg:py-20">
-      <div class="container-studio">
-        <div class="bento-grid-12">
-          <div class="col-span-12 lg:col-span-5 surface-card p-8 space-y-5">
-            <span class="font-mono-code text-xs uppercase text-indigo-500 font-semibold">[ 06 // DIRECT CHANNEL ]</span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-theme-primary">Initiate an AI/ML or Full-Stack Collaboration</h2>
-            <p class="text-xs sm:text-sm text-theme-secondary leading-relaxed">
-              Available for AI/ML engineering roles, LLM/multimodal systems research, and full-stack web architecture.
+      <div style="display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); gap:2rem;">
+        <div style="grid-column: span 5;" class="matrix-cell">
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <h3 style="font-size:1.35rem; font-weight:800;">Direct Engineering Channels</h3>
+            <p style="font-size:0.88rem; color:var(--ink-2);">
+              Available for AI/ML engineering roles, local LLM/multimodal research, and full-stack web architecture.
             </p>
-            <div class="space-y-2.5 font-mono-code text-xs text-theme-secondary">
-              <div>Primary: <a href="mailto:{{ profile.primary_email }}" class="text-indigo-500 font-semibold hover:underline">{{ profile.primary_email }}</a></div>
-              <div>Secondary: <a href="mailto:{{ profile.secondary_email }}" class="text-indigo-500 font-semibold hover:underline">{{ profile.secondary_email }}</a></div>
+            <div class="font-mono" style="font-size:0.8rem; display:flex; flex-direction:column; gap:0.6rem; padding-top:0.5rem;">
+              <div>Primary: <a href="mailto:{{ profile.primary_email }}" style="color:var(--accent); font-weight:700;">{{ profile.primary_email }}</a></div>
+              <div>Secondary: <a href="mailto:{{ profile.secondary_email }}" style="color:var(--accent);">{{ profile.secondary_email }}</a></div>
               <div>Location: {{ profile.location }}</div>
             </div>
           </div>
+          <div class="font-mono" style="font-size:0.72rem; color:var(--signal);">● DIRECT DATABASE DISPATCH ACTIVE</div>
+        </div>
 
-          <div class="col-span-12 lg:col-span-7 surface-card p-8">
-            <form id="ajaxContactForm" class="space-y-4 text-xs sm:text-sm">
-              {% csrf_token %}
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label class="block font-mono-code text-xs text-theme-muted mb-1.5">Your Name *</label>
-                  <input type="text" name="sender_name" required placeholder="Recruiter / Collaborator Name" class="theme-input" />
-                </div>
-                <div>
-                  <label class="block font-mono-code text-xs text-theme-muted mb-1.5">Your Email *</label>
-                  <input type="email" name="sender_email" required placeholder="name@company.com" class="theme-input" />
-                </div>
+        <div style="grid-column: span 7;" class="matrix-cell">
+          <form id="ajaxContactForm" style="display:flex; flex-direction:column; gap:1rem;">
+            {% csrf_token %}
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+              <div>
+                <label class="font-mono" style="font-size:0.72rem; color:var(--ink-3); display:block; margin-bottom:0.35rem;">YOUR NAME *</label>
+                <input type="text" name="sender_name" required placeholder="Recruiter / Collaborator Name" class="field-input" />
               </div>
               <div>
-                <label class="block font-mono-code text-xs text-theme-muted mb-1.5">Subject *</label>
-                <input type="text" name="subject" required placeholder="AI/ML Role / Research / Full-Stack Project" class="theme-input" />
+                <label class="font-mono" style="font-size:0.72rem; color:var(--ink-3); display:block; margin-bottom:0.35rem;">YOUR EMAIL *</label>
+                <input type="email" name="sender_email" required placeholder="name@organization.com" class="field-input" />
               </div>
-              <div>
-                <label class="block font-mono-code text-xs text-theme-muted mb-1.5">Message *</label>
-                <textarea name="message" rows="4" required placeholder="Share role details, timeline, or collaboration scope..." class="theme-input"></textarea>
-              </div>
-              <div class="flex items-center justify-between gap-4">
-                <span id="contactFormStatus" class="font-mono-code text-xs text-emerald-500 font-semibold"></span>
-                <button type="submit" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-mono-code text-xs font-bold btn-press">
-                  Send Message →
-                </button>
-              </div>
-            </form>
-          </div>
+            </div>
+            <div>
+              <label class="font-mono" style="font-size:0.72rem; color:var(--ink-3); display:block; margin-bottom:0.35rem;">SUBJECT / ROLE *</label>
+              <input type="text" name="subject" required placeholder="AI/ML Engineer Role / Research / Full-Stack Contract" class="field-input" />
+            </div>
+            <div>
+              <label class="font-mono" style="font-size:0.72rem; color:var(--ink-3); display:block; margin-bottom:0.35rem;">MESSAGE *</label>
+              <textarea name="message" rows="4" required placeholder="Share project scope, role details, or timeline..." class="field-input"></textarea>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+              <span id="contactFormStatus" class="font-mono" style="font-size:0.78rem; color:var(--signal); font-weight:700;"></span>
+              <button type="submit" class="pill-btn pill-btn-amber" style="padding:0.85rem 1.75rem; font-size:0.82rem;">
+                Transmit Message →
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- PROJECT ARCHITECTURE & README CASE-STUDY MODAL -->
-  <div id="projectReadmeModal" class="hidden fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="surface-card max-w-2xl w-full p-6 sm:p-8 space-y-4 border border-indigo-500/40">
-      <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-hairline);">
-        <span id="modalProjCode" class="font-mono-code text-xs text-indigo-500 font-bold">[ ARCHITECTURE SPECS ]</span>
-        <button type="button" onclick="closeProjectModal()" class="px-2.5 py-1 rounded-lg theme-pill font-mono-code text-xs">✕ ESC</button>
+  <!-- SAKIB-OS INTERACTIVE COMMAND SHELL MODAL -->
+  <div id="shellModal" style="display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.82); backdrop-filter:blur(12px); align-items:center; justify-content:center; padding:1rem;">
+    <div style="max-width:680px; width:100%; background:#0a0b0f; border:1px solid var(--line-strong); border-radius:20px; overflow:hidden; box-shadow:var(--shadow-elev); color:#f5f3ef;" class="font-mono">
+      <div style="padding:0.85rem 1.25rem; background:#12141c; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center; font-size:0.75rem;">
+        <span style="color:var(--accent); font-weight:700;">sakib@nexuslocal-os:~ (Interactive Engineering Shell)</span>
+        <button type="button" onclick="document.getElementById('shellModal').style.display='none'" style="color:#94a3b8;">✕ ESC</button>
       </div>
-      <h3 id="modalProjTitle" class="text-xl sm:text-2xl font-bold text-theme-primary"></h3>
-      <p id="modalProjDesc" class="text-xs sm:text-sm text-theme-secondary leading-relaxed"></p>
-      <div id="modalProjArch" class="p-4 rounded-xl theme-code-box font-mono-code text-xs whitespace-pre-line"></div>
-      <div id="modalProjLinks" class="flex flex-wrap gap-3 pt-2"></div>
-    </div>
-  </div>
-
-  <!-- INTERACTIVE AI ENGINEER CLI TERMINAL MODAL (Cmd+K / >_ CLI) -->
-  <div id="cliTerminalModal" class="hidden fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="max-w-2xl w-full rounded-2xl overflow-hidden bg-[#080a12] border border-indigo-500/40 text-gray-100 shadow-2xl">
-      <div class="px-4 py-2.5 bg-[#101422] border-b border-white/10 flex items-center justify-between font-mono-code text-xs">
-        <span>sakib@nexuslocal-ai:~ (Interactive Engineering Shell)</span>
-        <button type="button" onclick="document.getElementById('cliTerminalModal').classList.add('hidden')" class="text-gray-400 hover:text-white">✕ ESC</button>
+      <div id="shellOutput" style="padding:1.25rem; height:260px; overflow-y:auto; font-size:0.76rem; display:flex; flex-direction:column; gap:0.5rem;">
+        <div style="color:var(--signal);">Sakib-OS v8.0 Initialized. Type <code>help</code>, <code>whoami</code>, <code>nexuslocal</code>, <code>works</code>, <code>stack</code>, or <code>clear</code>.</div>
       </div>
-      <div id="cliOutput" class="p-4 h-64 overflow-y-auto font-mono-code text-xs space-y-1.5 text-gray-300">
-        <div class="text-emerald-400">Welcome to Sakib AI Systems Shell v7.0. Type <code class="text-indigo-300">help</code>, <code class="text-indigo-300">whoami</code>, <code class="text-indigo-300">master-ai</code>, <code class="text-indigo-300">projects</code>, or <code class="text-indigo-300">clear</code>.</div>
-      </div>
-      <form id="cliForm" class="border-t border-white/10 px-4 py-2.5 flex items-center gap-2 bg-[#06080e] font-mono-code text-xs">
-        <span class="text-emerald-400">sakib@ai:~$</span>
-        <input id="cliInput" type="text" placeholder="Type command (e.g. master-ai, projects)..." class="flex-1 bg-transparent text-white outline-none" />
+      <form id="shellForm" style="padding:0.85rem 1.25rem; border-top:1px solid rgba(255,255,255,0.08); display:flex; gap:0.6rem; background:#06070a; font-size:0.78rem;">
+        <span style="color:var(--accent); font-weight:700;">sakib@os:~$</span>
+        <input id="shellInput" type="text" placeholder="Enter command..." style="flex:1; background:transparent; border:none; color:#fff; outline:none; font-family:inherit;" />
       </form>
     </div>
   </div>
 
-  <footer class="w-full border-t py-6 text-xs font-mono-code text-theme-muted" style="border-color: var(--border-hairline);">
-    <div class="container-studio flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div>© 2026 {{ profile.full_name }} • {{ profile.role_title }}</div>
-      <div class="flex items-center gap-4">
-        <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="hover:underline">GitHub</a>
-        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="hover:underline">LinkedIn</a>
-        <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="hover:underline">Kaggle</a>
+  <footer style="border-top:1px solid var(--line); padding:2.5rem 0; font-size:0.78rem; color:var(--ink-3);" class="font-mono">
+    <div class="shell" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem;">
+      <div>© 2026 {{ profile.full_name }} — {{ profile.role_title }}</div>
+      <div style="display:flex; gap:1.25rem;">
+        <a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>
+        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener">Kaggle</a>
       </div>
     </div>
   </footer>
 
-  <!-- ========================================================================
-       INDESTRUCTIBLE 60 FPS 3D NEURAL MEMORY ROUTER ENGINE + INTERACTIVE APP JS
-       ======================================================================== -->
   <script>
-    const PROJECTS_DATA = {{ projects_json|safe }};
+    const WORKS_DB = {{ projects_json|safe }};
+    let activeWorkId = WORKS_DB.length > 0 ? WORKS_DB[0].id : 0;
 
-    // 1. Live Clock & Theme Switcher
+    // 1. Live Dhaka Clock & Theme Switcher
     setInterval(function () {
-      const el = document.getElementById("liveClockBdt");
-      if (el) el.textContent = "BDT • " + new Date().toLocaleTimeString("en-US", { hour12: false }) + " UTC+6";
+      const el = document.getElementById("dhakaClock");
+      if (el) el.textContent = "DAC • " + new Date().toLocaleTimeString("en-US", { hour12: false }) + " UTC+6";
     }, 1000);
 
-    document.getElementById("themeToggleBtn").addEventListener("click", function () {
+    document.getElementById("themeSwitchBtn").onclick = function () {
       const root = document.documentElement;
       root.setAttribute("data-theme", root.getAttribute("data-theme") === "light" ? "dark" : "light");
-    });
+    };
 
-    // 2. Indestructible 60 FPS 3D Perspective & Isometric Neural Memory Orchestrator Canvas
-    (function initMasterAICanvas3D() {
-      const canvas = document.getElementById("masterAi3dCanvas");
+    // 2. Interactive Sovereign Local AI Hardware Simulator & 60FPS 3D Tensor Field
+    const AI_MODES = [
+      { label: "ACTIVE: MASTER ROUTER (420 MB) + CODE-1G (0.95 GB NF4)", ramText: "1.37 GB / 8.00 GB USED", speed: "68.4 tok/s", segW: "32%", segName: "CODE-1G (0.95G)", segCol: "#38bdf8", deltaW: "8%" },
+      { label: "ACTIVE: MASTER ROUTER (420 MB) + VISION-1G (1.05 GB FLOW)", ramText: "1.47 GB / 8.00 GB USED", speed: "42.0 step/s", segW: "36%", segName: "VISION-1G (1.05G)", segCol: "#10b981", deltaW: "8%" },
+      { label: "ACTIVE: MASTER ROUTER (420 MB) + VIDEO-1G (1.15 GB VAE)", ramText: "1.57 GB / 8.00 GB USED", speed: "24.0 fps", segW: "40%", segName: "VIDEO-1G (1.15G)", segCol: "#a855f7", deltaW: "10%" },
+      { label: "IN-PLACE SINGLE-NODE CONTINUAL SELF-TRAINING (LoRA ΔW MERGE)", ramText: "1.42 GB / 8.00 GB (ZERO EXTRA NODE BLOAT)", speed: "ΔW MERGING", segW: "28%", segName: "ACTIVE NODE", segCol: "#f59e0b", deltaW: "24%" }
+    ];
+    let currentAiMode = 0;
+
+    window.dispatchLocalAI = function (modeIdx) {
+      currentAiMode = modeIdx;
+      const m = AI_MODES[modeIdx] || AI_MODES[0];
+      document.getElementById("simActiveNodeLabel").textContent = m.label;
+      document.getElementById("simRamTotalText").textContent = m.ramText;
+      document.getElementById("simSpeedBadge").textContent = m.speed;
+      const segE = document.getElementById("segExpert");
+      segE.style.width = m.segW;
+      segE.style.background = m.segCol;
+      segE.textContent = m.segName;
+      document.getElementById("segDelta").style.width = m.deltaW;
+    };
+
+    (function initSovereignCanvas() {
+      const canvas = document.getElementById("sovereignNeuralCanvas");
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
-      let width = 500, height = 250;
-      let rotY = 0.4, rotX = 0.38;
-      let isDragging = false, lastX = 0, lastY = 0;
-      let activeExpert = 0; // 0: Code-1G, 1: Photo-1G, 2: Video-1G, 99: Self-Train
+      let w = 480, h = 225, yaw = 0.5, pitch = 0.35, dragging = false, lx = 0, ly = 0;
 
-      const experts = [
-        { name: "CODE-1G (0.95 GB NF4)", color: "#38bdf8", pool: "GPU VRAM" },
-        { name: "PHOTO-1G (1.05 GB FLOW)", color: "#10b981", pool: "NPU + GPU" },
-        { name: "VIDEO-1G (1.15 GB VAE)", color: "#f59e0b", pool: "VRAM + RAM" },
-        { name: "REASON-1G (0.90 GB RAG)", color: "#a855f7", pool: "CPU RAM" }
-      ];
-
-      function resizeCanvas() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        width = Math.max(300, rect.width || 480);
-        height = Math.max(220, rect.height || 240);
+      function resize() {
+        const r = canvas.parentElement.getBoundingClientRect();
+        w = Math.max(280, r.width || 460);
+        h = Math.max(200, r.height || 225);
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
-      resizeCanvas();
-      window.addEventListener("resize", resizeCanvas);
+      resize();
+      window.addEventListener("resize", resize);
 
-      canvas.addEventListener("pointerdown", function (e) { isDragging = true; lastX = e.clientX; lastY = e.clientY; });
-      window.addEventListener("pointerup", function () { isDragging = false; });
+      canvas.addEventListener("pointerdown", function (e) { dragging = true; lx = e.clientX; ly = e.clientY; });
+      window.addEventListener("pointerup", function () { dragging = false; });
       window.addEventListener("pointermove", function (e) {
-        if (!isDragging) return;
-        rotY += (e.clientX - lastX) * 0.01;
-        rotX = Math.max(0.15, Math.min(1.1, rotX + (e.clientY - lastY) * 0.008));
-        lastX = e.clientX;
-        lastY = e.clientY;
+        if (!dragging) return;
+        yaw += (e.clientX - lx) * 0.01;
+        pitch = Math.max(0.1, Math.min(1.1, pitch + (e.clientY - ly) * 0.008));
+        lx = e.clientX; ly = e.clientY;
       });
 
-      function project3D(x, y, z) {
-        // Rotate Y
-        const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
-        const x1 = x * cosY - z * sinY;
-        const z1 = z * cosY + x * sinY;
-        // Rotate X
-        const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
-        const y2 = y * cosX - z1 * sinX;
-        const z2 = z1 * cosX + y * sinX;
-        const fov = 340 / (340 + z2 + 120);
-        return {
-          sx: width / 2 + x1 * fov,
-          sy: height / 2 + y2 * fov,
-          scale: fov,
-          z: z2
-        };
+      function proj(x, y, z) {
+        const cy = Math.cos(yaw), sy = Math.sin(yaw);
+        const x1 = x * cy - z * sy, z1 = z * cy + x * sy;
+        const cp = Math.cos(pitch), sp = Math.sin(pitch);
+        const y2 = y * cp - z1 * sp, z2 = z1 * cp + y * sp;
+        const f = 320 / (320 + z2 + 110);
+        return { x: w / 2 + x1 * f, y: h / 2 + y2 * f + 6, s: f };
       }
 
-      function draw3DOctahedron(cx, cy, cz, radius, strokeCol, fillCol, spin) {
-        const verts = [
-          [0, -radius, 0], [0, radius, 0],
-          [-radius, 0, 0], [radius, 0, 0],
-          [0, 0, -radius], [0, 0, radius]
-        ].map(function (v) {
-          const c = Math.cos(spin), s = Math.sin(spin);
-          const rx = v[0] * c - v[2] * s;
-          const rz = v[2] * c + v[0] * s;
-          return project3D(cx + rx, cy + v[1], cz + rz);
-        });
+      const satellites = [
+        { name: "CODE-1G", col: "#38bdf8" },
+        { name: "VISION-1G", col: "#10b981" },
+        { name: "VIDEO-1G", col: "#a855f7" },
+        { name: "REASON-1G", col: "#f59e0b" }
+      ];
 
-        const edges = [
-          [0,2],[0,3],[0,4],[0,5],
-          [1,2],[1,3],[1,4],[1,5],
-          [2,4],[4,3],[3,5],[5,2]
-        ];
-        ctx.fillStyle = fillCol;
-        ctx.beginPath();
-        ctx.arc(verts[0].sx, (verts[0].sy + verts[1].sy) / 2, radius * verts[0].scale * 0.72, 0, Math.PI * 2);
-        ctx.fill();
+      function loop() {
+        requestAnimationFrame(loop);
+        const t = Date.now() * 0.0018;
+        if (!dragging) yaw += (currentAiMode === 3 ? 0.018 : 0.006);
 
-        ctx.strokeStyle = strokeCol;
-        ctx.lineWidth = 1.4;
-        edges.forEach(function (e) {
+        ctx.fillStyle = "#050609";
+        ctx.fillRect(0, 0, w, h);
+
+        // Draw 3D Memory Bus Rings
+        [68, 112].forEach(function (rad, idx) {
           ctx.beginPath();
-          ctx.moveTo(verts[e[0]].sx, verts[e[0]].sy);
-          ctx.lineTo(verts[e[1]].sx, verts[e[1]].sy);
-          ctx.stroke();
-        });
-      }
-
-      function renderFrame() {
-        requestAnimationFrame(renderFrame);
-        const t = Date.now() * 0.0015;
-        if (!isDragging) rotY += (activeExpert === 99 ? 0.018 : 0.006);
-
-        ctx.fillStyle = "#070911";
-        ctx.fillRect(0, 0, width, height);
-
-        // Subtle 3D Memory Pool Orbit Rings (CPU RAM, GPU VRAM, NPU)
-        [75, 118, 152].forEach(function (r, rIdx) {
-          ctx.beginPath();
-          for (let a = 0; a <= 64; a++) {
-            const ang = (a / 64) * Math.PI * 2;
-            const p = project3D(Math.cos(ang) * r, 0, Math.sin(ang) * r);
-            if (a === 0) ctx.moveTo(p.sx, p.sy);
-            else ctx.lineTo(p.sx, p.sy);
+          for (let i = 0; i <= 60; i++) {
+            const a = (i / 60) * Math.PI * 2;
+            const p = proj(Math.cos(a) * rad, 0, Math.sin(a) * rad);
+            if (i === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
           }
-          ctx.strokeStyle = rIdx === 1 ? "rgba(99, 102, 241, 0.30)" : "rgba(255, 255, 255, 0.08)";
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = idx === 0 ? "rgba(245, 158, 11, 0.28)" : "rgba(255, 255, 255, 0.08)";
+          ctx.lineWidth = 1.2;
           ctx.stroke();
         });
 
-        const centerP = project3D(0, 0, 0);
+        const c0 = proj(0, 0, 0);
 
-        // 4 Orbiting ~1.0 GB Sub-Model Nodes + Data Conduits
-        experts.forEach(function (exp, i) {
-          const ang = (i * Math.PI) / 2 + t * 0.7;
-          const dist = activeExpert === i ? 98 : 126;
-          const ex = Math.cos(ang) * dist;
-          const ey = Math.sin(t * 2 + i) * 14;
-          const ez = Math.sin(ang) * dist;
-          const ep = project3D(ex, ey, ez);
+        satellites.forEach(function (sat, i) {
+          const a = (i * Math.PI) / 2 + t * 0.65;
+          const dist = currentAiMode === i ? 82 : 112;
+          const sx = Math.cos(a) * dist, sy = Math.sin(t * 2 + i) * 12, sz = Math.sin(a) * dist;
+          const sp = proj(sx, sy, sz);
+          const active = (currentAiMode === i || currentAiMode === 3);
 
-          // Conduit Line to Resident Master AI Core
           ctx.beginPath();
-          ctx.moveTo(centerP.sx, centerP.sy);
-          ctx.lineTo(ep.sx, ep.sy);
-          const isSelected = (activeExpert === i || activeExpert === 99);
-          ctx.strokeStyle = isSelected ? exp.color : "rgba(148, 163, 184, 0.22)";
-          ctx.lineWidth = isSelected ? 2 : 1;
+          ctx.moveTo(c0.x, c0.y);
+          ctx.lineTo(sp.x, sp.y);
+          ctx.strokeStyle = active ? sat.col : "rgba(148, 163, 184, 0.2)";
+          ctx.lineWidth = active ? 2.2 : 1;
           ctx.stroke();
 
-          // Flowing Data Packet along Conduit
-          if (isSelected) {
-            const prog = (Date.now() * 0.0025) % 1;
-            const dirProg = activeExpert === 99 ? (1 - prog) : prog;
-            const px = centerP.sx + (ep.sx - centerP.sx) * dirProg;
-            const py = centerP.sy + (ep.sy - centerP.sy) * dirProg;
+          if (active) {
+            const prog = (Date.now() * 0.0028) % 1;
+            const dProg = currentAiMode === 3 ? (1 - prog) : prog;
+            const px = c0.x + (sp.x - c0.x) * dProg;
+            const py = c0.y + (sp.y - c0.y) * dProg;
             ctx.fillStyle = "#ffffff";
             ctx.beginPath();
             ctx.arc(px, py, 3.2, 0, Math.PI * 2);
             ctx.fill();
           }
 
-          draw3DOctahedron(
-            ex, ey, ez,
-            isSelected ? 20 : 14,
-            exp.color,
-            isSelected ? "rgba(99, 102, 241, 0.28)" : "rgba(15, 23, 42, 0.65)",
-            t * 2 + i
-          );
+          ctx.fillStyle = active ? sat.col : "#1e293b";
+          ctx.beginPath();
+          ctx.arc(sp.x, sp.y, (active ? 10 : 7) * sp.s, 0, Math.PI * 2);
+          ctx.fill();
 
-          ctx.fillStyle = isSelected ? "#ffffff" : "#94a3b8";
-          ctx.font = "600 10px 'JetBrains Mono', monospace";
-          ctx.fillText(exp.name.split(" ")[0], ep.sx - 24, ep.sy - 18);
+          ctx.fillStyle = active ? "#ffffff" : "#94a3b8";
+          ctx.font = "700 10px 'JetBrains Mono', monospace";
+          ctx.fillText(sat.name, sp.x - 22, sp.y - 12);
         });
 
-        // Central Always-Resident Master AI Router Core
-        const corePulse = activeExpert === 99 ? 30 + Math.sin(t * 6) * 5 : 26;
-        draw3DOctahedron(
-          0, 0, 0,
-          corePulse,
-          activeExpert === 99 ? "#10b981" : "#818cf8",
-          activeExpert === 99 ? "rgba(16, 185, 129, 0.32)" : "rgba(79, 70, 229, 0.35)",
-          -t * 1.5
-        );
-        ctx.fillStyle = "#e0e7ff";
+        // Central Master AI Core
+        const coreR = (currentAiMode === 3 ? 22 + Math.sin(t * 5) * 4 : 19) * c0.s;
+        ctx.fillStyle = "rgba(245, 158, 11, 0.22)";
+        ctx.strokeStyle = "#f59e0b";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(c0.x, c0.y, coreR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#fde68a";
         ctx.font = "700 10px 'JetBrains Mono', monospace";
-        ctx.fillText("MASTER AI (RAM)", centerP.sx - 44, centerP.sy + 36);
+        ctx.fillText("MASTER ROUTER", c0.x - 42, c0.y + coreR + 14);
       }
-      renderFrame();
-
-      window.setMasterAIRoute = function (idx, label) {
-        activeExpert = idx;
-        const tel = document.getElementById("masterAiTelemetryStatus");
-        if (tel) tel.textContent = label;
-      };
+      loop();
     })();
 
-    // 3. Project Category Filter, Upvote & Modal
-    document.querySelectorAll(".proj-filter-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        const cat = btn.getAttribute("data-filter");
-        document.querySelectorAll(".proj-filter-btn").forEach(function (b) {
-          b.className = "proj-filter-btn px-3.5 py-1.5 rounded-xl theme-pill";
-        });
-        btn.className = "proj-filter-btn px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold";
-        document.querySelectorAll(".project-bento-card").forEach(function (card) {
-          card.style.display = (cat === "ALL" || card.getAttribute("data-category") === cat) ? "" : "none";
-        });
-      });
-    });
-
-    function openProjectModal(projId) {
-      const p = PROJECTS_DATA.find(function (x) { return x.id === projId; });
+    // 3. Interactive Split-Screen Work Showcase Controller
+    window.selectWorkItem = function (projId, rowEl) {
+      const p = WORKS_DB.find(function (x) { return x.id === projId; }) || WORKS_DB[0];
       if (!p) return;
-      document.getElementById("modalProjCode").textContent = "[ WORK // " + p.code + " • " + p.status + " ]";
-      document.getElementById("modalProjTitle").textContent = p.title;
-      document.getElementById("modalProjDesc").textContent = p.description;
-      document.getElementById("modalProjArch").textContent = p.architecture;
-      const linksBox = document.getElementById("modalProjLinks");
+      activeWorkId = p.id;
+      document.querySelectorAll(".work-row").forEach(function (r) { r.classList.remove("active"); });
+      if (rowEl) rowEl.classList.add("active");
+
+      document.getElementById("stageWorkCode").textContent = "[ SYSTEM // " + p.code + " • " + p.category.toUpperCase() + " ]";
+      document.getElementById("stageWorkStatus").textContent = p.status;
+      document.getElementById("stageWorkTitle").textContent = p.title;
+      document.getElementById("stageWorkTagline").textContent = p.tagline;
+      document.getElementById("stageWorkDesc").textContent = p.description;
+      document.getElementById("stageWorkArch").textContent = p.architecture;
+      document.getElementById("stageUpvoteCount").textContent = p.upvotes;
+
+      const tagsBox = document.getElementById("stageWorkTags");
+      tagsBox.innerHTML = "";
+      (p.tags || []).forEach(function (t) {
+        tagsBox.innerHTML += '<span class="skill-chip">' + t + '</span>';
+      });
+
+      const linksBox = document.getElementById("stageWorkLinks");
       linksBox.innerHTML = "";
       if (p.liveUrl) {
-        linksBox.innerHTML += '<a href="' + p.liveUrl + '" target="_blank" class="px-4 py-2 rounded-xl bg-emerald-600 text-white font-mono-code text-xs font-semibold">🟢 Launch Live Server ↗</a>';
+        linksBox.innerHTML += '<a href="' + p.liveUrl + '" target="_blank" rel="noopener" class="pill-btn pill-btn-amber" style="padding:0.65rem 1.2rem;">🟢 Launch Live Server ↗</a>';
       }
       if (p.githubUrl) {
-        linksBox.innerHTML += '<a href="' + p.githubUrl + '" target="_blank" class="px-4 py-2 rounded-xl theme-pill font-mono-code text-xs">GitHub Repository ↗</a>';
+        linksBox.innerHTML += '<a href="' + p.githubUrl + '" target="_blank" rel="noopener" class="pill-btn" style="padding:0.65rem 1.2rem;">GitHub Repository ↗</a>';
       }
-      document.getElementById("projectReadmeModal").classList.remove("hidden");
-    }
-    function closeProjectModal() {
-      document.getElementById("projectReadmeModal").classList.add("hidden");
-    }
+    };
 
-    function upvoteProject(pk, btnEl) {
-      fetch("/api/projects/" + pk + "/upvote/", {
+    document.getElementById("stageUpvoteBtn").onclick = function () {
+      if (!activeWorkId) return;
+      fetch("/api/projects/" + activeWorkId + "/upvote/", {
         method: "POST",
         headers: { "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value }
       })
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        if (d.ok) btnEl.querySelector(".upvote-count").textContent = d.upvotes;
+        if (d.ok) {
+          document.getElementById("stageUpvoteCount").textContent = d.upvotes;
+          const item = WORKS_DB.find(function (x) { return x.id === activeWorkId; });
+          if (item) item.upvotes = d.upvotes;
+        }
       });
+    };
+
+    document.querySelectorAll(".wf-btn").forEach(function (btn) {
+      btn.onclick = function () {
+        const cat = btn.getAttribute("data-wf");
+        document.querySelectorAll(".wf-btn").forEach(function (b) { b.className = "wf-btn pill-btn"; });
+        btn.className = "wf-btn pill-btn pill-btn-amber";
+        document.querySelectorAll(".work-row").forEach(function (r) {
+          r.style.display = (cat === "ALL" || r.getAttribute("data-proj-cat") === cat) ? "" : "none";
+        });
+      };
+    });
+
+    if (WORKS_DB.length > 0) {
+      selectWorkItem(WORKS_DB[0].id, document.querySelector(".work-row"));
     }
 
     // 4. AJAX Contact Form
@@ -915,31 +1064,31 @@
       });
     });
 
-    // 5. Interactive CLI Terminal Modal
-    document.getElementById("openTerminalBtn").addEventListener("click", function () {
-      document.getElementById("cliTerminalModal").classList.remove("hidden");
-      document.getElementById("cliInput").focus();
-    });
-    document.getElementById("cliForm").addEventListener("submit", function (e) {
+    // 5. Sakib-OS Interactive Shell Modal
+    document.getElementById("openShellBtn").onclick = function () {
+      document.getElementById("shellModal").style.display = "flex";
+      document.getElementById("shellInput").focus();
+    };
+    document.getElementById("shellForm").onsubmit = function (e) {
       e.preventDefault();
-      const inp = document.getElementById("cliInput");
-      const out = document.getElementById("cliOutput");
+      const inp = document.getElementById("shellInput");
+      const out = document.getElementById("shellOutput");
       const cmd = inp.value.trim().toLowerCase();
       inp.value = "";
       if (!cmd) return;
-      out.innerHTML += '<div class="text-indigo-400">sakib@ai:~$ ' + cmd + '</div>';
+      out.innerHTML += '<div style="color:var(--accent);">sakib@os:~$ ' + cmd + '</div>';
       if (cmd === "clear") { out.innerHTML = ""; return; }
-      const replies = {
-        "help": "Available commands: whoami, master-ai, projects, skills, contact, clear",
-        "whoami": "Md Najmus Sakib Rahatul — AI/ML Engineer & Full-Stack AI Systems Architect (LLMs, Multimodal AI, Local CPU/GPU/NPU Runtimes, Django & FastAPI).",
-        "master-ai": "NexusLocal: Resident Master AI Router (~420 MB RAM) orchestrating ~1.0 GB 4-bit quantized specialist sub-models (Code-1G, Photo-1G, Video-1G, Reason-1G) with In-Place Single-Node Continual Self-Training.",
-        "projects": "01 NexusLocal Master AI | 02 Aloron Shop (aloron-shop.vercel.app) | 03 Campus Lost & Found (baiust-campus-lost-and-found.vercel.app) | 04 NexusCode 3D (codequest-bd.vercel.app) | 05 Bio-Acoustic Mosquito FFT Trap | 06 IoT Storm TinyML | 07 CoWork FastAPI",
-        "skills": "PyTorch, Transformers, QLoRA/4-Bit NF4, llama.cpp, vLLM, ONNX, ExecuTorch, LangGraph, Django 5, FastAPI, Next.js, ESP32-S3 TinyML, PostgreSQL.",
-        "contact": "Primary Email: mdnajmussakib2003@gmail.com | GitHub: github.com/Sakib20050413"
+      const map = {
+        "help": "Commands: whoami, nexuslocal, works, stack, contact, clear",
+        "whoami": "Md Najmus Sakib Rahatul — AI/ML Systems Engineer & Full-Stack Architect.",
+        "nexuslocal": "Resident Master AI Router (420 MB RAM) + ~1 GB 4-bit NF4 quantized specialist models (Code, Vision, Video, Reason) + In-Place Single-Node Continual Learning.",
+        "works": "01 NexusLocal | 02 Aloron Shop (aloron-shop.vercel.app) | 03 Campus Lost & Found (baiust-campus-lost-and-found.vercel.app) | 04 Polyglot/NexusCode 3D (codequest-bd.vercel.app)",
+        "stack": "PyTorch, Transformers, QLoRA/NF4, llama.cpp, vLLM, ONNX, ExecuTorch, LangGraph, Django 5, FastAPI, Next.js, ESP32-S3 TinyML, PostgreSQL.",
+        "contact": "Email: mdnajmussakib2003@gmail.com | GitHub: github.com/Sakib20050413"
       };
-      out.innerHTML += '<div class="text-gray-200">' + (replies[cmd] || "Command not recognized. Type 'help' for available commands.") + '</div>';
+      out.innerHTML += '<div style="color:#e2e8f0;">' + (map[cmd] || "Unknown command. Type 'help'.") + '</div>';
       out.scrollTop = out.scrollHeight;
-    });
+    };
   </script>
 </body>
 </html>
