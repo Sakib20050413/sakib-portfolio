@@ -1,15 +1,13 @@
 services:
   - type: web
-    name: sakib-portfolio-cms
+    name: sakib-ai-portfolio
     env: python
-    region: singapore
-    plan: free
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn portfolio_cms.wsgi:application --bind 0.0.0.0:$PORT"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput && python seed_portfolio.py"
+    startCommand: "gunicorn portfolio_project.wsgi:application"
     envVars:
-      - key: DJANGO_DEBUG
-        value: "False"
-      - key: DJANGO_SECRET_KEY
-        generateValue: true
       - key: PYTHON_VERSION
         value: 3.11.8
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"

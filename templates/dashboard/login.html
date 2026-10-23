@@ -1,54 +1,54 @@
-{% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Admin Authentication | {{ profile.full_name }}{% endblock %}
-
-{% block content %}
-<div class="min-h-screen flex items-center justify-center p-4">
-    <div class="max-w-sm w-full surface-card p-8 space-y-6">
-        
-        <div class="text-center space-y-1">
-            <h1 class="text-xl font-bold text-white tracking-tight">Portfolio CMS</h1>
-            <p class="text-xs text-neutral-400 font-mono">
-                Operator: <span class="text-neutral-200">sakib_admin</span> • BAIUST
-            </p>
-        </div>
-
-        {% if messages %}
-            <div class="space-y-2">
-                {% for message in messages %}
-                <div class="p-3 rounded-xl text-xs font-mono {% if message.tags == 'error' %}bg-rose-500/10 border border-rose-500/30 text-rose-300{% else %}bg-neutral-800 text-neutral-300 border border-neutral-700{% endif %}">
-                    {{ message }}
-                </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        <form method="POST" action="{% url 'dashboard:login' %}" class="space-y-4 font-mono text-xs">
-            {% csrf_token %}
-            <div>
-                <label for="username" class="block text-neutral-400 mb-1">USERNAME</label>
-                <input type="text" id="username" name="username" value="sakib_admin" required autofocus class="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white focus:outline-none focus:border-neutral-600 text-sm">
-            </div>
-
-            <div>
-                <label for="password" class="block text-neutral-400 mb-1">PASSWORD</label>
-                <input type="password" id="password" name="password" placeholder="••••••••••••" required class="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white focus:outline-none focus:border-neutral-600 text-sm">
-                <div class="text-[11px] text-neutral-500 mt-1">Default password: <code>baiust1119003</code></div>
-            </div>
-
-            <div class="pt-2">
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-white text-black font-semibold text-sm hover:bg-neutral-200 transition shadow-sm font-sans">
-                    Log In
-                </button>
-            </div>
-        </form>
-
-        <div class="pt-4 border-t border-neutral-800 text-center">
-            <a href="{% url 'core:index' %}" class="text-xs text-neutral-400 hover:text-white font-mono transition">
-                &larr; Return to Portfolio
-            </a>
-        </div>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Authentication — Sakib Systems</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body class="min-h-screen bg-[#07080c] text-gray-100 flex items-center justify-center p-4">
+  <div class="max-w-md w-full surface-card p-8 space-y-6">
+    <div class="space-y-1 text-center">
+      <div class="inline-block px-2.5 py-1 rounded bg-indigo-500/15 border border-indigo-500/30 font-mono-code text-[11px] text-indigo-300">
+        [ RESTRICTED ACCESS ]
+      </div>
+      <h1 class="text-2xl font-bold tracking-tight">Full-Site Admin CMS</h1>
+      <p class="text-xs text-gray-400 font-mono-code">Enter credentials to manage live portfolio assets</p>
     </div>
-</div>
-{% endblock %}
+
+    {% if error %}
+    <div class="p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 font-mono-code text-xs">
+      ⚠ {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'dashboard_login' %}" class="space-y-4 text-xs font-mono-code">
+      {% csrf_token %}
+      <div>
+        <label for="username" class="block text-gray-400 mb-1">ADMINISTRATOR USERNAME</label>
+        <input type="text" id="username" name="username" value="sakib_admin" required autofocus class="w-full bg-[#080a10] border border-white/15 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 text-sm">
+      </div>
+
+      <div>
+        <label for="password" class="block text-gray-400 mb-1">SECURE ACCESS KEY</label>
+        <input type="password" id="password" name="password" placeholder="••••••••••••" required class="w-full bg-[#080a10] border border-white/15 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 text-sm">
+        <div class="text-[11px] text-gray-500 mt-1">Default key: <code>baiust1119003</code></div>
+      </div>
+
+      <div class="pt-2">
+        <button type="submit" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs font-mono-code transition btn-press">
+          Authenticate &amp; Open Control Panel →
+        </button>
+      </div>
+    </form>
+
+    <div class="pt-4 border-t border-white/10 text-center font-mono-code text-xs">
+      <a href="{% url 'portfolio_single_page' %}" class="text-gray-400 hover:text-white transition">
+        ← Return to Public Portfolio
+      </a>
+    </div>
+  </div>
+</body>
+</html>

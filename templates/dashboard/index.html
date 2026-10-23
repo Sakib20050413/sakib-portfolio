@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hidden Full-Site Control Panel (/dashboard/) — {{ profile.full_name }}</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body class="min-h-screen bg-[#07080c] text-gray-100">
+  <header class="glass-header sticky top-0 z-50">
+    <div class="container-studio h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="px-2.5 py-1 rounded bg-indigo-600 text-white font-mono-code text-xs font-bold">HIDDEN ADMIN CMS</span>
+        <span class="font-bold text-sm">{{ profile.full_name }} // Full-Site Dynamic Controller</span>
+      </div>
+      <div class="flex items-center gap-3 font-mono-code text-xs">
+        <a href="{% url 'portfolio_single_page' %}" target="_blank" class="px-3 py-1.5 rounded-lg border border-white/15 hover:border-white/40">View Live Public Site ↗</a>
+        <a href="{% url 'dashboard_logout' %}" class="px-3 py-1.5 rounded-lg bg-rose-600/20 border border-rose-500/40 text-rose-300">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container-studio py-8 space-y-10">
+    {% if status_msg %}
+    <div class="p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 font-mono-code text-xs text-emerald-300">
+      ✔ {{ status_msg }}
+    </div>
+    {% endif %}
+
+    <!-- 1. PROFILE PHOTO, IDENTITY, LINKS & THEME CUSTOMIZER -->
+    <section class="surface-card p-6 sm:p-8 space-y-5">
+      <h2 class="text-xl font-bold text-indigo-400 font-mono-code">01 // EDIT PROFILE PHOTO, BIO, SOCIAL LINKS &amp; DESIGN THEME</h2>
+      <form method="POST" class="space-y-4 text-xs">
+        {% csrf_token %}
+        <input type="hidden" name="cms_action" value="update_profile" />
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono-code">Full Name</label>
+            <input type="text" name="full_name" value="{{ profile.full_name }}" class="w-full bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono-code">Role Title (AI/ML Identity)</label>
+            <input type="text" name="role_title" value="{{ profile.role_title }}" class="w-full bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono-code">Profile Photo URL (Avatar)</label>
+            <input type="text" name="photo_url" value="{{ profile.photo_url }}" class="w-full bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1 font-mono-code">Hero Headline</label>
+          <input type="text" name="hero_headline" value="{{ profile.hero_headline }}" class="w-full bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+        </div>
+        <div>
+          <label class="block text-gray-400 mb-1 font-mono-code">Bio Summary</label>
+          <textarea name="bio_summary" rows="3" class="w-full bg-[#080a10] border border-white/15 rounded-lg p-3 text-white">{{ profile.bio_summary }}</textarea>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono-code">GitHub URL</label>
+            <input type="url" name="github_url" value="{{ profile.github_url }}" class="w-full bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono-code">LinkedIn URL</label>
+            <input type="url" name="linkedin_url" value="{{ profile.linkedin_url }}" class="w-full bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono-code">Kaggle URL</label>
+            <input type="url" name="kaggle_url" value="{{ profile.kaggle_url }}" class="w-full bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          </div>
+        </div>
+        <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono-code font-bold">
+          💾 Save Profile &amp; Theme Changes
+        </button>
+      </form>
+    </section>
+
+    <!-- 2. ADD / EDIT PROJECTS & LIVE SERVER URLS -->
+    <section class="surface-card p-6 sm:p-8 space-y-5">
+      <h2 class="text-xl font-bold text-emerald-400 font-mono-code">02 // ADD OR UPDATE PROJECTS &amp; LIVE SERVERS</h2>
+      <form method="POST" class="space-y-3 text-xs">
+        {% csrf_token %}
+        <input type="hidden" name="cms_action" value="save_project" />
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <input type="text" name="code" placeholder="Code (e.g. 08)" required class="bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          <input type="text" name="title" placeholder="Project Title *" required class="md:col-span-2 bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          <select name="category" class="bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white font-mono-code">
+            {% for c_code, c_label in project_categories %}
+            <option value="{{ c_code }}">{{ c_label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <input type="url" name="live_server_url" placeholder="Live Server URL (e.g. https://...vercel.app)" class="bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          <input type="url" name="github_repo_url" placeholder="GitHub Repo URL" class="bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+          <input type="text" name="tech_stack_csv" placeholder="Tech Stack CSV (PyTorch, FastAPI, Docker)" required class="bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+        </div>
+        <input type="text" name="tagline" placeholder="One-line Tagline *" required class="w-full bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+        <textarea name="description" rows="2" placeholder="Full Engineering Description *" required class="w-full bg-[#080a10] border border-white/15 rounded-lg p-3 text-white"></textarea>
+        <textarea name="architecture_breakdown" rows="2" placeholder="Architecture Breakdown (1. ... 2. ...)" class="w-full bg-[#080a10] border border-white/15 rounded-lg p-3 text-white"></textarea>
+        <button type="submit" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-mono-code font-bold">
+          + Add Project to Portfolio
+        </button>
+      </form>
+
+      <div class="pt-4 border-t border-white/10 space-y-2">
+        {% for p in projects %}
+        <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/10 text-xs">
+          <div>
+            <span class="font-mono-code text-indigo-400">[{{ p.code }}]</span>
+            <strong class="ml-2">{{ p.title }}</strong>
+            {% if p.live_server_url %}<span class="ml-2 text-emerald-400 font-mono-code">({{ p.live_server_url }})</span>{% endif %}
+          </div>
+          <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="cms_action" value="delete_project" />
+            <input type="hidden" name="project_id" value="{{ p.id }}" />
+            <button type="submit" class="px-2.5 py-1 rounded bg-rose-500/20 text-rose-300 font-mono-code">Delete</button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- 3. ADD / DELETE AI/ML & FULL-STACK SKILLS -->
+    <section class="surface-card p-6 sm:p-8 space-y-4">
+      <h2 class="text-xl font-bold text-indigo-400 font-mono-code">03 // MANAGE AI/ML &amp; FULL-STACK SKILLS</h2>
+      <form method="POST" class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+        {% csrf_token %}
+        <input type="hidden" name="cms_action" value="save_skill" />
+        <input type="text" name="name" placeholder="Skill Name (e.g. vLLM / DeepSpeed)" required class="bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+        <select name="domain" class="bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white font-mono-code">
+          {% for s_code, s_label in skill_choices %}
+          <option value="{{ s_code }}">{{ s_label }}</option>
+          {% endfor %}
+        </select>
+        <input type="text" name="highlight_tag" placeholder="Tag (e.g. Production AI)" value="Production AI" class="bg-[#080a10] border border-white/15 rounded-lg px-3 py-2 text-white" />
+        <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 text-white font-mono-code font-bold">+ Add Skill</button>
+      </form>
+    </section>
+
+    <!-- 4. 1-CLICK GITHUB PROFILE README & LINKEDIN SYNC EXPORTER -->
+    <section class="surface-card p-6 sm:p-8 space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-bold text-amber-300 font-mono-code">04 // 1-CLICK GITHUB PROFILE README.md &amp; LINKEDIN SYNC PAYLOAD</h2>
+        <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('syncReadmeBox').value); alert('Copied GitHub/LinkedIn Sync Payload!')" class="px-4 py-1.5 rounded-lg bg-indigo-600 text-white font-mono-code text-xs">
+          📋 Copy Sync Markdown
+        </button>
+      </div>
+      <textarea id="syncReadmeBox" rows="8" readonly class="w-full bg-[#080a10] border border-white/15 rounded-xl p-4 font-mono-code text-xs text-gray-300">{{ github_readme_sync }}</textarea>
+    </section>
+  </main>
+</body>
+</html>

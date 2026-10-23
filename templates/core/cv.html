@@ -1,156 +1,135 @@
-{% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Curriculum Vitae — {{ profile.full_name }} (BAIUST ID: {{ profile.student_id }}){% endblock %}
-
-{% block extra_head %}
-<style>
-@media print {
-    body {
-        background-color: #ffffff !important;
-        color: #0f172a !important;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Curriculum Vitae — {{ profile.full_name }} ({{ profile.role_title }})</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', -apple-system, sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    @media print {
+      body { background-color: #fff !important; color: #000 !important; }
+      .no-print { display: none !important; }
+      .print-card { border: none !important; box-shadow: none !important; padding: 0 !important; }
     }
-    .no-print {
-        display: none !important;
-    }
-    .print-sheet {
-        border: none !important;
-        box-shadow: none !important;
-        max-width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        background: transparent !important;
-        color: #0f172a !important;
-    }
-    .print-sheet * {
-        color: #0f172a !important;
-    }
-}
-</style>
-{% endblock %}
-
-{% block content %}
-<div class="max-w-4xl mx-auto w-full px-4 py-12">
+  </style>
+</head>
+<body class="bg-[#07080c] text-gray-200 min-h-screen py-8 px-4">
+  <div class="max-w-4xl mx-auto space-y-6">
 
     <!-- Action Bar (Hidden in Print) -->
-    <div class="no-print mb-8 p-4 rounded-xl surface-card flex items-center justify-between gap-4">
-        <a href="{% url 'core:index' %}" class="text-xs font-mono text-neutral-400 hover:text-white transition">
-            &larr; Return to Portfolio
-        </a>
-        <div class="flex items-center gap-3">
-            <button onclick="window.print()" class="px-4 py-2 rounded-lg bg-white text-black font-semibold text-xs font-mono transition shadow-sm hover:bg-neutral-200">
-                Print / Save PDF
-            </button>
-        </div>
+    <div class="no-print p-4 rounded-2xl bg-[#0f111a] border border-white/10 flex items-center justify-between">
+      <a href="{% url 'portfolio_single_page' %}" class="text-xs mono text-gray-400 hover:text-white transition">
+        ← Return to Public Portfolio
+      </a>
+      <button onclick="window.print()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs mono transition shadow-lg shadow-indigo-600/30">
+        🖨 Print / Save as PDF
+      </button>
     </div>
 
     <!-- Resume Document Sheet -->
-    <div class="print-sheet surface-card p-8 sm:p-12 space-y-8">
-        
-        <!-- Header -->
-        <header class="border-b border-neutral-800 pb-6">
-            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                <div>
-                    <h1 class="text-3xl font-bold tracking-tight text-white">{{ profile.full_name }}</h1>
-                    <div class="text-indigo-400 text-sm font-mono mt-1 font-medium">
-                        {{ profile.headline }}
-                    </div>
-                    <div class="text-neutral-400 text-xs font-mono mt-1">
-                        BAIUST Student ID: {{ profile.student_id }} • Class of 2027
-                    </div>
-                </div>
-                <div class="text-xs font-mono text-neutral-400 sm:text-right space-y-1">
-                    <div>{{ profile.location }}</div>
-                    <div>Email: <a href="mailto:{{ profile.primary_email }}" class="text-white hover:underline">{{ profile.primary_email }}</a></div>
-                    <div>GitHub: <a href="{{ profile.github_url }}" target="_blank" class="text-white hover:underline">github.com/Sakib20050413</a></div>
-                    <div>LinkedIn: <a href="{{ profile.linkedin_url }}" target="_blank" class="text-white hover:underline">in/md-najmus-sakib-rahatul</a></div>
-                </div>
-            </div>
-        </header>
+    <div class="print-card rounded-2xl bg-[#0f111a] border border-white/10 p-8 sm:p-12 space-y-8">
+      
+      <!-- Header -->
+      <header class="border-b border-white/10 pb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-extrabold text-white">{{ profile.full_name }}</h1>
+          <div class="text-indigo-400 text-sm font-semibold mono mt-1">{{ profile.role_title }}</div>
+          <p class="text-xs text-gray-400 mt-1">{{ profile.location }}</p>
+        </div>
+        <div class="text-xs mono text-gray-400 sm:text-right space-y-1">
+          <div>Email: <a href="mailto:{{ profile.primary_email }}" class="text-white hover:underline">{{ profile.primary_email }}</a></div>
+          <div>GitHub: <a href="{{ profile.github_url }}" target="_blank" class="text-white hover:underline">github.com/Sakib20050413</a></div>
+          <div>LinkedIn: <a href="{{ profile.linkedin_url }}" target="_blank" class="text-white hover:underline">linkedin.com/in/md-najmus-sakib-rahatul-559a85285</a></div>
+        </div>
+      </header>
 
-        <!-- Summary -->
-        <section class="space-y-2">
-            <h2 class="text-xs font-mono font-semibold tracking-wider text-neutral-400 uppercase">Summary</h2>
-            <p class="text-neutral-300 text-sm leading-relaxed">
-                {{ profile.bio }}
-            </p>
-        </section>
+      <!-- Executive Engineering Thesis -->
+      <section class="space-y-2">
+        <h2 class="text-xs mono font-bold tracking-wider text-indigo-400 uppercase">Executive Engineering Summary</h2>
+        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+          {{ profile.bio_summary }}
+        </p>
+      </section>
 
-        <!-- Technical Skills -->
-        <section class="space-y-3">
-            <h2 class="text-xs font-mono font-semibold tracking-wider text-neutral-400 uppercase">Technical Expertise</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-                <div class="p-4 rounded-xl bg-neutral-900 border border-neutral-800 space-y-1">
-                    <span class="text-neutral-400 block font-semibold">LANGUAGES & WEB:</span>
-                    <span class="text-neutral-200">Python, JavaScript (ES6+), TypeScript, C, C++, PHP, Java, SQL, HTML5, CSS3, Django, Next.js, React, Tailwind CSS</span>
-                </div>
-                <div class="p-4 rounded-xl bg-neutral-900 border border-neutral-800 space-y-1">
-                    <span class="text-neutral-400 block font-semibold">EMBEDDED & PLATFORMS:</span>
-                    <span class="text-neutral-200">ESP32-S3, Arduino, I2S / I2C / SPI, Digital Signal Processing (FFT), Sensors, Git, PostgreSQL, Docker, Linux, Vercel, Render</span>
-                </div>
-            </div>
-        </section>
+      <!-- Technical Competencies Arsenal -->
+      <section class="space-y-3">
+        <h2 class="text-xs mono font-bold tracking-wider text-emerald-400 uppercase">Core Technical Competencies</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mono">
+          <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1">
+            <span class="text-indigo-300 font-semibold block">AI, LLMS &amp; RUNTIMES:</span>
+            <span class="text-gray-300">PyTorch, LoRA/QLoRA 4-bit NF4, In-Place Continual Learning, llama.cpp, ONNX, vLLM, ExecuTorch, WebGPU, LangGraph</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1">
+            <span class="text-emerald-300 font-semibold block">FULL-STACK &amp; EDGE HARDWARE:</span>
+            <span class="text-gray-300">Python 3.12, Django 5, FastAPI, Next.js 15, TypeScript, PostgreSQL (Neon/Supabase), ESP32-S3, 512-Pt FFT DSP, Docker, Vercel</span>
+          </div>
+        </div>
+      </section>
 
-        <!-- Experience & Leadership -->
-        <section class="space-y-4">
-            <h2 class="text-xs font-mono font-semibold tracking-wider text-neutral-400 uppercase">Experience & Leadership</h2>
-            <div class="space-y-4">
-                {% for item in timeline %}
-                <div>
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs font-mono">
-                        <span class="font-bold text-white text-sm">{{ item.title }}</span>
-                        <span class="text-neutral-400">{{ item.period }}</span>
-                    </div>
-                    <div class="text-xs text-indigo-400 font-mono mt-0.5">{{ item.organization }}</div>
-                    <p class="text-neutral-400 text-sm mt-1 leading-relaxed">
-                        {{ item.description }}
-                    </p>
-                </div>
-                {% endfor %}
+      <!-- Key Production Projects & Live Deployments -->
+      <section class="space-y-4">
+        <h2 class="text-xs mono font-bold tracking-wider text-indigo-400 uppercase">Featured Production Systems &amp; Live Deployments</h2>
+        <div class="space-y-4">
+          {% for p in projects %}
+          <div class="border-b border-white/5 pb-4 last:border-b-0 space-y-1.5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between text-xs mono">
+              <span class="font-bold text-white text-sm">[{{ p.code }}] {{ p.title }}</span>
+              <span class="text-indigo-400">{{ p.status_label }}</span>
             </div>
-        </section>
+            <div class="text-xs mono text-gray-400">Tech Stack: {{ p.tech_stack_csv }}</div>
+            <p class="text-xs text-gray-300 leading-relaxed">{{ p.tagline }}</p>
+            <div class="flex flex-wrap gap-4 text-xs mono pt-1">
+              {% if p.live_server_url %}
+              <a href="{{ p.live_server_url }}" target="_blank" class="text-emerald-400 hover:underline">🟢 Live Server: {{ p.live_server_url }}</a>
+              {% endif %}
+              {% if p.github_repo_url %}
+              <a href="{{ p.github_repo_url }}" target="_blank" class="text-gray-400 hover:text-white hover:underline">Codebase: {{ p.github_repo_url }}</a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
 
-        <!-- Selected Real Projects -->
-        <section class="space-y-4">
-            <h2 class="text-xs font-mono font-semibold tracking-wider text-neutral-400 uppercase">Key Projects</h2>
-            <div class="space-y-4">
-                {% for p in projects %}
-                <div class="border-b border-neutral-800 pb-4 last:border-b-0">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs font-mono">
-                        <span class="font-bold text-white text-sm">
-                            [{{ p.code }}] {{ p.title }}
-                        </span>
-                        <span class="text-neutral-400">{{ p.category }}</span>
-                    </div>
-                    <div class="text-xs text-indigo-400 font-mono mt-0.5">Stack: {{ p.tech_stack }}</div>
-                    <p class="text-neutral-400 text-sm mt-1 leading-relaxed">
-                        {{ p.summary }}
-                    </p>
-                    {% if p.github_url %}
-                    <a href="{{ p.github_url }}" target="_blank" class="text-xs text-neutral-400 hover:text-white font-mono inline-block mt-1">
-                        &rarr; {{ p.github_url }}
-                    </a>
-                    {% endif %}
-                </div>
-                {% endfor %}
+      <!-- Experience & Research Trajectory -->
+      <section class="space-y-4">
+        <h2 class="text-xs mono font-bold tracking-wider text-emerald-400 uppercase">Experience, Research &amp; Leadership</h2>
+        <div class="space-y-4">
+          {% for item in timeline %}
+          <div class="space-y-1">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between text-xs mono">
+              <span class="font-bold text-white text-sm">{{ item.role }}</span>
+              <span class="text-gray-400">{{ item.period }}</span>
             </div>
-        </section>
+            <div class="text-xs mono text-indigo-400">{{ item.organization }}</div>
+            <p class="text-xs text-gray-300 leading-relaxed">{{ item.impact_summary }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
 
-        <!-- Education -->
-        <section class="space-y-2 border-t border-neutral-800 pt-6">
-            <h2 class="text-xs font-mono font-semibold tracking-wider text-neutral-400 uppercase">Education</h2>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs font-mono">
-                <div>
-                    <div class="font-bold text-white text-sm">Bachelor of Science in Computer Science & Engineering (B.Sc. CSE)</div>
-                    <div class="text-neutral-300">Bangladesh Army International University of Science and Technology (BAIUST), Cumilla</div>
-                </div>
-                <div class="text-neutral-400 sm:text-right mt-1 sm:mt-0">
-                    Class of 2027 • Level 3, Term 2<br>
-                    Student ID: <strong class="text-white">1119003</strong>
-                </div>
+      <!-- Verified Credentials & Hackathons -->
+      <section class="space-y-3">
+        <h2 class="text-xs mono font-bold tracking-wider text-indigo-400 uppercase">Courses, Certifications &amp; Hackathons</h2>
+        <div class="space-y-2.5">
+          {% for c in courses %}
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between text-xs mono gap-1">
+            <div class="text-gray-200">
+              <strong>{{ c.title }}</strong> — <span class="text-gray-400">{{ c.issuer }}</span>
             </div>
-        </section>
+            <span class="text-gray-400 shrink-0">{{ c.completion_date }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
 
     </div>
-</div>
-{% endblock %}
+  </div>
+</body>
+</html>

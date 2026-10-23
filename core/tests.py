@@ -1,154 +1,117 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
-from core.models import ProfileSetting, Project, Skill, TimelineEntry, ContactMessage
+from core.models import (
+    ProfileConfig,
+    AIArchitectureNode,
+    Skill,
+    Project,
+    CourseCertification,
+    TimelineEntry,
+    ContactMessage,
+)
 
 
-class PortfolioCoreTests(TestCase):
+class PortfolioV5Tests(TestCase):
     def setUp(self):
         self.client = Client()
-        self.profile = ProfileSetting.objects.create(
+        self.profile = ProfileConfig.objects.create(
             full_name="Md Najmus Sakib Rahatul",
-            student_id="1119003",
-            university="BAIUST, Cumilla",
-            headline="Full-Stack Web Developer",
+            role_title="AI/ML Engineer & Full-Stack AI Systems Architect",
             primary_email="mdnajmussakib2003@gmail.com",
+            hero_headline="Architecting Sovereign Local Multi-Model AI Systems",
+        )
+        self.node = AIArchitectureNode.objects.create(
+            node_id="MASTER-00",
+            title="Always-Resident Master AI Router",
+            memory_budget="~420 MB RAM",
+            summary="Prompt router",
+            mechanism_detail="Unified memory paging",
         )
         self.project = Project.objects.create(
-            code="A001",
-            title="BAIUST Campus Lost & Found System",
-            category="Full-Stack Web",
-            tech_stack="Django 5, Python, PostgreSQL",
-            summary="Campus recovery platform",
-            stars_count=10,
+            code="01",
+            title="NexusLocal Master AI",
+            slug="nexuslocal-master-ai",
+            category="AI_LLM",
+            tagline="Sovereign local AI",
+            description="Runs locally",
+            architecture_breakdown="Unified memory",
+            tech_stack_csv="PyTorch, FastAPI",
+            upvotes=10,
         )
         self.skill = Skill.objects.create(
-            name="Django",
-            category="Web & Backend",
-            proficiency=90,
-            badge_color="#10B981",
+            name="PyTorch",
+            domain="LLM_CORE",
+            proficiency=95,
+            highlight_tag="Core AI Stack",
+        )
+        self.course = CourseCertification.objects.create(
+            title="Full-Stack Python & Django Internship",
+            issuer="BAIUST Computer Club",
+            completion_date="2026",
+            key_takeaways="Team Leader",
         )
         self.timeline = TimelineEntry.objects.create(
-            title="Team Leader — Django Internship",
-            organization="BAIUST Computer Club",
-            period="May 2026 – Present",
-            description="Leading software team",
+            role="AI/ML Systems Architect",
+            organization="Independent Research",
+            period="2026 – Present",
+            impact_summary="Master AI research",
+        )
+        self.admin_user = User.objects.create_superuser(
+            username="sakib_admin",
+            email="mdnajmussakib2003@gmail.com",
+            password="baiust1119003"
         )
 
     def test_homepage_loads_successfully(self):
-        response = self.client.get(reverse("core:index"))
+        response = self.client.get(reverse("portfolio_single_page"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Md Najmus Sakib Rahatul")
-        self.assertContains(response, "1119003")
-        self.assertContains(response, "A001")
-        self.assertContains(response, "Campus Lost")
+        self.assertContains(response, "NexusLocal Master AI")
+        self.assertContains(response, "PyTorch")
+        # Ensure NO visible admin button in public navbar
+        self.assertNotContains(response, ">/admin<")
+        self.assertNotContains(response, ">Admin CMS<")
 
     def test_cv_view_loads_successfully(self):
-        response = self.client.get(reverse("core:cv"))
+        response = self.client.get(reverse("printable_cv"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Curriculum Vitae")
-        self.assertContains(response, "1119003")
+        self.assertContains(response, "Md Najmus Sakib Rahatul")
 
-    def test_api_projects_list(self):
-        response = self.client.get(reverse("core:api_projects_list"))
+    def test_api_upvote_project(self):
+        initial_upvotes = self.project.upvotes
+        response = self.client.post(reverse("api_upvote_project", kwargs={"pk": self.project.id}))
         self.assertEqual(response.status_code, 200)
         data = response.json()
-        self.assertEqual(data["status"], "success")
-        self.assertGreaterEqual(len(data["projects"]), 1)
-        self.assertEqual(data["projects"][0]["code"], "A001")
-
-    def test_api_project_detail(self):
-        response = self.client.get(reverse("core:api_project_detail", kwargs={"code": "A001"}))
-        self.assertEqual(response.status_code, 200)
-        data = response.json()
-        self.assertEqual(data["status"], "success")
-        self.assertEqual(data["project"]["title"], "BAIUST Campus Lost & Found System")
-
-    def test_api_project_like_post(self):
-        initial_stars = self.project.stars_count
-        response = self.client.post(reverse("core:api_project_like", kwargs={"pk": self.project.id}))
-        self.assertEqual(response.status_code, 200)
-        data = response.json()
-        self.assertEqual(data["status"], "success")
-        self.assertEqual(data["stars_count"], initial_stars + 1)
-
-    def test_api_skills_list(self):
-        response = self.client.get(reverse("core:api_skills_list"))
-        self.assertEqual(response.status_code, 200)
-        data = response.json()
-        self.assertEqual(data["status"], "success")
-        self.assertGreaterEqual(len(data["skills"]), 1)
+        self.assertTrue(data["ok"])
+        self.assertEqual(data["upvotes"], initial_upvotes + 1)
 
     def test_api_contact_submission(self):
         payload = {
-            "sender_name": "Arifur Rahaman",
-            "sender_email": "arifur.rahaman@baiust.edu.bd",
-            "subject": "Research Collaboration",
-            "project_type": "Research Collaboration",
-            "message": "Excellent work on the ESP32-S3 TinyML system.",
+            "sender_name": "Recruiter Team",
+            "sender_email": "recruiting@ai-startup.com",
+            "subject": "AI/ML Role Interview",
+            "message": "We reviewed your Sovereign Local Master AI architecture and would love to interview you.",
         }
         response = self.client.post(
-            reverse("core:api_contact_submit"),
+            reverse("api_submit_contact"),
             data=payload,
             content_type="application/json"
         )
         self.assertEqual(response.status_code, 200)
         data = response.json()
-        self.assertEqual(data["status"], "success")
-        self.assertTrue(ContactMessage.objects.filter(sender_name="Arifur Rahaman").exists())
-
-
-class DashboardCRUDTests(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.admin_user = User.objects.create_user(
-            username="sakib_admin",
-            password="baiust1119003",
-            is_staff=True,
-            is_superuser=True
-        )
-        self.project = Project.objects.create(
-            code="A001",
-            title="Initial Project",
-            category="Full-Stack Web",
-            tech_stack="Django",
-            summary="Initial summary",
-        )
+        self.assertTrue(data["ok"])
+        self.assertTrue(ContactMessage.objects.filter(sender_name="Recruiter Team").exists())
 
     def test_dashboard_requires_login(self):
-        response = self.client.get(reverse("dashboard:overview"))
+        response = self.client.get(reverse("dashboard_home"))
         self.assertEqual(response.status_code, 302)
+        self.assertIn("/dashboard/login/", response.url)
 
-    def test_dashboard_login_successful(self):
-        login_res = self.client.login(username="sakib_admin", password="baiust1119003")
-        self.assertTrue(login_res)
-        response = self.client.get(reverse("dashboard:overview"))
+    def test_dashboard_authenticated_access(self):
+        self.client.login(username="sakib_admin", password="baiust1119003")
+        response = self.client.get(reverse("dashboard_home"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Portfolio CMS Overview")
-
-    def test_project_create_crud(self):
-        self.client.login(username="sakib_admin", password="baiust1119003")
-        payload = {
-            "code": "A009",
-            "title": "New Distributed Cache",
-            "category": "Full-Stack Web",
-            "tech_stack": "Python, Redis",
-            "summary": "Distributed cache system",
-            "why_built": "High load mitigation",
-            "architecture": "Ring hash",
-            "hardware_code_highlights": "Sub-millisecond latency",
-            "github_url": "https://github.com/Sakib20050413/cache",
-            "live_url": "",
-            "stars_count": 5,
-            "is_featured": "on",
-            "order": 9,
-        }
-        response = self.client.post(reverse("dashboard:projects_manager"), data=payload)
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(Project.objects.filter(code="A009").exists())
-
-    def test_project_delete_crud(self):
-        self.client.login(username="sakib_admin", password="baiust1119003")
-        response = self.client.post(reverse("dashboard:project_delete", kwargs={"pk": self.project.id}))
-        self.assertEqual(response.status_code, 302)
-        self.assertFalse(Project.objects.filter(id=self.project.id).exists())
+        self.assertContains(response, "HIDDEN ADMIN CMS")
+        self.assertContains(response, "Full-Site Dynamic Controller")
