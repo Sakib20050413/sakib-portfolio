@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.http import Http404
 from django.urls import path
+from django.views.generic import RedirectView
 from core import views
 
 admin_slug = getattr(settings, "ADMIN_URL", "studio-7f3k").strip("/")
@@ -25,6 +26,13 @@ urlpatterns = [
     # Public Single-Page Portfolio & ATS CV
     path("", views.home_view, name="home"),
     path("cv/", views.printable_cv_view, name="printable_cv"),
+
+    # Direct Section Redirects for smooth UX
+    path("about/", RedirectView.as_view(url="/#about", permanent=False)),
+    path("projects/", RedirectView.as_view(url="/#projects", permanent=False)),
+    path("skills/", RedirectView.as_view(url="/#skills", permanent=False)),
+    path("experience/", RedirectView.as_view(url="/#experience", permanent=False)),
+    path("contact/", RedirectView.as_view(url="/#contact", permanent=False)),
 
     # REST APIs & Integration Hooks
     path("api/profile.json", views.api_profile_json, name="api_profile_json"),
