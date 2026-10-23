@@ -1,0 +1,68 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Sakib Portfolio CMS{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+  <a href="{% url 'admin:index' %}" style="display:inline-flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-0.02em;color:#f8fafc;text-decoration:none;">
+    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;box-shadow:0 0 8px rgba(16,185,129,0.6);"></span>
+    <span>Sakib Portfolio // Secret Admin Studio</span>
+  </a>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+  :root {
+    --primary: #4f46e5;
+    --secondary: #4338ca;
+    --accent: #10b981;
+    --primary-fg: #ffffff;
+    --body-fg: #f1f5f9;
+    --body-bg: #090a0f;
+    --body-quiet-color: #94a3b8;
+    --body-loud-color: #ffffff;
+    --header-color: #f8fafc;
+    --header-bg: #12151f;
+    --breadcrumbs-fg: #94a3b8;
+    --breadcrumbs-bg: #0f121b;
+    --link-fg: #818cf8;
+    --link-hover-color: #a5b4fc;
+    --link-selected-fg: #6366f1;
+    --hairline-color: rgba(255, 255, 255, 0.08);
+    --border-color: rgba(255, 255, 255, 0.12);
+  }
+  body {
+    background-color: var(--body-bg);
+    color: var(--body-fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  #header {
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--hairline-color);
+  }
+  .module, .inline-group, .change-list, .form-row {
+    background: #12151f !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+  }
+  input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea, select {
+    background: #090a0f !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+  }
+  .button, input[type="submit"], input[type="button"], .submit-row input {
+    background: #4f46e5 !important;
+    border-radius: 6px !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+  }
+  .button:hover, input[type="submit"]:hover {
+    background: #4338ca !important;
+  }
+</style>
+{% endblock %}

@@ -1,37 +1,161 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ profile.full_name }} — AI/ML Engineer CV</title>
+  <title>{{ settings.full_name }} — Resume / Curriculum Vitae</title>
+  <meta name="description" content="Curriculum Vitae of {{ settings.full_name }}: Aspiring AI Engineer & Full-Stack Developer." />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='64' font-family='monospace' font-size='42' font-weight='bold' fill='white' text-anchor='middle'>CV</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    @media print { .no-print { display: none !important; } body { background: #fff !important; color: #000 !important; } }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+      a { color: #000 !important; text-decoration: none !important; }
+      .page-break { page-break-before: always; }
+      .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; }
+      .border { border-color: #e2e8f0 !important; }
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 p-6 sm:p-10 font-sans">
-  <div class="max-w-4xl mx-auto bg-slate-900 border border-white/10 rounded-2xl p-8 sm:p-12 space-y-6">
-    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
-      <div>
-        <h1 class="text-3xl font-extrabold">{{ profile.full_name }}</h1>
-        <p class="text-indigo-400 font-mono text-sm mt-1">{{ profile.role_title }}</p>
-        <p class="text-xs text-slate-400 mt-1">{{ profile.primary_email }} • {{ profile.location }} • {{ profile.github_url }}</p>
-      </div>
-      <div class="no-print flex gap-2">
-        <a href="/" class="px-4 py-2 rounded-xl border border-white/15 text-xs font-mono">← Portfolio</a>
-        <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-mono font-bold">🖨️ Print / Save PDF</button>
+<body class="bg-slate-900 text-slate-100 min-h-screen py-10 px-4 sm:px-8 font-sans antialiased">
+
+  <div class="max-w-4xl mx-auto bg-slate-950 border border-white/10 rounded-2xl p-8 sm:p-12 shadow-2xl space-y-8">
+
+    <!-- Top Action Bar (hidden when printing) -->
+    <div class="no-print flex items-center justify-between border-b border-white/10 pb-6">
+      <a href="{% url 'home' %}" class="inline-flex items-center gap-1.5 text-xs font-mono text-indigo-400 hover:text-indigo-300">
+        ← Back to Portfolio
+      </a>
+      <div class="flex items-center gap-3">
+        <button onclick="window.print()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition-colors shadow-sm">
+          Print / Save as PDF
+        </button>
       </div>
     </div>
-    <p class="text-sm text-slate-300 leading-relaxed">{{ profile.bio_summary }}</p>
-    <div class="space-y-3">
-      <h2 class="text-sm font-mono uppercase text-indigo-400 font-bold">Selected Production Systems &amp; Research</h2>
-      {% for p in projects %}
-      <div class="border-l-2 border-indigo-500 pl-4 py-1">
-        <div class="font-bold text-sm">{{ p.title }} <span class="text-xs font-mono text-emerald-400">({{ p.tech_stack_csv }})</span></div>
-        <p class="text-xs text-slate-300 mt-0.5">{{ p.tagline }}</p>
+
+    <!-- Header: Name, Contact & Bio -->
+    <header class="border-b border-white/10 pb-6 space-y-3">
+      <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+        <h1 class="text-3xl font-extrabold tracking-tight text-white">{{ settings.full_name }}</h1>
+        <div class="text-xs font-mono text-slate-400">{{ about.location }}</div>
       </div>
-      {% endfor %}
-    </div>
+      <div class="text-sm font-semibold text-indigo-400 font-mono">{{ settings.role_title }}</div>
+
+      <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs font-mono text-slate-400 pt-1">
+        <span>Email: <a href="mailto:{{ settings.primary_email }}" class="text-slate-300 hover:underline">{{ settings.primary_email }}</a></span>
+        <span>GitHub: <a href="{{ settings.github_url }}" target="_blank" class="text-slate-300 hover:underline">github.com/Sakib20050413</a></span>
+        <span>LinkedIn: <a href="{{ settings.linkedin_url }}" target="_blank" class="text-slate-300 hover:underline">linkedin.com/in/md-najmus-sakib-rahatul</a></span>
+      </div>
+
+      <p class="text-xs sm:text-sm leading-relaxed text-slate-300 pt-2">
+        {{ about.bio_paragraph_1 }} {{ about.bio_paragraph_2 }}
+      </p>
+    </header>
+
+    <!-- Education -->
+    <section class="space-y-2 border-b border-white/10 pb-6">
+      <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold">Education</h2>
+      <div class="flex flex-col sm:flex-row sm:items-baseline justify-between">
+        <div class="font-bold text-sm text-white">Bangladesh Army International University of Science and Technology (BAIUST)</div>
+        <div class="text-xs font-mono text-slate-400">Cumilla, Bangladesh</div>
+      </div>
+      <div class="text-xs text-slate-300">{{ about.education }}</div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section class="space-y-3 border-b border-white/10 pb-6">
+      <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold">Technical Skills</h2>
+      <div class="space-y-2 text-xs">
+        {% for group in skill_groups %}
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+          <span class="font-semibold text-slate-200 w-44 flex-shrink-0 font-mono">{{ group.name }}:</span>
+          <span class="text-slate-300">
+            {% for s in group.skills.all %}{{ s.name }} ({{ s.level_label }}){% if not forloop.last %}, {% endif %}{% endfor %}
+          </span>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Key Projects -->
+    <section class="space-y-4 border-b border-white/10 pb-6">
+      <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold">Featured Projects</h2>
+      <div class="space-y-4">
+        {% for p in projects %}
+        <div class="space-y-1">
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+            <div class="font-bold text-sm text-white flex items-center gap-2">
+              <span>{{ p.title }}</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-white/10">{{ p.get_category_display }}</span>
+            </div>
+            <div class="text-[11px] font-mono text-slate-400">
+              {% if p.live_url %}<a href="{{ p.live_url }}" target="_blank" class="hover:underline text-emerald-400">Live Demo</a> • {% endif %}
+              {% if p.repo_url %}<a href="{{ p.repo_url }}" target="_blank" class="hover:underline text-indigo-300">GitHub</a>{% endif %}
+            </div>
+          </div>
+          <div class="text-xs text-slate-300 leading-relaxed">{{ p.description }}</div>
+          <div class="text-[11px] font-mono text-slate-400">Technologies: {{ p.tech_stack_csv }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Experience & Leadership -->
+    <section class="space-y-4 border-b border-white/10 pb-6">
+      <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold">Experience &amp; Leadership</h2>
+      <div class="space-y-3">
+        {% for exp in experiences %}
+        <div class="space-y-0.5">
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between">
+            <span class="font-bold text-sm text-white">{{ exp.role_title }}</span>
+            <span class="text-xs font-mono text-slate-400">{{ exp.period }}</span>
+          </div>
+          <div class="text-xs font-medium text-indigo-300">{{ exp.organization }}</div>
+          <div class="text-xs text-slate-300 pt-0.5">{{ exp.description }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="space-y-3">
+      <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold">Certifications &amp; Credentials</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        {% for cert in certificates %}
+        <div class="p-2.5 rounded-lg border border-white/5 bg-slate-900/50 flex items-center justify-between">
+          <div>
+            <div class="font-semibold text-slate-200">{{ cert.title }}</div>
+            <div class="text-[11px] text-slate-400">{{ cert.issuer }} • {{ cert.issue_date }}</div>
+          </div>
+          {% if cert.credential_url %}
+          <a href="{{ cert.credential_url }}" target="_blank" class="text-[11px] font-mono text-indigo-400 hover:underline">Verify</a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
   </div>
 </body>
 </html>

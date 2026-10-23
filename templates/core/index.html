@@ -1,447 +1,337 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" data-grade="aurora">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ profile.full_name }} — AI/ML Systems, Edge TinyML &amp; Full-Stack Architect</title>
-  <meta name="description" content="{{ profile.bio_summary }}" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2304060c'/><text x='50' y='66' font-family='monospace' font-size='44' font-weight='bold' fill='%2300f5d4' text-anchor='middle'>SR</text></svg>" />
+  <title>{{ settings.seo_title }}</title>
+  <meta name="description" content="{{ settings.seo_description }}" />
+
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ settings.seo_title }}" />
+  <meta property="og:description" content="{{ settings.seo_description }}" />
+  <meta property="og:image" content="{{ settings.photo_display_url }}" />
+
+  <!-- SVG Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='64' font-family='monospace' font-size='42' font-weight='bold' fill='white' text-anchor='middle'>SR</text></svg>" />
+
+  <!-- Preconnect & Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN for Clean Utility Baseline -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Calibrated CSS Variables & Motion Rules from DESIGN.md -->
   <style>
-    /* ==========================================================================
-       V9.0 TRUE 100VW FULL-BLEED SPATIAL PORTFOLIO + 3 STUDIO COLOR GRADES
-       Zero 2-3 Inch Side Margins • Motion Graphics • Physics Skill Arena
-       ========================================================================== */
-    :root, [data-grade="aurora"] {
-      --bg-0: #04060c;
-      --bg-1: #090d18;
-      --bg-2: #101728;
-      --bg-glass: rgba(7, 10, 19, 0.86);
-      --bg-input: #070b14;
-      --ink-1: #f4f7fb;
-      --ink-2: #a8b3cf;
-      --ink-3: #6c7a9c;
-      --border: rgba(0, 245, 212, 0.14);
+    :root, [data-theme="dark"] {
+      --bg-base: #090a0f;
+      --bg-surface: #12151f;
+      --bg-surface-elevated: #181c2a;
+      --bg-nav: rgba(9, 10, 15, 0.88);
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --accent-1: #00f5d4;
-      --accent-2: #6366f1;
-      --accent-3: #f59e0b;
-      --btn-fg: #04060c;
-      --aurora-1: radial-gradient(circle at 15% 15%, rgba(0, 245, 212, 0.13), transparent 42%);
-      --aurora-2: radial-gradient(circle at 85% 22%, rgba(99, 102, 241, 0.16), transparent 46%);
+      --border-hover: rgba(255, 255, 255, 0.16);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-faint: #64748b;
+      --accent-color: #4f46e5;
+      --accent-hover: #4338ca;
+      --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
     }
 
-    [data-grade="titanium"] {
-      --bg-0: #070606;
-      --bg-1: #111010;
-      --bg-2: #191716;
-      --bg-glass: rgba(14, 13, 12, 0.88);
-      --bg-input: #0b0a09;
-      --ink-1: #f7f4ef;
-      --ink-2: #c2bcb2;
-      --ink-3: #857e74;
-      --border: rgba(245, 158, 11, 0.24);
-      --border-subtle: rgba(255, 248, 235, 0.09);
-      --accent-1: #f59e0b;
-      --accent-2: #ff5722;
-      --accent-3: #10b981;
-      --btn-fg: #070606;
-      --aurora-1: radial-gradient(circle at 18% 15%, rgba(245, 158, 11, 0.14), transparent 42%);
-      --aurora-2: radial-gradient(circle at 82% 25%, rgba(255, 87, 34, 0.12), transparent 45%);
+    [data-theme="light"] {
+      --bg-base: #f8f9fa;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-nav: rgba(248, 249, 250, 0.92);
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-hover: rgba(15, 23, 42, 0.16);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-faint: #94a3b8;
+      --accent-color: #4338ca;
+      --accent-hover: #3730a3;
+      --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
     }
 
-    [data-grade="daylight"] {
-      --bg-0: #f3f1ea;
-      --bg-1: #ffffff;
-      --bg-2: #eae6dc;
-      --bg-glass: rgba(243, 241, 234, 0.92);
-      --bg-input: #f8f6f0;
-      --ink-1: #0f172a;
-      --ink-2: #334155;
-      --ink-3: #64748b;
-      --border: rgba(37, 99, 235, 0.28);
-      --border-subtle: rgba(15, 23, 42, 0.12);
-      --accent-1: #2563eb;
-      --accent-2: #059669;
-      --accent-3: #d97706;
-      --btn-fg: #ffffff;
-      --aurora-1: radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.09), transparent 42%);
-      --aurora-2: radial-gradient(circle at 85% 22%, rgba(5, 150, 105, 0.09), transparent 45%);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; width: 100%; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      width: 100%;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      transition: background-color 0.2s ease, color 0.2s ease;
       min-height: 100vh;
-      background-color: var(--bg-0);
-      background-image: var(--aurora-1), var(--aurora-2);
-      background-attachment: fixed;
-      color: var(--ink-1);
-      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      line-height: 1.6;
       overflow-x: hidden;
-      transition: background-color 260ms ease, color 260ms ease;
     }
 
-    .font-syne { font-family: 'Syne', sans-serif; letter-spacing: -0.03em; }
-    .font-serif-it { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-    a { color: inherit; text-decoration: none; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-
-    /* TRUE 100% FULL-SCREEN EDGE-TO-EDGE WRAPPER (ZERO 2-3 INCH SIDE MARGIN GAPS!) */
-    .full-screen-bleed {
-      width: 100%;
-      max-width: 100%;
-      padding-left: clamp(16px, 2.2vw, 38px);
-      padding-right: clamp(16px, 2.2vw, 38px);
+    /* Restrained Scroll Reveal Animations */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1), transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-on-scroll.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Full-Width Sticky Edge-to-Edge Studio Top Bar */
-    .studio-topbar {
-      position: sticky;
-      top: 0;
-      z-index: 9999;
-      width: 100%;
-      height: 66px;
-      background: var(--bg-glass);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* Respect prefers-reduced-motion unconditionally */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      #heroCanvas { display: none !important; }
     }
 
-    .nav-cluster {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    @media (max-width: 1080px) { .nav-cluster { display: none; } }
-
-    .nav-item {
-      padding: 0.45rem 0.9rem;
-      border-radius: 10px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--ink-2);
-      transition: all 150ms ease;
-    }
-    .nav-item:hover {
-      color: var(--ink-1);
-      background: var(--bg-2);
-    }
-
-    .grade-btn {
-      padding: 0.4rem 0.8rem;
-      border-radius: 10px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-1);
-      font-size: 0.72rem;
-      font-weight: 700;
+    .tap-target {
+      min-width: 44px;
+      min-height: 44px;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: all 160ms ease;
-    }
-    .grade-btn:hover { border-color: var(--accent-1); }
-    .grade-btn-cta {
-      background: var(--accent-1);
-      color: var(--btn-fg);
-      border-color: var(--accent-1);
-      font-weight: 800;
+      justify-content: center;
     }
 
-    /* Full-Bleed 12-Column Architectural Grid */
-    .grid-12 {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 1.25rem;
-      width: 100%;
+    /* Modal Backdrop */
+    .modal-backdrop {
+      background-color: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
     }
-
-    .card-spatial {
-      background: var(--bg-1);
-      border: 1px solid var(--border-subtle);
-      border-radius: 20px;
-      padding: clamp(1.25rem, 2.2vw, 2.25rem);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 200ms ease, transform 200ms ease;
-    }
-    .card-spatial:hover {
-      border-color: var(--border);
-    }
-
-    /* Infinite Kinetic Motion Marquee */
-    @keyframes marqueeSlide {
-      0% { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(-50%, 0, 0); }
-    }
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      animation: marqueeSlide 32s linear infinite;
-    }
-    .marquee-track:hover { animation-play-state: paused; }
-
-    /* Floating Motion Graphics Badge */
-    @keyframes floatSlow {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-7px); }
-    }
-    .float-badge { animation: floatSlow 4.2s ease-in-out infinite; }
-
-    .input-box {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
-      color: var(--ink-1);
-      border-radius: 12px;
-      padding: 0.8rem 1rem;
-      font-size: 0.86rem;
-      outline: none;
-    }
-    .input-box:focus { border-color: var(--accent-1); }
   </style>
+
+  <!-- Schema.org Person JSON-LD for Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ settings.full_name }}",
+    "jobTitle": "{{ settings.role_title }}",
+    "url": "{{ request.build_absolute_uri }}",
+    "image": "{{ settings.photo_display_url }}",
+    "email": "mailto:{{ settings.primary_email }}",
+    "sameAs": [
+      "{{ settings.github_url }}",
+      "{{ settings.linkedin_url }}",
+      "{{ settings.kaggle_url }}",
+      "{{ settings.twitter_url }}"
+    ],
+    "alumniOf": "Bangladesh Army International University of Science and Technology (BAIUST)"
+  }
+  </script>
 </head>
-<body>
+<body class="selection:bg-indigo-600 selection:text-white">
 
-  <!-- EDGE-TO-EDGE FULL-WIDTH STICKY TOP COMMAND BAR -->
-  <header class="studio-topbar full-screen-bleed">
-    <a href="#hero" style="display:flex; align-items:center; gap:0.8rem;">
-      <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" style="width:40px; height:40px; border-radius:12px; object-fit:cover; border:2px solid var(--accent-1);" />
-      <div>
-        <div style="display:flex; align-items:center; gap:0.5rem;">
-          <span style="font-weight:800; font-size:0.95rem;">{{ profile.full_name }}</span>
-          <span class="font-mono" style="font-size:0.65rem; padding:0.15rem 0.55rem; border-radius:6px; background:rgba(0,245,212,0.12); color:var(--accent-1); font-weight:700;">AI/ML &amp; TINYML</span>
-        </div>
-        <div class="font-mono" style="font-size:0.68rem; color:var(--ink-3);">LLMs • 512-Pt FFT Edge DSP • Full-Stack Web</div>
+  <!-- =========================================================================
+       1. STICKY MINIMAL NAVIGATION
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 w-full border-b transition-colors" style="background-color: var(--bg-nav); border-color: var(--border-subtle); backdrop-filter: blur(12px);">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-2 group text-base font-bold tracking-tight">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="group-hover:text-indigo-400 transition-colors">{{ settings.full_name }}</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium" style="color: var(--text-muted);">
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+        <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+        <a href="#experience" class="hover:text-white transition-colors">Experience</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </nav>
+
+      <!-- Right Controls: Resume & Theme Toggle -->
+      <div class="flex items-center gap-3">
+        <a href="{% url 'printable_cv' %}" class="tap-target px-4 text-xs font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
+          Resume
+        </a>
+
+        {% if settings.theme_toggle_enabled %}
+        <button id="themeToggleBtn" type="button" aria-label="Toggle Light and Dark Mode" class="tap-target p-2 rounded-lg border text-sm transition-colors" style="border-color: var(--border-subtle); color: var(--text-muted);">
+          <svg id="moonIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+          <svg id="sunIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
+        {% endif %}
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" type="button" aria-label="Open Navigation Menu" class="md:hidden tap-target p-2 rounded-lg border text-sm" style="border-color: var(--border-subtle); color: var(--text-muted);">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
       </div>
-    </a>
+    </div>
 
-    <nav class="nav-cluster font-mono">
-      <a href="#hero" class="nav-item">01 // Identity</a>
-      <a href="#local-ai" class="nav-item">02 // Sovereign AI Runtime</a>
-      <a href="#physics-skills" class="nav-item">03 // 2D Physics Arsenal</a>
-      <a href="#works-showcase" class="nav-item">04 // Production Works ({{ projects|length }})</a>
-      <a href="#credentials" class="nav-item">05 // Credentials</a>
-      <a href="#contact" class="nav-item">06 // Collaborate</a>
-    </nav>
-
-    <!-- Live Color Grading Switcher + CV Link -->
-    <div style="display:flex; align-items:center; gap:0.45rem;" class="font-mono">
-      <button type="button" onclick="setGrade('aurora')" class="grade-btn" title="Cyber-Aurora Dark Grade">🌌 Aurora</button>
-      <button type="button" onclick="setGrade('titanium')" class="grade-btn" title="Solar-Titanium Dark Grade">🔥 Titanium</button>
-      <button type="button" onclick="setGrade('daylight')" class="grade-btn" title="Swiss Daylight Editorial Grade">☀️ Daylight</button>
-      <a href="{% url 'printable_cv' %}" class="grade-btn grade-btn-cta">Resume PDF ↗</a>
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobileMenu" class="hidden md:hidden border-b px-4 py-4 space-y-3" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+      <a href="#about" class="block text-sm font-medium py-1 text-slate-300 hover:text-white">About</a>
+      <a href="#skills" class="block text-sm font-medium py-1 text-slate-300 hover:text-white">Skills</a>
+      <a href="#projects" class="block text-sm font-medium py-1 text-slate-300 hover:text-white">Projects</a>
+      <a href="#experience" class="block text-sm font-medium py-1 text-slate-300 hover:text-white">Experience</a>
+      <a href="#contact" class="block text-sm font-medium py-1 text-slate-300 hover:text-white">Contact</a>
     </div>
   </header>
 
-  <!-- FULL-BLEED KINETIC MOTION GRAPHICS TICKER -->
-  <div style="width:100%; border-bottom:1px solid var(--border-subtle); background:var(--bg-1); padding:0.55rem 0; overflow:hidden;">
-    <div class="marquee-track font-mono" style="font-size:0.72rem; color:var(--ink-2); gap:2.5rem; align-items:center;">
-      <span>⚡ SOVEREIGN LOCAL MASTER AI ROUTER (~420 MB RAM)</span>
-      <span style="color:var(--accent-1);">✦</span>
-      <span>🦟 512-POINT RADIX-2 FFT BIO-ACOUSTIC MOSQUITO AI TRAP (32 MS LATENCY)</span>
-      <span style="color:var(--accent-1);">✦</span>
-      <span>🌩️ 3-STREAM TINYML RURAL LIGHTNING EARLY WARNING SYSTEM (AS3935 RF + SIM800L)</span>
-      <span style="color:var(--accent-1);">✦</span>
-      <span>🛒 ALORON SHOP FULL-STACK NEXT.JS + TYPESCRIPT + PRISMA (LIVE ON VERCEL)</span>
-      <span style="color:var(--accent-1);">✦</span>
-      <span>🔍 CAMPUS LOST &amp; FOUND MULTI-FACTOR MATCHING ENGINE (LIVE ON VERCEL)</span>
-      <span style="color:var(--accent-1);">✦</span>
-      <span>⚡ SOVEREIGN LOCAL MASTER AI ROUTER (~420 MB RAM)</span>
-      <span style="color:var(--accent-1);">✦</span>
-      <span>🦟 512-POINT RADIX-2 FFT BIO-ACOUSTIC MOSQUITO AI TRAP (32 MS LATENCY)</span>
-    </div>
-  </div>
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-12 md:py-20">
 
-  <main class="full-screen-bleed" style="padding-top:1.75rem; padding-bottom:4rem; display:flex; flex-direction:column; gap:3.5rem;">
-
-    <!-- =================================================================== -->
-    <!-- 01. FULL-BLEED SPATIAL HERO + 3D GEODESIC AI & 512-PT FFT GLOBE     -->
-    <!-- =================================================================== -->
-    <section id="hero" class="grid-12" style="align-items:stretch;">
-      <!-- Left 7 Columns -->
-      <div class="card-spatial" style="grid-column: span 7; display:flex; flex-direction:column; justify-content:space-between; gap:2rem;">
-        <div style="display:flex; flex-direction:column; gap:1.35rem;">
-          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.6rem;" class="font-mono">
-            <span class="float-badge" style="padding:0.35rem 0.85rem; border-radius:999px; background:rgba(0,245,212,0.12); color:var(--accent-1); border:1px solid var(--border); font-size:0.74rem; font-weight:700;">
-              ● {{ profile.role_title }}
-            </span>
-            <span style="padding:0.35rem 0.85rem; border-radius:999px; border:1px solid var(--border-subtle); color:var(--ink-2); font-size:0.74rem;">
-              {{ profile.location }}
-            </span>
-          </div>
-
-          <h1 class="font-syne" style="font-size:clamp(2.2rem, 4.2vw, 4.1rem); font-weight:800; line-height:1.06; text-wrap:balance;">
-            Architecting <span class="font-serif-it" style="color:var(--accent-1); font-weight:400;">sovereign local AI runtimes</span>, 32ms Edge TinyML DSP &amp; full-stack cloud systems.
-          </h1>
-
-          <p style="font-size:1rem; color:var(--ink-2); max-width:74ch; line-height:1.7;">
-            {{ profile.bio_summary }}
-          </p>
-
-          <div style="display:flex; flex-wrap:wrap; gap:0.75rem; padding-top:0.25rem;" class="font-mono">
-            <a href="#works-showcase" class="grade-btn grade-btn-cta" style="padding:0.85rem 1.5rem; font-size:0.82rem;">
-              Explore {{ projects|length }} Production Systems →
-            </a>
-            <a href="#physics-skills" class="grade-btn" style="padding:0.85rem 1.35rem; font-size:0.82rem;">
-              Play 2D Physics Skill Arena
-            </a>
-            <a href="#contact" class="grade-btn" style="padding:0.85rem 1.35rem; font-size:0.82rem;">
-              Collaborate / Hire
-            </a>
-          </div>
-
-          <!-- Verified Profiles -->
-          <div style="display:flex; flex-wrap:wrap; gap:0.5rem; padding-top:0.4rem;" class="font-mono">
-            <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="grade-btn">GitHub ↗</a>
-            <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="grade-btn">LinkedIn ↗</a>
-            <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="grade-btn">Kaggle ↗</a>
-            <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener" class="grade-btn">X / Twitter ↗</a>
-            <a href="{{ profile.facebook_url }}" target="_blank" rel="noopener" class="grade-btn">Facebook ↗</a>
-            <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener" class="grade-btn">Instagram ↗</a>
-          </div>
+    <!-- =========================================================================
+         2. HERO SECTION
+         ========================================================================= -->
+    <section id="hero" class="relative reveal-on-scroll pt-4 pb-8 flex flex-col md:flex-row items-center gap-10 md:gap-14">
+      <!-- Left Hero Info -->
+      <div class="flex-1 space-y-6 text-center md:text-left">
+        <!-- Live Availability Pill -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-medium border" style="background-color: var(--bg-surface); border-color: var(--border-subtle); color: var(--text-muted);">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>{{ about.availability|default:"Open to AI/ML engineering roles & contracts" }}</span>
         </div>
 
-        <!-- Bottom 4-Metric Bar -->
-        <div style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:1rem; padding-top:1.5rem; border-top:1px solid var(--border-subtle);" class="font-mono">
-          <div>
-            <div style="font-size:1.65rem; font-weight:800; color:var(--accent-1);">~1.0 GB</div>
-            <div style="font-size:0.72rem; color:var(--ink-3);">4-Bit NF4 Sub-Models</div>
-          </div>
-          <div>
-            <div style="font-size:1.65rem; font-weight:800;">32 ms</div>
-            <div style="font-size:0.72rem; color:var(--ink-3);">512-Pt Edge FFT DSP</div>
-          </div>
-          <div>
-            <div style="font-size:1.65rem; font-weight:800; color:var(--accent-3);">CPU+GPU+NPU</div>
-            <div style="font-size:0.72rem; color:var(--ink-3);">Unified Memory Pager</div>
-          </div>
-          <div>
-            <div style="font-size:1.65rem; font-weight:800;">{{ projects|length }} Live</div>
-            <div style="font-size:0.72rem; color:var(--ink-3);">AI, TinyML &amp; Web Repos</div>
-          </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+          {{ settings.full_name }}
+        </h1>
+
+        <p class="text-lg sm:text-xl font-medium text-indigo-400 font-mono">
+          {{ settings.role_title }}
+        </p>
+
+        <p class="text-base sm:text-lg leading-relaxed max-w-2xl" style="color: var(--text-muted);">
+          {{ settings.tagline }}
+          {{ about.bio_paragraph_1 }}
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+          <a href="#projects" class="tap-target px-6 text-sm font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
+            View Projects
+          </a>
+          <a href="#contact" class="tap-target px-6 text-sm font-semibold rounded-lg border transition-colors hover:bg-white/5" style="border-color: var(--border-subtle); color: var(--text-main);">
+            Contact Me
+          </a>
+        </div>
+
+        <!-- Social Channels -->
+        <div class="flex items-center justify-center md:justify-start gap-5 pt-3" style="color: var(--text-muted);">
+          {% if settings.github_url %}
+          <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="hover:text-white transition-colors" title="GitHub">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          {% endif %}
+
+          {% if settings.linkedin_url %}
+          <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="hover:text-white transition-colors" title="LinkedIn">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </a>
+          {% endif %}
+
+          {% if settings.kaggle_url %}
+          <a href="{{ settings.kaggle_url }}" target="_blank" rel="noopener" class="hover:text-white transition-colors font-mono font-bold text-sm" title="Kaggle">
+            Kaggle
+          </a>
+          {% endif %}
+
+          {% if settings.twitter_url %}
+          <a href="{{ settings.twitter_url }}" target="_blank" rel="noopener" class="hover:text-white transition-colors" title="X (Twitter)">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          {% endif %}
         </div>
       </div>
 
-      <!-- Right 5 Columns: Live 3D Geodesic AI Telemetry Sphere + 512-Pt FFT Spectrum -->
-      <div class="card-spatial" style="grid-column: span 5; display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem;">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
-            <img src="{{ profile.photo_url }}" alt="{{ profile.full_name }}" style="width:48px; height:48px; border-radius:14px; object-fit:cover; border:1.5px solid var(--accent-1);" />
-            <div>
-              <div class="font-mono" style="font-size:0.68rem; color:var(--accent-1); font-weight:700;">LIVE TELEMETRY // DRAG 3D SPHERE</div>
-              <div style="font-weight:800; font-size:1rem;">Sovereign AI &amp; 512-Pt FFT Core</div>
-            </div>
-          </div>
-          <span id="globeModeLabel" class="font-mono" style="font-size:0.7rem; padding:0.25rem 0.65rem; border-radius:8px; background:rgba(0,245,212,0.12); color:var(--accent-1); font-weight:700;">
-            CODE-AST-1G
-          </span>
-        </div>
-
-        <div style="position:relative; width:100%; height:290px; border-radius:16px; overflow:hidden; background:#040710; border:1px solid var(--border-subtle);">
-          <canvas id="hero3dGlobeCanvas" style="width:100%; height:100%; display:block; cursor:grab;"></canvas>
-          <div class="font-mono" style="position:absolute; bottom:8px; left:12px; right:12px; display:flex; justify-content:space-between; pointer-events:none; font-size:0.66rem; color:#94a3b8;">
-            <span>BOTTOM SPECTRUM: 512-PT RADIX-2 FFT (350–600 HZ VECTOR BAND)</span>
-            <span style="color:#00f5d4;">60 FPS</span>
-          </div>
-        </div>
-
-        <!-- 4 Authentic AI/ML & Hardware Mode Buttons (Zero Videography!) -->
-        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.5rem;" class="font-mono">
-          <button type="button" onclick="switchGlobeMode(0, 'CODE-AST-1G (0.95 GB NF4)')" class="grade-btn" style="justify-content:center; padding:0.6rem;">
-            ⚡ Route Code-AST-1G
-          </button>
-          <button type="button" onclick="switchGlobeMode(1, 'HYBRID-RAG-1G (BM25 + VECTOR)')" class="grade-btn" style="justify-content:center; padding:0.6rem;">
-            🔍 Route Hybrid-RAG-1G
-          </button>
-          <button type="button" onclick="switchGlobeMode(2, 'ESP32-S3 512-PT FFT DSP')" class="grade-btn" style="justify-content:center; padding:0.6rem;">
-            🦟 512-Pt FFT Edge DSP
-          </button>
-          <button type="button" onclick="switchGlobeMode(3, 'IN-PLACE CONTINUAL LoRA ΔW')" class="grade-btn grade-btn-cta" style="justify-content:center; padding:0.6rem;">
-            🧠 In-Place LoRA ΔW
-          </button>
+      <!-- Right Hero Photo & Subtle Restrained Canvas Frame -->
+      <div class="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 relative flex-shrink-0">
+        <div class="w-full h-full rounded-2xl overflow-hidden border p-1" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
+          <img src="{{ settings.photo_display_url }}" alt="{{ settings.full_name }}" class="w-full h-full object-cover rounded-xl" loading="eager" />
         </div>
       </div>
     </section>
 
-    <!-- =================================================================== -->
-    <!-- 02. SOVEREIGN LOCAL MASTER AI & EDGE TINYML ARCHITECTURE            -->
-    <!-- =================================================================== -->
-    <section id="local-ai" style="display:flex; flex-direction:column; gap:1.5rem;">
-      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:1rem;">
-        <div>
-          <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">02 // CORE AI/ML &amp; HARDWARE ARCHITECTURE</div>
-          <h2 class="font-syne" style="font-size:clamp(1.75rem, 3vw, 2.6rem); font-weight:800;">Sovereign Local Multi-Model Runtime &amp; Edge DSP Nodes</h2>
-        </div>
-      </div>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1.1rem;">
-        {% for node in ai_nodes %}
-        <div class="card-spatial" style="display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
-          <div>
-            <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.72rem; margin-bottom:0.6rem;">
-              <span style="color:var(--accent-1); font-weight:700;">[ {{ node.node_id }} ]</span>
-              <span style="color:var(--accent-3); font-weight:700;">{{ node.memory_budget }}</span>
-            </div>
-            <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:0.45rem;">{{ node.title }}</h3>
-            <p style="font-size:0.84rem; color:var(--ink-2);">{{ node.summary }}</p>
+    <!-- =========================================================================
+         3. ABOUT SECTION
+         ========================================================================= -->
+    <section id="about" class="reveal-on-scroll border-t pt-16" style="border-color: var(--border-subtle);">
+      <div class="space-y-4 max-w-3xl">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">About Me</h2>
+        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight">{{ about.headline }}</h3>
+        <p class="text-base leading-relaxed" style="color: var(--text-muted);">
+          {{ about.bio_paragraph_1 }}
+        </p>
+        {% if about.bio_paragraph_2 %}
+        <p class="text-base leading-relaxed" style="color: var(--text-muted);">
+          {{ about.bio_paragraph_2 }}
+        </p>
+        {% endif %}
+
+        <!-- Quick Facts Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+          <div class="p-4 rounded-xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <div class="text-xs font-mono text-slate-400">Education</div>
+            <div class="text-sm font-semibold mt-1">{{ about.education }}</div>
           </div>
-          <div style="padding-top:0.85rem; border-top:1px solid var(--border-subtle); font-size:0.76rem; color:var(--ink-3);">
-            <div class="font-mono" style="color:var(--ink-1); font-weight:700; margin-bottom:0.2rem;">{{ node.hardware_pool }}</div>
-            {{ node.mechanism_detail }}
+          <div class="p-4 rounded-xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <div class="text-xs font-mono text-slate-400">Location</div>
+            <div class="text-sm font-semibold mt-1">{{ about.location }}</div>
           </div>
         </div>
-        {% endfor %}
       </div>
     </section>
 
-    <!-- =================================================================== -->
-    <!-- 03. INTERACTIVE 2D PHYSICS SKILL BALL PIT + 6-DOMAIN MATRIX         -->
-    <!-- =================================================================== -->
-    <section id="physics-skills" style="display:flex; flex-direction:column; gap:1.5rem;">
-      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:1rem;">
+
+    <!-- =========================================================================
+         4. SKILLS SECTION (5 GROUPS, HONEST PROFICIENCY TAGS)
+         ========================================================================= -->
+    <section id="skills" class="reveal-on-scroll border-t pt-16" style="border-color: var(--border-subtle);">
+      <div class="space-y-8">
         <div>
-          <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">03 // INTERACTIVE MOTION GRAPHICS &amp; TECHNICAL ARSENAL</div>
-          <h2 class="font-syne" style="font-size:clamp(1.75rem, 3vw, 2.6rem); font-weight:800;">Interactive 2D Physics Skill Arena &amp; Domain Matrix</h2>
-        </div>
-        <button type="button" id="impulseBallsBtn" class="grade-btn grade-btn-cta font-mono" style="padding:0.65rem 1.25rem;">
-          💥 Launch Zero-Gravity Impulse
-        </button>
-      </div>
-
-      <div class="grid-12" style="align-items:stretch;">
-        <!-- Left 5 Cols: Live 2D Gravity & Mouse-Repulsion Skill Ball Pit -->
-        <div class="card-spatial" style="grid-column: span 5; display:flex; flex-direction:column; justify-content:space-between; gap:0.85rem; padding:1.25rem;">
-          <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--ink-2);">
-            <span>MOVE CURSOR TO PUSH &amp; SCATTER SKILL SPHERES</span>
-            <span style="color:var(--accent-1);">2D PHYSICS ENGINE</span>
-          </div>
-          <div style="width:100%; height:380px; border-radius:14px; overflow:hidden; background:#050811; border:1px solid var(--border-subtle);">
-            <canvas id="skillPhysicsCanvas" style="width:100%; height:100%; display:block; cursor:crosshair;"></canvas>
-          </div>
+          <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Technical Skills</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1">Tools & Technologies I Actively Use</h3>
+          <p class="text-sm mt-1" style="color: var(--text-muted);">Organized by frequency of use with strictly honest competency indicators.</p>
         </div>
 
-        <!-- Right 7 Cols: 6-Domain Structured Matrix -->
-        <div style="grid-column: span 7; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
-          {% for dom in skill_domains %}
-          <div class="card-spatial" style="padding:1.25rem;">
-            <div class="font-mono" style="font-size:0.72rem; color:var(--accent-1); font-weight:700; margin-bottom:0.75rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border-subtle);">
-              {{ dom.label }}
-            </div>
-            <div style="display:flex; flex-wrap:wrap; gap:0.4rem;">
-              {% for sk in dom.skills %}
-              <span class="font-mono" style="padding:0.28rem 0.6rem; border-radius:7px; background:var(--bg-2); border:1px solid var(--border-subtle); font-size:0.71rem;">
-                {{ sk.name }}
-              </span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for group in skill_groups %}
+          <div class="p-5 rounded-2xl border space-y-4" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <h4 class="text-sm font-bold font-mono tracking-tight text-white border-b pb-2" style="border-color: var(--border-subtle);">
+              {{ group.name }}
+            </h4>
+            <div class="flex flex-wrap gap-2">
+              {% for s in group.skills.all %}
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium" style="background-color: var(--bg-base); border-color: var(--border-subtle);">
+                <span>{{ s.name }}</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded {% if s.level_label == 'Proficient' %}bg-indigo-950 text-indigo-300 border border-indigo-800{% elif s.level_label == 'Used in projects' %}bg-slate-800 text-slate-300 border border-slate-700{% else %}bg-amber-950 text-amber-300 border border-amber-800{% endif %}">
+                  {{ s.level_label }}
+                </span>
+              </div>
               {% endfor %}
             </div>
           </div>
@@ -450,435 +340,481 @@
       </div>
     </section>
 
-    <!-- =================================================================== -->
-    <!-- 04. FULL-BLEED PRODUCTION WORKS & LIVE SERVER SHOWCASE              -->
-    <!-- =================================================================== -->
-    <section id="works-showcase" style="display:flex; flex-direction:column; gap:1.5rem;">
-      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:1rem;">
+
+    <!-- =========================================================================
+         5. PROJECTS SECTION (GRID + FILTER CHIPS + DETAIL MODAL)
+         ========================================================================= -->
+    <section id="projects" class="reveal-on-scroll border-t pt-16" style="border-color: var(--border-subtle);">
+      <div class="space-y-8">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Featured Work</h2>
+            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1">Real Projects & Systems</h3>
+          </div>
+
+          <!-- Category Filter Buttons -->
+          <div class="inline-flex p-1 rounded-xl border self-start sm:self-auto" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors bg-indigo-600 text-white" data-filter="ALL">All</button>
+            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-400 hover:text-white" data-filter="AI_ML">AI-ML</button>
+            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-400 hover:text-white" data-filter="WEB">Web</button>
+            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-400 hover:text-white" data-filter="EMBEDDED">Embedded</button>
+          </div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {% for p in projects %}
+          <article class="project-card group p-6 rounded-2xl border flex flex-col justify-between transition-all hover:border-slate-600" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);" data-category="{{ p.category }}" data-project-id="{{ p.id }}">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-medium px-2 py-0.5 rounded border {% if p.category == 'AI_ML' %}border-purple-500/30 text-purple-300 bg-purple-950/40{% elif p.category == 'EMBEDDED' %}border-amber-500/30 text-amber-300 bg-amber-950/40{% else %}border-emerald-500/30 text-emerald-300 bg-emerald-950/40{% endif %}">
+                  {{ p.get_category_display }}
+                </span>
+                <span class="text-xs font-mono text-slate-400">{{ p.status }}</span>
+              </div>
+
+              <h4 class="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors">
+                {{ p.title }}
+              </h4>
+
+              <p class="text-sm line-clamp-2" style="color: var(--text-muted);">
+                {{ p.summary }}
+              </p>
+
+              <!-- Stack Tags -->
+              <div class="flex flex-wrap gap-1.5 pt-2">
+                {% for tag in p.tech_tags %}
+                <span class="px-2 py-0.5 rounded text-[11px] font-mono border" style="background-color: var(--bg-base); border-color: var(--border-subtle); color: var(--text-muted);">
+                  {{ tag }}
+                </span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Footer Action Links -->
+            <div class="flex items-center justify-between border-t pt-4 mt-6" style="border-color: var(--border-subtle);">
+              <button type="button" class="open-modal-btn text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1" data-project-index="{{ forloop.counter0 }}">
+                View Details
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+              </button>
+
+              <div class="flex items-center gap-3">
+                {% if p.repo_url %}
+                <a href="{{ p.repo_url }}" target="_blank" rel="noopener" class="text-xs text-slate-400 hover:text-white transition-colors" title="GitHub Repository">
+                  Code
+                </a>
+                {% endif %}
+                {% if p.live_url %}
+                <a href="{{ p.live_url }}" target="_blank" rel="noopener" class="text-xs font-medium text-emerald-400 hover:text-emerald-300 transition-colors" title="Live Deployment">
+                  Live Demo ↗
+                </a>
+                {% endif %}
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         6. EXPERIENCE & CERTIFICATES TIMELINE
+         ========================================================================= -->
+    <section id="experience" class="reveal-on-scroll border-t pt-16" style="border-color: var(--border-subtle);">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Experience Timeline -->
+        <div class="space-y-6">
+          <div>
+            <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Career History</h2>
+            <h3 class="text-2xl font-bold tracking-tight mt-1">Leadership & Experience</h3>
+          </div>
+
+          <div class="space-y-6 relative border-l pl-6" style="border-color: var(--border-subtle);">
+            {% for exp in experiences %}
+            <div class="relative space-y-1">
+              <span class="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full bg-indigo-500 ring-4" style="--tw-ring-color: var(--bg-base);"></span>
+              <div class="text-xs font-mono text-indigo-400">{{ exp.period }}</div>
+              <h4 class="text-base font-bold text-white">{{ exp.role_title }}</h4>
+              <div class="text-xs text-slate-400">{{ exp.organization }}</div>
+              <p class="text-sm pt-1" style="color: var(--text-muted);">
+                {{ exp.description }}
+              </p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Certificates -->
+        <div class="space-y-6">
+          <div>
+            <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Verification</h2>
+            <h3 class="text-2xl font-bold tracking-tight mt-1">Certifications</h3>
+          </div>
+
+          <div class="space-y-4">
+            {% for cert in certificates %}
+            <div class="p-4 rounded-xl border flex items-center justify-between" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="space-y-0.5">
+                <h4 class="text-sm font-semibold text-white">{{ cert.title }}</h4>
+                <div class="text-xs text-slate-400">{{ cert.issuer }} • {{ cert.issue_date }}</div>
+              </div>
+              {% if cert.credential_url %}
+              <a href="{{ cert.credential_url }}" target="_blank" rel="noopener" class="text-xs font-mono text-indigo-400 hover:text-indigo-300 transition-colors">
+                Verify ↗
+              </a>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         7. CURRENTLY EXPLORING (HONEST 3-LINE RESEARCH CARD)
+         ========================================================================= -->
+    {% if settings.show_exploring_section %}
+    <section id="exploring" class="reveal-on-scroll border-t pt-16" style="border-color: var(--border-subtle);">
+      <div class="p-6 sm:p-8 rounded-2xl border space-y-3" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span class="text-xs font-mono uppercase tracking-wider text-amber-300 font-semibold">{{ settings.exploring_title }}</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950/60 text-amber-300 border border-amber-800/50">In Progress</span>
+        </div>
+        <p class="text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);">
+          {{ settings.exploring_text }}
+        </p>
+      </div>
+    </section>
+    {% endif %}
+
+
+    <!-- =========================================================================
+         8. CONTACT FORM WITH HONEYPOT & RATE LIMIT
+         ========================================================================= -->
+    <section id="contact" class="reveal-on-scroll border-t pt-16" style="border-color: var(--border-subtle);">
+      <div class="max-w-xl mx-auto space-y-8 text-center">
         <div>
-          <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">04 // VERIFIED PRODUCTION SYSTEMS &amp; LIVE DEPLOYMENTS</div>
-          <h2 class="font-syne" style="font-size:clamp(1.75rem, 3vw, 2.6rem); font-weight:800;">Selected AI, TinyML Hardware &amp; Full-Stack Works ({{ projects|length }})</h2>
-        </div>
-        <div style="display:flex; flex-wrap:wrap; gap:0.45rem;" class="font-mono">
-          <button type="button" data-pf="ALL" class="pf-btn grade-btn grade-btn-cta">All ({{ projects|length }})</button>
-          <button type="button" data-pf="AI_LLM" class="pf-btn grade-btn">AI &amp; LLMs</button>
-          <button type="button" data-pf="FULLSTACK" class="pf-btn grade-btn">Full-Stack Web</button>
-          <button type="button" data-pf="EDGE_TINYML" class="pf-btn grade-btn">Edge TinyML</button>
-          <button type="button" data-pf="API_SYSTEMS" class="pf-btn grade-btn">FastAPI &amp; Docker</button>
-        </div>
-      </div>
-
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(420px, 1fr)); gap:1.25rem;">
-        {% for proj in projects %}
-        <article class="card-spatial proj-card-item" data-cat="{{ proj.category }}" style="display:flex; flex-direction:column; justify-content:space-between; gap:1.25rem;">
-          <div style="display:flex; flex-direction:column; gap:0.75rem;">
-            <div class="font-mono" style="display:flex; justify-content:space-between; align-items:center; font-size:0.74rem;">
-              <span style="color:var(--accent-1); font-weight:800;">[ SYSTEM // {{ proj.code }} ]</span>
-              <span style="padding:0.2rem 0.65rem; border-radius:999px; border:1px solid var(--border); font-size:0.68rem; font-weight:700; color:var(--accent-1);">
-                {{ proj.status_label }}
-              </span>
-            </div>
-
-            <h3 style="font-size:1.3rem; font-weight:800; line-height:1.25;">{{ proj.title }}</h3>
-            <p style="font-size:0.88rem; color:var(--ink-1); font-weight:600;">{{ proj.tagline }}</p>
-            <p style="font-size:0.82rem; color:var(--ink-2);">{{ proj.description }}</p>
-
-            <pre class="font-mono" style="background:var(--bg-input); border:1px solid var(--border-subtle); border-radius:12px; padding:0.85rem; font-size:0.72rem; color:var(--ink-2); white-space:pre-wrap;">{{ proj.architecture_breakdown }}</pre>
-
-            <div style="display:flex; flex-wrap:wrap; gap:0.4rem;">
-              {% for tag in proj.tech_tags %}
-              <span class="font-mono" style="padding:0.22rem 0.55rem; border-radius:6px; background:var(--bg-2); font-size:0.7rem;">{{ tag }}</span>
-              {% endfor %}
-            </div>
-          </div>
-
-          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.75rem; padding-top:1rem; border-top:1px solid var(--border-subtle);" class="font-mono">
-            <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
-              {% if proj.live_server_url %}
-              <a href="{{ proj.live_server_url }}" target="_blank" rel="noopener" class="grade-btn grade-btn-cta" style="padding:0.55rem 1rem;">
-                🟢 Launch Live Website ↗
-              </a>
-              {% endif %}
-              {% if proj.github_repo_url %}
-              <a href="{{ proj.github_repo_url }}" target="_blank" rel="noopener" class="grade-btn" style="padding:0.55rem 1rem;">
-                GitHub Code ↗
-              </a>
-              {% endif %}
-            </div>
-            <button type="button" onclick="upvoteWork({{ proj.id }}, this)" class="grade-btn">
-              ▲ <span class="upv-num">{{ proj.upvotes }}</span>
-            </button>
-          </div>
-        </article>
-        {% endfor %}
-      </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- 05. CREDENTIALS & LEADERSHIP TIMELINE                               -->
-    <!-- =================================================================== -->
-    <section id="credentials" class="grid-12">
-      <div style="grid-column: span 6; display:flex; flex-direction:column; gap:1rem;">
-        <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">05A // VERIFIED CERTIFICATIONS &amp; HACKATHONS</div>
-        {% for c in courses %}
-        <div class="card-spatial" style="padding:1.35rem;">
-          <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--accent-1); font-weight:700;">
-            <span>{{ c.issuer }}</span>
-            <span style="color:var(--ink-3);">{{ c.completion_date }}</span>
-          </div>
-          <h3 style="font-size:1.05rem; font-weight:800; margin:0.3rem 0;">{{ c.title }}</h3>
-          <p style="font-size:0.82rem; color:var(--ink-2);">{{ c.key_takeaways }}</p>
-        </div>
-        {% endfor %}
-      </div>
-
-      <div style="grid-column: span 6; display:flex; flex-direction:column; gap:1rem;">
-        <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">05B // LEADERSHIP &amp; ACADEMIC TRAJECTORY</div>
-        {% for item in timeline %}
-        <div class="card-spatial" style="padding:1.35rem;">
-          <div class="font-mono" style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--accent-3); font-weight:700;">
-            <span>{{ item.period }}</span>
-            <span>{{ item.badge_metric }}</span>
-          </div>
-          <h3 style="font-size:1.05rem; font-weight:800; margin:0.3rem 0;">{{ item.role }}</h3>
-          <div class="font-mono" style="font-size:0.74rem; color:var(--ink-3); margin-bottom:0.3rem;">{{ item.organization }}</div>
-          <p style="font-size:0.82rem; color:var(--ink-2);">{{ item.impact_summary }}</p>
-        </div>
-        {% endfor %}
-      </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- 06. DIRECT COLLABORATION & CONTACT                                  -->
-    <!-- =================================================================== -->
-    <section id="contact" class="grid-12">
-      <div class="card-spatial" style="grid-column: span 5; display:flex; flex-direction:column; justify-content:space-between;">
-        <div style="display:flex; flex-direction:column; gap:0.85rem;">
-          <div class="font-mono" style="font-size:0.75rem; color:var(--accent-1); font-weight:700;">06 // DIRECT COLLABORATION</div>
-          <h2 class="font-syne" style="font-size:1.85rem; font-weight:800;">Initiate an Engineering or Research Dialogue</h2>
-          <p style="font-size:0.88rem; color:var(--ink-2);">
-            Open to AI/ML engineering roles, Edge TinyML research collaborations, and full-stack web architecture.
+          <h2 class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">Get in Touch</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1">Let's Connect</h3>
+          <p class="text-sm mt-2" style="color: var(--text-muted);">
+            Direct Email: <a href="mailto:{{ settings.primary_email }}" class="text-indigo-400 hover:underline">{{ settings.primary_email }}</a>
           </p>
-          <div class="font-mono" style="font-size:0.78rem; display:flex; flex-direction:column; gap:0.5rem; padding-top:0.5rem;">
-            <div>Primary: <a href="mailto:{{ profile.primary_email }}" style="color:var(--accent-1); font-weight:700;">{{ profile.primary_email }}</a></div>
-            <div>Secondary: <a href="mailto:{{ profile.secondary_email }}" style="color:var(--accent-1);">{{ profile.secondary_email }}</a></div>
-            <div>Location: {{ profile.location }}</div>
-          </div>
         </div>
-        <div class="font-mono" style="font-size:0.72rem; color:var(--accent-1);">● REAL-TIME DATABASE INBOX ACTIVE</div>
-      </div>
 
-      <div class="card-spatial" style="grid-column: span 7;">
-        <form id="ajaxContactForm" style="display:flex; flex-direction:column; gap:0.9rem;">
+        <form id="contactForm" class="space-y-4 text-left p-6 sm:p-8 rounded-2xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
           {% csrf_token %}
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.9rem;">
-            <input type="text" name="sender_name" required placeholder="Your Name *" class="input-box" />
-            <input type="email" name="sender_email" required placeholder="Your Email *" class="input-box" />
+
+          <!-- Honeypot Field (Hidden for bots) -->
+          <div style="display:none !important;" aria-hidden="true">
+            <label for="company_hp">Company</label>
+            <input type="text" id="company_hp" name="company_hp" tabindex="-1" autocomplete="off" />
           </div>
-          <input type="text" name="subject" required placeholder="Subject / Role / Project Scope *" class="input-box" />
-          <textarea name="message" rows="4" required placeholder="Your Message *" class="input-box"></textarea>
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span id="contactFormStatus" class="font-mono" style="font-size:0.76rem; color:var(--accent-1); font-weight:700;"></span>
-            <button type="submit" class="grade-btn grade-btn-cta font-mono" style="padding:0.85rem 1.75rem; font-size:0.8rem;">
-              Transmit Message →
-            </button>
+
+          <div>
+            <label for="nameInput" class="block text-xs font-medium text-slate-300 mb-1">Your Name</label>
+            <input type="text" id="nameInput" name="name" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors" style="background-color: var(--bg-base); border-color: var(--border-subtle);" placeholder="Alex Smith" />
           </div>
+
+          <div>
+            <label for="emailInput" class="block text-xs font-medium text-slate-300 mb-1">Your Email</label>
+            <input type="email" id="emailInput" name="email" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors" style="background-color: var(--bg-base); border-color: var(--border-subtle);" placeholder="alex@company.com" />
+          </div>
+
+          <div>
+            <label for="messageInput" class="block text-xs font-medium text-slate-300 mb-1">Message</label>
+            <textarea id="messageInput" name="message" rows="4" required class="w-full px-3.5 py-2.5 rounded-lg border text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors" style="background-color: var(--bg-base); border-color: var(--border-subtle);" placeholder="Describe the role or project you would like to discuss..."></textarea>
+          </div>
+
+          <div id="formStatusMsg" class="hidden text-xs font-mono py-2 rounded"></div>
+
+          <button id="submitBtn" type="submit" class="w-full tap-target py-2.5 text-sm font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
+            Send Message
+          </button>
         </form>
       </div>
     </section>
 
   </main>
 
-  <footer class="full-screen-bleed font-mono" style="border-top:1px solid var(--border-subtle); padding-top:2rem; padding-bottom:2rem; font-size:0.75rem; color:var(--ink-3); display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem;">
-    <div>© 2026 {{ profile.full_name }} • AI/ML, Edge TinyML &amp; Full-Stack Systems</div>
-    <div style="display:flex; gap:1.25rem;">
-      <a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>
-      <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener">Kaggle</a>
+
+  <!-- =========================================================================
+       9. FOOTER
+       ========================================================================= -->
+  <footer class="border-t py-8 mt-20" style="border-color: var(--border-subtle);">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono" style="color: var(--text-faint);">
+      <div>
+        © 2026 {{ settings.full_name }}. Built with Django 5 &amp; Vanilla JS.
+      </div>
+      <a href="#hero" class="hover:text-white transition-colors">
+        Back to Top ↑
+      </a>
     </div>
   </footer>
 
+
+  <!-- =========================================================================
+       PROJECT DETAIL MODAL
+       ========================================================================= -->
+  <div id="projectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop" role="dialog" aria-modal="true">
+    <div class="relative w-full max-w-2xl rounded-2xl border p-6 sm:p-8 space-y-5 overflow-y-auto max-h-[90vh]" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);">
+      <button id="closeModalBtn" type="button" aria-label="Close modal" class="absolute top-5 right-5 tap-target p-2 rounded-lg text-slate-400 hover:text-white">
+        ✕
+      </button>
+
+      <div>
+        <span id="modalCategory" class="text-xs font-mono font-medium px-2 py-0.5 rounded border border-indigo-500/30 text-indigo-300 bg-indigo-950/40">Category</span>
+        <h3 id="modalTitle" class="text-xl sm:text-2xl font-bold text-white mt-2">Project Title</h3>
+        <p id="modalSummary" class="text-sm font-mono mt-1 text-indigo-300">Summary line</p>
+      </div>
+
+      <div class="space-y-2 border-t pt-4" style="border-color: var(--border-subtle);">
+        <h4 class="text-xs font-mono uppercase tracking-wider text-slate-400">Architecture &amp; What I Built</h4>
+        <p id="modalDescription" class="text-sm leading-relaxed" style="color: var(--text-muted);"></p>
+      </div>
+
+      <div class="space-y-2 border-t pt-4" style="border-color: var(--border-subtle);">
+        <h4 class="text-xs font-mono uppercase tracking-wider text-slate-400">Technologies</h4>
+        <div id="modalTechStack" class="flex flex-wrap gap-1.5"></div>
+      </div>
+
+      <div class="flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+        <button id="modalUpvoteBtn" type="button" class="tap-target px-3 py-1.5 rounded-lg border text-xs font-mono text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors" style="border-color: var(--border-subtle);">
+          <span>▲ Upvote</span>
+          <span id="modalUpvoteCount" class="font-bold text-indigo-400">0</span>
+        </button>
+
+        <div class="flex items-center gap-3">
+          <a id="modalRepoLink" href="#" target="_blank" rel="noopener" class="tap-target px-4 py-1.5 text-xs font-medium rounded-lg border text-slate-200 hover:bg-white/5 transition-colors" style="border-color: var(--border-subtle);">
+            GitHub Repo
+          </a>
+          <a id="modalLiveLink" href="#" target="_blank" rel="noopener" class="tap-target px-4 py-1.5 text-xs font-medium rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-colors">
+            Live Demo ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       CLIENT-SIDE VANILLA JAVASCRIPT LOGIC
+       ========================================================================= -->
   <script>
-    // 1. Studio Color-Grade Switcher
-    window.setGrade = function (grade) {
-      document.documentElement.setAttribute("data-grade", grade);
-    };
+    // Project Database for Modals
+    const PROJECTS_DATA = [
+      {% for p in projects %}
+      {
+        id: {{ p.id }},
+        title: "{{ p.title|escapejs }}",
+        category: "{{ p.get_category_display|escapejs }}",
+        summary: "{{ p.summary|escapejs }}",
+        description: "{{ p.description|escapejs }}",
+        techStack: [{% for t in p.tech_tags %}"{{ t|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}],
+        repoUrl: "{{ p.repo_url|escapejs }}",
+        liveUrl: "{{ p.live_url|escapejs }}",
+        upvotes: {{ p.upvotes }}
+      }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ];
 
-    // 2. Engine 1: 3D Geodesic AI Sphere + Live 512-Point FFT Bio-Acoustic Spectrum Analyzer
-    let activeGlobeMode = 0;
-    window.switchGlobeMode = function (idx, label) {
-      activeGlobeMode = idx;
-      document.getElementById("globeModeLabel").textContent = label;
-    };
+    let currentActiveProject = null;
 
-    (function initHeroGlobeAndFFT() {
-      const canvas = document.getElementById("hero3dGlobeCanvas");
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      let w = 480, h = 290, yaw = 0.3, pitch = 0.25, dragging = false, lx = 0, ly = 0;
-
-      function resize() {
-        const r = canvas.parentElement.getBoundingClientRect();
-        w = Math.max(280, r.width || 460);
-        h = Math.max(240, r.height || 290);
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-      resize();
-      window.addEventListener("resize", resize);
-
-      canvas.addEventListener("pointerdown", function (e) { dragging = true; lx = e.clientX; ly = e.clientY; });
-      window.addEventListener("pointerup", function () { dragging = false; });
-      window.addEventListener("pointermove", function (e) {
-        if (!dragging) return;
-        yaw += (e.clientX - lx) * 0.01;
-        pitch = Math.max(-0.6, Math.min(0.8, pitch + (e.clientY - ly) * 0.008));
-        lx = e.clientX; ly = e.clientY;
-      });
-
-      // Generate 3D Geodesic Sphere Points
-      const spherePts = [];
-      for (let lat = -60; lat <= 60; lat += 30) {
-        for (let lon = 0; lon < 360; lon += 30) {
-          const rLat = (lat * Math.PI) / 180, rLon = (lon * Math.PI) / 180;
-          spherePts.push([
-            Math.cos(rLat) * Math.cos(rLon) * 86,
-            Math.sin(rLat) * 86,
-            Math.cos(rLat) * Math.sin(rLon) * 86
-          ]);
-        }
-      }
-
-      const nodes = [
-        { name: "CODE-AST-1G", col: "#00f5d4", ang: 0 },
-        { name: "HYBRID-RAG-1G", col: "#818cf8", ang: 1.57 },
-        { name: "512-PT-FFT-DSP", col: "#f59e0b", ang: 3.14 },
-        { name: "CONTINUAL-LoRA", col: "#10b981", ang: 4.71 }
-      ];
-
-      function proj(x, y, z) {
-        const cy = Math.cos(yaw), sy = Math.sin(yaw);
-        const x1 = x * cy - z * sy, z1 = z * cy + x * sy;
-        const cp = Math.cos(pitch), sp = Math.sin(pitch);
-        const y2 = y * cp - z1 * sp, z2 = z1 * cp + y * sp;
-        const f = 340 / (340 + z2 + 120);
-        return { x: w / 2 + x1 * f, y: h / 2 - 18 + y2 * f, s: f, z: z2 };
-      }
-
-      function render() {
-        requestAnimationFrame(render);
-        const t = Date.now() * 0.002;
-        if (!dragging) yaw += 0.007;
-
-        ctx.fillStyle = "#040710";
-        ctx.fillRect(0, 0, w, h);
-
-        // Draw Geodesic Neural Sphere
-        const projected = spherePts.map(function (p) { return proj(p[0], p[1], p[2]); });
-        ctx.fillStyle = "rgba(0, 245, 212, 0.45)";
-        projected.forEach(function (p) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 1.8 * p.s, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        const c0 = proj(0, 0, 0);
-        nodes.forEach(function (n, i) {
-          const a = n.ang + t * 0.7;
-          const nx = Math.cos(a) * 122, ny = Math.sin(t * 2 + i) * 14, nz = Math.sin(a) * 122;
-          const np = proj(nx, ny, nz);
-          const isSel = (activeGlobeMode === i);
-
-          ctx.beginPath();
-          ctx.moveTo(c0.x, c0.y);
-          ctx.lineTo(np.x, np.y);
-          ctx.strokeStyle = isSel ? n.col : "rgba(148, 163, 184, 0.22)";
-          ctx.lineWidth = isSel ? 2.2 : 1;
-          ctx.stroke();
-
-          ctx.fillStyle = n.col;
-          ctx.beginPath();
-          ctx.arc(np.x, np.y, (isSel ? 9 : 6) * np.s, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.fillStyle = isSel ? "#ffffff" : "#94a3b8";
-          ctx.font = "700 10px 'JetBrains Mono', monospace";
-          ctx.fillText(n.name, np.x - 34, np.y - 12);
-        });
-
-        // Bottom 512-Point Radix-2 FFT Bio-Acoustic Spectrum Analyzer Bars
-        const barCount = 36;
-        const barW = (w - 24) / barCount;
-        for (let b = 0; b < barCount; b++) {
-          const wave = Math.abs(Math.sin(t * 3 + b * 0.35) * Math.cos(t * 1.4 - b * 0.2));
-          const bh = 8 + wave * (activeGlobeMode === 2 ? 46 : 26);
-          ctx.fillStyle = (b >= 12 && b <= 22) ? "#00f5d4" : "rgba(99, 102, 241, 0.55)";
-          ctx.fillRect(12 + b * barW, h - 24 - bh, barW - 2, bh);
-        }
-      }
-      render();
-    })();
-
-    // 3. Engine 3: Interactive 2D Gravity & Mouse-Repulsion Physics Skill Ball Pit
-    (function initSkillPhysicsArena() {
-      const canvas = document.getElementById("skillPhysicsCanvas");
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      let cw = 480, ch = 380;
-      const labels = [
-        "PyTorch", "Django 5", "FastAPI", "Next.js 15", "TypeScript",
-        "QLoRA NF4", "llama.cpp", "ESP32-S3", "512-Pt FFT", "TinyML",
-        "PostgreSQL", "Docker", "Prisma", "LangGraph", "Hybrid RAG",
-        "Python 3.12", "C++20", "ONNX", "Three.js", "Tailwind"
-      ];
-      const colors = ["#00f5d4", "#6366f1", "#f59e0b", "#10b981", "#38bdf8", "#a855f7"];
-      const balls = [];
-      let mx = -999, my = -999;
-
-      function resize() {
-        const r = canvas.parentElement.getBoundingClientRect();
-        cw = Math.max(280, r.width || 460);
-        ch = Math.max(320, r.height || 380);
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = cw * dpr;
-        canvas.height = ch * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-      resize();
-      window.addEventListener("resize", resize);
-
-      labels.forEach(function (lbl, i) {
-        balls.push({
-          label: lbl,
-          r: 26 + (lbl.length > 9 ? 5 : 0),
-          x: 45 + (i % 5) * 82,
-          y: 40 + Math.floor(i / 5) * 65,
-          vx: (Math.random() - 0.5) * 3,
-          vy: (Math.random() - 0.5) * 2,
-          color: colors[i % colors.length]
-        });
-      });
-
-      canvas.addEventListener("pointermove", function (e) {
-        const rect = canvas.getBoundingClientRect();
-        mx = e.clientX - rect.left;
-        my = e.clientY - rect.top;
-      });
-      canvas.addEventListener("pointerleave", function () { mx = -999; my = -999; });
-
-      document.getElementById("impulseBallsBtn").onclick = function () {
-        balls.forEach(function (b) {
-          b.vy = -8 - Math.random() * 6;
-          b.vx = (Math.random() - 0.5) * 10;
-        });
-      };
-
-      function stepPhysics() {
-        requestAnimationFrame(stepPhysics);
-        ctx.fillStyle = "#050811";
-        ctx.fillRect(0, 0, cw, ch);
-
-        for (let i = 0; i < balls.length; i++) {
-          const b = balls[i];
-          b.vy += 0.18; // Gravity
-          // Mouse repulsion
-          const dxM = b.x - mx, dyM = b.y - my;
-          const distM = Math.sqrt(dxM * dxM + dyM * dyM);
-          if (distM < b.r + 48 && distM > 1) {
-            const force = (b.r + 48 - distM) * 0.18;
-            b.vx += (dxM / distM) * force;
-            b.vy += (dyM / distM) * force;
+    // 1. IntersectionObserver for Restrained Scroll Reveals
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
           }
-
-          b.x += b.vx;
-          b.y += b.vy;
-          b.vx *= 0.985;
-          b.vy *= 0.985;
-
-          // Wall bounce
-          if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx) * 0.8; }
-          if (b.x + b.r > cw) { b.x = cw - b.r; b.vx = -Math.abs(b.vx) * 0.8; }
-          if (b.y - b.r < 0) { b.y = b.r; b.vy = Math.abs(b.vy) * 0.8; }
-          if (b.y + b.r > ch) { b.y = ch - b.r; b.vy = -Math.abs(b.vy) * 0.72; }
-
-          // Ball-to-ball collision
-          for (let j = i + 1; j < balls.length; j++) {
-            const b2 = balls[j];
-            const dx = b2.x - b.x, dy = b2.y - b.y;
-            const d = Math.sqrt(dx * dx + dy * dy);
-            const minD = b.r + b2.r;
-            if (d < minD && d > 0.1) {
-              const overlap = (minD - d) * 0.5;
-              const nx = dx / d, ny = dy / d;
-              b.x -= nx * overlap; b.y -= ny * overlap;
-              b2.x += nx * overlap; b2.y += ny * overlap;
-              const kx = (b.vx - b2.vx), ky = (b.vy - b2.vy);
-              const p = 2 * (nx * kx + ny * ky) / 2;
-              b.vx -= p * nx * 0.8; b.vy -= p * ny * 0.8;
-              b2.vx += p * nx * 0.8; b2.vy += p * ny * 0.8;
-            }
-          }
-
-          // Render Sphere
-          ctx.beginPath();
-          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
-          ctx.fill();
-          ctx.lineWidth = 1.8;
-          ctx.strokeStyle = b.color;
-          ctx.stroke();
-
-          ctx.fillStyle = "#f8fafc";
-          ctx.font = "700 10px 'JetBrains Mono', monospace";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(b.label, b.x, b.y);
-        }
-      }
-      stepPhysics();
-    })();
-
-    // 4. Project Filter & Upvote
-    document.querySelectorAll(".pf-btn").forEach(function (btn) {
-      btn.onclick = function () {
-        const cat = btn.getAttribute("data-pf");
-        document.querySelectorAll(".pf-btn").forEach(function (b) { b.className = "pf-btn grade-btn"; });
-        btn.className = "pf-btn grade-btn grade-btn-cta";
-        document.querySelectorAll(".proj-card-item").forEach(function (c) {
-          c.style.display = (cat === "ALL" || c.getAttribute("data-cat") === cat) ? "" : "none";
         });
-      };
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-revealed'));
+    }
+
+    // 2. Project Category Filter
+    document.querySelectorAll('.project-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        document.querySelectorAll('.project-filter-btn').forEach(b => {
+          b.className = 'project-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors text-slate-400 hover:text-white';
+        });
+        btn.className = 'project-filter-btn px-3 py-1.5 text-xs font-medium rounded-lg transition-colors bg-indigo-600 text-white';
+
+        document.querySelectorAll('.project-card').forEach(card => {
+          if (filter === 'ALL' || card.getAttribute('data-category') === filter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
     });
 
-    window.upvoteWork = function (pk, btn) {
-      fetch("/api/projects/" + pk + "/upvote/", {
-        method: "POST",
-        headers: { "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value }
-      })
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        if (d.ok) btn.querySelector(".upv-num").textContent = d.upvotes;
-      });
-    };
+    // 3. Project Detail Modal
+    const modal = document.getElementById('projectModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
 
-    // 5. AJAX Contact Form
-    document.getElementById("ajaxContactForm").addEventListener("submit", function (e) {
+    function openModalWithIndex(index) {
+      const p = PROJECTS_DATA[index];
+      if (!p) return;
+      currentActiveProject = p;
+
+      document.getElementById('modalTitle').textContent = p.title;
+      document.getElementById('modalCategory').textContent = p.category;
+      document.getElementById('modalSummary').textContent = p.summary;
+      document.getElementById('modalDescription').textContent = p.description;
+      document.getElementById('modalUpvoteCount').textContent = p.upvotes;
+
+      const techContainer = document.getElementById('modalTechStack');
+      techContainer.innerHTML = '';
+      p.techStack.forEach(tag => {
+        const chip = document.createElement('span');
+        chip.className = 'px-2 py-0.5 rounded text-[11px] font-mono border text-slate-300 bg-slate-900 border-white/10';
+        chip.textContent = tag;
+        techContainer.appendChild(chip);
+      });
+
+      const repoBtn = document.getElementById('modalRepoLink');
+      if (p.repoUrl) {
+        repoBtn.href = p.repoUrl;
+        repoBtn.style.display = 'inline-flex';
+      } else {
+        repoBtn.style.display = 'none';
+      }
+
+      const liveBtn = document.getElementById('modalLiveLink');
+      if (p.liveUrl) {
+        liveBtn.href = p.liveUrl;
+        liveBtn.style.display = 'inline-flex';
+      } else {
+        liveBtn.style.display = 'none';
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    document.querySelectorAll('.open-modal-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-project-index'), 10);
+        openModalWithIndex(idx);
+      });
+    });
+
+    closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.add('hidden');
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        modal.classList.add('hidden');
+      }
+    });
+
+    // Upvote Project API
+    document.getElementById('modalUpvoteBtn').addEventListener('click', () => {
+      if (!currentActiveProject) return;
+      fetch(`/api/projects/${currentActiveProject.id}/upvote/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          document.getElementById('modalUpvoteCount').textContent = data.upvotes;
+          currentActiveProject.upvotes = data.upvotes;
+        }
+      })
+      .catch(() => {});
+    });
+
+    // 4. Contact Form AJAX Submission with Spam Protection
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatusMsg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const form = e.target;
-      const status = document.getElementById("contactFormStatus");
-      fetch("/api/contact/submit/", {
-        method: "POST",
-        body: new FormData(form),
-        headers: { "X-CSRFToken": form.querySelector("[name=csrfmiddlewaretoken]").value }
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      formStatus.classList.add('hidden');
+
+      const formData = new FormData(contactForm);
+
+      fetch('/api/contact/', {
+        method: 'POST',
+        body: formData,
       })
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        status.textContent = d.ok ? "✔ " + d.message : "❌ " + d.error;
-        if (d.ok) form.reset();
+      .then(async (res) => {
+        const data = await res.json();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+        formStatus.classList.remove('hidden');
+
+        if (res.ok && data.ok) {
+          formStatus.className = 'text-xs font-mono p-3 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800';
+          formStatus.textContent = data.message || 'Message sent successfully!';
+          contactForm.reset();
+        } else {
+          formStatus.className = 'text-xs font-mono p-3 rounded bg-rose-950/80 text-rose-300 border border-rose-800';
+          formStatus.textContent = data.error || 'Failed to send message. Please try again.';
+        }
+      })
+      .catch(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+        formStatus.classList.remove('hidden');
+        formStatus.className = 'text-xs font-mono p-3 rounded bg-rose-950/80 text-rose-300 border border-rose-800';
+        formStatus.textContent = 'Network error. Please try again.';
       });
     });
+
+    // 5. Light/Dark Theme Switcher (Preserves preference in localStorage)
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+      const sunIcon = document.getElementById('sunIcon');
+      const moonIcon = document.getElementById('moonIcon');
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (theme === 'light') {
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+        } else {
+          sunIcon.classList.remove('hidden');
+          moonIcon.classList.add('hidden');
+        }
+      }
+
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+
+      themeBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    // 6. Mobile Menu Drawer Toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileBtn && mobileMenu) {
+      mobileBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+    }
   </script>
 </body>
 </html>
