@@ -31,7 +31,10 @@ urlpatterns = [
     path("about/", RedirectView.as_view(url="/#about", permanent=False)),
     path("projects/", RedirectView.as_view(url="/#projects", permanent=False)),
     path("skills/", RedirectView.as_view(url="/#skills", permanent=False)),
-    path("experience/", RedirectView.as_view(url="/#experience", permanent=False)),
+    path("hardware/", RedirectView.as_view(url="/#hardware", permanent=False)),
+    path("experience/", RedirectView.as_view(url="/#timeline", permanent=False)),
+    path("timeline/", RedirectView.as_view(url="/#timeline", permanent=False)),
+    path("faq/", RedirectView.as_view(url="/#faq", permanent=False)),
     path("contact/", RedirectView.as_view(url="/#contact", permanent=False)),
 
     # REST APIs & Integration Hooks

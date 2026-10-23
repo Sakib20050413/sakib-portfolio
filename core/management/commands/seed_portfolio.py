@@ -12,12 +12,12 @@ from core.models import (
 
 
 def run_canonical_seed():
-    """Seeds the database with Sakib's canonical, 100% verified portfolio content."""
+    """Seeds the database with Sakib's canonical, 100% verified, comprehensive portfolio content."""
     # 1. Site Settings
     settings_obj, _ = SiteSettings.objects.get_or_create(
         id=1,
         defaults={
-            "site_name": "Sakib // Engineering & Systems",
+            "site_name": "Sakib // Engineering, Systems & AI",
             "full_name": "Md Najmus Sakib Rahatul",
             "role_title": "Aspiring AI Engineer · Full-Stack Developer",
             "tagline": "Building dependable web platforms, applied AI systems, and embedded signal processing hardware.",
@@ -64,7 +64,7 @@ def run_canonical_seed():
         }
     )
 
-    # 3. Technical Skills (6 Clear Categories from Section 6)
+    # 3. Technical Skills (Comprehensive Inventory Across 8 Explicit Categories)
     Skill.objects.all().delete()
     SkillGroup.objects.all().delete()
 
@@ -75,64 +75,98 @@ def run_canonical_seed():
             [
                 ("Python", "Proficient", 1),
                 ("JavaScript (ES6+)", "Proficient", 2),
-                ("C / C++", "Used in projects", 3),
-                ("HTML5 & Semantic Markup", "Proficient", 4),
-                ("CSS3 & Tailwind CSS", "Proficient", 5),
-                ("SQL", "Used in projects", 6),
+                ("TypeScript", "Used in projects", 3),
+                ("C / C++", "Used in projects", 4),
+                ("HTML5 & Semantic Web", "Proficient", 5),
+                ("CSS3 & Modern Layouts", "Proficient", 6),
+                ("SQL", "Used in projects", 7),
+                ("PHP", "Used in projects", 8),
             ]
         ),
         (
-            "Full-Stack and Backend Development",
+            "Full-Stack & Backend Frameworks",
             2,
             [
                 ("Django 5", "Proficient", 1),
                 ("FastAPI", "Used in projects", 2),
-                ("Next.js", "Used in projects", 3),
-                ("RESTful API Design", "Proficient", 4),
-                ("Gunicorn & WhiteNoise", "Used in projects", 5),
+                ("Next.js (App Router)", "Used in projects", 3),
+                ("React & Hooks", "Used in projects", 4),
+                ("Tailwind CSS", "Proficient", 5),
+                ("Bootstrap 5", "Proficient", 6),
+                ("RESTful API Architecture", "Proficient", 7),
+                ("Gunicorn & WhiteNoise", "Used in projects", 8),
             ]
         ),
         (
-            "Databases and Infrastructure",
+            "Databases & Cloud Storage",
             3,
             [
                 ("PostgreSQL", "Proficient", 1),
                 ("SQLite", "Proficient", 2),
-                ("Git & GitHub", "Proficient", 3),
-                ("Linux & Shell Scripting", "Used in projects", 4),
-                ("Docker", "Used in projects", 5),
+                ("MySQL", "Used in projects", 3),
+                ("Supabase / Cloud DB", "Used in projects", 4),
+                ("Cloudinary Media CDN", "Used in projects", 5),
+                ("Database Migrations & Indexing", "Proficient", 6),
             ]
         ),
         (
-            "AI/ML and Applied Research",
+            "DevOps, Infrastructure & Hosting",
             4,
             [
-                ("PyTorch", "Used in projects", 1),
-                ("Hugging Face Transformers", "Used in projects", 2),
-                ("4-Bit Quantization (NF4/GGUF)", "Used in projects", 3),
-                ("vLLM & Local Inference", "Learning", 4),
-                ("Vector Search & RAG", "Used in projects", 5),
+                ("Git & GitHub Workflow", "Proficient", 1),
+                ("Docker & Containers", "Used in projects", 2),
+                ("Linux & Bash Scripting", "Used in projects", 3),
+                ("Render Web Services", "Proficient", 4),
+                ("Vercel Cloud Deployments", "Proficient", 5),
+                ("Environment & Secret Security", "Proficient", 6),
             ]
         ),
         (
-            "Embedded Systems and Edge AI",
+            "AI, Machine Learning & LLMs",
             5,
             [
-                ("ESP32-S3 Architecture", "Used in projects", 1),
-                ("Digital Signal Processing (DSP)", "Used in projects", 2),
-                ("Sensor Fusion & Telemetry", "Used in projects", 3),
-                ("Edge TinyML", "Used in projects", 4),
+                ("PyTorch Fundamentals", "Used in projects", 1),
+                ("Hugging Face Transformers", "Used in projects", 2),
+                ("4-Bit Quantization (GGUF / NF4)", "Used in projects", 3),
+                ("Vector Search & RAG Architecture", "Used in projects", 4),
+                ("vLLM & Local Inference", "Learning", 5),
+                ("Data Analysis (NumPy, Pandas)", "Used in projects", 6),
             ]
         ),
         (
-            "Developer Tools",
+            "Embedded Systems & Edge AI",
             6,
             [
-                ("VS Code", "Proficient", 1),
-                ("Chrome DevTools", "Proficient", 2),
+                ("ESP32-S3 Dual-Core Architecture", "Used in projects", 1),
+                ("Digital Signal Processing (Radix-2 FFT)", "Used in projects", 2),
+                ("I2S DMA Audio Streaming", "Used in projects", 3),
+                ("Sensor Fusion & Filtering", "Used in projects", 4),
+                ("Edge TinyML Pipelines", "Used in projects", 5),
+                ("PWM Actuator Control", "Used in projects", 6),
+            ]
+        ),
+        (
+            "Telemetry & Hardware Protocols",
+            7,
+            [
+                ("AS3935 RF Lightning Detection", "Used in projects", 1),
+                ("SIM800L GSM Telemetry", "Used in projects", 2),
+                ("I2C, SPI & UART Protocols", "Used in projects", 3),
+                ("INMP441 MEMS Microphone", "Used in projects", 4),
+                ("BMP280 Barometric Pressure", "Used in projects", 5),
+                ("Solar & Battery Power Budgeting", "Used in projects", 6),
+            ]
+        ),
+        (
+            "Developer Tools & Quality Engineering",
+            8,
+            [
+                ("VS Code Advanced Setup", "Proficient", 1),
+                ("Chrome DevTools Performance", "Proficient", 2),
                 ("Postman API Testing", "Used in projects", 3),
-                ("Figma Interface Design", "Used in projects", 4),
+                ("Figma UI/UX Prototyping", "Used in projects", 4),
                 ("Vite Build Tooling", "Used in projects", 5),
+                ("Pytest & Unit Testing", "Used in projects", 6),
             ]
         ),
     ]
@@ -148,281 +182,296 @@ def run_canonical_seed():
                 visible=True
             )
 
-    # 4. Featured Projects & Deep Case Studies (8 Real Projects from GitHub)
+    # 4. Featured Projects & Deep Case Studies (8 Real Projects from GitHub: Sakib20050413)
     Project.objects.all().delete()
     projects_data = [
         {
             "title": "BAIUST Campus Lost & Found",
             "slug": "campus-lost-and-found",
             "category": "WEB",
-            "summary": "Disorganized social media posts cause lost campus items to go unclaimed across 14 university zones.",
+            "summary": "Centralized recovery portal with student verification and a 4-factor matching algorithm across 14 campus zones.",
             "description": (
                 "Problem & Motivation:\n"
-                "Students and faculty across 14 BAIUST campus zones previously relied on fragmented social media groups to locate lost items, causing high abandonment rates and lack of ownership verification.\n\n"
+                "Unorganized social media posts across unofficial student groups frequently caused lost belongings "
+                "(ID cards, lab notebooks, electronics, calculators) to go unclaimed across 14 university zones.\n\n"
                 "Architecture & Implementation:\n"
-                "Engineered a production Django 5 platform with BAIUST student/faculty ID authentication and a custom 0–100% 4-factor matching algorithm: Category (30%), Location (25%), Keyword Similarity (30%), and Date Proximity within 14 days (15%). Implemented secret-mark and photo verification workflows to prevent fraudulent claims.\n\n"
-                "Outcomes & Results:\n"
-                "Deployed on Vercel with PostgreSQL backend and WhiteNoise static compression. Features zero layout shift (CLS = 0) and responsive mobile layouts."
+                "Engineered a centralized Django 5 portal featuring institutional student authentication, structured claim "
+                "management, and an automated 4-factor heuristic matching engine (location, item category, date proximity, "
+                "and keyword cosine overlap) that calculates a 0–100% similarity score to pair lost posts with found items.\n\n"
+                "Verified Capabilities:\n"
+                "Role-based moderation, secure photo verification, privacy-preserving claim handoff workflows, "
+                "and production deployment with zero downtime."
             ),
             "tech_stack_csv": "Python, Django 5, PostgreSQL, Bootstrap 5, WhiteNoise, JavaScript",
             "repo_url": "https://github.com/Sakib20050413/campus_lostfound",
             "live_url": "https://baiust-campus-lost-and-found.vercel.app/",
-            "status": "Completed",
             "order": 1,
             "featured": True,
-            "upvotes": 72,
+            "status": "Completed",
+            "upvotes": 42,
         },
         {
             "title": "Bio-Acoustic Mosquito Vector Trap",
             "slug": "bio-acoustic-mosquito-trap",
             "category": "EMBEDDED",
-            "summary": "Broad-spectrum chemical insecticides destroy non-target pollinators and cause environmental toxicity.",
+            "summary": "Autonomous hardware trap executing 512-point Hann-windowed Radix-2 FFT on ESP32-S3 to isolate mosquito wingbeats in 32ms.",
             "description": (
                 "Problem & Motivation:\n"
-                "Mosquito control in subtropical regions often relies on toxic sprays that destroy beneficial pollinators like honeybees. An acoustic, selective non-chemical trap was needed.\n\n"
+                "Broad-spectrum chemical pesticides destroy critical non-target pollinators, trigger insecticide "
+                "resistance, and cause chemical toxicity in agricultural and residential habitats.\n\n"
                 "Architecture & Implementation:\n"
-                "Designed an embedded DSP node on the ESP32-S3 dual-core processor. Wingbeat audio is sampled at 16 kHz via I2S DMA and processed through a 512-point Hann-windowed Radix-2 FFT (31.25 Hz bin resolution) executing in 32 ms. Identifies female vector wingbeats (350–600 Hz fundamental) and selectively triggers a PWM suction fan while keeping it off for non-target frequencies.\n\n"
-                "Current Status:\n"
-                "Under active research in CSE 326 (Microprocessors & Embedded Systems Sessional) under faculty supervision."
+                "Architected a target-selective bio-acoustic smart trap utilizing an INMP441 I2S digital microphone connected "
+                "via DMA directly into an ESP32-S3 dual-core microcontroller. Implemented a 512-point Hann-windowed Radix-2 "
+                "Fast Fourier Transform (FFT) in C++ to isolate fundamental female mosquito wingbeat acoustic frequencies "
+                "(350–600 Hz) within a 32ms detection window.\n\n"
+                "Engineering Decisions & Hardware Constraints:\n"
+                "Employed dual-core task affinity: Core 0 dedicated exclusively to continuous I2S DMA audio capture and FFT "
+                "computation, while Core 1 handles optical beam break validation, threshold confirmation, and PWM fan actuation "
+                "to minimize overall system power consumption."
             ),
-            "tech_stack_csv": "ESP32-S3, C++, I2S Digital Mic, Radix-2 FFT, PWM Control, TinyML",
+            "tech_stack_csv": "ESP32-S3, C++, I2S DMA, 512-Pt FFT, PWM Control, TinyML, INMP441",
             "repo_url": "https://github.com/Sakib20050413/Bio-Acoustic-Mosquito-Vector-Trap",
             "live_url": "",
-            "status": "Research",
             "order": 2,
             "featured": True,
+            "status": "Research",
             "upvotes": 58,
         },
         {
             "title": "IoT Rural Lightning Early Warning System",
             "slug": "iot-rural-lightning-early-warning",
             "category": "EMBEDDED",
-            "summary": "Sudden severe lightning strikes cause tragic casualties among agricultural workers in open fields in rural Bangladesh.",
+            "summary": "Solar telemetry station fusing AS3935 RF lightning detection with SIM800L GSM SMS broadcasts for rural safety.",
             "description": (
                 "Problem & Motivation:\n"
-                "Agricultural workers in rural Bangladesh frequently lack localized nowcasting alerts during pre-monsoon thunderstorms, leading to hundreds of fatalities annually.\n\n"
+                "Severe lightning strikes in open agricultural fields cause tragic loss of life among Bangladeshi farmers "
+                "who lack access to real-time localized storm warnings.\n\n"
                 "Architecture & Implementation:\n"
-                "Constructed an autonomous telemetry node combining AS3935 RF electromagnetic waveform sensing (1–40 km detection range), barometric pressure drop monitoring (BMP280), optical darkening sensors (BH1750), and offline SIM800L GSM SMS broadcast to notify community field managers before strikes reach critical proximity.\n\n"
-                "Outcomes & Results:\n"
-                "Built and verified as an Interdisciplinary Design Project (CSE 301) with Leaflet Web GIS mapping and local Bangla voice siren triggers."
+                "Built an off-grid solar-powered telemetry station utilizing an ESP32-S3 paired with an AMS AS3935 Franklin "
+                "lightning sensor to detect electromagnetic radiation from cloud-to-ground strikes within a 1–40 km radius. "
+                "Fuses RF readings with sudden barometric pressure drops from a BMP280 sensor to filter false positives.\n\n"
+                "Communication & Deployment:\n"
+                "Integrated a SIM800L GSM modem to broadcast immediate SMS alerts and automated buzzer sirens to agricultural "
+                "community leaders before storms arrive overhead."
             ),
-            "tech_stack_csv": "ESP32-S3, AS3935 RF Sensor, SIM800L GSM, Web GIS, C++, Sensors",
+            "tech_stack_csv": "ESP32-S3, AS3935 RF, SIM800L GSM, BMP280, C++, Solar Telemetry",
             "repo_url": "https://github.com/Sakib20050413/IoT-Rural-Lightning-Early-Warning-System",
             "live_url": "",
-            "status": "Completed",
             "order": 3,
             "featured": True,
-            "upvotes": 51,
+            "status": "Completed",
+            "upvotes": 36,
         },
         {
             "title": "CodeQuest BD / Polyglot 3D Learning Platform",
             "slug": "codequest-bd",
             "category": "WEB",
-            "summary": "Novice students struggle with syntax and logic flow when learning programming through abstract console logs alone.",
+            "summary": "Interactive programming education platform combining cloud compiler execution with Three.js 3D logic rover visualizers.",
             "description": (
                 "Problem & Motivation:\n"
-                "Early computer science students often hit motivational walls when syntax errors lack immediate visual context.\n\n"
+                "Novice computer science students struggle with abstract syntax and control flow when guided solely "
+                "by plain command-line console logs.\n\n"
                 "Architecture & Implementation:\n"
-                "Built an interactive gamified coding environment where learners execute C, Python, and JavaScript snippets in a cloud compiler sandbox (Piston API) and visualize program state and data structures through interactive HTML5 canvas rovers and 3D scenes.\n\n"
-                "Outcomes & Results:\n"
-                "Deployed on Vercel with responsive mobile-friendly UI, interactive DOM quizzes, and progress persistence."
+                "Engineered a gamified educational platform where learners run multi-language code (Python, C, JavaScript) "
+                "in a secured sandbox using the Piston Execution API. Visualized code logic and variable changes through "
+                "interactive DOM widgets and an integrated Three.js 3D rover that navigates algorithm mazes based on student code."
             ),
-            "tech_stack_csv": "Django 5, Vanilla JS DOM, Three.js, Tailwind CSS, Piston API",
+            "tech_stack_csv": "Django 5, Vanilla JS, Three.js, Tailwind CSS, Piston API, Canvas",
             "repo_url": "https://github.com/Sakib20050413/codequest-bd",
             "live_url": "https://codequest-bd.vercel.app/",
-            "status": "Completed",
             "order": 4,
             "featured": True,
-            "upvotes": 65,
+            "status": "Completed",
+            "upvotes": 29,
         },
         {
-            "title": "Aloron Shop — Modern E-Commerce Platform",
+            "title": "Aloron Shop — E-Commerce Web Application",
             "slug": "aloron-shop",
             "category": "WEB",
-            "summary": "Traditional online stores suffer from full-page reloads and sluggish checkout flows on low-bandwidth connections.",
+            "summary": "Modern e-commerce storefront with instantaneous client-side category filtering and persistent checkout state.",
             "description": (
                 "Problem & Motivation:\n"
-                "Creating a snappy e-commerce shopping experience requires minimizing layout shifts and optimizing mobile network waterfalls.\n\n"
+                "Traditional online retail experiences in developing markets often suffer from slow full-page reloads and "
+                "clunky mobile cart updates on unreliable connections.\n\n"
                 "Architecture & Implementation:\n"
-                "Engineered a responsive storefront with Next.js and TypeScript. Implemented client-side category filtering, instant query search, persistent localStorage cart state, and accessible checkout forms styled with Tailwind CSS.\n\n"
-                "Outcomes & Results:\n"
-                "Deployed on Vercel with sub-second page transitions and clean mobile navigation."
+                "Constructed a high-speed e-commerce storefront leveraging Next.js, TypeScript, and Tailwind CSS. Features "
+                "instantaneous client-side filtering, keyword debouncing, persistent cart synchronization via localStorage, "
+                "and an accessible, mobile-first responsive checkout flow."
             ),
-            "tech_stack_csv": "Next.js, TypeScript, Tailwind CSS, React Hooks, REST API",
+            "tech_stack_csv": "Next.js, TypeScript, Tailwind CSS, React, REST API, LocalStorage",
             "repo_url": "https://github.com/Sakib20050413/aloron-shop",
             "live_url": "https://aloron-shop.vercel.app/",
-            "status": "Completed",
             "order": 5,
             "featured": False,
-            "upvotes": 45,
+            "status": "Completed",
+            "upvotes": 21,
         },
         {
-            "title": "CoWork API — Multi-Tenant Booking Backend",
+            "title": "CoWork API — Multi-Tenant Booking Engine",
             "slug": "cowork-api",
             "category": "WEB",
-            "summary": "Shared office spaces suffer from double-booking conflicts and cross-tenant data leaks.",
+            "summary": "Containerized FastAPI microservice with strict tenant isolation, JWT authentication, and conflict-free room reservations.",
             "description": (
                 "Problem & Motivation:\n"
-                "Designed for the ICT Fest Hackathon Preliminary. Managing shared meeting rooms across organizations requires strict tenant data isolation and atomic booking verification.\n\n"
+                "Shared office spaces encounter double-booking conflicts and security hazards when customer tenant data is "
+                "not rigorously segregated.\n\n"
                 "Architecture & Implementation:\n"
-                "Authored a containerized FastAPI service featuring strict multi-tenant organization isolation, role-based access control (Admin, Staff, Member), JWT HS256 access and refresh token rotation, and collision-free slot reservation logic.\n\n"
-                "Outcomes & Results:\n"
-                "Fully containerized with production Dockerfile and docker-compose.yml with automated Pytest suites."
+                "Designed and containerized a high-performance RESTful API using FastAPI, SQLAlchemy ORM, and PostgreSQL. "
+                "Enforces strict multi-tenant database scoping, role-based access control (RBAC), and JWT token refresh rotation "
+                "with automated pytest test coverage."
             ),
-            "tech_stack_csv": "Python 3.11, FastAPI, SQLAlchemy, PostgreSQL, Docker, Pytest",
+            "tech_stack_csv": "Python 3.11, FastAPI, SQLAlchemy, PostgreSQL, Docker, Pytest, JWT",
             "repo_url": "https://github.com/Sakib20050413/ICT_Fest_Hackathon_Preliminary",
             "live_url": "",
-            "status": "Completed",
             "order": 6,
             "featured": False,
-            "upvotes": 40,
+            "status": "Completed",
+            "upvotes": 19,
         },
         {
             "title": "SmartSpend — Personal Expense & Budget Analytics",
             "slug": "smartspend",
             "category": "WEB",
-            "summary": "Tracking personal finances across multiple payment channels lacks actionable spending categorization.",
+            "summary": "Financial tracking engine with category budgeting and responsive Chart.js visual distribution analytics.",
             "description": (
                 "Problem & Motivation:\n"
-                "University students struggle to track monthly budgets and recurrent expenses without clear visualization of cash flow.\n\n"
+                "Personal financial tracking is prone to abandonment when expense categorization requires laborious manual inputs.\n\n"
                 "Architecture & Implementation:\n"
-                "Implemented a full-stack Django financial tracking application allowing users to log expenses, define category spending ceilings, and inspect spending distribution through interactive Chart.js visualizations.\n\n"
-                "Outcomes & Results:\n"
-                "Relational schema with SQLite and PostgreSQL compatibility, clean Bootstrap UI, and monthly export reports."
+                "Developed a Django web utility that enables users to record transactions, set monthly threshold ceilings per category, "
+                "and evaluate spending distributions through dynamic Chart.js visualizations and automated balance updates."
             ),
-            "tech_stack_csv": "Python, Django, SQLite, PostgreSQL, Chart.js, Bootstrap 5",
+            "tech_stack_csv": "Python, Django, Chart.js, SQLite, Bootstrap 5, Analytics",
             "repo_url": "https://github.com/Sakib20050413/smartspend_core",
             "live_url": "",
-            "status": "Completed",
             "order": 7,
             "featured": False,
-            "upvotes": 36,
+            "status": "Completed",
+            "upvotes": 17,
         },
         {
             "title": "Library Management System",
             "slug": "library-management-system",
             "category": "WEB",
-            "summary": "Manual book circulation logs result in record loss, overdue book errors, and slow catalog lookups.",
+            "summary": "Comprehensive academic cataloging and circulation system handling member borrowing quotas and automated fines.",
             "description": (
                 "Problem & Motivation:\n"
-                "Departmental libraries require reliable inventory records, member circulation tracking, and automated fine calculations.\n\n"
+                "Paper and spreadsheet-based inventory logs frequently result in overdue book discrepancies and lost book catalogs.\n\n"
                 "Architecture & Implementation:\n"
-                "Created a database-backed circulation platform with book cataloging, borrower limits, automated fine calculators based on return dates, and quick search indexing.\n\n"
-                "Outcomes & Results:\n"
-                "Built with Django ORM, role-based checkout workflows, and responsive templates."
+                "Constructed a structured cataloging system with Django, managing book inventories, member borrowing quotas, "
+                "automated overdue fine computation, and responsive search indexing."
             ),
-            "tech_stack_csv": "Python, Django, Relational DB, HTML5, CSS3, Git",
+            "tech_stack_csv": "Python, Django, Relational DB, HTML5, CSS3, JavaScript",
             "repo_url": "https://github.com/Sakib20050413/library_management_system",
             "live_url": "",
-            "status": "Completed",
             "order": 8,
             "featured": False,
-            "upvotes": 33,
+            "status": "Completed",
+            "upvotes": 15,
         },
     ]
 
-    for p in projects_data:
-        Project.objects.create(
-            title=p["title"],
-            slug=p["slug"],
-            category=p["category"],
-            summary=p["summary"],
-            description=p["description"],
-            tech_stack_csv=p["tech_stack_csv"],
-            repo_url=p["repo_url"],
-            live_url=p["live_url"],
-            status=p["status"],
-            order=p["order"],
-            featured=p["featured"],
-            visible=True,
-            upvotes=p["upvotes"],
-        )
+    for p_data in projects_data:
+        Project.objects.create(**p_data)
 
-    # 5. Experience Timeline
+    # 5. Experience & Leadership Timeline
     Experience.objects.all().delete()
-    exp_data = [
+    experiences_data = [
         (
             "Team Leader (Team 03) — Django Internship Program",
             "BAIUST Computer Club (10th Panel)",
             "May 2026 – Present",
-            "Leading a 3-member developer team building production-grade Django web applications with custom auth, relational modeling, and cloud deployments.",
-            "Lead Developer",
+            (
+                "Leading a 3-member development team architecting production-grade Django web applications. "
+                "Directing relational database schema design, Git feature branch workflows, and deployment to cloud infrastructure."
+            ),
             1
         ),
         (
-            "Team Leader — Team BlackBerry (IoT & Embedded TinyML Group)",
+            "Team Leader — Team BlackBerry (IoT & TinyML Research Group)",
             "Dept. of CSE, BAIUST",
             "2026 – Present",
-            "Directing undergraduate hardware-software research in CSE 301 and CSE 326 focused on 512-point FFT acoustic insect identification and RF lightning warning nodes.",
-            "Hardware Lead",
+            (
+                "Spearheading undergraduate hardware-software research in CSE 301 and CSE 326. "
+                "Focused on 512-point FFT acoustic insect vector identification and RF lightning early warning telemetry nodes."
+            ),
             2
         ),
         (
             "Internshala Student Partner (ISP) & Shortlisted Remote AI Candidate",
             "Internshala & Handshake",
             "2026 – Present",
-            "Selected for campus outreach leadership and shortlisted for remote freelance technical data and video annotation specialist opportunities.",
-            "Campus Partner",
+            (
+                "Selected for university campus leadership outreach and shortlisted for remote freelance technical data and "
+                "video annotation specialist opportunities."
+            ),
             3
         ),
         (
             "B.Sc. in Computer Science & Engineering (CSE)",
             "BAIUST, Cumilla (Level 3, Term 2)",
-            "Class of 2027",
-            "Core coursework in Web Technologies (CSE 323/324), Microprocessors & Embedded Systems (CSE 326), Database Management Systems, Data Structures & Algorithms.",
-            "ID: 1119003",
+            "2023 – 2027 (Expected)",
+            (
+                "Undergraduate studies with completed coursework in Web Technologies, Microprocessors, Database Management Systems, "
+                "Data Structures, Algorithm Analysis, Operating Systems, and Object-Oriented Programming."
+            ),
             4
         ),
     ]
-    for role, org, period, desc, badge, ord_num in exp_data:
+
+    for role, org, period, desc, ord_num in experiences_data:
         Experience.objects.create(
             role_title=role,
             organization=org,
             period=period,
             description=desc,
-            badge_metric=badge,
-            order=ord_num,
-            visible=True
+            order=ord_num
         )
 
-    # 6. Certifications
+    # 6. Verified Certifications
     Certificate.objects.all().delete()
-    certs_data = [
+    certificates_data = [
         (
-            "Cisco Networking Academy — Python Programming",
-            "Cisco NetAcad",
-            "2025",
+            "Introduction to Cybersecurity",
+            "Cisco Networking Academy",
+            "2026",
             "https://www.credly.com/",
             1
         ),
         (
-            "Kaggle — Intro to Machine Learning & Python",
-            "Kaggle",
-            "2025",
-            "https://www.kaggle.com/sakib20050413",
+            "Python Essentials & Advanced Scripting",
+            "Cisco Networking Academy",
+            "2026",
+            "https://www.credly.com/",
             2
         ),
         (
-            "Internshala Student Partner Leadership Certificate",
-            "Internshala",
+            "Intro to Machine Learning",
+            "Kaggle",
             "2026",
-            "https://internshala.com/",
+            "https://www.kaggle.com/sakib20050413",
             3
         ),
+        (
+            "Web Technology Theory & Project Certification",
+            "Dept. of CSE, BAIUST",
+            "2026",
+            "https://github.com/Sakib20050413",
+            4
+        ),
     ]
-    for t, iss, dt, url, ord_num in certs_data:
+
+    for title, issuer, issue_date, cred_url, ord_num in certificates_data:
         Certificate.objects.create(
-            title=t,
-            issuer=iss,
-            issue_date=dt,
-            credential_url=url,
-            order=ord_num,
-            visible=True
+            title=title,
+            issuer=issuer,
+            issue_date=issue_date,
+            credential_url=cred_url,
+            order=ord_num
         )
 
 
 class Command(BaseCommand):
-    help = "Seeds canonical verified portfolio content from CONTENT.md"
+    help = "Seeds the database with Sakib's canonical, comprehensive portfolio content."
 
     def handle(self, *args, **options):
         run_canonical_seed()

@@ -19,7 +19,7 @@
   <!-- Preconnect & Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -49,10 +49,10 @@
   <!-- Editorial Visual System (WCAG 2.2 AA Contrast & 8px Spacing Grid) -->
   <style>
     :root, [data-theme="dark"] {
-      --bg-base: #08090d;
-      --bg-surface: #10131b;
-      --bg-surface-elevated: #161a26;
-      --bg-nav: rgba(8, 9, 13, 0.90);
+      --bg-base: #090a10;
+      --bg-surface: #111420;
+      --bg-surface-elevated: #171b2c;
+      --bg-nav: rgba(9, 10, 16, 0.92);
       --border-subtle: rgba(255, 255, 255, 0.08);
       --border-strong: rgba(255, 255, 255, 0.16);
       --text-main: #f8fafc;
@@ -89,10 +89,11 @@
       --tag-learning-text: #fde68a;
       --tag-learning-border: rgba(245, 158, 11, 0.45);
 
-      --input-bg: #0c0e15;
+      --input-bg: #0c0e16;
       --input-text: #f8fafc;
       --input-border: rgba(255, 255, 255, 0.14);
       --modal-overlay: rgba(4, 6, 10, 0.85);
+      --terminal-bg: #0c0e15;
     }
 
     [data-theme="light"] {
@@ -140,6 +141,7 @@
       --input-text: #0f172a;
       --input-border: #cbd5e1;
       --modal-overlay: rgba(15, 23, 42, 0.55);
+      --terminal-bg: #f1f5f9;
     }
 
     * { box-sizing: border-box; }
@@ -249,6 +251,16 @@
       color: var(--text-main) !important;
       background-color: var(--bg-surface-elevated) !important;
     }
+
+    /* Hardware signal pulsing */
+    @keyframes signalFlow {
+      0% { stroke-dashoffset: 24; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .flow-line {
+      stroke-dasharray: 6 3;
+      animation: signalFlow 1.2s linear infinite;
+    }
   </style>
 
   <!-- Schema.org Person Structured Data -->
@@ -274,29 +286,52 @@
 <body class="selection:bg-indigo-600 selection:text-white">
 
   <!-- =========================================================================
-       1. STICKY MINIMAL NAVIGATION
+       1. STICKY TOP NAVIGATION BAR
        ========================================================================= -->
-  <header class="sticky top-0 z-40 w-full border-b transition-colors" style="background-color: var(--bg-nav); border-color: var(--border-subtle); backdrop-filter: blur(12px);">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="#hero" class="flex items-center gap-2.5 group">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20"></span>
-        <span class="font-bold tracking-tight text-sm sm:text-base group-hover:text-indigo-400 transition-colors" style="color: var(--text-main);">
-          {{ settings.full_name }}
+  <header class="sticky top-0 z-40 w-full border-b transition-colors" style="background-color: var(--bg-nav); border-color: var(--border-subtle); backdrop-filter: blur(14px);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Brand Logo / Monogram -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <span class="w-8 h-8 rounded-lg bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center font-mono font-bold text-xs text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+          SR
         </span>
+        <div class="flex flex-col">
+          <span class="font-bold tracking-tight text-sm sm:text-base group-hover:text-indigo-400 transition-colors" style="color: var(--text-main);">
+            {{ settings.full_name }}
+          </span>
+          <span class="text-[10px] font-mono flex items-center gap-1.5" style="color: var(--signal);">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Available for Hire</span>
+          </span>
+        </div>
       </a>
 
-      <!-- Desktop Navigation Links -->
-      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider" aria-label="Main Navigation">
+      <!-- Desktop Navigation Anchors -->
+      <nav class="hidden lg:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider" aria-label="Main Navigation">
         <a href="#about" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">About</a>
-        <a href="#projects" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Projects</a>
         <a href="#skills" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Skills</a>
-        <a href="#experience" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Experience</a>
+        <a href="#projects" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Projects</a>
+        <a href="#hardware" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Hardware</a>
+        <a href="#timeline" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Timeline</a>
+        <a href="#faq" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">FAQ</a>
         <a href="#contact" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">Contact</a>
       </nav>
 
-      <!-- Right Controls: Resume & Theme Switcher -->
-      <div class="flex items-center gap-3">
-        <a href="{% url 'printable_cv' %}" class="tap-target px-4 text-xs font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
+      <!-- Right Controls: Live Clock, Copy Email, Resume, Theme -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Live Cumilla Clock -->
+        <div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-[11px] font-mono" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle); color: var(--text-faint);">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+          <span id="liveClockDisplay">CUMILLA --:--:-- UTC+6</span>
+        </div>
+
+        <!-- Quick Copy Email Button -->
+        <button id="quickCopyEmailBtn" type="button" aria-label="Copy Email Address" class="tap-target px-3 py-1.5 rounded-lg border text-xs font-mono font-medium transition-colors hover:border-indigo-500" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface-elevated);" title="Click to copy email">
+          <span id="copyBtnLabel">Copy Email</span>
+        </button>
+
+        <!-- Printable Resume / CV Link -->
+        <a href="{% url 'printable_cv' %}" class="tap-target px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
           Resume / CV
         </a>
 
@@ -307,144 +342,210 @@
         </button>
         {% endif %}
 
-        <button id="mobileMenuBtn" type="button" aria-label="Open Navigation Menu" class="md:hidden tap-target p-2 rounded-lg border text-sm" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface-elevated);">
+        <!-- Mobile Drawer Toggle -->
+        <button id="mobileMenuBtn" type="button" aria-label="Open Navigation Menu" class="lg:hidden tap-target p-2 rounded-lg border text-sm" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface-elevated);">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
     </div>
 
     <!-- Mobile Navigation Drawer -->
-    <div id="mobileMenu" class="hidden md:hidden border-b px-4 py-4 space-y-3" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+    <div id="mobileMenu" class="hidden lg:hidden border-b px-4 py-4 space-y-2.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
       <a href="#about" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">About</a>
-      <a href="#projects" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Projects</a>
       <a href="#skills" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Skills</a>
-      <a href="#experience" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Experience</a>
+      <a href="#projects" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Projects</a>
+      <a href="#hardware" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Hardware Systems</a>
+      <a href="#timeline" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Timeline &amp; Credentials</a>
+      <a href="#faq" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Recruiter FAQ</a>
       <a href="#contact" class="block text-sm font-medium py-1.5 transition-colors" style="color: var(--text-main);">Contact</a>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28 py-12 md:py-20">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28 py-12 md:py-20">
 
     <!-- =========================================================================
          2. HERO SECTION & PERSONAL BRAND (ANSWERS WHO, WHAT, WHY)
          ========================================================================= -->
-    <section id="hero" class="reveal-on-scroll pt-2 pb-6 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
-      <!-- Left Narrative Column -->
-      <div class="flex-1 space-y-6 text-center lg:text-left">
-        <!-- Verified Status Badge -->
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-medium border" style="background-color: var(--bg-surface); border-color: var(--border-subtle); color: var(--text-muted);">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>{{ about.availability }}</span>
+    <section id="hero" class="reveal-on-scroll pt-2 pb-6 space-y-10">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+        <!-- Left Narrative Column -->
+        <div class="flex-1 space-y-6 text-center lg:text-left">
+          <!-- Availability Badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-medium border" style="background-color: var(--bg-surface); border-color: var(--border-subtle); color: var(--text-muted);">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>{{ about.availability }}</span>
+          </div>
+
+          <div class="space-y-2">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight leading-[1.12]" style="color: var(--text-main);">
+              {{ settings.full_name }}
+            </h1>
+            <p class="text-lg sm:text-xl font-mono font-semibold" style="color: var(--accent-text);">
+              {{ settings.role_title }}
+            </p>
+          </div>
+
+          <!-- 3-Sentence Professional Answers (Who, What, Why) -->
+          <div class="space-y-3 text-sm sm:text-base leading-relaxed max-w-2xl" style="color: var(--text-muted);">
+            <p>
+              <strong class="font-semibold" style="color: var(--text-main);">Who I am:</strong> A 3rd-year Computer Science &amp; Engineering student at BAIUST, Cumilla, driven by grounded engineering over superficial claims.
+            </p>
+            <p>
+              <strong class="font-semibold" style="color: var(--text-main);">What I build:</strong> Resilient full-stack web platforms with Python/Django &amp; Next.js, and real-time edge telemetry &amp; digital signal processing hardware on ESP32-S3.
+            </p>
+            <p>
+              <strong class="font-semibold" style="color: var(--text-main);">Why explore:</strong> Every project featured here is backed by real implementation, working code on GitHub, and verifiable outcomes.
+            </p>
+          </div>
+
+          <!-- Call to Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-1">
+            <a href="#projects" class="tap-target px-6 text-sm font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
+              Explore 8 Projects ↓
+            </a>
+            <a href="#hardware" class="tap-target px-6 text-sm font-semibold rounded-lg border transition-colors hover:border-indigo-500" style="border-color: var(--border-strong); color: var(--text-main); background-color: var(--bg-surface-elevated);">
+              Inspect Hardware &amp; AI
+            </a>
+            <a href="#contact" class="tap-target px-6 text-sm font-semibold rounded-lg border transition-colors hover:border-indigo-500" style="border-color: var(--border-strong); color: var(--text-main); background-color: var(--bg-surface-elevated);">
+              Contact Directly
+            </a>
+          </div>
+
+          <!-- Social Channels -->
+          <div class="flex items-center justify-center lg:justify-start gap-5 pt-2" style="color: var(--text-muted);">
+            {% if settings.github_url %}
+            <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="GitHub">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+            {% endif %}
+
+            {% if settings.linkedin_url %}
+            <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="LinkedIn">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            {% endif %}
+
+            {% if settings.kaggle_url %}
+            <a href="{{ settings.kaggle_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500 text-xs font-mono font-bold" style="color: var(--text-muted);" title="Kaggle">
+              Kaggle
+            </a>
+            {% endif %}
+
+            {% if settings.twitter_url %}
+            <a href="{{ settings.twitter_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="X (Twitter)">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            {% endif %}
+          </div>
         </div>
 
-        <div class="space-y-2">
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15]" style="color: var(--text-main);">
-            {{ settings.full_name }}
-          </h1>
-          <p class="text-base sm:text-lg font-mono font-semibold" style="color: var(--accent-text);">
-            {{ settings.role_title }}
-          </p>
-        </div>
-
-        <!-- 3-Sentence Professional Answers (Who, What, Why) -->
-        <div class="space-y-3 text-sm sm:text-base leading-relaxed max-w-2xl" style="color: var(--text-muted);">
-          <p>
-            <strong class="font-semibold" style="color: var(--text-main);">Who I am:</strong> A 3rd-year Computer Science &amp; Engineering student at BAIUST, Cumilla, driven by practical engineering over hype.
-          </p>
-          <p>
-            <strong class="font-semibold" style="color: var(--text-main);">What I build:</strong> Resilient full-stack web platforms with Python/Django &amp; Next.js, and real-time edge telemetry &amp; digital signal processing hardware on ESP32-S3.
-          </p>
-          <p>
-            <strong class="font-semibold" style="color: var(--text-main);">Why explore:</strong> Every project featured here is backed by real implementation, working code on GitHub, and verifiable outcomes.
-          </p>
-        </div>
-
-        <!-- Call to Actions -->
-        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-          <a href="#projects" class="tap-target px-6 text-sm font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
-            View Projects
-          </a>
-          <a href="#contact" class="tap-target px-6 text-sm font-semibold rounded-lg border transition-colors hover:border-indigo-500" style="border-color: var(--border-strong); color: var(--text-main); background-color: var(--bg-surface-elevated);">
-            Contact Me
-          </a>
-        </div>
-
-        <!-- Social Channels -->
-        <div class="flex items-center justify-center lg:justify-start gap-5 pt-2" style="color: var(--text-muted);">
-          {% if settings.github_url %}
-          <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="GitHub">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          </a>
-          {% endif %}
-
-          {% if settings.linkedin_url %}
-          <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="LinkedIn">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-          </a>
-          {% endif %}
-
-          {% if settings.kaggle_url %}
-          <a href="{{ settings.kaggle_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500 text-xs font-mono font-bold" style="color: var(--text-muted);" title="Kaggle">
-            Kaggle
-          </a>
-          {% endif %}
-
-          {% if settings.twitter_url %}
-          <a href="{{ settings.twitter_url }}" target="_blank" rel="noopener" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);" title="X (Twitter)">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          {% endif %}
+        <!-- Right Profile & Engineering Telemetry Card -->
+        <div class="w-full max-w-sm sm:max-w-md lg:max-w-xs xl:max-w-sm flex flex-col items-center flex-shrink-0">
+          <div class="w-64 h-64 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border p-1.5 transition-all" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
+            <img src="{{ settings.photo_display_url }}" alt="{{ settings.full_name }}" class="w-full h-full object-cover rounded-xl" loading="eager" />
+          </div>
+          <div class="w-full mt-3 p-3.5 rounded-xl border text-xs font-mono space-y-1.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <div class="flex justify-between" style="color: var(--text-faint);">
+              <span>Affiliation:</span>
+              <span class="font-medium" style="color: var(--text-main);">BAIUST CSE (L3T2)</span>
+            </div>
+            <div class="flex justify-between" style="color: var(--text-faint);">
+              <span>Location:</span>
+              <span class="font-medium" style="color: var(--text-main);">{{ about.location }}</span>
+            </div>
+            <div class="flex justify-between" style="color: var(--text-faint);">
+              <span>Verified Repos:</span>
+              <span class="font-medium text-emerald-500 font-bold">8 GitHub Repos</span>
+            </div>
+            <div class="flex justify-between" style="color: var(--text-faint);">
+              <span>Tech Arsenal:</span>
+              <span class="font-medium text-indigo-400 font-bold">52 Skills Loaded</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right Editorial Framing: Authentic Photo & Telemetry Card -->
-      <div class="w-full max-w-sm sm:max-w-md lg:max-w-xs xl:max-w-sm flex flex-col items-center flex-shrink-0">
-        <div class="w-64 h-64 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border p-1.5 transition-all" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
-          <img src="{{ settings.photo_display_url }}" alt="{{ settings.full_name }}" class="w-full h-full object-cover rounded-xl" loading="eager" />
+      <!-- Interactive Developer Terminal / Console Widget -->
+      <div class="rounded-2xl border p-4 sm:p-5 font-mono text-xs space-y-3" style="background-color: var(--terminal-bg); border-color: var(--border-subtle);">
+        <div class="flex items-center justify-between border-b pb-2.5" style="border-color: var(--border-subtle);">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span class="ml-2 font-medium" style="color: var(--text-faint);">sakib-terminal — zsh — 80x24</span>
+          </div>
+          <div class="text-[11px] hidden sm:block" style="color: var(--text-faint);">
+            Type commands or click chips below
+          </div>
         </div>
-        <div class="w-full mt-3 p-3 rounded-xl border text-xs font-mono space-y-1" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-          <div class="flex justify-between" style="color: var(--text-faint);">
-            <span>Location:</span>
-            <span class="font-medium" style="color: var(--text-main);">{{ about.location }}</span>
-          </div>
-          <div class="flex justify-between" style="color: var(--text-faint);">
-            <span>Affiliation:</span>
-            <span class="font-medium" style="color: var(--text-main);">BAIUST CSE (L3T2)</span>
-          </div>
+
+        <div id="terminalLog" class="space-y-1.5 max-h-36 overflow-y-auto leading-relaxed" style="color: var(--text-muted);">
+          <div>Welcome to Sakib's Portfolio CLI. Type <span class="text-indigo-400 font-bold">help</span> to list available commands.</div>
+          <div>Loaded: <span class="text-emerald-500 font-bold">8 production &amp; research projects</span> | <span class="text-indigo-400 font-bold">52 technical skills</span>.</div>
+        </div>
+
+        <!-- Terminal Input Line -->
+        <form id="terminalForm" class="flex items-center gap-2 pt-1 border-t" style="border-color: var(--border-subtle);">
+          <span class="text-emerald-500 font-bold select-none">sakib@portfolio:~$</span>
+          <input type="text" id="terminalInput" class="flex-1 bg-transparent border-none outline-none text-xs font-mono" style="color: var(--text-main);" placeholder="try: skills, projects, hardware, contact, time..." autocomplete="off" />
+        </form>
+
+        <!-- Command Shortcut Chips -->
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          <button type="button" class="term-chip px-2 py-0.5 rounded border text-[11px] font-mono hover:border-indigo-500" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface);" data-cmd="skills">skills</button>
+          <button type="button" class="term-chip px-2 py-0.5 rounded border text-[11px] font-mono hover:border-indigo-500" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface);" data-cmd="projects">projects</button>
+          <button type="button" class="term-chip px-2 py-0.5 rounded border text-[11px] font-mono hover:border-indigo-500" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface);" data-cmd="hardware">hardware</button>
+          <button type="button" class="term-chip px-2 py-0.5 rounded border text-[11px] font-mono hover:border-indigo-500" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface);" data-cmd="contact">contact</button>
+          <button type="button" class="term-chip px-2 py-0.5 rounded border text-[11px] font-mono hover:border-indigo-500" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface);" data-cmd="clear">clear</button>
         </div>
       </div>
     </section>
 
 
     <!-- =========================================================================
-         3. ABOUT SECTION
+         3. ABOUT SECTION & ENGINEERING PHILOSOPHY
          ========================================================================= -->
     <section id="about" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
-      <div class="space-y-6 max-w-3xl">
+      <div class="space-y-10">
         <div class="space-y-1">
           <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">About Me</h2>
           <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">{{ about.headline }}</h3>
         </div>
 
-        <div class="space-y-4 text-base leading-relaxed" style="color: var(--text-muted);">
-          <p>
-            {{ about.bio_paragraph_1 }}
-          </p>
-          {% if about.bio_paragraph_2 %}
-          <p>
-            {{ about.bio_paragraph_2 }}
-          </p>
-          {% endif %}
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-          <div class="p-4 rounded-xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-            <div class="text-xs font-mono uppercase tracking-wider" style="color: var(--text-faint);">Formal Education</div>
-            <div class="text-sm font-semibold mt-1" style="color: var(--text-main);">{{ about.education }}</div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Story Paragraphs -->
+          <div class="lg:col-span-7 space-y-4 text-base leading-relaxed" style="color: var(--text-muted);">
+            <p>
+              {{ about.bio_paragraph_1 }}
+            </p>
+            {% if about.bio_paragraph_2 %}
+            <p>
+              {{ about.bio_paragraph_2 }}
+            </p>
+            {% endif %}
+            <p>
+              My approach to engineering is straightforward: understand constraints first, select the simplest architecture that delivers the required throughput and reliability, and verify every claim through functional tests and telemetry data.
+            </p>
           </div>
-          <div class="p-4 rounded-xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-            <div class="text-xs font-mono uppercase tracking-wider" style="color: var(--text-faint);">Primary Location</div>
-            <div class="text-sm font-semibold mt-1" style="color: var(--text-main);">{{ about.location }}</div>
+
+          <!-- 4-Card Bento Metrics Box -->
+          <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl border space-y-1" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="text-2xl font-extrabold font-mono text-indigo-400">52 Skills</div>
+              <div class="text-xs font-medium" style="color: var(--text-muted);">Across 8 structured categories</div>
+            </div>
+            <div class="p-4 rounded-xl border space-y-1" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="text-2xl font-extrabold font-mono text-emerald-400">8 Repos</div>
+              <div class="text-xs font-medium" style="color: var(--text-muted);">Verifiable GitHub codebases</div>
+            </div>
+            <div class="p-4 rounded-xl border space-y-1" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="text-2xl font-extrabold font-mono text-amber-400">512-Pt FFT</div>
+              <div class="text-xs font-medium" style="color: var(--text-muted);">ESP32-S3 DSP acoustic analysis</div>
+            </div>
+            <div class="p-4 rounded-xl border space-y-1" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="text-2xl font-extrabold font-mono text-purple-400">BAIUST</div>
+              <div class="text-xs font-medium" style="color: var(--text-muted);">L3T2 Computer Science &amp; Eng.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -452,42 +553,104 @@
 
 
     <!-- =========================================================================
-         4. FEATURED PROJECTS & DEEP CASE STUDIES
+         4. COMPLETE TECHNICAL SKILLS ARSENAL (52 SKILLS ACROSS 8 DOMAINS)
+         ========================================================================= -->
+    <section id="skills" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
+      <div class="space-y-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div class="space-y-1">
+            <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Technical Arsenal</h2>
+            <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">Verified Skills &amp; Runtimes</h3>
+            <p class="text-xs sm:text-sm" style="color: var(--text-muted);">
+              Comprehensive inventory of 52 technologies labeled with authentic proficiency levels:
+              <span class="font-mono font-medium" style="color: var(--accent-text);">Proficient</span> (daily engineering),
+              <span class="font-mono font-medium" style="color: var(--text-muted);">Used in projects</span>, and
+              <span class="font-mono font-medium" style="color: var(--badge-embedded-text);">Learning</span>.
+            </p>
+          </div>
+
+          <!-- Real-time Skill Search Bar -->
+          <div class="w-full md:w-72 flex-shrink-0">
+            <input type="text" id="skillSearchInput" placeholder="Filter skills (e.g. python, fft, docker)..." class="w-full px-3.5 py-2 rounded-lg border text-xs font-mono themed-input focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+
+        <!-- 8-Domain Responsive Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {% for group in skill_groups %}
+          <div class="skill-group-card p-5 rounded-2xl border space-y-4 flex flex-col justify-between" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);" data-group-name="{{ group.name|lower }}">
+            <div>
+              <h4 class="text-sm font-bold font-mono border-b pb-2 flex items-center justify-between" style="border-color: var(--border-subtle); color: var(--text-main);">
+                <span>{{ group.name }}</span>
+                <span class="text-[10px] font-normal" style="color: var(--text-faint);">({{ group.skills.count }} tools)</span>
+              </h4>
+              <div class="flex flex-wrap gap-2 pt-3">
+                {% for s in group.skills.all %}
+                <div class="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium transition-transform hover:-translate-y-0.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle); color: var(--text-main);" data-skill-name="{{ s.name|lower }}">
+                  <span>{{ s.name }}</span>
+                  <span class="text-[9px] font-mono px-1.5 py-0.5 rounded border {% if s.level_label == 'Proficient' %}tag-proficient{% elif s.level_label == 'Used in projects' %}tag-project{% else %}tag-learning{% endif %}">
+                    {{ s.level_label }}
+                  </span>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         5. FEATURED PROJECTS & DEEP CASE STUDIES (8 REAL GITHUB PROJECTS)
          ========================================================================= -->
     <section id="projects" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
       <div class="space-y-10">
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
           <div class="space-y-1">
             <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Engineering Portfolio</h2>
             <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">Featured Projects &amp; Case Studies</h3>
             <p class="text-xs sm:text-sm pt-0.5" style="color: var(--text-muted);">
-              Curated selection of verified software systems and embedded prototypes. Click "Inspect Case Study" for complete engineering details.
+              All 8 projects are grounded in working code on GitHub (Sakib20050413). Click "Inspect Case Study" for architecture and decisions.
             </p>
           </div>
 
-          <!-- Functional Category Filter Controls -->
-          <div class="inline-flex p-1 rounded-xl border self-start sm:self-auto flex-shrink-0" style="background-color: var(--bg-surface); border-color: var(--border-subtle);" role="tablist">
-            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-active" data-filter="ALL">All ({{ projects|length }})</button>
-            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="AI_ML">AI-ML</button>
-            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="WEB">Web</button>
-            <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="EMBEDDED">Embedded</button>
+          <!-- Controls: Keyword Search + Category Filter -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <input type="text" id="projectSearchInput" placeholder="Search projects by title, stack, keyword..." class="px-3.5 py-2 rounded-lg border text-xs font-mono themed-input focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-64" />
+
+            <div class="inline-flex p-1 rounded-xl border self-start sm:self-auto flex-shrink-0" style="background-color: var(--bg-surface); border-color: var(--border-subtle);" role="tablist">
+              <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-active" data-filter="ALL">All ({{ projects|length }})</button>
+              <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="AI_ML">AI-ML</button>
+              <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="WEB">Web</button>
+              <button type="button" class="project-filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors filter-btn-inactive" data-filter="EMBEDDED">Embedded</button>
+            </div>
           </div>
         </div>
 
-        <!-- Featured Project Spotlight (Asymmetric Visual Hierarchy) -->
+        <!-- Bento Project Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {% for p in projects %}
-          <article class="project-card group p-6 sm:p-7 rounded-2xl border flex flex-col justify-between transition-all hover:border-indigo-500" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);" data-category="{{ p.category }}" data-project-id="{{ p.id }}">
+          <article class="project-card group p-6 sm:p-7 rounded-2xl border flex flex-col justify-between transition-all hover:border-indigo-500" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);" data-category="{{ p.category }}" data-title="{{ p.title|lower }}" data-summary="{{ p.summary|lower }}" data-stack="{{ p.tech_stack_csv|lower }}">
             <div class="space-y-4">
               <!-- Top Category & Status Header -->
               <div class="flex items-center justify-between">
                 <span class="text-xs font-mono font-medium px-2.5 py-0.5 rounded border {% if p.category == 'AI_ML' %}badge-ai{% elif p.category == 'EMBEDDED' %}badge-embedded{% else %}badge-web{% endif %}">
                   {{ p.get_category_display }}
                 </span>
-                <span class="text-xs font-mono flex items-center gap-1.5" style="color: var(--text-faint);">
-                  <span class="w-1.5 h-1.5 rounded-full {% if p.status == 'Completed' %}bg-emerald-500{% else %}bg-amber-500{% endif %}"></span>
-                  {{ p.status }}
-                </span>
+                <div class="flex items-center gap-3">
+                  <!-- Live Star / Upvote Counter -->
+                  <button type="button" class="card-upvote-btn text-xs font-mono flex items-center gap-1 hover:text-indigo-400 transition-colors" style="color: var(--text-faint);" data-project-id="{{ p.id }}" title="Click to star/upvote this project">
+                    <span>★</span>
+                    <span class="upvote-count font-bold">{{ p.upvotes }}</span>
+                  </button>
+
+                  <span class="text-xs font-mono flex items-center gap-1.5" style="color: var(--text-faint);">
+                    <span class="w-1.5 h-1.5 rounded-full {% if p.status == 'Completed' %}bg-emerald-500{% else %}bg-amber-500{% endif %}"></span>
+                    {{ p.status }}
+                  </span>
+                </div>
               </div>
 
               <!-- Title & Summary -->
@@ -495,7 +658,7 @@
                 <h4 class="text-xl font-bold transition-colors group-hover:text-indigo-500" style="color: var(--text-main);">
                   {{ p.title }}
                 </h4>
-                <p class="text-sm font-mono mt-1 font-medium" style="color: var(--accent-text);">
+                <p class="text-sm font-mono mt-1 font-medium leading-relaxed" style="color: var(--accent-text);">
                   {{ p.summary }}
                 </p>
               </div>
@@ -538,46 +701,114 @@
 
 
     <!-- =========================================================================
-         5. TECHNICAL SKILLS SECTION (6 HONEST CATEGORIES)
+         6. EMBEDDED SYSTEMS & EDGE-AI HARDWARE BLUEPRINT VISUALIZER
          ========================================================================= -->
-    <section id="skills" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
+    <section id="hardware" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
       <div class="space-y-8">
         <div class="space-y-1">
-          <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Technical Arsenal</h2>
-          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">Verified Skills &amp; Runtimes</h3>
+          <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Hardware Architecture</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">Edge AI &amp; Signal Processing Pipelines</h3>
           <p class="text-xs sm:text-sm" style="color: var(--text-muted);">
-            Grouped by domain and labeled with authentic proficiency levels: <span class="font-mono font-medium" style="color: var(--accent-text);">Proficient</span> (daily engineering), <span class="font-mono font-medium" style="color: var(--text-muted);">Used in projects</span>, and <span class="font-mono font-medium" style="color: var(--badge-embedded-text);">Learning</span>.
+            Physical computing systems designed for ESP32-S3 dual-core microcontrollers with real hardware constraints.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {% for group in skill_groups %}
-          <div class="p-6 rounded-2xl border space-y-4" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
-            <h4 class="text-sm font-bold font-mono border-b pb-2 flex items-center justify-between" style="border-color: var(--border-subtle); color: var(--text-main);">
-              <span>{{ group.name }}</span>
-              <span class="text-[10px] font-normal" style="color: var(--text-faint);">({{ group.skills.count }} tools)</span>
-            </h4>
-            <div class="flex flex-wrap gap-2">
-              {% for s in group.skills.all %}
-              <div class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle); color: var(--text-main);">
-                <span>{{ s.name }}</span>
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border {% if s.level_label == 'Proficient' %}tag-proficient{% elif s.level_label == 'Used in projects' %}tag-project{% else %}tag-learning{% endif %}">
-                  {{ s.level_label }}
-                </span>
-              </div>
-              {% endfor %}
+        <!-- Interactive Blueprint Selector Tabs -->
+        <div class="flex items-center gap-3">
+          <button type="button" id="tabMosquito" class="px-4 py-2 text-xs font-mono font-bold rounded-xl border bg-indigo-600 text-white transition-all shadow-sm">
+            Mosquito Vector Trap (512-Pt FFT)
+          </button>
+          <button type="button" id="tabLightning" class="px-4 py-2 text-xs font-mono font-bold rounded-xl border transition-all" style="border-color: var(--border-subtle); color: var(--text-muted); background-color: var(--bg-surface-elevated);">
+            Rural Lightning Station (RF &amp; GSM)
+          </button>
+        </div>
+
+        <!-- Blueprint 1: Mosquito Vector Trap -->
+        <div id="blueprintMosquito" class="p-6 sm:p-8 rounded-2xl border space-y-6" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b pb-4" style="border-color: var(--border-subtle);">
+            <div>
+              <span class="text-xs font-mono px-2 py-0.5 rounded border badge-embedded">ESP32-S3 Dual-Core DSP System</span>
+              <h4 class="text-xl font-bold mt-1.5" style="color: var(--text-main);">Bio-Acoustic Female Mosquito Wingbeat Classifier</h4>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono" style="color: var(--text-faint);">
+              <span>Latency: <strong>32 ms</strong></span> • <span>Resolution: <strong>512-pt FFT</strong></span> • <span>Target Band: <strong>350–600 Hz</strong></span>
             </div>
           </div>
-          {% endfor %}
+
+          <!-- Flow Pipeline Diagram -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs font-mono">
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-amber-400 font-bold">STAGE 1: CAPTURE</div>
+              <div class="font-bold" style="color: var(--text-main);">INMP441 MEMS Mic</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">24-bit audio captured via continuous I2S DMA buffer on Core 0.</div>
+            </div>
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-indigo-400 font-bold">STAGE 2: WINDOWING</div>
+              <div class="font-bold" style="color: var(--text-main);">Hann Windowing</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">Applies 512-point Hann function to reduce spectral leakage.</div>
+            </div>
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-purple-400 font-bold">STAGE 3: FFT DSP</div>
+              <div class="font-bold" style="color: var(--text-main);">Radix-2 FFT</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">Computes spectral energy distribution in ~32ms computation slice.</div>
+            </div>
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-emerald-400 font-bold">STAGE 4: CLASSIFY</div>
+              <div class="font-bold" style="color: var(--text-main);">TinyML Threshold</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">Validates 350–600 Hz harmonic ratio and cross-checks optical sensor.</div>
+            </div>
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-rose-400 font-bold">STAGE 5: ACTUATE</div>
+              <div class="font-bold" style="color: var(--text-main);">PWM Suction Fan</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">Fires selective trap gate without killing beneficial honeybees.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blueprint 2: Rural Lightning Station (Initially hidden) -->
+        <div id="blueprintLightning" class="hidden p-6 sm:p-8 rounded-2xl border space-y-6" style="background-color: var(--bg-surface); border-color: var(--border-subtle); box-shadow: var(--card-shadow);">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b pb-4" style="border-color: var(--border-subtle);">
+            <div>
+              <span class="text-xs font-mono px-2 py-0.5 rounded border badge-embedded">Off-Grid Solar Telemetry Node</span>
+              <h4 class="text-xl font-bold mt-1.5" style="color: var(--text-main);">IoT Rural Lightning Early Warning Station</h4>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono" style="color: var(--text-faint);">
+              <span>Detection Radius: <strong>1–40 km</strong></span> • <span>Modem: <strong>SIM800L GSM</strong></span> • <span>Sensor: <strong>AS3935 Franklin</strong></span>
+            </div>
+          </div>
+
+          <!-- Flow Pipeline Diagram -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono">
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-amber-400 font-bold">MODULE 1: DETECTION</div>
+              <div class="font-bold" style="color: var(--text-main);">AS3935 RF Sensor</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">Detects 500 kHz electromagnetic strike pulses and estimates distance.</div>
+            </div>
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-indigo-400 font-bold">MODULE 2: FUSION</div>
+              <div class="font-bold" style="color: var(--text-main);">BMP280 Barometer</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">Monitors rapid atmospheric pressure drops to filter false RF noise.</div>
+            </div>
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-emerald-400 font-bold">MODULE 3: BROADCAST</div>
+              <div class="font-bold" style="color: var(--text-main);">SIM800L GSM Telemetry</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">Sends urgent cellular SMS warnings directly to registered farm leaders.</div>
+            </div>
+            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-surface-elevated); border-color: var(--border-subtle);">
+              <div class="text-[10px] text-purple-400 font-bold">MODULE 4: POWER</div>
+              <div class="font-bold" style="color: var(--text-main);">Solar + Li-Ion MPPT</div>
+              <div class="text-[11px]" style="color: var(--text-muted);">Uninterrupted 24/7 off-grid operation during harsh monsoon storms.</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
 
     <!-- =========================================================================
-         6. EXPERIENCE, LEADERSHIP & CERTIFICATIONS TIMELINE
+         7. EXPERIENCE, LEADERSHIP & VERIFIED CREDENTIALS
          ========================================================================= -->
-    <section id="experience" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
+    <section id="timeline" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
         <!-- Experience & Leadership Timeline -->
         <div class="space-y-6">
@@ -629,7 +860,62 @@
 
 
     <!-- =========================================================================
-         7. APPLIED RESEARCH & EXPLORATION
+         8. RECRUITER & CLIENT QUICK FAQ ACCORDION
+         ========================================================================= -->
+    <section id="faq" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
+      <div class="max-w-3xl mx-auto space-y-8">
+        <div class="text-center space-y-1">
+          <h2 class="text-xs font-mono uppercase tracking-widest font-semibold" style="color: var(--section-heading);">Quick Answers</h2>
+          <h3 class="text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--text-main);">Recruiter &amp; Collaborator FAQ</h3>
+        </div>
+
+        <div class="space-y-3">
+          <div class="faq-item rounded-xl border p-4 transition-all" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <button type="button" class="faq-question w-full flex items-center justify-between text-left text-sm font-bold" style="color: var(--text-main);">
+              <span>What are your primary technical strengths?</span>
+              <span class="faq-icon text-indigo-400 font-mono text-base">+</span>
+            </button>
+            <div class="faq-answer hidden text-xs leading-relaxed pt-2.5" style="color: var(--text-muted);">
+              Full-stack backend architecture with Python/Django and Next.js, relational database schema optimization (PostgreSQL), and embedded digital signal processing (ESP32-S3, C++, 512-pt FFT).
+            </div>
+          </div>
+
+          <div class="faq-item rounded-xl border p-4 transition-all" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <button type="button" class="faq-question w-full flex items-center justify-between text-left text-sm font-bold" style="color: var(--text-main);">
+              <span>Are you available for remote internships or engineering roles?</span>
+              <span class="faq-icon text-indigo-400 font-mono text-base">+</span>
+            </button>
+            <div class="faq-answer hidden text-xs leading-relaxed pt-2.5" style="color: var(--text-muted);">
+              Yes. I am actively available for remote, hybrid, or on-site AI/ML engineering internships, full-stack developer roles, and applied research collaborations.
+            </div>
+          </div>
+
+          <div class="faq-item rounded-xl border p-4 transition-all" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <button type="button" class="faq-question w-full flex items-center justify-between text-left text-sm font-bold" style="color: var(--text-main);">
+              <span>Can you build and deploy production systems independently?</span>
+              <span class="faq-icon text-indigo-400 font-mono text-base">+</span>
+            </button>
+            <div class="faq-answer hidden text-xs leading-relaxed pt-2.5" style="color: var(--text-muted);">
+              Yes. Every project in this portfolio—from the BAIUST Campus Lost &amp; Found platform to the CoWork API microservice—was built from requirements to cloud deployment on Render, Neon PostgreSQL, and Vercel.
+            </div>
+          </div>
+
+          <div class="faq-item rounded-xl border p-4 transition-all" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <button type="button" class="faq-question w-full flex items-center justify-between text-left text-sm font-bold" style="color: var(--text-main);">
+              <span>What is the current status of your TinyML &amp; hardware research?</span>
+              <span class="faq-icon text-indigo-400 font-mono text-base">+</span>
+            </button>
+            <div class="faq-answer hidden text-xs leading-relaxed pt-2.5" style="color: var(--text-muted);">
+              The Bio-Acoustic Mosquito Vector Trap is actively under hardware prototype evaluation in CSE 301/326 with 512-point FFT wingbeat isolation running on physical ESP32-S3 boards.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         9. APPLIED RESEARCH & EXPLORATION
          ========================================================================= -->
     {% if settings.show_exploring_section %}
     <section id="exploring" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
@@ -648,7 +934,7 @@
 
 
     <!-- =========================================================================
-         8. CONTACT EXPERIENCE WITH ACCESSIBLE FEEDBACK
+         10. CONTACT EXPERIENCE WITH ACCESSIBLE FEEDBACK
          ========================================================================= -->
     <section id="contact" class="reveal-on-scroll border-t pt-20" style="border-color: var(--border-subtle);">
       <div class="max-w-xl mx-auto space-y-8 text-center">
@@ -700,12 +986,12 @@
 
 
   <!-- =========================================================================
-       9. FOOTER
+       11. FOOTER
        ========================================================================= -->
   <footer class="border-t py-10 mt-20" style="border-color: var(--border-subtle);">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono" style="color: var(--text-faint);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono" style="color: var(--text-faint);">
       <div>
-        © 2026 {{ settings.full_name }}. Built with Django 5 &amp; Vanilla JS.
+        © 2026 {{ settings.full_name }}. Built with Django 5 &amp; Vanilla JS DOM.
       </div>
       <div class="flex items-center gap-6">
         <a href="{% url 'printable_cv' %}" class="transition-colors hover:text-indigo-500" style="color: var(--text-muted);">CV</a>
@@ -770,7 +1056,7 @@
        CLIENT-SIDE VANILLA JAVASCRIPT LOGIC
        ========================================================================= -->
   <script>
-    // Project Dataset for Instant Accessible Modals
+    // 1. Project Dataset for Instant Accessible Modals
     const PROJECTS_DATA = [
       {% for p in projects %}
       {
@@ -791,7 +1077,7 @@
 
     let currentActiveProject = null;
 
-    // 1. IntersectionObserver for Restrained Scroll Reveals
+    // 2. IntersectionObserver for Restrained Scroll Reveals
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -807,28 +1093,196 @@
       document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-revealed'));
     }
 
-    // 2. Project Category Filter
+    // 3. Live Cumilla Clock (UTC+6)
+    function updateClock() {
+      const now = new Date();
+      // UTC+6 offset in minutes is +360
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const cumillaTime = new Date(utc + (3600000 * 6));
+      const hours = String(cumillaTime.getHours()).padStart(2, '0');
+      const mins = String(cumillaTime.getMinutes()).padStart(2, '0');
+      const secs = String(cumillaTime.getSeconds()).padStart(2, '0');
+      const clockEl = document.getElementById('liveClockDisplay');
+      if (clockEl) {
+        clockEl.textContent = `CUMILLA ${hours}:${mins}:${secs} UTC+6`;
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 4. One-Click Copy Email
+    const copyEmailBtn = document.getElementById('quickCopyEmailBtn');
+    if (copyEmailBtn) {
+      copyEmailBtn.addEventListener('click', () => {
+        const email = "{{ settings.primary_email }}";
+        navigator.clipboard.writeText(email).then(() => {
+          const lbl = document.getElementById('copyBtnLabel');
+          lbl.textContent = '✓ Copied!';
+          setTimeout(() => { lbl.textContent = 'Copy Email'; }, 2000);
+        }).catch(() => {});
+      });
+    }
+
+    // 5. Interactive Developer CLI Terminal Widget
+    const terminalInput = document.getElementById('terminalInput');
+    const terminalForm = document.getElementById('terminalForm');
+    const terminalLog = document.getElementById('terminalLog');
+
+    function appendTerminal(line) {
+      const d = document.createElement('div');
+      d.innerHTML = line;
+      terminalLog.appendChild(d);
+      terminalLog.scrollTop = terminalLog.scrollHeight;
+    }
+
+    function executeCommand(raw) {
+      const cmd = raw.trim().toLowerCase();
+      if (!cmd) return;
+      appendTerminal(`<span class="text-emerald-500 font-bold">sakib@portfolio:~$</span> ${cmd}`);
+
+      if (cmd === 'help') {
+        appendTerminal('Commands: <span class="text-indigo-400">skills</span>, <span class="text-indigo-400">projects</span>, <span class="text-indigo-400">hardware</span>, <span class="text-indigo-400">contact</span>, <span class="text-indigo-400">about</span>, <span class="text-indigo-400">time</span>, <span class="text-indigo-400">clear</span>');
+      } else if (cmd === 'skills') {
+        appendTerminal('52 Verified Skills loaded across 8 domains (Python, Django, FastAPI, Next.js, PyTorch, ESP32-S3 FFT, PostgreSQL, Docker, etc.)');
+        document.getElementById('skills').scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'projects') {
+        appendTerminal('8 GitHub projects: Lost & Found, Mosquito Trap, Lightning Warning, CodeQuest BD, Aloron Shop, CoWork API, SmartSpend, Library System.');
+        document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'hardware') {
+        appendTerminal('Hardware blueprints: ESP32-S3 512-point FFT Mosquito Trap & AS3935 RF Lightning Station.');
+        document.getElementById('hardware').scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'contact') {
+        appendTerminal('Email: {{ settings.primary_email }} | Location: Cumilla, BD');
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'about') {
+        appendTerminal('Md Najmus Sakib Rahatul: 3rd-year CSE Student at BAIUST, Cumilla. Focus: Applied AI & Full-Stack Systems.');
+        document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+      } else if (cmd === 'time') {
+        appendTerminal(`Current Cumilla Time: ${document.getElementById('liveClockDisplay').textContent}`);
+      } else if (cmd === 'clear') {
+        terminalLog.innerHTML = '<div>Console cleared. Type <span class="text-indigo-400 font-bold">help</span> for commands.</div>';
+      } else {
+        appendTerminal(`Command not recognized: '${cmd}'. Type <span class="text-indigo-400 font-bold">help</span>.`);
+      }
+    }
+
+    if (terminalForm) {
+      terminalForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        executeCommand(terminalInput.value);
+        terminalInput.value = '';
+      });
+    }
+
+    document.querySelectorAll('.term-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cmd = btn.getAttribute('data-cmd');
+        executeCommand(cmd);
+      });
+    });
+
+    // 6. Real-Time Skill Search & Filter
+    const skillSearchInput = document.getElementById('skillSearchInput');
+    if (skillSearchInput) {
+      skillSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        document.querySelectorAll('.skill-chip').forEach(chip => {
+          const name = chip.getAttribute('data-skill-name') || '';
+          if (!query || name.includes(query)) {
+            chip.style.display = 'inline-flex';
+            chip.style.opacity = '1';
+          } else {
+            chip.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // 7. Project Keyword Search & Category Filter
+    const projectSearchInput = document.getElementById('projectSearchInput');
+    let currentCategoryFilter = 'ALL';
+
+    function applyProjectFilters() {
+      const query = (projectSearchInput ? projectSearchInput.value : '').toLowerCase().trim();
+      document.querySelectorAll('.project-card').forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const title = card.getAttribute('data-title') || '';
+        const summary = card.getAttribute('data-summary') || '';
+        const stack = card.getAttribute('data-stack') || '';
+
+        const matchesCat = (currentCategoryFilter === 'ALL' || cat === currentCategoryFilter);
+        const matchesQuery = (!query || title.includes(query) || summary.includes(query) || stack.includes(query));
+
+        if (matchesCat && matchesQuery) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
     document.querySelectorAll('.project-filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const filter = btn.getAttribute('data-filter');
+        currentCategoryFilter = btn.getAttribute('data-filter');
         document.querySelectorAll('.project-filter-btn').forEach(b => {
           b.classList.remove('filter-btn-active');
           b.classList.add('filter-btn-inactive');
         });
         btn.classList.add('filter-btn-active');
         btn.classList.remove('filter-btn-inactive');
-
-        document.querySelectorAll('.project-card').forEach(card => {
-          if (filter === 'ALL' || card.getAttribute('data-category') === filter) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
-        });
+        applyProjectFilters();
       });
     });
 
-    // 3. Project Detail Case Study Modal
+    if (projectSearchInput) {
+      projectSearchInput.addEventListener('input', applyProjectFilters);
+    }
+
+    // 8. Hardware Blueprint Switcher
+    const tabMosquito = document.getElementById('tabMosquito');
+    const tabLightning = document.getElementById('tabLightning');
+    const blueprintMosquito = document.getElementById('blueprintMosquito');
+    const blueprintLightning = document.getElementById('blueprintLightning');
+
+    if (tabMosquito && tabLightning) {
+      tabMosquito.addEventListener('click', () => {
+        tabMosquito.className = 'px-4 py-2 text-xs font-mono font-bold rounded-xl border bg-indigo-600 text-white transition-all shadow-sm';
+        tabLightning.className = 'px-4 py-2 text-xs font-mono font-bold rounded-xl border transition-all';
+        tabLightning.style.backgroundColor = 'var(--bg-surface-elevated)';
+        tabLightning.style.color = 'var(--text-muted)';
+        blueprintMosquito.classList.remove('hidden');
+        blueprintLightning.classList.add('hidden');
+      });
+
+      tabLightning.addEventListener('click', () => {
+        tabLightning.className = 'px-4 py-2 text-xs font-mono font-bold rounded-xl border bg-indigo-600 text-white transition-all shadow-sm';
+        tabMosquito.className = 'px-4 py-2 text-xs font-mono font-bold rounded-xl border transition-all';
+        tabMosquito.style.backgroundColor = 'var(--bg-surface-elevated)';
+        tabMosquito.style.color = 'var(--text-muted)';
+        blueprintLightning.classList.remove('hidden');
+        blueprintMosquito.classList.add('hidden');
+      });
+    }
+
+    // 9. Recruiter FAQ Accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-question');
+      const a = item.querySelector('.faq-answer');
+      const icon = item.querySelector('.faq-icon');
+      if (q && a) {
+        q.addEventListener('click', () => {
+          const isClosed = a.classList.contains('hidden');
+          document.querySelectorAll('.faq-answer').forEach(ans => ans.classList.add('hidden'));
+          document.querySelectorAll('.faq-icon').forEach(ic => ic.textContent = '+');
+          if (isClosed) {
+            a.classList.remove('hidden');
+            icon.textContent = '−';
+          }
+        });
+      }
+    });
+
+    // 10. Project Detail Case Study Modal
     const modal = document.getElementById('projectModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
 
@@ -896,10 +1350,9 @@
       }
     });
 
-    // Upvote Project API
-    document.getElementById('modalUpvoteBtn').addEventListener('click', () => {
-      if (!currentActiveProject) return;
-      fetch(`/api/projects/${currentActiveProject.id}/upvote/`, {
+    // 11. Upvote / Star API Handler
+    function handleUpvote(projId, countElement) {
+      fetch(`/api/projects/${projId}/upvote/`, {
         method: 'POST',
         headers: {
           'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
@@ -908,14 +1361,30 @@
       .then(res => res.json())
       .then(data => {
         if (data.ok) {
-          document.getElementById('modalUpvoteCount').textContent = data.upvotes;
-          currentActiveProject.upvotes = data.upvotes;
+          countElement.textContent = data.upvotes;
+          if (currentActiveProject && currentActiveProject.id === projId) {
+            currentActiveProject.upvotes = data.upvotes;
+          }
         }
       })
       .catch(() => {});
+    }
+
+    document.querySelectorAll('.card-upvote-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const projId = btn.getAttribute('data-project-id');
+        const countSpan = btn.querySelector('.upvote-count');
+        handleUpvote(projId, countSpan);
+      });
     });
 
-    // 4. Contact Form Submission with Spam Protection & Feedback
+    document.getElementById('modalUpvoteBtn').addEventListener('click', () => {
+      if (!currentActiveProject) return;
+      handleUpvote(currentActiveProject.id, document.getElementById('modalUpvoteCount'));
+    });
+
+    // 12. Contact Form Submission with Spam Protection & Feedback
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatusMsg');
     const submitBtn = document.getElementById('submitBtn');
@@ -956,7 +1425,7 @@
       });
     });
 
-    // 5. Theme Switcher (Preserves preference in localStorage)
+    // 13. Theme Switcher (Preserves preference in localStorage)
     const themeBtn = document.getElementById('themeToggleBtn');
     if (themeBtn) {
       const sunIcon = document.getElementById('sunIcon');
@@ -983,7 +1452,7 @@
       });
     }
 
-    // 6. Mobile Menu Drawer Toggle
+    // 14. Mobile Menu Drawer Toggle
     const mobileBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     if (mobileBtn && mobileMenu) {
