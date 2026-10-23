@@ -1,9 +1,10 @@
 import os
+import shutil
 from pathlib import Path
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-sakib-ai-ml-portfolio-v5-production-key")
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-sakib-ai-ml-portfolio-v6-production-key")
 DEBUG = os.environ.get("DEBUG", "True").lower() in ("true", "1", "yes")
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
@@ -54,13 +55,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "portfolio_project.wsgi.application"
 
-# Cloud PostgreSQL (Neon / Supabase) with automatic local SQLite fallback
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-    )
-}
+# Database: Use DATABASE_URL (Neon/Supabase Postgres) if set; on Vercel without DATABASE_URL, copy pre-seeded db.sqlite3 to writable /tmp/db.sqlite3
+if os.environ.get("DATABASE_URL"):
+    DATABASES = {
+        "default": dj_database_url.config(conn_max_age=600)
+    }
+elif "VERCEL" in os.environ:
+    tmp_db = Path("/tmp/db.sqlite3")
+    bundled_db = BASE_DIR / "db.sqlite3"
+    if not tmp_db.exists() and bundled_db.exists():
+        shutil.copy2(bundled_db, tmp_db)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": str(tmp_db),
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Dhaka"
@@ -70,10 +87,10 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = Path("/tmp/media") if "VERCEL" in os.environ else (BASE_DIR / "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "/dashboard/login/"

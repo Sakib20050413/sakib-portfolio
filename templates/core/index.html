@@ -336,6 +336,9 @@
                   🟢 Launch Live Server ↗
                 </a>
                 {% endif %}
+                <button type="button" onclick="openArchModal('{{ proj.code }}', '{{ proj.title|escapejs }}', '{{ proj.category }}', '{{ proj.tagline|escapejs }}', '{{ proj.description|escapejs }}', '{{ proj.architecture_breakdown|escapejs }}', '{{ proj.tech_stack_csv|escapejs }}', '{{ proj.live_server_url|escapejs }}', '{{ proj.github_repo_url|escapejs }}')" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono-code text-indigo-300 btn-press">
+                  Inspect Architecture ↗
+                </button>
                 {% if proj.github_repo_url %}
                 <a href="{{ proj.github_repo_url }}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl border border-white/15 hover:border-white/40 text-xs font-mono-code text-gray-200 btn-press">
                   GitHub Repo ↗
@@ -462,12 +465,66 @@
     <div class="container-studio flex flex-col sm:flex-row items-center justify-between gap-3">
       <div>© 2026 {{ profile.full_name }} • {{ profile.role_title }}</div>
       <div class="flex items-center gap-4">
+        <button type="button" onclick="document.getElementById('cmdKModal').showModal()" class="hover:text-indigo-400 text-indigo-300">Cmd+K Shell</button>
         <a href="{{ profile.github_url }}" target="_blank" rel="noopener" class="hover:text-white">GitHub</a>
         <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener" class="hover:text-white">LinkedIn</a>
         <a href="{{ profile.kaggle_url }}" target="_blank" rel="noopener" class="hover:text-white">Kaggle</a>
       </div>
     </div>
   </footer>
+
+  <!-- ARCHITECTURE README MODAL -->
+  <dialog id="archModal" class="p-0 rounded-2xl bg-[#0d0f17] text-gray-100 border border-white/15 shadow-2xl w-full max-w-2xl backdrop:bg-black/80 backdrop:backdrop-blur-md">
+    <div class="p-4 bg-[#131624] border-b border-white/10 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+        <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+        <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+        <span id="archModalCode" class="text-xs font-mono-code text-gray-400 pl-2">README.md</span>
+      </div>
+      <button type="button" onclick="document.getElementById('archModal').close()" class="text-gray-400 hover:text-white font-mono-code text-sm px-2">✕</button>
+    </div>
+    <div class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+      <div>
+        <span id="archModalCategory" class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">CATEGORY</span>
+        <h3 id="archModalTitle" class="text-2xl font-bold tracking-tight text-white mt-2">Project Title</h3>
+        <p id="archModalTagline" class="text-xs font-mono-code text-indigo-300 mt-1">Tagline</p>
+        <p id="archModalDescription" class="text-xs text-gray-300 mt-2 leading-relaxed">Description</p>
+      </div>
+      <div>
+        <h4 class="text-xs font-mono-code text-indigo-400 font-bold uppercase tracking-wider">System Architecture &amp; Engineering Decisions</h4>
+        <div id="archModalBreakdown" class="text-xs font-mono-code text-gray-200 mt-1.5 p-3.5 rounded-xl bg-black/40 border border-white/5 whitespace-pre-line leading-relaxed">Breakdown</div>
+      </div>
+      <div>
+        <h4 class="text-xs font-mono-code text-gray-400 font-bold uppercase tracking-wider mb-2">Tech Stack</h4>
+        <div id="archModalTech" class="flex flex-wrap gap-1.5"></div>
+      </div>
+      <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+        <a id="archModalRepo" href="#" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono-code text-gray-200">GitHub Repository ↗</a>
+        <a id="archModalLive" href="#" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono-code text-xs font-bold">🟢 Launch Live Server ↗</a>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- CMD+K INTERACTIVE TERMINAL DRAWER -->
+  <dialog id="cmdKModal" class="p-0 rounded-2xl bg-[#0d0f17] text-gray-100 border border-white/15 shadow-2xl w-full max-w-xl backdrop:bg-black/80 backdrop:backdrop-blur-md">
+    <div class="p-3.5 bg-[#131624] border-b border-white/10 flex items-center justify-between text-xs font-mono-code">
+      <div class="flex items-center gap-2 text-indigo-400">
+        <span>⚡ sakib@ai-engine:~$</span>
+      </div>
+      <span class="text-gray-500">ESC to close</span>
+    </div>
+    <div class="p-4 space-y-3 font-mono-code text-xs">
+      <div id="cliOutput" class="space-y-1.5 text-gray-300 max-h-56 overflow-y-auto">
+        <div class="text-emerald-400">Sakib AI Orchestrator CLI [Version 6.0]</div>
+        <div class="text-gray-400">Available commands: <span class="text-indigo-300">projects</span>, <span class="text-indigo-300">skills</span>, <span class="text-indigo-300">masterai</span>, <span class="text-indigo-300">contact</span>, <span class="text-indigo-300">clear</span></div>
+      </div>
+      <div class="flex items-center gap-2 pt-2 border-t border-white/10">
+        <span class="text-indigo-400">&gt;</span>
+        <input id="cliInput" type="text" placeholder="type a command..." autofocus class="w-full bg-transparent text-white focus:outline-none text-xs" />
+      </div>
+    </div>
+  </dialog>
 
   <script src="{% static 'js/neural_router_3d.js' %}"></script>
   <script>
@@ -521,6 +578,90 @@
         if (d.ok) form.reset();
       });
     });
+    function openArchModal(code, title, cat, tagline, desc, breakdown, techCsv, liveUrl, repoUrl) {
+      document.getElementById('archModalCode').textContent = code + ' // README.md';
+      document.getElementById('archModalCategory').textContent = cat;
+      document.getElementById('archModalTitle').textContent = title;
+      document.getElementById('archModalTagline').textContent = tagline;
+      document.getElementById('archModalDescription').textContent = desc;
+      document.getElementById('archModalBreakdown').textContent = breakdown;
+
+      const techBox = document.getElementById('archModalTech');
+      techBox.innerHTML = '';
+      techCsv.split(',').forEach(function(t) {
+        if (!t.trim()) return;
+        const s = document.createElement('span');
+        s.className = 'px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 font-mono-code text-[11px] text-gray-300';
+        s.textContent = t.trim();
+        techBox.appendChild(s);
+      });
+
+      const liveBtn = document.getElementById('archModalLive');
+      if (liveUrl) {
+        liveBtn.href = liveUrl;
+        liveBtn.style.display = 'inline-flex';
+      } else {
+        liveBtn.style.display = 'none';
+      }
+
+      const repoBtn = document.getElementById('archModalRepo');
+      if (repoUrl) {
+        repoBtn.href = repoUrl;
+        repoBtn.style.display = 'inline-flex';
+      } else {
+        repoBtn.style.display = 'none';
+      }
+
+      document.getElementById('archModal').showModal();
+    }
+
+    // Cmd+K Key Listener & Terminal CLI
+    window.addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const d = document.getElementById('cmdKModal');
+        if (d.open) d.close(); else d.showModal();
+      }
+    });
+
+    const cliInput = document.getElementById('cliInput');
+    const cliOutput = document.getElementById('cliOutput');
+    if (cliInput) {
+      cliInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          const val = cliInput.value.trim().toLowerCase();
+          cliInput.value = '';
+          if (!val) return;
+          const userLine = document.createElement('div');
+          userLine.className = 'text-indigo-400 font-bold';
+          userLine.textContent = '$ ' + val;
+          cliOutput.appendChild(userLine);
+
+          let resp = '';
+          if (val === 'help') {
+            resp = 'Commands: projects, skills, masterai, contact, clear';
+          } else if (val === 'projects') {
+            resp = '01: NexusLocal Master AI | 02: Aloron Shop | 03: Campus Lost & Found | 04: Mosquito AI Trap | 05: Rural Lightning Warning | 06: CoWork API | 07: SmartSpend';
+          } else if (val === 'skills') {
+            resp = 'PyTorch, LoRA, 4-Bit NF4, llama.cpp, ONNX, Django 5, FastAPI, Next.js 15, TypeScript, ESP32-S3 TinyML, PostgreSQL, Docker';
+          } else if (val === 'masterai') {
+            resp = 'Master AI Router (~420 MB RAM) dynamically queues ~1 GB sub-models (Code, Photo, Video, Reason) across CPU+GPU+NPU with in-place continual learning.';
+          } else if (val === 'contact') {
+            resp = 'Email: mdnajmussakib2003@gmail.com | Location: Cumilla / Dhaka, Bangladesh (UTC+6)';
+          } else if (val === 'clear') {
+            cliOutput.innerHTML = '';
+            return;
+          } else {
+            resp = 'Command not recognized: ' + val + '. Type "help".';
+          }
+          const respLine = document.createElement('div');
+          respLine.className = 'text-gray-300';
+          respLine.textContent = resp;
+          cliOutput.appendChild(respLine);
+          cliOutput.scrollTop = cliOutput.scrollHeight;
+        }
+      });
+    }
   </script>
 </body>
 </html>
