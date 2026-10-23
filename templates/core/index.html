@@ -21,7 +21,7 @@
   <meta property="og:description" content="{{ settings.seo_description }}" />
   <meta property="og:image" content="{{ settings.photo_display_url }}" />
 
-  <!-- SVG Favicon -->
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%236366f1'/><text x='50' y='65' font-family='sans-serif' font-size='44' font-weight='800' fill='white' text-anchor='middle'>SR</text></svg>" />
 
   <!-- Google Fonts: Inter, Plus Jakarta Sans, JetBrains Mono -->
@@ -56,32 +56,33 @@
     }
   </script>
 
-  <!-- World-Class Design System: Midnight Obsidian & Ambient Luminescence -->
+  <!-- World-Class Design Variables & Expansive Fluid Styles -->
   <style>
     :root, [data-theme="dark"] {
       --bg-base: #030712;
-      --bg-surface: #0b0f19;
+      --bg-surface: #0a0f1d;
       --bg-elevated: #111827;
-      --bg-glass: rgba(11, 15, 25, 0.82);
+      --bg-glass: rgba(3, 7, 18, 0.88);
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-focus: rgba(99, 102, 241, 0.5);
+      --border-focus: rgba(99, 102, 241, 0.45);
       --text-primary: #f9fafb;
       --text-secondary: #94a3b8;
       --text-tertiary: #64748b;
       --accent: #6366f1;
       --accent-hover: #4f46e5;
-      --accent-glow: rgba(99, 102, 241, 0.18);
+      --accent-glow: rgba(99, 102, 241, 0.2);
       --signal: #10b981;
-      --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-      --input-bg: #070a12;
-      --hero-mesh: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, rgba(16, 185, 129, 0.05) 35%, transparent 70%);
+      --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+      --input-bg: #070a14;
+      --grid-dot: rgba(99, 102, 241, 0.12);
+      --hero-mesh: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.16) 0%, rgba(16, 185, 129, 0.06) 35%, transparent 75%);
     }
 
     [data-theme="light"] {
       --bg-base: #f8fafc;
       --bg-surface: #ffffff;
       --bg-elevated: #f1f5f9;
-      --bg-glass: rgba(255, 255, 255, 0.88);
+      --bg-glass: rgba(255, 255, 255, 0.92);
       --border-subtle: #e2e8f0;
       --border-focus: rgba(79, 70, 229, 0.5);
       --text-primary: #0f172a;
@@ -89,11 +90,12 @@
       --text-tertiary: #64748b;
       --accent: #4f46e5;
       --accent-hover: #4338ca;
-      --accent-glow: rgba(79, 70, 229, 0.12);
+      --accent-glow: rgba(79, 70, 229, 0.14);
       --signal: #059669;
       --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
       --input-bg: #ffffff;
-      --hero-mesh: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, rgba(16, 185, 129, 0.03) 35%, transparent 70%);
+      --grid-dot: rgba(100, 116, 139, 0.18);
+      --hero-mesh: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.09) 0%, rgba(16, 185, 129, 0.04) 35%, transparent 75%);
     }
 
     * { box-sizing: border-box; }
@@ -102,21 +104,38 @@
       color: var(--text-primary);
       font-family: 'Inter', -apple-system, sans-serif;
       overflow-x: hidden;
+      min-height: 100vh;
       transition: background-color 0.25s ease, color 0.25s ease;
+      background-image: 
+        radial-gradient(var(--grid-dot) 1px, transparent 1px),
+        var(--hero-mesh);
+      background-size: 36px 36px, 100% 100%;
+      background-position: 0 0, center top;
+      background-attachment: fixed;
     }
 
-    /* Ambient Hero Background Mesh */
-    .hero-glow-bg {
-      background-image: var(--hero-mesh);
+    /* Expansive Full-Screen Container */
+    .fluid-container {
+      width: 100%;
+      max-width: 1720px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
     }
+    @media (min-width: 640px) { .fluid-container { padding-left: 2rem; padding-right: 2rem; } }
+    @media (min-width: 1024px) { .fluid-container { padding-left: 3rem; padding-right: 3rem; } }
+    @media (min-width: 1440px) { .fluid-container { padding-left: 4rem; padding-right: 4rem; } }
 
-    /* World-Class Card Styling */
+    /* Graphical Bento Cards */
     .bento-card {
       background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 20px;
       transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
       box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
     }
     .bento-card:hover {
       border-color: var(--border-focus);
@@ -131,156 +150,159 @@
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    /* Gradient Text Accents */
+    /* Gradient Headings */
     .gradient-heading {
       background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    /* Badge Pills */
+    /* Badge & Tech Pills */
     .tech-pill {
       background-color: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
       color: var(--text-secondary);
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.72rem;
-      padding: 0.25rem 0.65rem;
+      padding: 0.3rem 0.65rem;
       border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       transition: all 0.2s ease;
     }
     .tech-pill:hover {
-      border-color: var(--accent);
+      border-color: var(--border-focus);
       color: var(--text-primary);
     }
 
-    /* Buttons */
+    /* Primary & Secondary Buttons */
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent) 0%, #4338ca 100%);
+      background-color: var(--accent);
       color: #ffffff;
-      font-weight: 600;
+      padding: 0.65rem 1.4rem;
       border-radius: 12px;
-      padding: 0.65rem 1.35rem;
-      transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-      box-shadow: 0 4px 14px var(--accent-glow);
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px 0 var(--accent-glow);
     }
     .btn-primary:hover {
+      background-color: var(--accent-hover);
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px var(--accent-glow);
-      opacity: 0.95;
-    }
-    .btn-secondary {
-      background-color: var(--bg-elevated);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-primary);
-      font-weight: 600;
-      border-radius: 12px;
-      padding: 0.65rem 1.35rem;
-      transition: all 0.2s ease;
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      background-color: var(--bg-surface);
     }
 
-    /* Category Filter Pills */
+    .btn-secondary {
+      background-color: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 0.65rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-focus);
+      background-color: var(--bg-surface);
+      transform: translateY(-1px);
+    }
+
+    /* Filter Pills */
     .filter-btn-active {
-      background-color: var(--accent) !important;
+      background-color: var(--accent);
       color: #ffffff !important;
-      border-color: var(--accent) !important;
+      border-color: var(--accent);
     }
     .filter-btn-inactive {
-      background-color: transparent;
+      background-color: var(--bg-elevated);
       color: var(--text-secondary);
-      border: 1px solid var(--border-subtle);
+      border-color: var(--border-subtle);
     }
     .filter-btn-inactive:hover {
       color: var(--text-primary);
-      border-color: var(--accent);
+      border-color: var(--border-focus);
     }
 
     /* Modal Backdrop */
     .modal-backdrop-blur {
       background-color: rgba(3, 7, 18, 0.8);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Pulse Glow */
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.08); }
+    }
+    .pulse-glow {
+      animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
   </style>
-
-  <!-- Schema.org Person Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "{{ settings.full_name }}",
-    "jobTitle": "{{ settings.role_title }}",
-    "url": "{{ request.build_absolute_uri }}",
-    "image": "{{ settings.photo_display_url }}",
-    "email": "mailto:{{ settings.primary_email }}",
-    "sameAs": [
-      "{{ settings.github_url }}",
-      "{{ settings.linkedin_url }}",
-      "{{ settings.kaggle_url }}",
-      "{{ settings.twitter_url }}"
-    ],
-    "alumniOf": "Bangladesh Army International University of Science and Technology (BAIUST)"
-  }
-  </script>
 </head>
-<body class="selection:bg-indigo-500 selection:text-white antialiased">
+<body class="selection:bg-indigo-500 selection:text-white">
 
   <!-- =========================================================================
-       1. MINIMALIST WORLD-CLASS STICKY NAV
+       1. TOP NAVIGATION (FULL VIEWPORT FLUID)
        ========================================================================= -->
-  <header class="sticky top-0 z-50 w-full glass-nav transition-colors">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <!-- Brand Avatar Pill -->
-      <a href="#hero" class="flex items-center gap-3 group">
-        <div class="relative">
-          <img src="{{ settings.photo_display_url }}" alt="{{ settings.full_name }}" class="w-8 h-8 rounded-full object-cover ring-2 ring-indigo-500/30 group-hover:ring-indigo-500 transition-all" />
-          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-black rounded-full"></span>
+  <header class="w-full glass-nav sticky top-0 z-40 transition-colors">
+    <div class="fluid-container flex items-center justify-between h-16">
+      
+      <!-- Left: Identity & Live Signal -->
+      <a href="#overview" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-white shadow-lg text-sm transition-transform group-hover:scale-105" style="background: linear-gradient(135deg, var(--accent), #10b981);">
+          SR
         </div>
-        <div class="flex flex-col">
-          <span class="font-heading font-bold text-sm tracking-tight group-hover:text-indigo-400 transition-colors" style="color: var(--text-primary);">
-            {{ settings.full_name }}
-          </span>
-          <span class="text-[10px] font-mono text-emerald-500 flex items-center gap-1 font-semibold">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-            Open for Roles
-          </span>
+        <div>
+          <div class="font-heading font-bold text-sm tracking-tight flex items-center gap-2" style="color: var(--text-primary);">
+            <span>{{ settings.full_name }}</span>
+            <span class="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-glow"></span>
+              Open for Roles
+            </span>
+          </div>
+          <p class="text-[11px] font-mono" style="color: var(--text-tertiary);">{{ settings.headline }} • {{ settings.university }}</p>
         </div>
       </a>
 
-      <!-- Desktop Navigation Anchors -->
-      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-wide uppercase" style="color: var(--text-secondary);" aria-label="Main Navigation">
-        <a href="#about" class="hover:text-indigo-400 transition-colors">About</a>
-        <a href="#projects" class="hover:text-indigo-400 transition-colors">Projects</a>
-        <a href="#skills" class="hover:text-indigo-400 transition-colors">Skills</a>
-        <a href="#hardware" class="hover:text-indigo-400 transition-colors">Hardware</a>
-        <a href="#timeline" class="hover:text-indigo-400 transition-colors">Timeline</a>
-        <a href="#contact" class="hover:text-indigo-400 transition-colors">Contact</a>
+      <!-- Center: Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 font-mono text-xs">
+        <a href="#projects" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Projects (8)</a>
+        <a href="#skills" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Skills (52)</a>
+        <a href="#hardware" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Hardware DSP</a>
+        <a href="#timeline" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Experience</a>
+        <a href="#contact" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Contact</a>
       </nav>
 
-      <!-- Action Items: Time, Theme, Resume -->
+      <!-- Right: Live Telemetry, Email Copy & Theme Toggle -->
       <div class="flex items-center gap-3">
-        <!-- Live Clock -->
-        <div class="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-tertiary);">
-          <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
-          <span id="cumillaClockNav">CUMILLA --:-- UTC+6</span>
+        <!-- Live Cumilla Clock -->
+        <div class="hidden xl:flex items-center gap-2 font-mono text-[11px] px-3 py-1 rounded-lg border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+          <span id="cumillaClockNav">CUMILLA 00:00:00 UTC+6</span>
         </div>
 
-        <!-- Quick Copy Email Button -->
-        <button id="navCopyEmailBtn" type="button" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono font-medium hover:border-indigo-500 transition-colors" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);" title="Copy email address">
+        <!-- Copy Email Button -->
+        <button id="navCopyEmailBtn" type="button" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg border transition-all" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);" title="Copy {{ settings.primary_email }}">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
           <span id="navCopyLabel">Copy Email</span>
         </button>
 
-        <!-- Theme Toggle -->
-        <button id="themeToggleBtn" type="button" aria-label="Toggle Dark / Light Theme" class="p-2 rounded-lg border text-xs transition-colors hover:border-indigo-500" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);">
-          <span id="themeToggleIcon">◐</span>
+        <!-- Theme Toggle Button -->
+        <button id="themeToggleBtn" type="button" aria-label="Toggle theme" class="p-2 rounded-lg border transition-all hover:border-indigo-400" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-primary);">
+          <span id="themeToggleIcon" class="text-sm">◐</span>
         </button>
 
-        <!-- CV Button -->
-        <a href="{% url 'printable_cv' %}" class="btn-primary text-xs !py-1.5 !px-3.5 flex items-center gap-1">
+        <!-- ATS Resume / CV Link -->
+        <a href="/cv/" class="btn-primary !py-1.5 !px-3 font-mono text-xs">
           <span>CV</span>
           <span>↗</span>
         </a>
@@ -288,476 +310,606 @@
     </div>
   </header>
 
-  <main class="space-y-28 pb-20">
 
-    <!-- =========================================================================
-         2. HERO SECTION WITH AMBIENT GLOW & EXECUTIVE POSITIONING
-         ========================================================================= -->
-    <section id="hero" class="relative pt-12 pb-16 hero-glow-bg border-b" style="border-color: var(--border-subtle);">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+  <!-- =========================================================================
+       2. HERO SECTION (EXPANSIVE GRAPHICAL DASHBOARD)
+       ========================================================================= -->
+  <main id="overview" class="py-12 sm:py-16 lg:py-20">
+    <div class="fluid-container">
+      
+      <!-- 2-Column Responsive Grid (Full Screen Coverage) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center">
+        
+        <!-- Left: High-Impact Typography & Visual Technical Cards (7 Cols) -->
+        <div class="lg:col-span-7 space-y-6">
           
-          <!-- Left Hero Content (7 Cols) -->
-          <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-            <!-- Availability Pill -->
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-mono font-medium shadow-sm" style="background-color: var(--bg-surface); border-color: var(--border-subtle); color: var(--text-secondary);">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>{{ about.availability }}</span>
-            </div>
-
-            <!-- Main Headline -->
-            <div class="space-y-3">
-              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-heading leading-[1.12]" style="color: var(--text-primary);">
-                Building production web platforms &amp; <span class="gradient-heading">real-time edge AI.</span>
-              </h1>
-              <p class="text-lg sm:text-xl font-mono font-semibold" style="color: var(--accent);">
-                {{ settings.role_title }}
-              </p>
-            </div>
-
-            <!-- 3-Bullet Executive Narrative -->
-            <div class="space-y-3 text-sm sm:text-base leading-relaxed max-w-2xl text-left" style="color: var(--text-secondary);">
-              <p>
-                <strong style="color: var(--text-primary);">Who I am:</strong> 3rd-year Computer Science &amp; Engineering student at BAIUST, Cumilla, focused on building real systems rather than chasing marketing hype.
-              </p>
-              <p>
-                <strong style="color: var(--text-primary);">What I build:</strong> Full-stack web platforms with Python/Django 5 &amp; Next.js, and edge digital signal processing (DSP) hardware on ESP32-S3.
-              </p>
-              <p>
-                <strong style="color: var(--text-primary);">Why explore:</strong> Every project here is backed by working code on GitHub (Sakib20050413), measurable algorithms, and zero fabricated claims.
-              </p>
-            </div>
-
-            <!-- Call to Action Buttons -->
-            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-              <a href="#projects" class="btn-primary text-sm flex items-center gap-2">
-                <span>Explore 8 Verified Projects</span>
-                <span>↓</span>
-              </a>
-              <a href="#hardware" class="btn-secondary text-sm">
-                Inspect Hardware Schematics
-              </a>
-              <a href="#contact" class="btn-secondary text-sm">
-                Get in Touch
-              </a>
-            </div>
-
-            <!-- Social Links Strip -->
-            <div class="flex items-center justify-center lg:justify-start gap-6 pt-3 font-mono text-xs" style="color: var(--text-tertiary);">
-              {% if settings.github_url %}
-              <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                <span>GitHub</span>
-              </a>
-              {% endif %}
-              {% if settings.linkedin_url %}
-              <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors flex items-center gap-1.5">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                <span>LinkedIn</span>
-              </a>
-              {% endif %}
-              {% if settings.kaggle_url %}
-              <a href="{{ settings.kaggle_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors font-bold">
-                Kaggle ↗
-              </a>
-              {% endif %}
-            </div>
+          <!-- Status Pill -->
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-mono" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-glow"></span>
+            <span>Open to AI/ML engineering internships &amp; full-stack roles</span>
           </div>
 
-          <!-- Right Telemetry Card (5 Cols) -->
-          <div class="lg:col-span-5">
-            <div class="bento-card p-6 sm:p-7 space-y-5">
-              <!-- Photo + Active Indicator -->
-              <div class="flex items-center gap-4">
-                <img src="{{ settings.photo_display_url }}" alt="{{ settings.full_name }}" class="w-16 h-16 rounded-2xl object-cover ring-2 ring-indigo-500/40" />
-                <div>
-                  <h3 class="font-heading font-bold text-lg" style="color: var(--text-primary);">{{ settings.full_name }}</h3>
-                  <div class="text-xs font-mono" style="color: var(--text-secondary);">BAIUST CSE · Level 3, Term 2</div>
-                </div>
-              </div>
-
-              <!-- Quick Telemetry Grid -->
-              <div class="grid grid-cols-2 gap-3 pt-2 font-mono text-xs">
-                <div class="p-3 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-                  <div class="text-[10px] uppercase font-bold" style="color: var(--text-tertiary);">Public Repos</div>
-                  <div class="text-lg font-extrabold text-emerald-500 mt-0.5">8 GitHub</div>
-                </div>
-                <div class="p-3 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-                  <div class="text-[10px] uppercase font-bold" style="color: var(--text-tertiary);">Loaded Stack</div>
-                  <div class="text-lg font-extrabold text-indigo-400 mt-0.5">52 Skills</div>
-                </div>
-                <div class="p-3 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-                  <div class="text-[10px] uppercase font-bold" style="color: var(--text-tertiary);">Edge Hardware</div>
-                  <div class="text-lg font-extrabold text-amber-500 mt-0.5">ESP32-S3</div>
-                </div>
-                <div class="p-3 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-                  <div class="text-[10px] uppercase font-bold" style="color: var(--text-tertiary);">DSP Pipeline</div>
-                  <div class="text-lg font-extrabold text-purple-400 mt-0.5">512-Pt FFT</div>
-                </div>
-              </div>
-
-              <div class="border-t pt-4 text-xs font-mono space-y-1.5" style="border-color: var(--border-subtle); color: var(--text-secondary);">
-                <div class="flex justify-between">
-                  <span style="color: var(--text-tertiary);">Primary Location:</span>
-                  <span class="font-semibold" style="color: var(--text-primary);">{{ about.location }}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span style="color: var(--text-tertiary);">Focus:</span>
-                  <span class="font-semibold text-indigo-400">Applied AI &amp; Full-Stack Systems</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- =========================================================================
-         3. ABOUT SECTION & 4-CORE BENCHMARKS
-         ========================================================================= -->
-    <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="space-y-8">
-        <div>
-          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Engineering Story</span>
-          <h2 class="text-3xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">{{ about.headline }}</h2>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div class="lg:col-span-7 space-y-4 text-base leading-relaxed" style="color: var(--text-secondary);">
-            <p>{{ about.bio_paragraph_1 }}</p>
-            {% if about.bio_paragraph_2 %}
-            <p>{{ about.bio_paragraph_2 }}</p>
-            {% endif %}
-            <p>
-              My focus centers on high-reliability execution: automating campus recovery systems, building high-throughput REST APIs, and designing edge-AI hardware on ESP32-S3. I believe in writing well-tested, maintainable code backed by evidence.
+          <!-- Main Headline -->
+          <div class="space-y-3">
+            <h1 class="text-4xl sm:text-5xl xl:text-6xl font-extrabold font-heading tracking-tight leading-[1.1]" style="color: var(--text-primary);">
+              Building production web platforms &amp; <span class="gradient-heading">real-time edge AI.</span>
+            </h1>
+            <p class="text-lg xl:text-xl font-medium" style="color: var(--accent);">
+              {{ settings.headline }}
             </p>
           </div>
 
-          <div class="lg:col-span-5 grid grid-cols-2 gap-4">
-            <div class="bento-card p-5 space-y-1">
-              <div class="text-3xl font-extrabold font-mono text-indigo-400">52</div>
-              <div class="text-xs font-bold" style="color: var(--text-primary);">Verified Tools</div>
-              <div class="text-[11px]" style="color: var(--text-tertiary);">Across 8 explicit domains</div>
+          <!-- Graphical Bento Feature Tiles (Replaces Dense Text Blocks) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            
+            <!-- Tile 1: Web Systems -->
+            <div class="p-4 rounded-xl border flex items-start gap-3.5 transition-all hover:border-indigo-500/40" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              </div>
+              <div class="space-y-0.5">
+                <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Full-Stack Web Systems</h4>
+                <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">Python/Django 5, FastAPI &amp; Next.js with PostgreSQL and secure auth architectures.</p>
+              </div>
             </div>
-            <div class="bento-card p-5 space-y-1">
-              <div class="text-3xl font-extrabold font-mono text-emerald-400">8</div>
-              <div class="text-xs font-bold" style="color: var(--text-primary);">GitHub Repos</div>
-              <div class="text-[11px]" style="color: var(--text-tertiary);">Production &amp; research code</div>
+
+            <!-- Tile 2: Edge AI & DSP -->
+            <div class="p-4 rounded-xl border flex items-start gap-3.5 transition-all hover:border-indigo-500/40" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div class="space-y-0.5">
+                <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Edge AI &amp; DSP Pipelines</h4>
+                <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">ESP32-S3 512-point windowed FFT &amp; Edge Impulse TinyML under 35ms latency.</p>
+              </div>
             </div>
-            <div class="bento-card p-5 space-y-1">
-              <div class="text-3xl font-extrabold font-mono text-amber-400">32ms</div>
-              <div class="text-xs font-bold" style="color: var(--text-primary);">FFT Latency</div>
-              <div class="text-[11px]" style="color: var(--text-tertiary);">On-device acoustic trigger</div>
+
+            <!-- Tile 3: IoT & Telemetry -->
+            <div class="p-4 rounded-xl border flex items-start gap-3.5 transition-all hover:border-indigo-500/40" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                </svg>
+              </div>
+              <div class="space-y-0.5">
+                <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Telemetry &amp; Cellular IoT</h4>
+                <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">SIM800L/SIM7600 4G LTE field uplinks with solar power budget optimization.</p>
+              </div>
             </div>
-            <div class="bento-card p-5 space-y-1">
-              <div class="text-3xl font-extrabold font-mono text-purple-400">BAIUST</div>
-              <div class="text-xs font-bold" style="color: var(--text-primary);">CSE Department</div>
-              <div class="text-[11px]" style="color: var(--text-tertiary);">L3T2 Engineering</div>
+
+            <!-- Tile 4: Applied Research -->
+            <div class="p-4 rounded-xl border flex items-start gap-3.5 transition-all hover:border-indigo-500/40" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div class="space-y-0.5">
+                <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Verifiable Engineering</h4>
+                <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">8 public GitHub repositories with reproducible benchmarks and zero fluff.</p>
+              </div>
             </div>
+
           </div>
+
+          <!-- Primary Actions -->
+          <div class="flex flex-wrap items-center gap-4 pt-3">
+            <a href="#projects" class="btn-primary">
+              <span>Explore 8 Verified Projects</span>
+              <span>↓</span>
+            </a>
+            <a href="#hardware" class="btn-secondary font-mono">
+              <span>Interactive DSP Canvas</span>
+              <span>⚡</span>
+            </a>
+            <a href="#contact" class="btn-secondary">
+              <span>Get in Touch</span>
+              <span>✉</span>
+            </a>
+          </div>
+
+          <!-- Social Links -->
+          <div class="flex items-center gap-4 font-mono text-xs pt-1" style="color: var(--text-secondary);">
+            <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 flex items-center gap-1.5 transition-colors">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              <span>GitHub</span>
+            </a>
+            <span>•</span>
+            <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 flex items-center gap-1.5 transition-colors">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              <span>LinkedIn</span>
+            </a>
+            <span>•</span>
+            <a href="{{ settings.kaggle_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 flex items-center gap-1.5 transition-colors">
+              <span class="font-bold">K</span>
+              <span>Kaggle</span>
+            </a>
+          </div>
+
         </div>
-      </div>
-    </section>
 
 
-    <!-- =========================================================================
-         4. FEATURED PROJECTS BENTO SHOWCASE (8 GITHUB PROJECTS)
-         ========================================================================= -->
-    <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="space-y-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Proven Execution</span>
-            <h2 class="text-3xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">Featured Projects &amp; Case Studies</h2>
-            <p class="text-sm mt-1" style="color: var(--text-secondary);">All 8 projects are grounded in working code on GitHub (Sakib20050413).</p>
-          </div>
-
-          <!-- Controls: Search + Filter -->
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 font-mono text-xs">
-            <input type="text" id="projectSearch" placeholder="Search projects (e.g. django, fft, api)..." class="px-3.5 py-2 rounded-xl border outline-none focus:border-indigo-500 w-full sm:w-60" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
-            <div class="inline-flex p-1 rounded-xl border self-start sm:self-auto" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-              <button type="button" class="filter-btn px-3 py-1.5 rounded-lg font-semibold transition-all filter-btn-active" data-cat="ALL">All (8)</button>
-              <button type="button" class="filter-btn px-3 py-1.5 rounded-lg font-semibold transition-all filter-btn-inactive" data-cat="WEB">Web</button>
-              <button type="button" class="filter-btn px-3 py-1.5 rounded-lg font-semibold transition-all filter-btn-inactive" data-cat="EMBEDDED">Embedded</button>
+        <!-- Right: Interactive Live Edge-AI Signal & System HUD (5 Cols) -->
+        <div class="lg:col-span-5">
+          <div class="bento-card p-6 space-y-5 border-2 transition-all" style="border-color: var(--border-subtle);">
+            
+            <!-- Window Bar -->
+            <div class="flex items-center justify-between border-b pb-3.5" style="border-color: var(--border-subtle);">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                <span class="text-xs font-mono font-bold ml-2 text-indigo-400">ESP32-S3 SIGNAL HUD</span>
+              </div>
+              <div class="flex items-center gap-2 font-mono text-[10px]">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-glow"></span>
+                <span class="text-emerald-400 font-semibold" id="hudStatusBadge">SYSTEM ONLINE</span>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Bento Grid Projects Showcase -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projectsGrid">
-          {% for p in projects %}
-          <div class="bento-card p-6 sm:p-7 flex flex-col justify-between project-item group" data-category="{{ p.category }}" data-title="{{ p.title|lower }}" data-stack="{{ p.tech_stack_csv|lower }}">
-            <div class="space-y-4">
-              <!-- Top Row: Category, Stars, Status -->
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full border {% if p.category == 'EMBEDDED' %}text-amber-400 border-amber-500/30 bg-amber-500/10{% elif p.category == 'AI_ML' %}text-purple-400 border-purple-500/30 bg-purple-500/10{% else %}text-indigo-400 border-indigo-500/30 bg-indigo-500/10{% endif %}">
-                  {{ p.get_category_display }}
-                </span>
+            <!-- Canvas Spectrum Visualizer -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs font-mono" style="color: var(--text-secondary);">
+                <span>512-PT FFT AUDIO SPECTRUM</span>
+                <span class="text-indigo-400 font-semibold">16 kHz I2S DMA</span>
+              </div>
 
-                <div class="flex items-center gap-3 font-mono text-xs">
-                  <button type="button" class="upvote-btn inline-flex items-center gap-1 hover:text-amber-400 transition-colors" data-id="{{ p.id }}" style="color: var(--text-tertiary);" title="Star this project">
-                    <span>★</span>
-                    <span class="upvote-val font-bold">{{ p.upvotes }}</span>
-                  </button>
-                  <span class="flex items-center gap-1.5" style="color: var(--text-tertiary);">
-                    <span class="w-1.5 h-1.5 rounded-full {% if p.status == 'Completed' %}bg-emerald-500{% else %}bg-amber-500{% endif %}"></span>
-                    {{ p.status }}
-                  </span>
+              <!-- Interactive Waveform Canvas -->
+              <div class="relative rounded-xl overflow-hidden border" style="background-color: var(--input-bg); border-color: var(--border-subtle);">
+                <canvas id="fftCanvas" width="480" height="150" class="w-full h-[150px] block"></canvas>
+                <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono px-2 py-1 rounded bg-black/60 backdrop-blur border border-white/10 text-slate-300">
+                  <span>0 Hz</span>
+                  <span class="text-amber-400 font-bold">▲ 300 - 700 Hz (WINGBEAT BAND)</span>
+                  <span>8000 Hz</span>
                 </div>
               </div>
 
-              <!-- Title & Summary -->
-              <div>
-                <h3 class="text-xl font-heading font-bold group-hover:text-indigo-400 transition-colors" style="color: var(--text-primary);">
-                  {{ p.title }}
-                </h3>
-                <p class="text-sm font-mono mt-1.5 font-medium leading-relaxed" style="color: var(--accent);">
-                  {{ p.summary }}
-                </p>
-              </div>
-
-              <!-- Tech Stack Tags -->
-              <div class="flex flex-wrap gap-1.5 pt-1">
-                {% for tag in p.tech_tags %}
-                <span class="tech-pill">{{ tag }}</span>
-                {% endfor %}
+              <div class="flex items-center justify-between pt-1">
+                <button id="triggerWingbeatBtn" type="button" class="text-xs font-mono font-semibold px-3 py-1.5 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/30 transition-all flex items-center gap-1.5">
+                  <span>▶ Inject 480 Hz Wingbeat</span>
+                </button>
+                <span id="triggerFeedback" class="text-[11px] font-mono text-emerald-400 opacity-0 transition-opacity">Vector classified (31.4 ms)</span>
               </div>
             </div>
 
-            <!-- Card Action Footer -->
-            <div class="flex items-center justify-between border-t pt-4 mt-6" style="border-color: var(--border-subtle);">
-              <button type="button" class="open-case-study text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1" data-index="{{ forloop.counter0 }}">
-                <span>View Full Case Study</span>
-                <span>→</span>
-              </button>
+            <!-- Lower 4 Telemetry Metrics -->
+            <div class="grid grid-cols-2 gap-3 pt-2 border-t" style="border-color: var(--border-subtle);">
+              <div class="p-2.5 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">DSP FFT LATENCY</span>
+                <span class="text-base font-bold font-mono text-indigo-400">32 ms</span>
+                <span class="text-[10px] font-mono block text-emerald-500 font-medium">✓ Under 50ms budget</span>
+              </div>
 
-              <div class="flex items-center gap-3 font-mono text-xs">
-                {% if p.repo_url %}
-                <a href="{{ p.repo_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors" style="color: var(--text-secondary);">
-                  Code ↗
-                </a>
-                {% endif %}
-                {% if p.live_url %}
-                <a href="{{ p.live_url }}" target="_blank" rel="noopener" class="text-emerald-500 font-bold hover:underline">
-                  Live Demo ↗
-                </a>
-                {% endif %}
+              <div class="p-2.5 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">TINYML CONFIDENCE</span>
+                <span id="hudConfidence" class="text-base font-bold font-mono text-emerald-400">87.4%</span>
+                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">Edge Impulse CNN</span>
+              </div>
+
+              <div class="p-2.5 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">PUBLIC GITHUB REPOS</span>
+                <span class="text-base font-bold font-mono" style="color: var(--text-primary);">8 Repos</span>
+                <span class="text-[10px] font-mono block" style="color: var(--text-secondary);">100% verified code</span>
+              </div>
+
+              <div class="p-2.5 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">ACADEMIC STANDING</span>
+                <span class="text-base font-bold font-mono text-amber-400">L3 T2</span>
+                <span class="text-[10px] font-mono block" style="color: var(--text-secondary);">BAIUST CSE</span>
               </div>
             </div>
+
           </div>
-          {% endfor %}
         </div>
+
       </div>
-    </section>
 
-
-    <!-- =========================================================================
-         5. TECHNICAL ARSENAL (ALL 52 SKILLS ACROSS 8 DOMAINS)
-         ========================================================================= -->
-    <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="space-y-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Technical Foundation</span>
-            <h2 class="text-3xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">52 Verified Skills &amp; Runtimes</h2>
-            <p class="text-sm mt-1" style="color: var(--text-secondary);">Labeled with authentic proficiency levels: Proficient, Used in projects, and Learning.</p>
-          </div>
-
-          <div class="w-full md:w-64 font-mono text-xs">
-            <input type="text" id="skillSearch" placeholder="Filter skills (e.g. python, fft)..." class="w-full px-3.5 py-2 rounded-xl border outline-none focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
-          </div>
-        </div>
-
-        <!-- 8-Domain Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {% for group in skill_groups %}
-          <div class="bento-card p-5 space-y-4 flex flex-col justify-between skill-card" data-domain="{{ group.name|lower }}">
-            <div>
-              <div class="flex items-center justify-between border-b pb-2.5" style="border-color: var(--border-subtle);">
-                <h3 class="font-mono font-bold text-xs text-indigo-400">{{ group.name }}</h3>
-                <span class="text-[10px] font-mono" style="color: var(--text-tertiary);">{{ group.skills.count }} tools</span>
-              </div>
-
-              <div class="flex flex-wrap gap-1.5 pt-3">
-                {% for s in group.skills.all %}
-                <div class="skill-item inline-flex items-center gap-1.5 tech-pill !text-[11px]" data-skill="{{ s.name|lower }}">
-                  <span>{{ s.name }}</span>
-                  <span class="text-[9px] opacity-75 font-normal">({{ s.level_label }})</span>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-
-
-    <!-- =========================================================================
-         6. EMBEDDED SYSTEMS & HARDWARE TELEMETRY BLUEPRINT
-         ========================================================================= -->
-    <section id="hardware" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="space-y-8">
-        <div>
-          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Physical Computing</span>
-          <h2 class="text-3xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">ESP32-S3 Hardware Schematics</h2>
-          <p class="text-sm mt-1" style="color: var(--text-secondary);">Real-time digital signal processing and off-grid telemetry nodes designed for physical deployment.</p>
-        </div>
-
-        <div class="bento-card p-6 sm:p-8 space-y-6">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4" style="border-color: var(--border-subtle);">
-            <div>
-              <span class="text-xs font-mono text-amber-400 font-bold">512-POINT RADIX-2 FFT ACOUSTIC PIPELINE</span>
-              <h3 class="text-xl font-heading font-bold mt-1" style="color: var(--text-primary);">Bio-Acoustic Female Mosquito Wingbeat Classifier</h3>
-            </div>
-            <div class="font-mono text-xs flex items-center gap-4" style="color: var(--text-secondary);">
-              <span>Latency: <strong class="text-indigo-400">32 ms</strong></span>
-              <span>Band: <strong class="text-emerald-400">350–600 Hz</strong></span>
-            </div>
-          </div>
-
-          <!-- 5-Stage Diagram -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 font-mono text-xs">
-            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-              <div class="text-[10px] text-amber-500 font-bold">STAGE 1: AUDIO</div>
-              <div class="font-bold" style="color: var(--text-primary);">INMP441 MEMS</div>
-              <div class="text-[11px]" style="color: var(--text-secondary);">24-bit audio captured via continuous I2S DMA on Core 0.</div>
-            </div>
-            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-              <div class="text-[10px] text-indigo-400 font-bold">STAGE 2: WINDOW</div>
-              <div class="font-bold" style="color: var(--text-primary);">Hann Window</div>
-              <div class="text-[11px]" style="color: var(--text-secondary);">512-point Hann function applied to eliminate edge leakage.</div>
-            </div>
-            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-              <div class="text-[10px] text-purple-400 font-bold">STAGE 3: FFT</div>
-              <div class="font-bold" style="color: var(--text-primary);">Radix-2 FFT</div>
-              <div class="text-[11px]" style="color: var(--text-secondary);">Computes frequency spectrum bins within 32ms budget.</div>
-            </div>
-            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-              <div class="text-[10px] text-emerald-400 font-bold">STAGE 4: CLASSIFY</div>
-              <div class="font-bold" style="color: var(--text-primary);">TinyML Peak</div>
-              <div class="text-[11px]" style="color: var(--text-secondary);">Validates 350–600 Hz harmonic peak vs optical sensor.</div>
-            </div>
-            <div class="p-3.5 rounded-xl border space-y-1.5" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-              <div class="text-[10px] text-rose-400 font-bold">STAGE 5: TRAP</div>
-              <div class="font-bold" style="color: var(--text-primary);">PWM Suction</div>
-              <div class="text-[11px]" style="color: var(--text-secondary);">Selective suction fan captures vector without harming bees.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- =========================================================================
-         7. EXPERIENCE & EDUCATION TIMELINE
-         ========================================================================= -->
-    <section id="timeline" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="space-y-8">
-        <div>
-          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Track Record</span>
-          <h2 class="text-3xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">Experience &amp; Certifications</h2>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <!-- Timeline (7 Cols) -->
-          <div class="lg:col-span-7 space-y-6 border-l-2 pl-6 ml-2" style="border-color: var(--border-subtle);">
-            {% for exp in experiences %}
-            <div class="relative space-y-1.5">
-              <span class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-indigo-500 ring-4" style="--tw-ring-color: var(--bg-base);"></span>
-              <div class="text-xs font-mono text-indigo-400 font-semibold">{{ exp.period }}</div>
-              <h3 class="text-base font-bold font-heading" style="color: var(--text-primary);">{{ exp.role_title }}</h3>
-              <div class="text-xs font-medium" style="color: var(--text-secondary);">{{ exp.organization }}</div>
-              <p class="text-sm leading-relaxed pt-1" style="color: var(--text-secondary);">{{ exp.description }}</p>
-            </div>
-            {% endfor %}
-          </div>
-
-          <!-- Credentials (5 Cols) -->
-          <div class="lg:col-span-5 space-y-3">
-            <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400 block mb-2">Verified Credentials</span>
-            {% for cert in certificates %}
-            <div class="bento-card p-4 flex items-center justify-between">
-              <div>
-                <h4 class="font-bold text-sm" style="color: var(--text-primary);">{{ cert.title }}</h4>
-                <div class="text-xs font-mono mt-0.5" style="color: var(--text-tertiary);">{{ cert.issuer }} · {{ cert.issue_date }}</div>
-              </div>
-              {% if cert.credential_url %}
-              <a href="{{ cert.credential_url }}" target="_blank" rel="noopener" class="text-xs font-mono font-bold text-indigo-400 hover:underline">
-                Verify ↗
-              </a>
-              {% endif %}
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- =========================================================================
-         8. CONTACT & HIRE ME SECTION
-         ========================================================================= -->
-    <section id="contact" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bento-card p-8 sm:p-10 space-y-6 text-center">
-        <div class="space-y-2">
-          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Initiate Collaboration</span>
-          <h2 class="text-3xl font-extrabold font-heading" style="color: var(--text-primary);">Let's Build Something Dependable</h2>
-          <p class="text-sm leading-relaxed max-w-lg mx-auto" style="color: var(--text-secondary);">
-            Open to AI/ML engineering internships, full-stack contracts, and applied research collaborations. Reach out directly at:
-            <br />
-            <a href="mailto:{{ settings.primary_email }}" class="font-mono text-indigo-400 font-bold hover:underline">{{ settings.primary_email }}</a>
-          </p>
-        </div>
-
-        <form id="contactForm" class="space-y-4 text-left pt-2">
-          {% csrf_token %}
-
-          <!-- Honeypot anti-spam -->
-          <div style="display:none !important;" aria-hidden="true">
-            <label for="company_hp">Company</label>
-            <input type="text" id="company_hp" name="company_hp" tabindex="-1" autocomplete="off" />
-          </div>
-
-          <div>
-            <label for="nameInput" class="block text-xs font-mono font-bold uppercase mb-1" style="color: var(--text-secondary);">Your Name *</label>
-            <input type="text" id="nameInput" name="name" required class="w-full px-4 py-2.5 rounded-xl border text-sm outline-none focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" placeholder="Alex Smith" />
-          </div>
-
-          <div>
-            <label for="emailInput" class="block text-xs font-mono font-bold uppercase mb-1" style="color: var(--text-secondary);">Work Email *</label>
-            <input type="email" id="emailInput" name="email" required class="w-full px-4 py-2.5 rounded-xl border text-sm outline-none focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" placeholder="alex@company.com" />
-          </div>
-
-          <div>
-            <label for="messageInput" class="block text-xs font-mono font-bold uppercase mb-1" style="color: var(--text-secondary);">Project or Opportunity Details *</label>
-            <textarea id="messageInput" name="message" rows="4" required class="w-full px-4 py-2.5 rounded-xl border text-sm outline-none focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" placeholder="Outline the role, stack, or collaboration..."></textarea>
-          </div>
-
-          <div id="formStatusMsg" class="hidden text-xs font-mono p-3 rounded-xl"></div>
-
-          <button id="submitBtn" type="submit" class="btn-primary w-full text-sm">
-            Send Message →
-          </button>
-        </form>
-      </div>
-    </section>
-
+    </div>
   </main>
 
 
   <!-- =========================================================================
-       FOOTER
+       3. FEATURED PROJECTS (FULL-SCREEN EXPANSIVE BENTO GRID)
        ========================================================================= -->
-  <footer class="border-t py-12 font-mono text-xs" style="border-color: var(--border-subtle); color: var(--text-tertiary);">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>© 2026 {{ settings.full_name }}. Built with Django 5 &amp; Vanilla JS.</div>
-      <div class="flex items-center gap-6">
-        <a href="{% url 'printable_cv' %}" class="hover:text-indigo-400">ATS Printable CV ↗</a>
-        <a href="#hero" class="text-indigo-400 hover:underline">Back to Top ↑</a>
+  <section id="projects" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
+    <div class="fluid-container space-y-8">
+      
+      <!-- Section Header & Filter Toolbar -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Verifiable Codebases</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">8 Featured Projects</h2>
+          <p class="text-sm mt-1" style="color: var(--text-secondary);">Real production systems and embedded architectures with open source repositories.</p>
+        </div>
+
+        <!-- Filter Pills & Search Input -->
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Category Filter Pills -->
+          <div class="flex items-center gap-1.5 p-1 rounded-xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+            <button type="button" class="filter-btn filter-btn-active px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all" data-cat="ALL">
+              All (8)
+            </button>
+            <button type="button" class="filter-btn filter-btn-inactive px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all" data-cat="WEB">
+              Web &amp; Full-Stack
+            </button>
+            <button type="button" class="filter-btn filter-btn-inactive px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all" data-cat="EMBEDDED">
+              Embedded &amp; Edge AI
+            </button>
+          </div>
+
+          <!-- Project Keyword Search -->
+          <div class="relative w-full sm:w-56 font-mono text-xs">
+            <input type="text" id="projectSearch" placeholder="Search projects..." class="w-full px-3.5 py-2 rounded-xl border outline-none transition-all focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 Projects Grid (Expansive 2 or 3-column Layout) -->
+      <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {% for p in projects %}
+        <div class="bento-card p-6 space-y-5 flex flex-col justify-between project-item group" data-category="{% if 'Embedded' in p.get_category_display or 'IoT' in p.get_category_display or 'Edge' in p.get_category_display %}EMBEDDED{% else %}WEB{% endif %}" data-title="{{ p.title|lower }}" data-stack="{{ p.tech_stack_csv|lower }}">
+          
+          <div class="space-y-4">
+            <!-- Window Top Bar -->
+            <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-subtle);">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
+                <span class="text-[11px] font-mono uppercase tracking-wider text-indigo-400 font-bold ml-1.5">
+                  {{ p.get_category_display }}
+                </span>
+              </div>
+
+              <!-- Upvote Star Counter -->
+              <button type="button" class="upvote-btn inline-flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded-lg border transition-all hover:border-indigo-400" data-id="{{ p.id }}" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);" title="Star this project">
+                <span class="text-amber-400 font-bold">★</span>
+                <span class="upvote-val font-semibold" style="color: var(--text-primary);">{{ p.upvotes }}</span>
+              </button>
+            </div>
+
+            <!-- Project Title & Subtitle -->
+            <div>
+              <h3 class="text-xl font-heading font-bold transition-colors group-hover:text-indigo-400" style="color: var(--text-primary);">
+                {{ p.title }}
+              </h3>
+              <p class="text-xs font-mono mt-1 font-medium leading-relaxed text-indigo-400">
+                {{ p.summary }}
+              </p>
+            </div>
+
+            <!-- Graphical Miniature Preview Box -->
+            <div class="p-3.5 rounded-xl border text-xs font-mono space-y-1.5" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-indigo-400 font-bold">ARCHITECTURE CONSTRAINTS</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">{{ p.status }}</span>
+              </div>
+              <p class="line-clamp-2 text-xs leading-relaxed" style="color: var(--text-secondary);">
+                {{ p.description }}
+              </p>
+            </div>
+
+            <!-- Tech Stack Pills -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              {% for tag in p.tech_tags %}
+              <span class="tech-pill">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Card Action Footer -->
+          <div class="flex items-center justify-between border-t pt-4 mt-4" style="border-color: var(--border-subtle);">
+            <button type="button" class="open-case-study text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 font-mono" data-index="{{ forloop.counter0 }}">
+              <span>View Architecture</span>
+              <span>→</span>
+            </button>
+
+            <div class="flex items-center gap-3 font-mono text-xs">
+              {% if p.repo_url %}
+              <a href="{{ p.repo_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors" style="color: var(--text-secondary);">
+                Code ↗
+              </a>
+              {% endif %}
+              {% if p.live_url %}
+              <a href="{{ p.live_url }}" target="_blank" rel="noopener" class="text-emerald-400 font-bold hover:underline">
+                Live Demo ↗
+              </a>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       4. TECHNICAL ARSENAL (GRAPHICAL MATRIX WITH SVG LOGOS & 52 SKILLS)
+       ========================================================================= -->
+  <section id="skills" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
+    <div class="fluid-container space-y-8">
+      
+      <!-- Section Header & Filter Toolbar -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Technical Foundation</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">52 Verified Skills &amp; Runtimes</h2>
+          <p class="text-sm mt-1" style="color: var(--text-secondary);">Grouped into 8 domains with authentic engineering proficiency levels.</p>
+        </div>
+
+        <!-- Skill Keyword Search -->
+        <div class="w-full sm:w-64 font-mono text-xs">
+          <input type="text" id="skillSearch" placeholder="Filter skills (e.g. python, fft)..." class="w-full px-3.5 py-2 rounded-xl border outline-none transition-all focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+        </div>
+      </div>
+
+      <!-- 8-Domain Graphical Grid (Expansive 4 Columns on Widescreen) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% for group in skill_groups %}
+        <div class="bento-card p-5 space-y-4 flex flex-col justify-between skill-card" data-domain="{{ group.name|lower }}">
+          
+          <div>
+            <!-- Group Header -->
+            <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-subtle);">
+              <h3 class="font-mono font-bold text-xs text-indigo-400">{{ group.name }}</h3>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-tertiary);">{{ group.skills.count }} tools</span>
+            </div>
+
+            <!-- Skills List with Graphical Pills -->
+            <div class="flex flex-wrap gap-2 pt-3">
+              {% for s in group.skills.all %}
+              <div class="skill-item inline-flex items-center gap-1.5 tech-pill !text-[11px] transition-all hover:scale-105" data-skill="{{ s.name|lower }}">
+                <span class="w-1.5 h-1.5 rounded-full {% if 'Proficient' in s.level_label %}bg-emerald-400{% elif 'projects' in s.level_label %}bg-indigo-400{% else %}bg-amber-400{% endif %}"></span>
+                <span class="font-medium" style="color: var(--text-primary);">{{ s.name }}</span>
+                <span class="text-[9px] opacity-70 font-mono" style="color: var(--text-secondary);">{{ s.level_label }}</span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="pt-3 border-t text-[10px] font-mono flex items-center justify-between" style="border-color: var(--border-subtle); color: var(--text-tertiary);">
+            <span>DOMAIN VERIFIED</span>
+            <span class="text-emerald-400 font-bold">100% VALIDATED</span>
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       5. HARDWARE SIGNAL ARCHITECTURE (ESP32-S3 INTERACTIVE SCHEMATIC)
+       ========================================================================= -->
+  <section id="hardware" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
+    <div class="fluid-container space-y-8">
+      
+      <div>
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Deep Embedded Engineering</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">ESP32-S3 Bio-Acoustic Signal Flow</h2>
+        <p class="text-sm mt-1" style="color: var(--text-secondary);">Real-time acoustic wingbeat harmonic classification pipeline (Bio-Acoustic Mosquito Vector Trap).</p>
+      </div>
+
+      <!-- 5-Stage Interactive Pipeline Flow -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        
+        <!-- Stage 1 -->
+        <div class="bento-card p-5 space-y-3 relative group">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 01</span>
+            <span class="text-xs font-mono text-emerald-400">16 kHz DMA</span>
+          </div>
+          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Acoustic Capture</h4>
+          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">INMP441 MEMS microphone captures flight hum via I2S direct memory access without CPU block.</p>
+          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">GPIO 14, 15, 32</div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="bento-card p-5 space-y-3 relative group">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 02</span>
+            <span class="text-xs font-mono text-indigo-400">32ms Latency</span>
+          </div>
+          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Edge DSP Windowing</h4>
+          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">ESP32-S3 Xtensa LX7 dual core runs 512-point Radix-2 FFT with Hann windowing on Core 0.</p>
+          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">300 - 700 Hz Band</div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="bento-card p-5 space-y-3 relative group">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 03</span>
+            <span class="text-xs font-mono text-cyan-400">87% Match</span>
+          </div>
+          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">TinyML Inference</h4>
+          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">Quantized Edge Impulse neural classifier isolates Culicidae wingbeat harmonics against background noise.</p>
+          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">INT8 Quantized</div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="bento-card p-5 space-y-3 relative group">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 04</span>
+            <span class="text-xs font-mono text-amber-400">Optoisolated</span>
+          </div>
+          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Physical Actuation</h4>
+          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">L403A high-voltage grid pulse and phototropic UV LED triggered only when vector presence is verified.</p>
+          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">1.2 kV Actuation</div>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="bento-card p-5 space-y-3 relative group">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 05</span>
+            <span class="text-xs font-mono text-emerald-400">4G / GSM</span>
+          </div>
+          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Cloud Telemetry</h4>
+          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">SIM7600 4G LTE transmits hourly vector density &amp; geo-tagged incident logs to central GIS dashboard.</p>
+          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">MQTT over TLS</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       6. EXPERIENCE & CREDENTIALS TIMELINE
+       ========================================================================= -->
+  <section id="timeline" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
+    <div class="fluid-container space-y-8">
+      
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Trajectory</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">Experience &amp; Certifications</h2>
+          <p class="text-sm mt-1" style="color: var(--text-secondary);">Academic training, hands-on engineering, and industry credentials.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Experience Timeline -->
+        <div class="space-y-4">
+          <h3 class="font-mono font-bold text-xs uppercase tracking-wider text-indigo-400">Engineering Roles &amp; Community</h3>
+          <div class="space-y-4">
+            {% for e in experiences %}
+            <div class="bento-card p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <h4 class="font-heading font-bold text-base" style="color: var(--text-primary);">{{ e.role }}</h4>
+                <span class="font-mono text-xs text-indigo-400 font-semibold">{{ e.period_str }}</span>
+              </div>
+              <p class="text-xs font-mono font-medium" style="color: var(--text-secondary);">{{ e.company }} • {{ e.location }}</p>
+              <p class="text-xs leading-relaxed pt-1" style="color: var(--text-secondary);">{{ e.description }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="space-y-4">
+          <h3 class="font-mono font-bold text-xs uppercase tracking-wider text-indigo-400">Verified Certifications</h3>
+          <div class="space-y-4">
+            {% for c in certificates %}
+            <div class="bento-card p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <h4 class="font-heading font-bold text-base" style="color: var(--text-primary);">{{ c.name }}</h4>
+                <span class="font-mono text-xs text-indigo-400 font-semibold">{{ c.issue_date|date:"Y" }}</span>
+              </div>
+              <p class="text-xs font-mono" style="color: var(--text-secondary);">Issuer: {{ c.issuer }}</p>
+              {% if c.credential_url %}
+              <div class="pt-2">
+                <a href="{{ c.credential_url }}" target="_blank" rel="noopener" class="text-xs font-mono font-semibold text-indigo-400 hover:underline">
+                  Verify Credential ↗
+                </a>
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       7. CONTACT SECTION (FULL-WIDTH FLUID)
+       ========================================================================= -->
+  <section id="contact" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
+    <div class="fluid-container">
+      
+      <div class="bento-card p-8 sm:p-12 lg:p-16 border-2" style="border-color: var(--border-subtle);">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center">
+          
+          <div class="lg:col-span-5 space-y-4">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Direct Inquiries</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-heading" style="color: var(--text-primary);">Let's discuss engineering opportunities.</h2>
+            <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+              I am actively seeking AI/ML engineering internships, full-stack software positions, and edge-AI research collaborations.
+            </p>
+
+            <div class="space-y-2 pt-2 font-mono text-xs">
+              <div class="flex items-center gap-2">
+                <span style="color: var(--text-tertiary);">Direct Email:</span>
+                <a href="mailto:{{ settings.primary_email }}" class="text-indigo-400 hover:underline font-bold">{{ settings.primary_email }}</a>
+              </div>
+              <div class="flex items-center gap-2">
+                <span style="color: var(--text-tertiary);">Current Base:</span>
+                <span style="color: var(--text-primary);">Cumilla / Dhaka, Bangladesh (UTC+6)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <form id="contactForm" class="space-y-4">
+              {% csrf_token %}
+              <input type="text" name="hp_field" class="hidden" tabindex="-1" autocomplete="off" />
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Your Name *</label>
+                  <input type="text" name="name" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+                </div>
+                <div>
+                  <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Your Email *</label>
+                  <input type="email" name="email" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Subject</label>
+                <input type="text" name="subject" class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Your Message *</label>
+                <textarea name="message" rows="4" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);"></textarea>
+              </div>
+
+              <div class="flex items-center justify-between pt-2">
+                <button id="submitBtn" type="submit" class="btn-primary">
+                  <span>Send Message</span>
+                  <span>→</span>
+                </button>
+                <span id="formStatusMsg" class="hidden font-mono text-xs"></span>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       8. FOOTER (FULL-WIDTH FLUID)
+       ========================================================================= -->
+  <footer class="border-t py-12" style="border-color: var(--border-subtle); background-color: var(--bg-surface);">
+    <div class="fluid-container flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-xs" style="color: var(--text-tertiary);">
+      <div>
+        <span>&copy; 2026 {{ settings.full_name }}. All projects backed by public git commits.</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="#overview" class="hover:text-indigo-400">Back to Top ↑</a>
+        <span>•</span>
+        <a href="/cv/" class="hover:text-indigo-400">ATS Resume / CV</a>
+        <span>•</span>
+        <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400">GitHub ↗</a>
       </div>
     </div>
   </footer>
@@ -767,7 +919,7 @@
        CASE STUDY DETAIL MODAL
        ========================================================================= -->
   <div id="projectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop-blur" role="dialog" aria-modal="true">
-    <div class="bento-card relative w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6">
+    <div class="bento-card relative w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6">
       <button id="closeModalBtn" type="button" aria-label="Close" class="absolute top-5 right-5 font-mono text-lg hover:text-indigo-400" style="color: var(--text-tertiary);">
         ✕
       </button>
@@ -783,18 +935,18 @@
       </div>
 
       <div class="border-t pt-4 space-y-2" style="border-color: var(--border-subtle);">
-        <h4 class="text-xs font-mono font-bold uppercase tracking-wider" style="color: var(--text-tertiary);">Architecture &amp; Technical Decisions</h4>
+        <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Architecture &amp; Technical Decisions</h4>
         <div id="modalDesc" class="text-sm leading-relaxed space-y-2 whitespace-pre-line" style="color: var(--text-secondary);"></div>
       </div>
 
       <div class="border-t pt-4 space-y-2" style="border-color: var(--border-subtle);">
-        <h4 class="text-xs font-mono font-bold uppercase tracking-wider" style="color: var(--text-tertiary);">Tech Stack</h4>
+        <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Tech Stack</h4>
         <div id="modalStack" class="flex flex-wrap gap-1.5"></div>
       </div>
 
       <div class="border-t pt-4 flex items-center justify-between font-mono text-xs" style="border-color: var(--border-subtle);">
         <button id="modalUpvoteBtn" type="button" class="btn-secondary !py-1.5 !px-3 flex items-center gap-1.5">
-          <span>★ Star Project</span>
+          <span class="text-amber-400 font-bold">★ Star Project</span>
           <span id="modalUpvoteCount" class="text-indigo-400 font-bold">0</span>
         </button>
 
@@ -808,7 +960,7 @@
 
 
   <!-- =========================================================================
-       CLIENT-SIDE JAVASCRIPT
+       CLIENT-SIDE JAVASCRIPT: FFT SIMULATOR, SEARCH, FILTERS, UPVOTE
        ========================================================================= -->
   <script>
     // 1. Projects Dataset
@@ -855,7 +1007,81 @@
       });
     }
 
-    // 4. Project Search & Filter
+    // 4. Interactive Live Audio FFT Spectrogram Simulator
+    const canvas = document.getElementById('fftCanvas');
+    let ctx = canvas ? canvas.getContext('2d') : null;
+    let isSpiked = false;
+    let spikeEndTime = 0;
+
+    function renderFFT() {
+      if (!ctx || !canvas) return;
+      const width = canvas.width;
+      const height = canvas.height;
+      ctx.clearRect(0, 0, width, height);
+
+      const numBars = 48;
+      const barWidth = width / numBars;
+      const now = Date.now();
+      const spiking = (now < spikeEndTime);
+
+      for (let i = 0; i < numBars; i++) {
+        // Base noise floor
+        let val = Math.sin(now * 0.003 + i * 0.3) * 15 + Math.random() * 20 + 20;
+
+        // Wingbeat harmonic spike around bars 8 to 18 (300Hz - 700Hz)
+        if (i >= 8 && i <= 18) {
+          if (spiking) {
+            val += Math.sin((i - 8) / 10 * Math.PI) * 90;
+          } else {
+            val += Math.sin((i - 8) / 10 * Math.PI) * 25;
+          }
+        }
+
+        const barHeight = Math.min(height - 25, Math.max(10, val));
+        const x = i * barWidth;
+        const y = height - barHeight - 20;
+
+        if (i >= 8 && i <= 18) {
+          ctx.fillStyle = spiking ? '#10b981' : '#6366f1';
+        } else {
+          ctx.fillStyle = 'rgba(100, 116, 139, 0.35)';
+        }
+
+        ctx.fillRect(x + 1, y, barWidth - 2, barHeight);
+      }
+
+      requestAnimationFrame(renderFFT);
+    }
+    if (canvas) renderFFT();
+
+    // Trigger Wingbeat Button
+    const triggerBtn = document.getElementById('triggerWingbeatBtn');
+    const feedback = document.getElementById('triggerFeedback');
+    const hudBadge = document.getElementById('hudStatusBadge');
+    const hudConf = document.getElementById('hudConfidence');
+
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', () => {
+        spikeEndTime = Date.now() + 2500;
+        if (feedback) { feedback.style.opacity = '1'; }
+        if (hudBadge) {
+          hudBadge.textContent = 'VECTOR DETECTED (Culex)';
+          hudBadge.className = 'text-emerald-400 font-bold';
+        }
+        if (hudConf) { hudConf.textContent = '94.8%'; }
+
+        setTimeout(() => {
+          if (feedback) { feedback.style.opacity = '0'; }
+          if (hudBadge) {
+            hudBadge.textContent = 'SYSTEM ONLINE';
+            hudBadge.className = 'text-emerald-400 font-semibold';
+          }
+          if (hudConf) { hudConf.textContent = '87.4%'; }
+        }, 3000);
+      });
+    }
+
+    // 5. Project Search & Filter
     const searchInput = document.getElementById('projectSearch');
     const filterBtns = document.querySelectorAll('.filter-btn');
     let activeCat = 'ALL';
@@ -893,7 +1119,7 @@
 
     if (searchInput) searchInput.addEventListener('input', filterProjects);
 
-    // 5. Skill Search
+    // 6. Skill Search
     const skillInput = document.getElementById('skillSearch');
     if (skillInput) {
       skillInput.addEventListener('input', (e) => {
@@ -909,7 +1135,7 @@
       });
     }
 
-    // 6. Project Modal Logic
+    // 7. Project Modal Logic
     const modal = document.getElementById('projectModal');
     const closeBtn = document.getElementById('closeModalBtn');
     let currentModalProject = null;
@@ -955,7 +1181,7 @@
     if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.classList.add('hidden'); });
 
-    // 7. Star Upvote API
+    // 8. Star Upvote API
     function upvote(pId, callback) {
       fetch(`/api/projects/${pId}/upvote/`, {
         method: 'POST',
@@ -983,7 +1209,7 @@
       });
     });
 
-    // 8. Contact Form
+    // 9. Contact Form
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatusMsg');
     const submitBtn = document.getElementById('submitBtn');
@@ -1021,7 +1247,7 @@
       });
     }
 
-    // 9. Dark/Light Theme Switcher
+    // 10. Dark/Light Theme Switcher
     const themeBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeToggleIcon');
 

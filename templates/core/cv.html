@@ -28,12 +28,17 @@
   </script>
 
   <style>
+    body {
+      background-color: #030712;
+      background-image: radial-gradient(rgba(99, 102, 241, 0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
     @media print {
       .no-print { display: none !important; }
-      body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+      body { background: #fff !important; background-image: none !important; color: #000 !important; font-size: 11pt; }
       a { color: #000 !important; text-decoration: none !important; }
       .page-break { page-break-before: always; }
-      .shadow-sm, .shadow-md, .shadow-lg { box-shadow: none !important; }
+      .shadow-sm, .shadow-md, .shadow-lg, .shadow-2xl { box-shadow: none !important; }
       .border { border-color: #e2e8f0 !important; }
     }
   </style>
