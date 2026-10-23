@@ -203,7 +203,7 @@ def run_canonical_seed():
                 "and production deployment with zero downtime."
             ),
             "tech_stack_csv": "Python, Django 5, PostgreSQL, Bootstrap 5, WhiteNoise, JavaScript",
-            "repo_url": "https://github.com/Sakib20050413/campus_lostfound",
+            "repo_url": "https://github.com/Sakib20050413/baiust-campus-lost-and-found",
             "live_url": "https://baiust-campus-lost-and-found.vercel.app/",
             "order": 1,
             "featured": True,
@@ -230,7 +230,7 @@ def run_canonical_seed():
                 "to minimize overall system power consumption."
             ),
             "tech_stack_csv": "ESP32-S3, C++, I2S DMA, 512-Pt FFT, PWM Control, TinyML, INMP441",
-            "repo_url": "https://github.com/Sakib20050413/Bio-Acoustic-Mosquito-Vector-Trap",
+            "repo_url": "https://github.com/Sakib20050413/Bio-Acoustic-Mosquito-AI-Trap",
             "live_url": "",
             "order": 2,
             "featured": True,
@@ -342,7 +342,7 @@ def run_canonical_seed():
             ),
             "tech_stack_csv": "Python, Django, Chart.js, SQLite, Bootstrap 5, Analytics",
             "repo_url": "https://github.com/Sakib20050413/smartspend_core",
-            "live_url": "",
+            "live_url": "https://smartspendcore.vercel.app",
             "order": 7,
             "featured": False,
             "status": "Completed",
@@ -361,7 +361,7 @@ def run_canonical_seed():
                 "automated overdue fine computation, and responsive search indexing."
             ),
             "tech_stack_csv": "Python, Django, Relational DB, HTML5, CSS3, JavaScript",
-            "repo_url": "https://github.com/Sakib20050413/library_management_system",
+            "repo_url": "https://github.com/Sakib20050413/Library-Management-System",
             "live_url": "",
             "order": 8,
             "featured": False,

@@ -12,14 +12,8 @@
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ settings.seo_title }}</title>
-  <meta name="description" content="{{ settings.seo_description }}" />
-
-  <!-- Canonical & OpenGraph Metadata -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="{{ settings.seo_title }}" />
-  <meta property="og:description" content="{{ settings.seo_description }}" />
-  <meta property="og:image" content="{{ settings.photo_display_url }}" />
+  <title>{{ settings.full_name }} — Full-Stack Developer &amp; CSE Student</title>
+  <meta name="description" content="Portfolio of {{ settings.full_name }}: Full-Stack Web Developer &amp; CSE Student at BAIUST. Explore live web applications, embedded systems, and open-source projects." />
 
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%236366f1'/><text x='50' y='65' font-family='sans-serif' font-size='44' font-weight='800' fill='white' text-anchor='middle'>SR</text></svg>" />
@@ -27,7 +21,7 @@
   <!-- Google Fonts: Inter, Plus Jakarta Sans, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -37,8 +31,8 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Inter"', '"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            heading: ['"Plus Jakarta Sans"', '"Inter"', 'sans-serif'],
+            sans: ['"Inter"', '-apple-system', 'sans-serif'],
+            heading: ['"Plus Jakarta Sans"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
@@ -56,46 +50,42 @@
     }
   </script>
 
-  <!-- World-Class Design Variables & Expansive Fluid Styles -->
+  <!-- World-Class Human Portfolio Styles -->
   <style>
     :root, [data-theme="dark"] {
-      --bg-base: #030712;
-      --bg-surface: #0a0f1d;
-      --bg-elevated: #111827;
-      --bg-glass: rgba(3, 7, 18, 0.88);
+      --bg-base: #07090e;
+      --bg-surface: #0e121b;
+      --bg-elevated: #151a26;
+      --bg-glass: rgba(7, 9, 14, 0.88);
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-focus: rgba(99, 102, 241, 0.45);
-      --text-primary: #f9fafb;
+      --border-focus: rgba(99, 102, 241, 0.4);
+      --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
       --text-tertiary: #64748b;
       --accent: #6366f1;
       --accent-hover: #4f46e5;
-      --accent-glow: rgba(99, 102, 241, 0.2);
-      --signal: #10b981;
-      --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
-      --input-bg: #070a14;
-      --grid-dot: rgba(99, 102, 241, 0.12);
-      --hero-mesh: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.16) 0%, rgba(16, 185, 129, 0.06) 35%, transparent 75%);
+      --accent-glow: rgba(99, 102, 241, 0.16);
+      --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      --browser-bar: #121723;
+      --grid-dot: rgba(99, 102, 241, 0.08);
     }
 
     [data-theme="light"] {
       --bg-base: #f8fafc;
       --bg-surface: #ffffff;
       --bg-elevated: #f1f5f9;
-      --bg-glass: rgba(255, 255, 255, 0.92);
+      --bg-glass: rgba(255, 255, 255, 0.9);
       --border-subtle: #e2e8f0;
-      --border-focus: rgba(79, 70, 229, 0.5);
+      --border-focus: rgba(79, 70, 229, 0.45);
       --text-primary: #0f172a;
       --text-secondary: #334155;
       --text-tertiary: #64748b;
       --accent: #4f46e5;
       --accent-hover: #4338ca;
-      --accent-glow: rgba(79, 70, 229, 0.14);
-      --signal: #059669;
-      --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
-      --input-bg: #ffffff;
-      --grid-dot: rgba(100, 116, 139, 0.18);
-      --hero-mesh: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.09) 0%, rgba(16, 185, 129, 0.04) 35%, transparent 75%);
+      --accent-glow: rgba(79, 70, 229, 0.12);
+      --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+      --browser-bar: #e2e8f0;
+      --grid-dot: rgba(100, 116, 139, 0.15);
     }
 
     * { box-sizing: border-box; }
@@ -106,11 +96,9 @@
       overflow-x: hidden;
       min-height: 100vh;
       transition: background-color 0.25s ease, color 0.25s ease;
-      background-image: 
-        radial-gradient(var(--grid-dot) 1px, transparent 1px),
-        var(--hero-mesh);
-      background-size: 36px 36px, 100% 100%;
-      background-position: 0 0, center top;
+      background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+      background-size: 32px 32px;
+      background-position: 0 0;
       background-attachment: fixed;
     }
 
@@ -125,10 +113,10 @@
     }
     @media (min-width: 640px) { .fluid-container { padding-left: 2rem; padding-right: 2rem; } }
     @media (min-width: 1024px) { .fluid-container { padding-left: 3rem; padding-right: 3rem; } }
-    @media (min-width: 1440px) { .fluid-container { padding-left: 4rem; padding-right: 4rem; } }
+    @media (min-width: 1440px) { .fluid-container { padding-left: 4.5rem; padding-right: 4.5rem; } }
 
-    /* Graphical Bento Cards */
-    .bento-card {
+    /* Card Styling */
+    .portfolio-card {
       background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 20px;
@@ -137,12 +125,12 @@
       position: relative;
       overflow: hidden;
     }
-    .bento-card:hover {
+    .portfolio-card:hover {
       border-color: var(--border-focus);
       box-shadow: 0 16px 36px -12px var(--accent-glow);
     }
 
-    /* Glass Header */
+    /* Glass Navigation */
     .glass-nav {
       background-color: var(--bg-glass);
       backdrop-filter: blur(16px);
@@ -150,33 +138,7 @@
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    /* Gradient Headings */
-    .gradient-heading {
-      background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* Badge & Tech Pills */
-    .tech-pill {
-      background-color: var(--bg-elevated);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-secondary);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      padding: 0.3rem 0.65rem;
-      border-radius: 8px;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: all 0.2s ease;
-    }
-    .tech-pill:hover {
-      border-color: var(--border-focus);
-      color: var(--text-primary);
-    }
-
-    /* Primary & Secondary Buttons */
+    /* Buttons */
     .btn-primary {
       background-color: var(--accent);
       color: #ffffff;
@@ -214,6 +176,20 @@
       transform: translateY(-1px);
     }
 
+    /* Tech Pills */
+    .tech-pill {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
     /* Filter Pills */
     .filter-btn-active {
       background-color: var(--accent);
@@ -230,80 +206,108 @@
       border-color: var(--border-focus);
     }
 
-    /* Modal Backdrop */
-    .modal-backdrop-blur {
-      background-color: rgba(3, 7, 18, 0.8);
-      backdrop-filter: blur(10px);
+    /* Browser Mockup Chrome */
+    .browser-frame {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .browser-header {
+      background-color: var(--browser-bar);
+      padding: 0.6rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .browser-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+    }
+    .browser-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 6px;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     /* Pulse Glow */
-    @keyframes pulse-subtle {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.08); }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.6; }
     }
-    .pulse-glow {
-      animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    .pulse-dot {
+      animation: pulse-dot 2.5s infinite ease-in-out;
     }
   </style>
 </head>
 <body class="selection:bg-indigo-500 selection:text-white">
 
   <!-- =========================================================================
-       1. TOP NAVIGATION (FULL VIEWPORT FLUID)
+       1. NAVIGATION (FULL VIEWPORT FLUID)
        ========================================================================= -->
   <header class="w-full glass-nav sticky top-0 z-40 transition-colors">
     <div class="fluid-container flex items-center justify-between h-16">
       
-      <!-- Left: Identity & Live Signal -->
-      <a href="#overview" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-white shadow-lg text-sm transition-transform group-hover:scale-105" style="background: linear-gradient(135deg, var(--accent), #10b981);">
+      <!-- Brand & Name -->
+      <a href="#about" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-white shadow-md text-sm transition-transform group-hover:scale-105" style="background: linear-gradient(135deg, var(--accent), #10b981);">
           SR
         </div>
         <div>
           <div class="font-heading font-bold text-sm tracking-tight flex items-center gap-2" style="color: var(--text-primary);">
             <span>{{ settings.full_name }}</span>
-            <span class="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-glow"></span>
+            <span class="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
               Open for Roles
             </span>
           </div>
-          <p class="text-[11px] font-mono" style="color: var(--text-tertiary);">{{ settings.headline }} • {{ settings.university }}</p>
+          <p class="text-[11px] font-mono" style="color: var(--text-tertiary);">Computer Science &amp; Engineering • BAIUST</p>
         </div>
       </a>
 
-      <!-- Center: Navigation Links -->
+      <!-- Center Links -->
       <nav class="hidden md:flex items-center gap-1 font-mono text-xs">
         <a href="#projects" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Projects (8)</a>
-        <a href="#skills" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Skills (52)</a>
-        <a href="#hardware" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Hardware DSP</a>
-        <a href="#timeline" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Experience</a>
+        <a href="#skills" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Skills</a>
+        <a href="#about-me" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">About Me</a>
+        <a href="#experience" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Experience</a>
         <a href="#contact" class="px-3 py-1.5 rounded-lg transition-colors hover:text-indigo-400" style="color: var(--text-secondary);">Contact</a>
       </nav>
 
-      <!-- Right: Live Telemetry, Email Copy & Theme Toggle -->
-      <div class="flex items-center gap-3">
-        <!-- Live Cumilla Clock -->
+      <!-- Right Tools: Clock, Copy Email, Theme, Resume -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Live Clock -->
         <div class="hidden xl:flex items-center gap-2 font-mono text-[11px] px-3 py-1 rounded-lg border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);">
           <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
           <span id="cumillaClockNav">CUMILLA 00:00:00 UTC+6</span>
         </div>
 
-        <!-- Copy Email Button -->
-        <button id="navCopyEmailBtn" type="button" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg border transition-all" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);" title="Copy {{ settings.primary_email }}">
+        <!-- Copy Email -->
+        <button id="navCopyEmailBtn" type="button" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg border transition-all" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);" title="Copy email address">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
           </svg>
           <span id="navCopyLabel">Copy Email</span>
         </button>
 
-        <!-- Theme Toggle Button -->
+        <!-- Theme Toggle -->
         <button id="themeToggleBtn" type="button" aria-label="Toggle theme" class="p-2 rounded-lg border transition-all hover:border-indigo-400" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-primary);">
           <span id="themeToggleIcon" class="text-sm">◐</span>
         </button>
 
-        <!-- ATS Resume / CV Link -->
+        <!-- Resume Button -->
         <a href="/cv/" class="btn-primary !py-1.5 !px-3 font-mono text-xs">
-          <span>CV</span>
+          <span>Resume</span>
           <span>↗</span>
         </a>
       </div>
@@ -312,194 +316,130 @@
 
 
   <!-- =========================================================================
-       2. HERO SECTION (EXPANSIVE GRAPHICAL DASHBOARD)
+       2. HERO SECTION (NATURAL, WARM, AUTHENTIC DEVELOPER SPOTLIGHT)
        ========================================================================= -->
-  <main id="overview" class="py-12 sm:py-16 lg:py-20">
+  <main id="about" class="py-12 sm:py-16 lg:py-20">
     <div class="fluid-container">
       
-      <!-- 2-Column Responsive Grid (Full Screen Coverage) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-center">
         
-        <!-- Left: High-Impact Typography & Visual Technical Cards (7 Cols) -->
+        <!-- Left Column: Personal Introduction & Context (7 Cols) -->
         <div class="lg:col-span-7 space-y-6">
           
-          <!-- Status Pill -->
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-mono" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-glow"></span>
-            <span>Open to AI/ML engineering internships &amp; full-stack roles</span>
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-mono" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+            <span>Based in Cumilla / Dhaka, Bangladesh • UTC+6</span>
           </div>
 
-          <!-- Main Headline -->
           <div class="space-y-3">
             <h1 class="text-4xl sm:text-5xl xl:text-6xl font-extrabold font-heading tracking-tight leading-[1.1]" style="color: var(--text-primary);">
-              Building production web platforms &amp; <span class="gradient-heading">real-time edge AI.</span>
+              Hi, I'm <span class="text-indigo-400">{{ settings.full_name }}</span>.
             </h1>
-            <p class="text-lg xl:text-xl font-medium" style="color: var(--accent);">
-              {{ settings.headline }}
+            <p class="text-xl sm:text-2xl font-medium leading-relaxed" style="color: var(--text-secondary);">
+              Full-Stack Developer &amp; CSE Undergraduate building modern web applications and exploring embedded systems.
             </p>
           </div>
 
-          <!-- Graphical Bento Feature Tiles (Replaces Dense Text Blocks) -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            
-            <!-- Tile 1: Web Systems -->
-            <div class="p-4 rounded-xl border flex items-start gap-3.5 transition-all hover:border-indigo-500/40" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-              </div>
-              <div class="space-y-0.5">
-                <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Full-Stack Web Systems</h4>
-                <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">Python/Django 5, FastAPI &amp; Next.js with PostgreSQL and secure auth architectures.</p>
-              </div>
-            </div>
+          <p class="text-sm sm:text-base leading-relaxed" style="color: var(--text-secondary);">
+            I am a 3rd-year Computer Science &amp; Engineering student at <strong class="text-indigo-400 font-semibold">BAIUST</strong>. I design and build production-ready web platforms with Python/Django, FastAPI, and Next.js, and work on real-time embedded hardware using ESP32 microcontrollers.
+          </p>
 
-            <!-- Tile 2: Edge AI & DSP -->
-            <div class="p-4 rounded-xl border flex items-start gap-3.5 transition-all hover:border-indigo-500/40" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <div class="space-y-0.5">
-                <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Edge AI &amp; DSP Pipelines</h4>
-                <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">ESP32-S3 512-point windowed FFT &amp; Edge Impulse TinyML under 35ms latency.</p>
-              </div>
-            </div>
-
-            <!-- Tile 3: IoT & Telemetry -->
-            <div class="p-4 rounded-xl border flex items-start gap-3.5 transition-all hover:border-indigo-500/40" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
-                </svg>
-              </div>
-              <div class="space-y-0.5">
-                <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Telemetry &amp; Cellular IoT</h4>
-                <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">SIM800L/SIM7600 4G LTE field uplinks with solar power budget optimization.</p>
-              </div>
-            </div>
-
-            <!-- Tile 4: Applied Research -->
-            <div class="p-4 rounded-xl border flex items-start gap-3.5 transition-all hover:border-indigo-500/40" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
-              <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <div class="space-y-0.5">
-                <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Verifiable Engineering</h4>
-                <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">8 public GitHub repositories with reproducible benchmarks and zero fluff.</p>
-              </div>
-            </div>
-
+          <!-- Core Tech Highlights -->
+          <div class="flex flex-wrap items-center gap-2 pt-1">
+            <span class="text-xs font-mono font-medium mr-1" style="color: var(--text-tertiary);">Core Stack:</span>
+            <span class="tech-pill font-semibold text-indigo-400">Python</span>
+            <span class="tech-pill font-semibold text-indigo-400">Django 5</span>
+            <span class="tech-pill font-semibold text-indigo-400">FastAPI</span>
+            <span class="tech-pill font-semibold text-indigo-400">Next.js</span>
+            <span class="tech-pill font-semibold text-indigo-400">PostgreSQL</span>
+            <span class="tech-pill font-semibold text-indigo-400">ESP32-S3</span>
+            <span class="tech-pill font-semibold text-indigo-400">Docker</span>
           </div>
 
-          <!-- Primary Actions -->
+          <!-- CTAs -->
           <div class="flex flex-wrap items-center gap-4 pt-3">
             <a href="#projects" class="btn-primary">
-              <span>Explore 8 Verified Projects</span>
+              <span>View Featured Projects</span>
               <span>↓</span>
-            </a>
-            <a href="#hardware" class="btn-secondary font-mono">
-              <span>Interactive DSP Canvas</span>
-              <span>⚡</span>
             </a>
             <a href="#contact" class="btn-secondary">
               <span>Get in Touch</span>
               <span>✉</span>
             </a>
-          </div>
-
-          <!-- Social Links -->
-          <div class="flex items-center gap-4 font-mono text-xs pt-1" style="color: var(--text-secondary);">
-            <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 flex items-center gap-1.5 transition-colors">
+            <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="btn-secondary font-mono text-xs">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
               <span>GitHub</span>
             </a>
-            <span>•</span>
-            <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 flex items-center gap-1.5 transition-colors">
+            <a href="{{ settings.linkedin_url }}" target="_blank" rel="noopener" class="btn-secondary font-mono text-xs">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
               <span>LinkedIn</span>
-            </a>
-            <span>•</span>
-            <a href="{{ settings.kaggle_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 flex items-center gap-1.5 transition-colors">
-              <span class="font-bold">K</span>
-              <span>Kaggle</span>
             </a>
           </div>
 
         </div>
 
-
-        <!-- Right: Interactive Live Edge-AI Signal & System HUD (5 Cols) -->
+        <!-- Right Column: Live Featured App Spotlight Preview (5 Cols) -->
         <div class="lg:col-span-5">
-          <div class="bento-card p-6 space-y-5 border-2 transition-all" style="border-color: var(--border-subtle);">
-            
-            <!-- Window Bar -->
-            <div class="flex items-center justify-between border-b pb-3.5" style="border-color: var(--border-subtle);">
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
-                <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
-                <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-                <span class="text-xs font-mono font-bold ml-2 text-indigo-400">ESP32-S3 SIGNAL HUD</span>
+          <div class="browser-frame shadow-2xl">
+            <!-- Browser Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-rose-500"></span>
+                <span class="browser-dot bg-amber-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
               </div>
-              <div class="flex items-center gap-2 font-mono text-[10px]">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-glow"></span>
-                <span class="text-emerald-400 font-semibold" id="hudStatusBadge">SYSTEM ONLINE</span>
+              <div class="browser-url flex items-center gap-1.5">
+                <span class="text-emerald-400">🔒</span>
+                <span>https://codequest-bd.vercel.app</span>
               </div>
+              <a href="https://codequest-bd.vercel.app" target="_blank" rel="noopener" class="text-[11px] font-mono text-indigo-400 font-bold hover:underline shrink-0">
+                Live ↗
+              </a>
             </div>
 
-            <!-- Canvas Spectrum Visualizer -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs font-mono" style="color: var(--text-secondary);">
-                <span>512-PT FFT AUDIO SPECTRUM</span>
-                <span class="text-indigo-400 font-semibold">16 kHz I2S DMA</span>
+            <!-- Authentic App Preview Card -->
+            <div class="p-6 space-y-4" style="background-color: var(--bg-surface);">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                    FEATURED LIVE WEB APP
+                  </span>
+                  <h3 class="font-heading font-bold text-lg mt-1" style="color: var(--text-primary);">CodeQuest BD</h3>
+                </div>
+                <span class="text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
+                  ● Deployed on Vercel
+                </span>
               </div>
 
-              <!-- Interactive Waveform Canvas -->
-              <div class="relative rounded-xl overflow-hidden border" style="background-color: var(--input-bg); border-color: var(--border-subtle);">
-                <canvas id="fftCanvas" width="480" height="150" class="w-full h-[150px] block"></canvas>
-                <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono px-2 py-1 rounded bg-black/60 backdrop-blur border border-white/10 text-slate-300">
-                  <span>0 Hz</span>
-                  <span class="text-amber-400 font-bold">▲ 300 - 700 Hz (WINGBEAT BAND)</span>
-                  <span>8000 Hz</span>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Interactive coding education platform combining in-browser multi-language execution (Python, C, JavaScript) with Three.js 3D visual rover mazes.
+              </p>
+
+              <!-- Interactive Code Snippet Mockup -->
+              <div class="p-3.5 rounded-xl border font-mono text-xs space-y-2" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[11px] pb-2 border-b" style="border-color: var(--border-subtle); color: var(--text-tertiary);">
+                  <span>solution.py</span>
+                  <span class="text-emerald-400">✓ All 4 Test Cases Passed</span>
+                </div>
+                <div class="space-y-1 text-[11px] leading-relaxed">
+                  <div><span class="text-indigo-400">def</span> <span class="text-amber-400">two_sum</span>(nums, target):</div>
+                  <div class="pl-4 text-slate-400">seen = {}</div>
+                  <div class="pl-4 text-slate-400"><span class="text-indigo-400">for</span> i, n <span class="text-indigo-400">in</span> enumerate(nums):</div>
+                  <div class="pl-8 text-slate-400">diff = target - n</div>
+                  <div class="pl-8 text-slate-400"><span class="text-indigo-400">if</span> diff <span class="text-indigo-400">in</span> seen: <span class="text-emerald-400">return</span> [seen[diff], i]</div>
+                  <div class="pl-8 text-slate-400">seen[n] = i</div>
                 </div>
               </div>
 
-              <div class="flex items-center justify-between pt-1">
-                <button id="triggerWingbeatBtn" type="button" class="text-xs font-mono font-semibold px-3 py-1.5 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/30 transition-all flex items-center gap-1.5">
-                  <span>▶ Inject 480 Hz Wingbeat</span>
-                </button>
-                <span id="triggerFeedback" class="text-[11px] font-mono text-emerald-400 opacity-0 transition-opacity">Vector classified (31.4 ms)</span>
-              </div>
-            </div>
-
-            <!-- Lower 4 Telemetry Metrics -->
-            <div class="grid grid-cols-2 gap-3 pt-2 border-t" style="border-color: var(--border-subtle);">
-              <div class="p-2.5 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">DSP FFT LATENCY</span>
-                <span class="text-base font-bold font-mono text-indigo-400">32 ms</span>
-                <span class="text-[10px] font-mono block text-emerald-500 font-medium">✓ Under 50ms budget</span>
-              </div>
-
-              <div class="p-2.5 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">TINYML CONFIDENCE</span>
-                <span id="hudConfidence" class="text-base font-bold font-mono text-emerald-400">87.4%</span>
-                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">Edge Impulse CNN</span>
-              </div>
-
-              <div class="p-2.5 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">PUBLIC GITHUB REPOS</span>
-                <span class="text-base font-bold font-mono" style="color: var(--text-primary);">8 Repos</span>
-                <span class="text-[10px] font-mono block" style="color: var(--text-secondary);">100% verified code</span>
-              </div>
-
-              <div class="p-2.5 rounded-xl border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
-                <span class="text-[10px] font-mono block" style="color: var(--text-tertiary);">ACADEMIC STANDING</span>
-                <span class="text-base font-bold font-mono text-amber-400">L3 T2</span>
-                <span class="text-[10px] font-mono block" style="color: var(--text-secondary);">BAIUST CSE</span>
+              <!-- Action Links -->
+              <div class="flex items-center justify-between pt-2 border-t" style="border-color: var(--border-subtle);">
+                <a href="https://codequest-bd.vercel.app" target="_blank" rel="noopener" class="btn-primary !py-1.5 !px-3 font-mono text-xs">
+                  <span>Open Live Application</span>
+                  <span>↗</span>
+                </a>
+                <a href="https://github.com/Sakib20050413/codequest-bd" target="_blank" rel="noopener" class="text-xs font-mono text-indigo-400 hover:underline">
+                  View Source on GitHub ↗
+                </a>
               </div>
             </div>
 
@@ -513,117 +453,504 @@
 
 
   <!-- =========================================================================
-       3. FEATURED PROJECTS (FULL-SCREEN EXPANSIVE BENTO GRID)
+       3. FEATURED PROJECTS (WITH AUTHENTIC LIVE BROWSER PREVIEWS)
        ========================================================================= -->
   <section id="projects" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
-    <div class="fluid-container space-y-8">
+    <div class="fluid-container space-y-10">
       
       <!-- Section Header & Filter Toolbar -->
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Verifiable Codebases</span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">8 Featured Projects</h2>
-          <p class="text-sm mt-1" style="color: var(--text-secondary);">Real production systems and embedded architectures with open source repositories.</p>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Portfolio Work</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">Featured Projects</h2>
+          <p class="text-sm mt-1" style="color: var(--text-secondary);">Real projects with working live deployments on Vercel and public GitHub repositories.</p>
         </div>
 
-        <!-- Filter Pills & Search Input -->
+        <!-- Filter Pills & Search -->
         <div class="flex flex-wrap items-center gap-3">
-          <!-- Category Filter Pills -->
           <div class="flex items-center gap-1.5 p-1 rounded-xl border" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
             <button type="button" class="filter-btn filter-btn-active px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all" data-cat="ALL">
               All (8)
             </button>
-            <button type="button" class="filter-btn filter-btn-inactive px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all" data-cat="WEB">
-              Web &amp; Full-Stack
+            <button type="button" class="filter-btn filter-btn-inactive px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all" data-cat="LIVE">
+              Live Web Apps (4)
             </button>
-            <button type="button" class="filter-btn filter-btn-inactive px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all" data-cat="EMBEDDED">
-              Embedded &amp; Edge AI
+            <button type="button" class="filter-btn filter-btn-inactive px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all" data-cat="HARDWARE">
+              Embedded &amp; Systems (4)
             </button>
           </div>
 
-          <!-- Project Keyword Search -->
           <div class="relative w-full sm:w-56 font-mono text-xs">
-            <input type="text" id="projectSearch" placeholder="Search projects..." class="w-full px-3.5 py-2 rounded-xl border outline-none transition-all focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+            <input type="text" id="projectSearch" placeholder="Search by name or tech..." class="w-full px-3.5 py-2 rounded-xl border outline-none transition-all focus:border-indigo-500" style="background-color: var(--bg-surface); border-color: var(--border-subtle); color: var(--text-primary);" />
           </div>
         </div>
       </div>
 
-      <!-- 8 Projects Grid (Expansive 2 or 3-column Layout) -->
-      <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {% for p in projects %}
-        <div class="bento-card p-6 space-y-5 flex flex-col justify-between project-item group" data-category="{% if 'Embedded' in p.get_category_display or 'IoT' in p.get_category_display or 'Edge' in p.get_category_display %}EMBEDDED{% else %}WEB{% endif %}" data-title="{{ p.title|lower }}" data-stack="{{ p.tech_stack_csv|lower }}">
-          
-          <div class="space-y-4">
-            <!-- Window Top Bar -->
-            <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-subtle);">
-              <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
-                <span class="text-[11px] font-mono uppercase tracking-wider text-indigo-400 font-bold ml-1.5">
-                  {{ p.get_category_display }}
-                </span>
+      <!-- Projects Grid (Widescreen 2-column or 3-column Layout) -->
+      <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        
+        <!-- ==================== 1. CODEQUEST BD ==================== -->
+        <div class="portfolio-card flex flex-col justify-between project-item group" data-category="LIVE" data-title="codequest bd" data-stack="django three.js python javascript tailwind">
+          <div>
+            <!-- Browser Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-rose-500"></span>
+                <span class="browser-dot bg-amber-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
               </div>
-
-              <!-- Upvote Star Counter -->
-              <button type="button" class="upvote-btn inline-flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded-lg border transition-all hover:border-indigo-400" data-id="{{ p.id }}" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);" title="Star this project">
-                <span class="text-amber-400 font-bold">★</span>
-                <span class="upvote-val font-semibold" style="color: var(--text-primary);">{{ p.upvotes }}</span>
-              </button>
+              <div class="browser-url">https://codequest-bd.vercel.app</div>
+              <a href="https://codequest-bd.vercel.app" target="_blank" rel="noopener" class="text-[11px] font-mono text-emerald-400 font-bold hover:underline shrink-0">Live ↗</a>
             </div>
 
-            <!-- Project Title & Subtitle -->
-            <div>
-              <h3 class="text-xl font-heading font-bold transition-colors group-hover:text-indigo-400" style="color: var(--text-primary);">
-                {{ p.title }}
-              </h3>
-              <p class="text-xs font-mono mt-1 font-medium leading-relaxed text-indigo-400">
-                {{ p.summary }}
-              </p>
-            </div>
-
-            <!-- Graphical Miniature Preview Box -->
-            <div class="p-3.5 rounded-xl border text-xs font-mono space-y-1.5" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-secondary);">
-              <div class="flex items-center justify-between text-[11px]">
-                <span class="text-indigo-400 font-bold">ARCHITECTURE CONSTRAINTS</span>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">{{ p.status }}</span>
+            <!-- Preview Graphic -->
+            <div class="p-5 border-b" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+              <div class="rounded-xl p-3 border font-mono text-xs space-y-1.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[10px] text-indigo-400 font-bold">
+                  <span>3D ROVER ALGORITHM ARENA</span>
+                  <span class="text-emerald-400">● Interactive Sandbox</span>
+                </div>
+                <p class="text-[11px] leading-relaxed" style="color: var(--text-secondary);">
+                  Multi-language compiler execution with Piston API &amp; Three.js algorithm visualization.
+                </p>
               </div>
-              <p class="line-clamp-2 text-xs leading-relaxed" style="color: var(--text-secondary);">
-                {{ p.description }}
-              </p>
             </div>
 
-            <!-- Tech Stack Pills -->
-            <div class="flex flex-wrap gap-1.5 pt-1">
-              {% for tag in p.tech_tags %}
-              <span class="tech-pill">{{ tag }}</span>
-              {% endfor %}
+            <!-- Content -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-heading font-bold" style="color: var(--text-primary);">CodeQuest BD</h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">LIVE APP</span>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Interactive coding platform allowing learners to run Python, C, and JavaScript in a secure sandbox while navigating 3D rover algorithm mazes.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="tech-pill">Django 5</span>
+                <span class="tech-pill">Three.js</span>
+                <span class="tech-pill">JavaScript</span>
+                <span class="tech-pill">Tailwind CSS</span>
+                <span class="tech-pill">Piston API</span>
+              </div>
             </div>
           </div>
 
-          <!-- Card Action Footer -->
-          <div class="flex items-center justify-between border-t pt-4 mt-4" style="border-color: var(--border-subtle);">
-            <button type="button" class="open-case-study text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 font-mono" data-index="{{ forloop.counter0 }}">
-              <span>View Architecture</span>
-              <span>→</span>
-            </button>
-
-            <div class="flex items-center gap-3 font-mono text-xs">
-              {% if p.repo_url %}
-              <a href="{{ p.repo_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400 transition-colors" style="color: var(--text-secondary);">
-                Code ↗
-              </a>
-              {% endif %}
-              {% if p.live_url %}
-              <a href="{{ p.live_url }}" target="_blank" rel="noopener" class="text-emerald-400 font-bold hover:underline">
-                Live Demo ↗
-              </a>
-              {% endif %}
-            </div>
+          <!-- Footer Actions -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+            <a href="https://codequest-bd.vercel.app" target="_blank" rel="noopener" class="btn-primary !py-1.5 !px-3 font-mono text-xs">
+              <span>Open Live Demo</span>
+              <span>↗</span>
+            </a>
+            <a href="https://github.com/Sakib20050413/codequest-bd" target="_blank" rel="noopener" class="text-xs font-mono text-indigo-400 hover:underline">
+              GitHub ↗
+            </a>
           </div>
-
         </div>
-        {% endfor %}
+
+        <!-- ==================== 2. SMARTSPEND ==================== -->
+        <div class="portfolio-card flex flex-col justify-between project-item group" data-category="LIVE" data-title="smartspend" data-stack="django python chart.js sqlite bootstrap">
+          <div>
+            <!-- Browser Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-rose-500"></span>
+                <span class="browser-dot bg-amber-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
+              </div>
+              <div class="browser-url">https://smartspendcore.vercel.app</div>
+              <a href="https://smartspendcore.vercel.app" target="_blank" rel="noopener" class="text-[11px] font-mono text-emerald-400 font-bold hover:underline shrink-0">Live ↗</a>
+            </div>
+
+            <!-- Preview Graphic -->
+            <div class="p-5 border-b" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+              <div class="rounded-xl p-3 border font-mono text-xs space-y-2" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-indigo-400 font-bold">BUDGET ANALYTICS</span>
+                  <span class="text-emerald-400 font-semibold">$1,420 / $2,000 spent</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                  <div class="bg-indigo-500 h-2 rounded-full" style="width: 71%"></div>
+                </div>
+                <div class="flex items-center justify-between text-[10px]" style="color: var(--text-tertiary);">
+                  <span>Food &amp; Dining (32%)</span>
+                  <span>Cloud (24%)</span>
+                  <span>Transit (15%)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-heading font-bold" style="color: var(--text-primary);">SmartSpend</h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">LIVE APP</span>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Personal financial tracking platform featuring monthly category budgeting, automated threshold ceilings, and responsive Chart.js visual analytics.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="tech-pill">Python</span>
+                <span class="tech-pill">Django</span>
+                <span class="tech-pill">Chart.js</span>
+                <span class="tech-pill">SQLite</span>
+                <span class="tech-pill">Bootstrap 5</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+            <a href="https://smartspendcore.vercel.app" target="_blank" rel="noopener" class="btn-primary !py-1.5 !px-3 font-mono text-xs">
+              <span>Open Live Demo</span>
+              <span>↗</span>
+            </a>
+            <a href="https://github.com/Sakib20050413/smartspend_core" target="_blank" rel="noopener" class="text-xs font-mono text-indigo-400 hover:underline">
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- ==================== 3. BAIUST CAMPUS LOST & FOUND ==================== -->
+        <div class="portfolio-card flex flex-col justify-between project-item group" data-category="LIVE" data-title="baiust campus lost and found" data-stack="django postgresql python javascript">
+          <div>
+            <!-- Browser Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-rose-500"></span>
+                <span class="browser-dot bg-amber-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
+              </div>
+              <div class="browser-url">https://baiust-campus-lost-and-found.vercel.app</div>
+              <a href="https://baiust-campus-lost-and-found.vercel.app" target="_blank" rel="noopener" class="text-[11px] font-mono text-emerald-400 font-bold hover:underline shrink-0">Live ↗</a>
+            </div>
+
+            <!-- Preview Graphic -->
+            <div class="p-5 border-b" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+              <div class="rounded-xl p-3 border font-mono text-xs space-y-1.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-indigo-400 font-bold">CAMPUS RECOVERY</span>
+                  <span class="text-emerald-400 font-semibold">14 Zones Indexed</span>
+                </div>
+                <div class="text-[11px]" style="color: var(--text-secondary);">
+                  Found: Casio fx-991EX (Central Library Zone)
+                </div>
+                <div class="text-[10px] text-emerald-400 font-semibold">✓ Claim Verified &amp; Returned</div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-heading font-bold" style="color: var(--text-primary);">BAIUST Campus Lost &amp; Found</h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">LIVE APP</span>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Centralized university portal with student authentication, structured claim verification, and an automated 4-factor matching algorithm across campus zones.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="tech-pill">Django 5</span>
+                <span class="tech-pill">PostgreSQL</span>
+                <span class="tech-pill">Bootstrap 5</span>
+                <span class="tech-pill">JavaScript</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+            <a href="https://baiust-campus-lost-and-found.vercel.app" target="_blank" rel="noopener" class="btn-primary !py-1.5 !px-3 font-mono text-xs">
+              <span>Open Live Demo</span>
+              <span>↗</span>
+            </a>
+            <a href="https://github.com/Sakib20050413/baiust-campus-lost-and-found" target="_blank" rel="noopener" class="text-xs font-mono text-indigo-400 hover:underline">
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- ==================== 4. ALORON SHOP ==================== -->
+        <div class="portfolio-card flex flex-col justify-between project-item group" data-category="LIVE" data-title="aloron shop" data-stack="next.js typescript react tailwind rest api">
+          <div>
+            <!-- Browser Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-rose-500"></span>
+                <span class="browser-dot bg-amber-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
+              </div>
+              <div class="browser-url">https://aloron-shop.vercel.app</div>
+              <a href="https://aloron-shop.vercel.app" target="_blank" rel="noopener" class="text-[11px] font-mono text-emerald-400 font-bold hover:underline shrink-0">Live ↗</a>
+            </div>
+
+            <!-- Preview Graphic -->
+            <div class="p-5 border-b" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+              <div class="rounded-xl p-3 border font-mono text-xs space-y-1.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-indigo-400 font-bold">STOREFRONT ENGINE</span>
+                  <span class="text-emerald-400">Cart Sync OK</span>
+                </div>
+                <div class="text-[11px]" style="color: var(--text-secondary);">
+                  Instant Client-Side Filtering &amp; LocalStorage Cart
+                </div>
+                <div class="text-[10px] text-indigo-400 font-semibold">BDT 1,450.00 • In Stock</div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-heading font-bold" style="color: var(--text-primary);">Aloron Shop</h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">LIVE APP</span>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                High-speed e-commerce application constructed with Next.js and TypeScript, featuring instant debounced search, persistent shopping cart, and mobile checkout.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="tech-pill">Next.js</span>
+                <span class="tech-pill">TypeScript</span>
+                <span class="tech-pill">Tailwind CSS</span>
+                <span class="tech-pill">React</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+            <a href="https://aloron-shop.vercel.app" target="_blank" rel="noopener" class="btn-primary !py-1.5 !px-3 font-mono text-xs">
+              <span>Open Live Demo</span>
+              <span>↗</span>
+            </a>
+            <a href="https://github.com/Sakib20050413/aloron-shop" target="_blank" rel="noopener" class="text-xs font-mono text-indigo-400 hover:underline">
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- ==================== 5. BIO-ACOUSTIC MOSQUITO AI TRAP ==================== -->
+        <div class="portfolio-card flex flex-col justify-between project-item group" data-category="HARDWARE" data-title="bio-acoustic mosquito vector trap" data-stack="esp32-s3 c++ fft tinyml inmp441">
+          <div>
+            <!-- Hardware Window Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-indigo-500"></span>
+                <span class="browser-dot bg-cyan-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
+              </div>
+              <div class="browser-url">ESP32-S3 Hardware Prototype</div>
+              <span class="text-[11px] font-mono text-indigo-400 font-bold shrink-0">C++ / FreeRTOS</span>
+            </div>
+
+            <!-- Preview Graphic -->
+            <div class="p-5 border-b" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+              <div class="rounded-xl p-3 border font-mono text-xs space-y-1.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-indigo-400 font-bold">ACOUSTIC DSP PIPELINE</span>
+                  <span class="text-emerald-400 font-semibold">32ms Latency</span>
+                </div>
+                <div class="text-[11px]" style="color: var(--text-secondary);">
+                  INMP441 I2S DMA &rarr; 512-Pt FFT &rarr; TinyML Classifier
+                </div>
+                <div class="text-[10px] text-amber-400 font-semibold">350–600 Hz Wingbeat Detection Band</div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-heading font-bold" style="color: var(--text-primary);">Bio-Acoustic Mosquito Vector Trap</h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-semibold border border-indigo-500/20">HARDWARE</span>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Autonomous edge-computing trap using an ESP32-S3 and I2S digital microphone to classify mosquito wingbeat acoustics in 32ms, targeting disease vectors safely.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="tech-pill">ESP32-S3</span>
+                <span class="tech-pill">C++</span>
+                <span class="tech-pill">I2S DMA</span>
+                <span class="tech-pill">Radix-2 FFT</span>
+                <span class="tech-pill">TinyML</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+            <a href="https://github.com/Sakib20050413/Bio-Acoustic-Mosquito-AI-Trap" target="_blank" rel="noopener" class="btn-secondary !py-1.5 !px-3 font-mono text-xs">
+              <span>View Hardware Repo</span>
+              <span>↗</span>
+            </a>
+            <span class="text-xs font-mono text-slate-400">Research &amp; Prototype</span>
+          </div>
+        </div>
+
+        <!-- ==================== 6. IOT LIGHTNING EARLY WARNING ==================== -->
+        <div class="portfolio-card flex flex-col justify-between project-item group" data-category="HARDWARE" data-title="iot rural lightning early warning" data-stack="esp32 as3935 sim800l gsm c++ solar">
+          <div>
+            <!-- Hardware Window Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-amber-500"></span>
+                <span class="browser-dot bg-indigo-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
+              </div>
+              <div class="browser-url">Solar Telemetry Station</div>
+              <span class="text-[11px] font-mono text-amber-400 font-bold shrink-0">GSM / RF</span>
+            </div>
+
+            <!-- Preview Graphic -->
+            <div class="p-5 border-b" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+              <div class="rounded-xl p-3 border font-mono text-xs space-y-1.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-amber-400 font-bold">ATMOSPHERIC RF SENSING</span>
+                  <span class="text-emerald-400 font-semibold">1–40 km Range</span>
+                </div>
+                <div class="text-[11px]" style="color: var(--text-secondary);">
+                  AS3935 Franklin Sensor &rarr; SIM800L Automated SMS Broadcast
+                </div>
+                <div class="text-[10px] text-emerald-400 font-semibold">Solar &amp; LiFePO4 Power Management</div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-heading font-bold" style="color: var(--text-primary);">IoT Lightning Warning System</h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-semibold border border-amber-500/20">IOT SYSTEM</span>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Off-grid solar-powered station detecting cloud-to-ground electromagnetic discharge to deliver automated early warnings and SMS alerts to rural farmers.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="tech-pill">ESP32</span>
+                <span class="tech-pill">AS3935 RF</span>
+                <span class="tech-pill">SIM800L GSM</span>
+                <span class="tech-pill">BMP280</span>
+                <span class="tech-pill">C++</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+            <a href="https://github.com/Sakib20050413/IoT-Rural-Lightning-Early-Warning-System" target="_blank" rel="noopener" class="btn-secondary !py-1.5 !px-3 font-mono text-xs">
+              <span>View Hardware Repo</span>
+              <span>↗</span>
+            </a>
+            <span class="text-xs font-mono text-slate-400">Deployed Station</span>
+          </div>
+        </div>
+
+        <!-- ==================== 7. COWORK API ==================== -->
+        <div class="portfolio-card flex flex-col justify-between project-item group" data-category="HARDWARE" data-title="cowork api" data-stack="fastapi python postgresql docker jwt">
+          <div>
+            <!-- API Window Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-rose-500"></span>
+                <span class="browser-dot bg-amber-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
+              </div>
+              <div class="browser-url">REST API / OpenAPI Specification</div>
+              <span class="text-[11px] font-mono text-indigo-400 font-bold shrink-0">FastAPI</span>
+            </div>
+
+            <!-- Preview Graphic -->
+            <div class="p-5 border-b" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+              <div class="rounded-xl p-3 border font-mono text-xs space-y-1.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-emerald-400 font-bold">POST /api/v1/bookings/</span>
+                  <span class="text-emerald-400 font-semibold">201 Created</span>
+                </div>
+                <div class="text-[11px]" style="color: var(--text-secondary);">
+                  Multi-tenant isolation, JWT refresh rotation, conflict-free scheduling.
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-heading font-bold" style="color: var(--text-primary);">CoWork API</h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-semibold border border-indigo-500/20">BACKEND API</span>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Containerized booking engine with tenant database scoping, role-based access control, and automated pytest coverage for shared workspaces.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="tech-pill">Python 3.11</span>
+                <span class="tech-pill">FastAPI</span>
+                <span class="tech-pill">PostgreSQL</span>
+                <span class="tech-pill">Docker</span>
+                <span class="tech-pill">Pytest</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+            <a href="https://github.com/Sakib20050413/ICT_Fest_Hackathon_Preliminary" target="_blank" rel="noopener" class="btn-secondary !py-1.5 !px-3 font-mono text-xs">
+              <span>View Source Code</span>
+              <span>↗</span>
+            </a>
+            <span class="text-xs font-mono text-slate-400">Hackathon Project</span>
+          </div>
+        </div>
+
+        <!-- ==================== 8. LIBRARY MANAGEMENT SYSTEM ==================== -->
+        <div class="portfolio-card flex flex-col justify-between project-item group" data-category="HARDWARE" data-title="library management system" data-stack="django python sqlite bootstrap">
+          <div>
+            <!-- Window Header -->
+            <div class="browser-header">
+              <div class="flex items-center gap-1.5">
+                <span class="browser-dot bg-rose-500"></span>
+                <span class="browser-dot bg-amber-500"></span>
+                <span class="browser-dot bg-emerald-500"></span>
+              </div>
+              <div class="browser-url">Django Circulation Management</div>
+              <span class="text-[11px] font-mono text-indigo-400 font-bold shrink-0">Django</span>
+            </div>
+
+            <!-- Preview Graphic -->
+            <div class="p-5 border-b" style="background-color: var(--bg-elevated); border-color: var(--border-subtle);">
+              <div class="rounded-xl p-3 border font-mono text-xs space-y-1.5" style="background-color: var(--bg-surface); border-color: var(--border-subtle);">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-indigo-400 font-bold">CIRCULATION DATABASE</span>
+                  <span class="text-emerald-400 font-semibold">Active Catalog</span>
+                </div>
+                <div class="text-[11px]" style="color: var(--text-secondary);">
+                  Book inventory, borrowing quotas, automated overdue fine calculation.
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-heading font-bold" style="color: var(--text-primary);">Library Management System</h3>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-semibold border border-indigo-500/20">WEB APP</span>
+              </div>
+              <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
+                Relational cataloging portal engineered with Django to track academic book checkouts, borrower limits, and overdue fine calculations.
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="tech-pill">Python</span>
+                <span class="tech-pill">Django</span>
+                <span class="tech-pill">SQLite</span>
+                <span class="tech-pill">Bootstrap 5</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t pt-4" style="border-color: var(--border-subtle);">
+            <a href="https://github.com/Sakib20050413/Library-Management-System" target="_blank" rel="noopener" class="btn-secondary !py-1.5 !px-3 font-mono text-xs">
+              <span>View Source Code</span>
+              <span>↗</span>
+            </a>
+            <span class="text-xs font-mono text-slate-400">Academic Project</span>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -631,56 +958,95 @@
 
 
   <!-- =========================================================================
-       4. TECHNICAL ARSENAL (GRAPHICAL MATRIX WITH SVG LOGOS & 52 SKILLS)
+       4. SKILLS & TECHNOLOGIES (CLEAN, HUMAN DEVELOPER TOOLING)
        ========================================================================= -->
   <section id="skills" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
-    <div class="fluid-container space-y-8">
+    <div class="fluid-container space-y-10">
       
-      <!-- Section Header & Filter Toolbar -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Technical Foundation</span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">52 Verified Skills &amp; Runtimes</h2>
-          <p class="text-sm mt-1" style="color: var(--text-secondary);">Grouped into 8 domains with authentic engineering proficiency levels.</p>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Technical Toolkit</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">Skills &amp; Technologies</h2>
+          <p class="text-sm mt-1" style="color: var(--text-secondary);">Languages, frameworks, databases, and embedded tools I work with.</p>
         </div>
 
-        <!-- Skill Keyword Search -->
         <div class="w-full sm:w-64 font-mono text-xs">
-          <input type="text" id="skillSearch" placeholder="Filter skills (e.g. python, fft)..." class="w-full px-3.5 py-2 rounded-xl border outline-none transition-all focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+          <input type="text" id="skillSearch" placeholder="Filter skills (e.g. python, django)..." class="w-full px-3.5 py-2 rounded-xl border outline-none transition-all focus:border-indigo-500" style="background-color: var(--bg-surface); border-color: var(--border-subtle); color: var(--text-primary);" />
         </div>
       </div>
 
-      <!-- 8-Domain Graphical Grid (Expansive 4 Columns on Widescreen) -->
+      <!-- 4 Practical Engineering Clusters -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {% for group in skill_groups %}
-        <div class="bento-card p-5 space-y-4 flex flex-col justify-between skill-card" data-domain="{{ group.name|lower }}">
-          
-          <div>
-            <!-- Group Header -->
-            <div class="flex items-center justify-between border-b pb-3" style="border-color: var(--border-subtle);">
-              <h3 class="font-mono font-bold text-xs text-indigo-400">{{ group.name }}</h3>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-tertiary);">{{ group.skills.count }} tools</span>
-            </div>
-
-            <!-- Skills List with Graphical Pills -->
-            <div class="flex flex-wrap gap-2 pt-3">
-              {% for s in group.skills.all %}
-              <div class="skill-item inline-flex items-center gap-1.5 tech-pill !text-[11px] transition-all hover:scale-105" data-skill="{{ s.name|lower }}">
-                <span class="w-1.5 h-1.5 rounded-full {% if 'Proficient' in s.level_label %}bg-emerald-400{% elif 'projects' in s.level_label %}bg-indigo-400{% else %}bg-amber-400{% endif %}"></span>
-                <span class="font-medium" style="color: var(--text-primary);">{{ s.name }}</span>
-                <span class="text-[9px] opacity-70 font-mono" style="color: var(--text-secondary);">{{ s.level_label }}</span>
-              </div>
-              {% endfor %}
-            </div>
+        
+        <!-- Cluster 1: Languages -->
+        <div class="portfolio-card p-6 space-y-4">
+          <div class="flex items-center gap-2 border-b pb-3" style="border-color: var(--border-subtle);">
+            <span class="text-base">💻</span>
+            <h3 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Languages</h3>
           </div>
-
-          <div class="pt-3 border-t text-[10px] font-mono flex items-center justify-between" style="border-color: var(--border-subtle); color: var(--text-tertiary);">
-            <span>DOMAIN VERIFIED</span>
-            <span class="text-emerald-400 font-bold">100% VALIDATED</span>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-pill font-medium text-indigo-400 skill-item" data-skill="python">Python</span>
+            <span class="tech-pill font-medium skill-item" data-skill="c c++">C / C++</span>
+            <span class="tech-pill font-medium skill-item" data-skill="javascript">JavaScript (ES6+)</span>
+            <span class="tech-pill font-medium skill-item" data-skill="typescript">TypeScript</span>
+            <span class="tech-pill font-medium skill-item" data-skill="sql">SQL</span>
+            <span class="tech-pill font-medium skill-item" data-skill="html5 css3">HTML5 &amp; CSS3</span>
+            <span class="tech-pill font-medium skill-item" data-skill="bash">Bash Scripting</span>
           </div>
-
         </div>
-        {% endfor %}
+
+        <!-- Cluster 2: Full-Stack & Backend -->
+        <div class="portfolio-card p-6 space-y-4">
+          <div class="flex items-center gap-2 border-b pb-3" style="border-color: var(--border-subtle);">
+            <span class="text-base">⚡</span>
+            <h3 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Full-Stack &amp; Backend</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-pill font-medium text-indigo-400 skill-item" data-skill="django 5">Django 5</span>
+            <span class="tech-pill font-medium text-indigo-400 skill-item" data-skill="fastapi">FastAPI</span>
+            <span class="tech-pill font-medium text-indigo-400 skill-item" data-skill="next.js">Next.js</span>
+            <span class="tech-pill font-medium skill-item" data-skill="react">React</span>
+            <span class="tech-pill font-medium skill-item" data-skill="restful apis">RESTful APIs</span>
+            <span class="tech-pill font-medium skill-item" data-skill="tailwind css">Tailwind CSS</span>
+            <span class="tech-pill font-medium skill-item" data-skill="bootstrap 5">Bootstrap 5</span>
+          </div>
+        </div>
+
+        <!-- Cluster 3: Databases & DevOps -->
+        <div class="portfolio-card p-6 space-y-4">
+          <div class="flex items-center gap-2 border-b pb-3" style="border-color: var(--border-subtle);">
+            <span class="text-base">🗄️</span>
+            <h3 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Databases &amp; Cloud</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-pill font-medium text-indigo-400 skill-item" data-skill="postgresql">PostgreSQL</span>
+            <span class="tech-pill font-medium skill-item" data-skill="sqlite">SQLite</span>
+            <span class="tech-pill font-medium skill-item" data-skill="mysql">MySQL</span>
+            <span class="tech-pill font-medium skill-item" data-skill="supabase">Supabase</span>
+            <span class="tech-pill font-medium skill-item" data-skill="docker">Docker</span>
+            <span class="tech-pill font-medium skill-item" data-skill="git github">Git &amp; GitHub</span>
+            <span class="tech-pill font-medium skill-item" data-skill="linux ubuntu">Linux / Ubuntu</span>
+            <span class="tech-pill font-medium skill-item" data-skill="vercel">Vercel</span>
+          </div>
+        </div>
+
+        <!-- Cluster 4: Embedded Systems & Edge AI -->
+        <div class="portfolio-card p-6 space-y-4">
+          <div class="flex items-center gap-2 border-b pb-3" style="border-color: var(--border-subtle);">
+            <span class="text-base">🔌</span>
+            <h3 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Embedded &amp; Edge AI</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-pill font-medium text-indigo-400 skill-item" data-skill="esp32 esp32-s3">ESP32 / ESP32-S3</span>
+            <span class="tech-pill font-medium skill-item" data-skill="arduino">Arduino IDE</span>
+            <span class="tech-pill font-medium skill-item" data-skill="tinyml">TinyML</span>
+            <span class="tech-pill font-medium skill-item" data-skill="freertos">FreeRTOS</span>
+            <span class="tech-pill font-medium skill-item" data-skill="i2s spi i2c">I2S / SPI / I2C</span>
+            <span class="tech-pill font-medium skill-item" data-skill="sensors">INMP441 MEMS</span>
+            <span class="tech-pill font-medium skill-item" data-skill="sim800l gsm">SIM800L GSM</span>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -688,103 +1054,76 @@
 
 
   <!-- =========================================================================
-       5. HARDWARE SIGNAL ARCHITECTURE (ESP32-S3 INTERACTIVE SCHEMATIC)
+       5. ABOUT ME SECTION (GENUINE, HUMAN BIO)
        ========================================================================= -->
-  <section id="hardware" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
-    <div class="fluid-container space-y-8">
+  <section id="about-me" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
+    <div class="fluid-container">
+      
+      <div class="portfolio-card p-8 sm:p-12 lg:p-16 space-y-8">
+        
+        <div class="max-w-3xl space-y-4">
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Background</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading" style="color: var(--text-primary);">About Me</h2>
+          
+          <p class="text-base leading-relaxed" style="color: var(--text-secondary);">
+            I am an undergraduate student currently in my 3rd year pursuing a B.Sc. in Computer Science and Engineering at Bangladesh Army International University of Science and Technology (BAIUST), Cumilla.
+          </p>
+
+          <p class="text-base leading-relaxed" style="color: var(--text-secondary);">
+            My fascination with software development centers on solving real practical problems. Over the last three years, I've built full-stack web platforms using Python/Django and modern JavaScript, containerized backend microservices with FastAPI, and developed embedded edge-computing hardware with ESP32-S3 microcontrollers.
+          </p>
+
+          <p class="text-base leading-relaxed" style="color: var(--text-secondary);">
+            I enjoy clean code, understanding low-level hardware constraints, and working with teams that care about product craft. When I'm not writing code, you'll find me reading about systems architecture, contributing to student programming activities, or tinkering with electronics.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t" style="border-color: var(--border-subtle);">
+          <div>
+            <span class="text-xs font-mono text-indigo-400 font-bold block">UNIVERSITY</span>
+            <span class="font-heading font-bold text-sm block mt-1" style="color: var(--text-primary);">BAIUST, Cumilla</span>
+            <span class="text-xs" style="color: var(--text-secondary);">B.Sc. in CSE (2022 – Present)</span>
+          </div>
+
+          <div>
+            <span class="text-xs font-mono text-indigo-400 font-bold block">SPECIALIZATION</span>
+            <span class="font-heading font-bold text-sm block mt-1" style="color: var(--text-primary);">Full-Stack &amp; Embedded</span>
+            <span class="text-xs" style="color: var(--text-secondary);">Python, Django, Next.js, ESP32</span>
+          </div>
+
+          <div>
+            <span class="text-xs font-mono text-indigo-400 font-bold block">AVAILABILITY</span>
+            <span class="font-heading font-bold text-sm block mt-1 text-emerald-400">Open for Opportunities</span>
+            <span class="text-xs" style="color: var(--text-secondary);">Internships, Contracts &amp; Roles</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       6. EXPERIENCE & CERTIFICATES TIMELINE
+       ========================================================================= -->
+  <section id="experience" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
+    <div class="fluid-container space-y-10">
       
       <div>
-        <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Deep Embedded Engineering</span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">ESP32-S3 Bio-Acoustic Signal Flow</h2>
-        <p class="text-sm mt-1" style="color: var(--text-secondary);">Real-time acoustic wingbeat harmonic classification pipeline (Bio-Acoustic Mosquito Vector Trap).</p>
-      </div>
-
-      <!-- 5-Stage Interactive Pipeline Flow -->
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-        
-        <!-- Stage 1 -->
-        <div class="bento-card p-5 space-y-3 relative group">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 01</span>
-            <span class="text-xs font-mono text-emerald-400">16 kHz DMA</span>
-          </div>
-          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Acoustic Capture</h4>
-          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">INMP441 MEMS microphone captures flight hum via I2S direct memory access without CPU block.</p>
-          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">GPIO 14, 15, 32</div>
-        </div>
-
-        <!-- Stage 2 -->
-        <div class="bento-card p-5 space-y-3 relative group">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 02</span>
-            <span class="text-xs font-mono text-indigo-400">32ms Latency</span>
-          </div>
-          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Edge DSP Windowing</h4>
-          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">ESP32-S3 Xtensa LX7 dual core runs 512-point Radix-2 FFT with Hann windowing on Core 0.</p>
-          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">300 - 700 Hz Band</div>
-        </div>
-
-        <!-- Stage 3 -->
-        <div class="bento-card p-5 space-y-3 relative group">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 03</span>
-            <span class="text-xs font-mono text-cyan-400">87% Match</span>
-          </div>
-          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">TinyML Inference</h4>
-          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">Quantized Edge Impulse neural classifier isolates Culicidae wingbeat harmonics against background noise.</p>
-          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">INT8 Quantized</div>
-        </div>
-
-        <!-- Stage 4 -->
-        <div class="bento-card p-5 space-y-3 relative group">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 04</span>
-            <span class="text-xs font-mono text-amber-400">Optoisolated</span>
-          </div>
-          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Physical Actuation</h4>
-          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">L403A high-voltage grid pulse and phototropic UV LED triggered only when vector presence is verified.</p>
-          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">1.2 kV Actuation</div>
-        </div>
-
-        <!-- Stage 5 -->
-        <div class="bento-card p-5 space-y-3 relative group">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold">STAGE 05</span>
-            <span class="text-xs font-mono text-emerald-400">4G / GSM</span>
-          </div>
-          <h4 class="font-heading font-bold text-sm" style="color: var(--text-primary);">Cloud Telemetry</h4>
-          <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">SIM7600 4G LTE transmits hourly vector density &amp; geo-tagged incident logs to central GIS dashboard.</p>
-          <div class="font-mono text-[10px] pt-1" style="color: var(--accent);">MQTT over TLS</div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- =========================================================================
-       6. EXPERIENCE & CREDENTIALS TIMELINE
-       ========================================================================= -->
-  <section id="timeline" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
-    <div class="fluid-container space-y-8">
-      
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Trajectory</span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">Experience &amp; Certifications</h2>
-          <p class="text-sm mt-1" style="color: var(--text-secondary);">Academic training, hands-on engineering, and industry credentials.</p>
-        </div>
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Milestones</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold font-heading mt-1" style="color: var(--text-primary);">Experience &amp; Education</h2>
+        <p class="text-sm mt-1" style="color: var(--text-secondary);">Academic timeline and practical engineering roles.</p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
-        <!-- Experience Timeline -->
+        <!-- Experience -->
         <div class="space-y-4">
-          <h3 class="font-mono font-bold text-xs uppercase tracking-wider text-indigo-400">Engineering Roles &amp; Community</h3>
+          <h3 class="font-mono font-bold text-xs uppercase tracking-wider text-indigo-400">Practical Experience</h3>
           <div class="space-y-4">
             {% for e in experiences %}
-            <div class="bento-card p-5 space-y-2">
+            <div class="portfolio-card p-6 space-y-2">
               <div class="flex items-center justify-between">
                 <h4 class="font-heading font-bold text-base" style="color: var(--text-primary);">{{ e.role }}</h4>
                 <span class="font-mono text-xs text-indigo-400 font-semibold">{{ e.period_str }}</span>
@@ -801,7 +1140,7 @@
           <h3 class="font-mono font-bold text-xs uppercase tracking-wider text-indigo-400">Verified Certifications</h3>
           <div class="space-y-4">
             {% for c in certificates %}
-            <div class="bento-card p-5 space-y-2">
+            <div class="portfolio-card p-6 space-y-2">
               <div class="flex items-center justify-between">
                 <h4 class="font-heading font-bold text-base" style="color: var(--text-primary);">{{ c.name }}</h4>
                 <span class="font-mono text-xs text-indigo-400 font-semibold">{{ c.issue_date|date:"Y" }}</span>
@@ -826,29 +1165,29 @@
 
 
   <!-- =========================================================================
-       7. CONTACT SECTION (FULL-WIDTH FLUID)
+       7. CONTACT SECTION (DIRECT & FRIENDLY)
        ========================================================================= -->
   <section id="contact" class="py-16 sm:py-20 border-t" style="border-color: var(--border-subtle);">
     <div class="fluid-container">
       
-      <div class="bento-card p-8 sm:p-12 lg:p-16 border-2" style="border-color: var(--border-subtle);">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center">
+      <div class="portfolio-card p-8 sm:p-12 lg:p-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
           <div class="lg:col-span-5 space-y-4">
-            <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Direct Inquiries</span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold font-heading" style="color: var(--text-primary);">Let's discuss engineering opportunities.</h2>
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Let's Connect</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-heading" style="color: var(--text-primary);">Get in touch.</h2>
             <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
-              I am actively seeking AI/ML engineering internships, full-stack software positions, and edge-AI research collaborations.
+              Whether you have an internship opportunity, contract work, or just want to discuss software and hardware projects, my inbox is always open.
             </p>
 
             <div class="space-y-2 pt-2 font-mono text-xs">
-              <div class="flex items-center gap-2">
-                <span style="color: var(--text-tertiary);">Direct Email:</span>
-                <a href="mailto:{{ settings.primary_email }}" class="text-indigo-400 hover:underline font-bold">{{ settings.primary_email }}</a>
+              <div>
+                <span style="color: var(--text-tertiary);">Email:</span>
+                <a href="mailto:{{ settings.primary_email }}" class="text-indigo-400 font-bold hover:underline ml-2">{{ settings.primary_email }}</a>
               </div>
-              <div class="flex items-center gap-2">
-                <span style="color: var(--text-tertiary);">Current Base:</span>
-                <span style="color: var(--text-primary);">Cumilla / Dhaka, Bangladesh (UTC+6)</span>
+              <div>
+                <span style="color: var(--text-tertiary);">Location:</span>
+                <span style="color: var(--text-primary);" class="ml-2">Cumilla / Dhaka, Bangladesh</span>
               </div>
             </div>
           </div>
@@ -860,23 +1199,23 @@
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Your Name *</label>
-                  <input type="text" name="name" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+                  <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Name *</label>
+                  <input type="text" name="name" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-primary);" />
                 </div>
                 <div>
-                  <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Your Email *</label>
-                  <input type="email" name="email" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+                  <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Email *</label>
+                  <input type="email" name="email" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-primary);" />
                 </div>
               </div>
 
               <div>
                 <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Subject</label>
-                <input type="text" name="subject" class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);" />
+                <input type="text" name="subject" class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-primary);" />
               </div>
 
               <div>
-                <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Your Message *</label>
-                <textarea name="message" rows="4" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--input-bg); border-color: var(--border-subtle); color: var(--text-primary);"></textarea>
+                <label class="block text-xs font-mono mb-1.5" style="color: var(--text-tertiary);">Message *</label>
+                <textarea name="message" rows="4" required class="w-full px-4 py-2.5 rounded-xl border outline-none text-xs font-mono focus:border-indigo-500" style="background-color: var(--bg-elevated); border-color: var(--border-subtle); color: var(--text-primary);"></textarea>
               </div>
 
               <div class="flex items-center justify-between pt-2">
@@ -897,17 +1236,17 @@
 
 
   <!-- =========================================================================
-       8. FOOTER (FULL-WIDTH FLUID)
+       8. FOOTER
        ========================================================================= -->
   <footer class="border-t py-12" style="border-color: var(--border-subtle); background-color: var(--bg-surface);">
     <div class="fluid-container flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-xs" style="color: var(--text-tertiary);">
       <div>
-        <span>&copy; 2026 {{ settings.full_name }}. All projects backed by public git commits.</span>
+        <span>&copy; 2026 {{ settings.full_name }}. Built with Django &amp; Tailwind CSS.</span>
       </div>
       <div class="flex items-center gap-4">
-        <a href="#overview" class="hover:text-indigo-400">Back to Top ↑</a>
+        <a href="#about" class="hover:text-indigo-400">Back to Top ↑</a>
         <span>•</span>
-        <a href="/cv/" class="hover:text-indigo-400">ATS Resume / CV</a>
+        <a href="/cv/" class="hover:text-indigo-400">Curriculum Vitae</a>
         <span>•</span>
         <a href="{{ settings.github_url }}" target="_blank" rel="noopener" class="hover:text-indigo-400">GitHub ↗</a>
       </div>
@@ -916,72 +1255,10 @@
 
 
   <!-- =========================================================================
-       CASE STUDY DETAIL MODAL
-       ========================================================================= -->
-  <div id="projectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 modal-backdrop-blur" role="dialog" aria-modal="true">
-    <div class="bento-card relative w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6">
-      <button id="closeModalBtn" type="button" aria-label="Close" class="absolute top-5 right-5 font-mono text-lg hover:text-indigo-400" style="color: var(--text-tertiary);">
-        ✕
-      </button>
-
-      <div class="space-y-1.5 pr-8">
-        <div class="flex items-center gap-2 font-mono text-xs">
-          <span id="modalCat" class="text-indigo-400 font-bold">Category</span>
-          <span style="color: var(--text-tertiary);">•</span>
-          <span id="modalStatus" style="color: var(--text-tertiary);">Status</span>
-        </div>
-        <h3 id="modalTitle" class="text-2xl font-extrabold font-heading" style="color: var(--text-primary);">Title</h3>
-        <p id="modalSummary" class="text-sm font-mono text-indigo-400 font-medium"></p>
-      </div>
-
-      <div class="border-t pt-4 space-y-2" style="border-color: var(--border-subtle);">
-        <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Architecture &amp; Technical Decisions</h4>
-        <div id="modalDesc" class="text-sm leading-relaxed space-y-2 whitespace-pre-line" style="color: var(--text-secondary);"></div>
-      </div>
-
-      <div class="border-t pt-4 space-y-2" style="border-color: var(--border-subtle);">
-        <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">Tech Stack</h4>
-        <div id="modalStack" class="flex flex-wrap gap-1.5"></div>
-      </div>
-
-      <div class="border-t pt-4 flex items-center justify-between font-mono text-xs" style="border-color: var(--border-subtle);">
-        <button id="modalUpvoteBtn" type="button" class="btn-secondary !py-1.5 !px-3 flex items-center gap-1.5">
-          <span class="text-amber-400 font-bold">★ Star Project</span>
-          <span id="modalUpvoteCount" class="text-indigo-400 font-bold">0</span>
-        </button>
-
-        <div class="flex items-center gap-3">
-          <a id="modalRepoLink" href="#" target="_blank" rel="noopener" class="btn-secondary !py-1.5 !px-3" style="display:none;">GitHub ↗</a>
-          <a id="modalLiveLink" href="#" target="_blank" rel="noopener" class="btn-primary !py-1.5 !px-3" style="display:none;">Live Demo ↗</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- =========================================================================
-       CLIENT-SIDE JAVASCRIPT: FFT SIMULATOR, SEARCH, FILTERS, UPVOTE
+       CLIENT-SIDE JAVASCRIPT
        ========================================================================= -->
   <script>
-    // 1. Projects Dataset
-    const PROJECTS = [
-      {% for p in projects %}
-      {
-        id: {{ p.id }},
-        title: "{{ p.title|escapejs }}",
-        category: "{{ p.get_category_display|escapejs }}",
-        status: "{{ p.status|escapejs }}",
-        summary: "{{ p.summary|escapejs }}",
-        description: "{{ p.description|escapejs }}",
-        techStack: [{% for t in p.tech_tags %}"{{ t|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}],
-        repoUrl: "{{ p.repo_url|escapejs }}",
-        liveUrl: "{{ p.live_url|escapejs }}",
-        upvotes: {{ p.upvotes }}
-      }{% if not forloop.last %},{% endif %}
-      {% endfor %}
-    ];
-
-    // 2. Live Cumilla Clock
+    // 1. Live Cumilla Clock
     function updateClock() {
       const now = new Date();
       const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
@@ -995,7 +1272,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 3. Quick Copy Email
+    // 2. Quick Copy Email
     const copyBtn = document.getElementById('navCopyEmailBtn');
     if (copyBtn) {
       copyBtn.addEventListener('click', () => {
@@ -1007,81 +1284,7 @@
       });
     }
 
-    // 4. Interactive Live Audio FFT Spectrogram Simulator
-    const canvas = document.getElementById('fftCanvas');
-    let ctx = canvas ? canvas.getContext('2d') : null;
-    let isSpiked = false;
-    let spikeEndTime = 0;
-
-    function renderFFT() {
-      if (!ctx || !canvas) return;
-      const width = canvas.width;
-      const height = canvas.height;
-      ctx.clearRect(0, 0, width, height);
-
-      const numBars = 48;
-      const barWidth = width / numBars;
-      const now = Date.now();
-      const spiking = (now < spikeEndTime);
-
-      for (let i = 0; i < numBars; i++) {
-        // Base noise floor
-        let val = Math.sin(now * 0.003 + i * 0.3) * 15 + Math.random() * 20 + 20;
-
-        // Wingbeat harmonic spike around bars 8 to 18 (300Hz - 700Hz)
-        if (i >= 8 && i <= 18) {
-          if (spiking) {
-            val += Math.sin((i - 8) / 10 * Math.PI) * 90;
-          } else {
-            val += Math.sin((i - 8) / 10 * Math.PI) * 25;
-          }
-        }
-
-        const barHeight = Math.min(height - 25, Math.max(10, val));
-        const x = i * barWidth;
-        const y = height - barHeight - 20;
-
-        if (i >= 8 && i <= 18) {
-          ctx.fillStyle = spiking ? '#10b981' : '#6366f1';
-        } else {
-          ctx.fillStyle = 'rgba(100, 116, 139, 0.35)';
-        }
-
-        ctx.fillRect(x + 1, y, barWidth - 2, barHeight);
-      }
-
-      requestAnimationFrame(renderFFT);
-    }
-    if (canvas) renderFFT();
-
-    // Trigger Wingbeat Button
-    const triggerBtn = document.getElementById('triggerWingbeatBtn');
-    const feedback = document.getElementById('triggerFeedback');
-    const hudBadge = document.getElementById('hudStatusBadge');
-    const hudConf = document.getElementById('hudConfidence');
-
-    if (triggerBtn) {
-      triggerBtn.addEventListener('click', () => {
-        spikeEndTime = Date.now() + 2500;
-        if (feedback) { feedback.style.opacity = '1'; }
-        if (hudBadge) {
-          hudBadge.textContent = 'VECTOR DETECTED (Culex)';
-          hudBadge.className = 'text-emerald-400 font-bold';
-        }
-        if (hudConf) { hudConf.textContent = '94.8%'; }
-
-        setTimeout(() => {
-          if (feedback) { feedback.style.opacity = '0'; }
-          if (hudBadge) {
-            hudBadge.textContent = 'SYSTEM ONLINE';
-            hudBadge.className = 'text-emerald-400 font-semibold';
-          }
-          if (hudConf) { hudConf.textContent = '87.4%'; }
-        }, 3000);
-      });
-    }
-
-    // 5. Project Search & Filter
+    // 3. Project Search & Filter
     const searchInput = document.getElementById('projectSearch');
     const filterBtns = document.querySelectorAll('.filter-btn');
     let activeCat = 'ALL';
@@ -1119,7 +1322,7 @@
 
     if (searchInput) searchInput.addEventListener('input', filterProjects);
 
-    // 6. Skill Search
+    // 4. Skill Filter
     const skillInput = document.getElementById('skillSearch');
     if (skillInput) {
       skillInput.addEventListener('input', (e) => {
@@ -1135,81 +1338,7 @@
       });
     }
 
-    // 7. Project Modal Logic
-    const modal = document.getElementById('projectModal');
-    const closeBtn = document.getElementById('closeModalBtn');
-    let currentModalProject = null;
-
-    function openModal(idx) {
-      const p = PROJECTS[idx];
-      if (!p) return;
-      currentModalProject = p;
-
-      document.getElementById('modalCat').textContent = p.category;
-      document.getElementById('modalStatus').textContent = p.status;
-      document.getElementById('modalTitle').textContent = p.title;
-      document.getElementById('modalSummary').textContent = p.summary;
-      document.getElementById('modalDesc').textContent = p.description;
-      document.getElementById('modalUpvoteCount').textContent = p.upvotes;
-
-      const stackBox = document.getElementById('modalStack');
-      stackBox.innerHTML = '';
-      p.techStack.forEach(t => {
-        const s = document.createElement('span');
-        s.className = 'tech-pill';
-        s.textContent = t;
-        stackBox.appendChild(s);
-      });
-
-      const repo = document.getElementById('modalRepoLink');
-      if (p.repoUrl) { repo.href = p.repoUrl; repo.style.display = 'inline-flex'; } else { repo.style.display = 'none'; }
-
-      const live = document.getElementById('modalLiveLink');
-      if (p.liveUrl) { live.href = p.liveUrl; live.style.display = 'inline-flex'; } else { live.style.display = 'none'; }
-
-      modal.classList.remove('hidden');
-    }
-
-    document.querySelectorAll('.open-case-study').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.getAttribute('data-index'), 10);
-        openModal(idx);
-      });
-    });
-
-    if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-    if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.classList.add('hidden'); });
-
-    // 8. Star Upvote API
-    function upvote(pId, callback) {
-      fetch(`/api/projects/${pId}/upvote/`, {
-        method: 'POST',
-        headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value }
-      })
-      .then(res => res.json())
-      .then(data => { if (data.ok) callback(data.upvotes); })
-      .catch(() => {});
-    }
-
-    document.querySelectorAll('.upvote-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const pId = btn.getAttribute('data-id');
-        const span = btn.querySelector('.upvote-val');
-        upvote(pId, (num) => { span.textContent = num; });
-      });
-    });
-
-    document.getElementById('modalUpvoteBtn').addEventListener('click', () => {
-      if (!currentModalProject) return;
-      upvote(currentModalProject.id, (num) => {
-        document.getElementById('modalUpvoteCount').textContent = num;
-        currentModalProject.upvotes = num;
-      });
-    });
-
-    // 9. Contact Form
+    // 5. Contact Form
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatusMsg');
     const submitBtn = document.getElementById('submitBtn');
@@ -1247,7 +1376,7 @@
       });
     }
 
-    // 10. Dark/Light Theme Switcher
+    // 6. Theme Switcher
     const themeBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeToggleIcon');
 
