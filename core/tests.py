@@ -100,3 +100,14 @@ class PortfolioCoreTests(TestCase):
         self.assertEqual(response.json()["upvotes"], initial_upvotes + 1)
         project.refresh_from_db()
         self.assertEqual(project.upvotes, initial_upvotes + 1)
+
+    def test_privacy_and_terms_pages_accessible_directly(self):
+        for url in ("/privacy/", "/privacy", "/terms/", "/terms"):
+            res = self.client.get(url)
+            self.assertEqual(res.status_code, 200, url)
+        priv = self.client.get("/privacy/")
+        self.assertContains(priv, "AutoShorts Studio")
+        self.assertContains(priv, "1124076067059902")
+        home = self.client.get(reverse("home"))
+        self.assertContains(home, "/privacy/")
+        self.assertContains(home, "/terms/")

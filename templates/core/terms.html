@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — {{ settings.full_name|default:"Md Najmus Sakib Rahatul" }} &amp; AutoShorts Studio</title>
+  <meta name="description" content="Official Terms of Service for sakib-portfolio, AutoShorts (YouTube), and AutoShorts Studio (Meta App)." />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+</head>
+<body class="min-h-screen bg-[#090a0f] text-[#f3f4f6] antialiased px-4 py-12">
+  <main class="max-w-3xl mx-auto bg-[#11131c] border border-white/10 rounded-2xl p-6 sm:p-10 space-y-6">
+    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+      <div>
+        <p class="text-xs font-mono uppercase tracking-widest text-indigo-400">Legal &amp; API Compliance</p>
+        <h1 class="text-2xl sm:text-3xl font-bold mt-1">Terms of Service</h1>
+      </div>
+      <a href="/" class="text-xs font-mono px-3 py-1.5 rounded-lg border border-white/15 hover:border-indigo-400 transition">← Portfolio</a>
+    </div>
+
+    <p class="text-sm text-gray-300">
+      <strong>Last Updated:</strong> {{ last_updated }} &middot;
+      <strong>Operator:</strong> {{ settings.full_name|default:"Md Najmus Sakib Rahatul" }}
+    </p>
+
+    <section class="space-y-2 text-sm leading-relaxed text-gray-300">
+      <h2 class="text-lg font-semibold text-white">1. Acceptance of Terms</h2>
+      <p>
+        By accessing <code class="text-indigo-300">sakib-portfolio-green.vercel.app</code> or authorizing our first-party creator publishing tools (<strong>AutoShorts</strong> and <strong>AutoShorts Studio</strong>), you agree to these Terms of Service.
+      </p>
+    </section>
+
+    <section class="space-y-2 text-sm leading-relaxed text-gray-300">
+      <h2 class="text-lg font-semibold text-white">2. Authorized First-Party Publishing Use</h2>
+      <ul class="list-disc pl-5 space-y-1">
+        <li><strong>AutoShorts</strong> and <strong>AutoShorts Studio</strong> are private creator automation workflows designed for managing owned YouTube channels and Facebook Pages.</li>
+        <li>All uploaded scripts, voiceovers, and motion-graphics assets must represent original educational content complying with platform guidelines.</li>
+        <li>You agree to comply with the <a href="https://www.youtube.com/t/terms" class="text-indigo-400 underline" target="_blank" rel="noopener">YouTube Terms of Service</a> and <a href="https://developers.facebook.com/terms" class="text-indigo-400 underline" target="_blank" rel="noopener">Meta Platform Terms</a>.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2 text-sm leading-relaxed text-gray-300">
+      <h2 class="text-lg font-semibold text-white">3. Intellectual Property &amp; Disclaimer</h2>
+      <p>
+        All custom portfolio code, visual designs, and generated media published through owned channels remain the property of their respective creator. This site and its tools are provided "as is" without warranties of uninterrupted uptime or monetization outcomes.
+      </p>
+    </section>
+
+    <section class="space-y-2 text-sm leading-relaxed text-gray-300 border-t border-white/10 pt-4">
+      <p>
+        Questions? Contact <a href="mailto:mdnajmussakib2003@gmail.com" class="text-indigo-400 underline">mdnajmussakib2003@gmail.com</a>.
+        View our <a href="/privacy/" class="text-indigo-400 underline">Privacy Policy &amp; Data Deletion Instructions</a>.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

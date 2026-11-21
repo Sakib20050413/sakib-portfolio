@@ -26,6 +26,10 @@ urlpatterns = [
     # Public Single-Page Portfolio & ATS CV
     path("", views.home_view, name="home"),
     path("cv/", views.printable_cv_view, name="printable_cv"),
+    path("privacy/", views.privacy_policy_view, name="privacy"),
+    path("privacy", views.privacy_policy_view),
+    path("terms/", views.terms_of_service_view, name="terms"),
+    path("terms", views.terms_of_service_view),
 
     # Direct Section Redirects for smooth UX
     path("about/", RedirectView.as_view(url="/#about", permanent=False)),

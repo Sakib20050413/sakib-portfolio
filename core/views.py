@@ -1,4 +1,5 @@
 import json
+import os
 from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -46,6 +47,7 @@ def home_view(request):
         "projects": projects,
         "experiences": experiences,
         "certificates": certificates,
+        "google_site_verification": os.environ.get("GOOGLE_SITE_VERIFICATION", "").strip(),
     }
     return render(request, "core/index.html", context)
 
@@ -67,6 +69,33 @@ def printable_cv_view(request):
         "certificates": certificates,
     }
     return render(request, "core/cv.html", context)
+
+
+def privacy_policy_view(request):
+    """Public privacy policy covering the portfolio, AutoShorts (YouTube), and AutoShorts Studio (Meta)."""
+    site_settings, _ = get_or_seed_canonical_data()
+    return render(
+        request,
+        "core/privacy.html",
+        {
+            "settings": site_settings,
+            "last_updated": "November 21, 2026",
+            "meta_app_id": "1124076067059902",
+        },
+    )
+
+
+def terms_of_service_view(request):
+    """Public terms of service covering the portfolio, AutoShorts, and AutoShorts Studio."""
+    site_settings, _ = get_or_seed_canonical_data()
+    return render(
+        request,
+        "core/terms.html",
+        {
+            "settings": site_settings,
+            "last_updated": "November 21, 2026",
+        },
+    )
 
 
 def api_profile_json(request):

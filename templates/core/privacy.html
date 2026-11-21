@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — {{ settings.full_name|default:"Md Najmus Sakib Rahatul" }} &amp; AutoShorts Studio</title>
+  <meta name="description" content="Official Privacy Policy and Data Deletion Instructions for sakib-portfolio, AutoShorts (YouTube OAuth), and AutoShorts Studio (Meta App)." />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+</head>
+<body class="min-h-screen bg-[#090a0f] text-[#f3f4f6] antialiased px-4 py-12">
+  <main class="max-w-3xl mx-auto bg-[#11131c] border border-white/10 rounded-2xl p-6 sm:p-10 space-y-6">
+    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+      <div>
+        <p class="text-xs font-mono uppercase tracking-widest text-indigo-400">Legal &amp; API Compliance</p>
+        <h1 class="text-2xl sm:text-3xl font-bold mt-1">Privacy Policy</h1>
+      </div>
+      <a href="/" class="text-xs font-mono px-3 py-1.5 rounded-lg border border-white/15 hover:border-indigo-400 transition">← Portfolio</a>
+    </div>
+
+    <p class="text-sm text-gray-300">
+      <strong>Last Updated:</strong> {{ last_updated }} &middot;
+      <strong>Operator:</strong> {{ settings.full_name|default:"Md Najmus Sakib Rahatul" }}
+    </p>
+
+    <section class="space-y-2 text-sm leading-relaxed text-gray-300">
+      <h2 class="text-lg font-semibold text-white">1. Scope &amp; Applications Covered</h2>
+      <p>
+        This Privacy Policy explains how personal and platform data is handled across:
+      </p>
+      <ul class="list-disc pl-5 space-y-1">
+        <li><strong>Developer Portfolio:</strong> <code class="text-indigo-300">sakib-portfolio-green.vercel.app</code> (including contact inquiries and project upvotes).</li>
+        <li><strong>AutoShorts:</strong> First-party YouTube Data API v3 publishing integration used solely by the channel owner to publish creator-owned educational videos.</li>
+        <li><strong>AutoShorts Studio (Meta App ID {{ meta_app_id }}):</strong> First-party Facebook Graph API integration used solely by the Page owner to publish Reels and videos to owned Facebook Pages.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2 text-sm leading-relaxed text-gray-300">
+      <h2 class="text-lg font-semibold text-white">2. Information Collected &amp; How It Is Used</h2>
+      <ul class="list-disc pl-5 space-y-1">
+        <li><strong>Portfolio Contact Form:</strong> Name, email address, and message submitted voluntarily are stored solely to respond to professional inquiries.</li>
+        <li><strong>YouTube API Services &amp; Google OAuth:</strong> Access tokens (<code class="text-indigo-300">youtube.upload</code>) are used exclusively on the authorized owner's local workstation to upload original video content, titles, descriptions, and thumbnails to owned YouTube channels.</li>
+        <li><strong>Meta / Facebook Graph API:</strong> Page access tokens and Page IDs (<code class="text-indigo-300">pages_manage_posts</code>, <code class="text-indigo-300">pages_read_engagement</code>, <code class="text-indigo-300">pages_show_list</code>) are used strictly to publish Reels/videos to owned Facebook Pages and verify Page readiness.</li>
+        <li><strong>No Sale or Third-Party Sharing:</strong> We never sell, rent, share, or broker user data, tokens, or analytics with advertisers or external third parties.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2 text-sm leading-relaxed text-gray-300">
+      <h2 class="text-lg font-semibold text-white">3. Data Storage, Security &amp; Retention</h2>
+      <p>
+        OAuth credentials and Page access tokens are stored locally in restricted environment files controlled exclusively by the operator and are retained only while active publishing is authorized.
+      </p>
+    </section>
+
+    <section id="data-deletion" class="space-y-2 text-sm leading-relaxed text-gray-300">
+      <h2 class="text-lg font-semibold text-white">4. User Data Deletion &amp; Access Revocation</h2>
+      <p>
+        You may revoke application permissions or request permanent deletion of any stored contact record at any time:
+      </p>
+      <ul class="list-disc pl-5 space-y-1">
+        <li><strong>Google Account Permissions:</strong> Remove access at <a href="https://myaccount.google.com/permissions" class="text-indigo-400 underline" target="_blank" rel="noopener">myaccount.google.com/permissions</a>.</li>
+        <li><strong>Facebook Business Integrations:</strong> Remove <em>AutoShorts Studio</em> from <a href="https://www.facebook.com/settings?tab=business_tools" class="text-indigo-400 underline" target="_blank" rel="noopener">Facebook Business Integrations Settings</a>.</li>
+        <li><strong>Direct Deletion Request:</strong> Email <a href="mailto:mdnajmussakib2003@gmail.com" class="text-indigo-400 underline">mdnajmussakib2003@gmail.com</a> or <a href="mailto:md.najmus.sakib.rahatul.2005@gmail.com" class="text-indigo-400 underline">md.najmus.sakib.rahatul.2005@gmail.com</a>; verified requests are fulfilled within 48 hours.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2 text-sm leading-relaxed text-gray-300 border-t border-white/10 pt-4">
+      <p>
+        <strong>Third-Party Policies:</strong> Use of YouTube API Services is subject to the
+        <a href="https://www.youtube.com/t/terms" class="text-indigo-400 underline" target="_blank" rel="noopener">YouTube Terms of Service</a>
+        and <a href="https://policies.google.com/privacy" class="text-indigo-400 underline" target="_blank" rel="noopener">Google Privacy Policy</a>.
+        See also our <a href="/terms/" class="text-indigo-400 underline">Terms of Service</a>.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
